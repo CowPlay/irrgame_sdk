@@ -19,12 +19,13 @@ namespace irrgame
 		public:
 
 			//! Destructor
-			virtual ~irrgamePlayer() = 0;
+			virtual ~irrgamePlayer()
+			{
+			}
 
-			virtual void run(irrgameApp* application) = 0;
+//			virtual void run(irrgameApp* application) = 0;
 
-			void getFileSystem();
-
+			virtual void getFileSystem() = 0;
 	};
 
 	//! irrgamePlayer creator

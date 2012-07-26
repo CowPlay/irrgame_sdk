@@ -10,7 +10,7 @@
 #include "irrArray.h"
 #include "fast_atof.h"
 
-#ifdef _DEBUG
+#ifdef DEBUG
 #define IRR_DEBUGPRINT(x) printf((x));
 #else // _DEBUG 
 #define IRR_DEBUGPRINT(x)

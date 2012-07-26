@@ -14,8 +14,17 @@
 //core
 #include "irrgameTypes.h"
 
+//io
+#include "ioutil.h"
+#include "IReadFile.h"
+#include "irrXML.h"
+#include "IWriteFile.h"
+#include "IXMLReader.h"
+#include "IXMLWriter.h"
+#include "SPath.h"
+
 //logic
-#include "IGameObject.h"
+//#include "IGameObject.h"
 
 //video
 

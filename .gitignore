@@ -17,6 +17,7 @@
 Debug/makefile
 
 #eclipse
+.settings/**
 Debug/**
 .project
 .cproject

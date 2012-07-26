@@ -44,6 +44,10 @@ namespace irrgame
 		//! Internal function, please do not use.
 		IWriteFile* createWriteFile(const io::path& fileName, bool append);
 
+		//! Internal function, please do not use.
+		IWriteFile* createMemoryWriteFile(void* memory, long size,
+				const io::path& fileName, bool deleteMemoryWhenDropped);
+
 	} // end namespace io
 } // end namespace irr
 

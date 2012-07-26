@@ -428,7 +428,8 @@ namespace irrgame
 		 deleted using 'delete' after no longer needed. Returns 0 if an error occured
 		 and the file could not be opened. */
 //	IrrXMLReader* createIrrXMLReader(FILE* file);
-//! Creates an instance of an UFT-8 or ASCII character xml parser.
+
+		//! Creates an instance of an UFT-8 or ASCII character xml parser.
 		/** This means that all character data will be returned in 8 bit ASCII or UTF-8. The file to read can
 		 be in any format, it will be converted to UTF-8 if it is not in this format.
 		 If you are using the Irrlicht Engine, it is better not to use this function but
@@ -467,7 +468,8 @@ namespace irrgame
 		 deleted using 'delete' after no longer needed. Returns 0 if an error occured
 		 and the file could not be opened. */
 //		IrrXMLReaderUTF16* createIrrXMLReaderUTF16(FILE* file);
-//! Creates an instance of an UFT-16 xml parser.
+
+		//! Creates an instance of an UFT-16 xml parser.
 		/** This means that all character data will be returned in UTF-16. The file to read can
 		 be in any format, it will be converted to UTF-16 if it is not in this format.
 		 If you are using the Irrlicht Engine, it is better not to use this function but

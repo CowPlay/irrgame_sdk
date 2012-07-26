@@ -12,6 +12,8 @@ namespace irrgame
 {
 	namespace io
 	{
+		class IReadFile;
+
 		//! An xml reader for wide characters, derived from IReferenceCounted.
 		/** This XML Parser can read any type of text files from any source
 		 Irrlicht can read. Just call IFileSystem::createXMLReader(). For more
@@ -23,6 +25,12 @@ namespace irrgame
 		 Irrlicht can read. Just call IFileSystem::createXMLReaderUTF8(). For
 		 more informations on how to use the parser, see IIrrXMLReader */
 		typedef IIrrXMLReader<c8, IReferenceCounted> IXMLReaderUTF8;
+
+		//! Creates an instance of a wide character xml parser.
+		IXMLReader* createXMLReader(IReadFile* file);
+
+		//! Creates an instance of an UFT-8 or ASCII character xml parser.
+		IXMLReaderUTF8* createXMLReaderUTF8(IReadFile* file);
 
 	} // end namespace io
 } // end namespace irr

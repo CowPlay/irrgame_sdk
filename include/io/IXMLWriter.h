@@ -13,6 +13,7 @@ namespace irrgame
 {
 	namespace io
 	{
+		class IWriteFile;
 
 		//! Interface providing methods for making it easier to write XML files.
 		/** This XML Writer writes xml files using in the platform dependent
@@ -81,6 +82,9 @@ namespace irrgame
 				//! Writes a line break
 				virtual void writeLineBreak() = 0;
 		};
+
+		//! Creates an instance of a wide character xml writer.
+		IXMLWriter* createXMLWriter(IWriteFile* file);
 
 	} // end namespace io
 } // end namespace irr

@@ -114,7 +114,7 @@ typedef char fschar_t;
 //} // end namespace irr
 
 //! define a break macro for debugging.
-#if defined(_DEBUG)
+#if defined(DEBUG)
 #if defined(_IRR_WINDOWS_API_) && defined(_MSC_VER) && !defined (_WIN32_WCE)
 #if defined(WIN64) || defined(_WIN64) // using portable common solution for x64 configuration
 #include <crtdbg.h>
@@ -159,7 +159,7 @@ typedef char fschar_t;
 #define _IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX
 #endif // _IRR_MANAGED_MARSHALLING_BUGFIX
 // memory debugging
-#if defined(_DEBUG) && defined(IRRLICHT_EXPORTS) && defined(_MSC_VER) && \
+#if defined(DEBUG) && defined(IRRLICHT_EXPORTS) && defined(_MSC_VER) && \
 	(_MSC_VER > 1299) && !defined(_IRR_DONT_DO_MEMORY_DEBUGGING_HERE) && !defined(_WIN32_WCE)
 
 #define CRTDBG_MAP_ALLOC

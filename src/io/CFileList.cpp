@@ -148,6 +148,13 @@ namespace irrgame
 			return Path;
 		}
 
+		//! IFileList creator
+		IFileList* createFileList(const io::path& path, bool ignoreCase,
+				bool ignorePaths)
+		{
+			return new CFileList(path, ignoreCase, ignorePaths);
+		}
+
 	} // end namespace irr
 } // end namespace io
 

@@ -8,6 +8,20 @@
 #ifndef IRRGAMESDKCOMPILECONFIG_H_
 #define IRRGAMESDKCOMPILECONFIG_H_
 
+// --------------------------------------------
+//!MacOS X
+
+#define LINEBREAK "\r"
+
+// --------------------------------------------
+//!Windows
+
+//#define LINEBREAK "\r\n"
+
+
+
+
+
 
 
 

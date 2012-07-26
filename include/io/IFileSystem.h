@@ -8,7 +8,7 @@
 #include "IReferenceCounted.h"
 #include "IXMLReader.h"
 #include "IFileArchive.h"
-
+#include "IArchiveLoader.h"
 namespace irrgame
 {
 	namespace video

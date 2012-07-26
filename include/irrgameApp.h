@@ -14,19 +14,19 @@ namespace irrgame
 	class irrgameApp
 	{
 
-	public:
-		irrgameApp(irrgamePlayer* player);
+		public:
+			//! Destructor
+			virtual ~irrgameApp()
+			{
+			}
 
+			irrgameApp(irrgamePlayer* player);
 
-		void onApplicationSuspend();
+			virtual void run() = 0;
 
-		virtual void run() = 0;
-
-
+			void onApplicationSuspend();
 
 	};
 }
-
-
 
 #endif /* IRRGAMEAPPLICATION_H_ */

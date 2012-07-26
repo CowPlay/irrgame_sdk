@@ -11,4 +11,14 @@
 *.la
 *.a
 
+#MacOsX
 .DS_Store
+
+Debug/makefile
+
+#eclipse
+Debug/**
+.project
+.cproject
+*.mk
+*.d

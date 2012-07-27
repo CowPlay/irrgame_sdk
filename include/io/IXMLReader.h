@@ -32,6 +32,13 @@ namespace irrgame
 		//! Creates an instance of an UFT-8 or ASCII character xml parser.
 		IXMLReaderUTF8* createXMLReaderUTF8(IReadFile* file);
 
+
+//		//! creates an IXMLReader
+//		IXMLReader* createIXMLReader(IReadFile* file);
+//
+//		//! creates an IXMLReader
+//		IXMLReaderUTF8* createIXMLReaderUTF8(IReadFile* file);
+
 	} // end namespace io
 } // end namespace irr
 

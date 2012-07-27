@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CXMLReaderImpl.h"
-#include "CXMLReader.h"
+#include "./io/IXMLReader.h"
 #include "./io/IReadFile.h"
 
 namespace irrgame

@@ -5,8 +5,8 @@
 #ifndef __IRR_CORE_UTIL_H_INCLUDED__
 #define __IRR_CORE_UTIL_H_INCLUDED__
 
-#include "irrString.h"
-#include "SPath.h"
+#include "./core/irrString.h"
+#include "./io/SPath.h"
 
 namespace irrgame
 {

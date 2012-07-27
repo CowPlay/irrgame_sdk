@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CLimitReadFile.h"
-#include "irrString.h"
+#include "./core/irrString.h"
 
 namespace irrgame
 {

@@ -5,10 +5,10 @@
 #ifndef __ICXML_READER_IMPL_H_INCLUDED__
 #define __ICXML_READER_IMPL_H_INCLUDED__
 
-#include "irrXML.h"
-#include "irrString.h"
-#include "irrArray.h"
-#include "fast_atof.h"
+#include "./io/irrXML.h"
+#include "./core/irrString.h"
+#include "./core/irrArray.h"
+#include "./core/fast_atof.h"
 
 #ifdef DEBUG
 #define IRR_DEBUGPRINT(x) printf((x));

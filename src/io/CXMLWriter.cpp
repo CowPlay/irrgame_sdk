@@ -4,7 +4,7 @@
 
 #include "CXMLWriter.h"
 #include <wchar.h>
-#include "irrString.h"
+#include "./core/irrString.h"
 #include "irrgamesdkCompileConfig.h"
 
 namespace irrgame

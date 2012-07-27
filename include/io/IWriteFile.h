@@ -5,7 +5,7 @@
 #ifndef __I_WRITE_FILE_H_INCLUDED__
 #define __I_WRITE_FILE_H_INCLUDED__
 
-#include "IReferenceCounted.h"
+#include "./core/IReferenceCounted.h"
 #include "SPath.h"
 
 namespace irrgame

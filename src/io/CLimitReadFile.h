@@ -5,8 +5,8 @@
 #ifndef __C_LIMIT_READ_FILE_H_INCLUDED__
 #define __C_LIMIT_READ_FILE_H_INCLUDED__
 
-#include "IReadFile.h"
-#include "irrString.h"
+#include "./io/IReadFile.h"
+#include "./core/irrString.h"
 
 namespace irrgame
 {

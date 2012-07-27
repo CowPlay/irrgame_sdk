@@ -6,8 +6,8 @@
 #define __C_XML_WRITER_H_INCLUDED__
 
 #include <wchar.h>
-#include "IXMLWriter.h"
-#include "IWriteFile.h"
+#include "./io/IXMLWriter.h"
+#include "./io/IWriteFile.h"
 
 namespace irrgame
 {

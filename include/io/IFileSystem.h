@@ -5,8 +5,8 @@
 #ifndef __I_FILE_SYSTEM_H_INCLUDED__
 #define __I_FILE_SYSTEM_H_INCLUDED__
 
-#include "IReferenceCounted.h"
-#include "IXMLReader.h"
+#include "./core/IReferenceCounted.h"
+#include "./io/IXMLReader.h"
 #include "IFileArchive.h"
 #include "IArchiveLoader.h"
 namespace irrgame
@@ -281,7 +281,7 @@ namespace irrgame
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReader::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				virtual IXMLReader* createXMLReader(IReadFile* file) =0;
+//				virtual IXMLReader* createXMLReader(IReadFile* file) =0;
 
 				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
 				/** Use createXMLReader() if you prefer wchar_t* instead of char*. See IIrrXMLReader for
@@ -290,8 +290,8 @@ namespace irrgame
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReaderUTF8::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				virtual IXMLReaderUTF8* createXMLReaderUTF8(
-						const path& filename) =0;
+//				virtual IXMLReaderUTF8* createXMLReaderUTF8(
+//						const path& filename) =0;
 
 				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
 				/** Use createXMLReader() if you prefer wchar_t* instead of char*. See IIrrXMLReader for
@@ -300,7 +300,7 @@ namespace irrgame
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReaderUTF8::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				virtual IXMLReaderUTF8* createXMLReaderUTF8(IReadFile* file) =0;
+//				virtual IXMLReaderUTF8* createXMLReaderUTF8(IReadFile* file) =0;
 
 				//! Creates a XML Writer from a file.
 				/** \return 0, if file could not be opened, otherwise a pointer to the created
@@ -314,7 +314,7 @@ namespace irrgame
 				 IXMLWriter is returned. After use, the reader
 				 has to be deleted using its IXMLWriter::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				virtual IXMLWriter* createXMLWriter(IWriteFile* file) =0;
+//				virtual IXMLWriter* createXMLWriter(IWriteFile* file) =0;
 
 				//! Creates a new empty collection of attributes, usable for serialization and more.
 				/** \param driver: Video driver to be used to load textures when specified as attribute values.
@@ -322,8 +322,8 @@ namespace irrgame
 				 \return Pointer to the created object.
 				 If you no longer need the object, you should call IAttributes::drop().
 				 See IReferenceCounted::drop() for more information. */
-				virtual IAttributes* createEmptyAttributes(
-						video::IVideoDriver* driver = 0) =0;
+//				virtual IAttributes* createEmptyAttributes(
+//						video::IVideoDriver* driver = 0) =0;
 		};
 
 	} // end namespace io

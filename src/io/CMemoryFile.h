@@ -5,9 +5,9 @@
 #ifndef __C_MEMORY_READ_FILE_H_INCLUDED__
 #define __C_MEMORY_READ_FILE_H_INCLUDED__
 
-#include "IReadFile.h"
-#include "IWriteFile.h"
-#include "irrString.h"
+#include "./io/IReadFile.h"
+#include "./io/IWriteFile.h"
+#include "./core/irrString.h"
 
 namespace irrgame
 {

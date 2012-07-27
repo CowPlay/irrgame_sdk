@@ -2,10 +2,10 @@
 // This file is part of the "Irrlicht Engine" and the "irrXML" project.
 // For conditions of distribution and use, see copyright notice in irrlicht.h and/or irrXML.h
 
-#include "irrXML.h"
-#include "irrString.h"
-#include "irrArray.h"
-#include "fast_atof.h"
+#include "./io/irrXML.h"
+#include "./core/irrString.h"
+#include "./core/irrArray.h"
+#include "./core/fast_atof.h"
 #include "CXMLReaderImpl.h"
 
 namespace irrgame

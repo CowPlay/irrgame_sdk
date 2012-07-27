@@ -5,9 +5,9 @@
 #ifndef __C_FILE_LIST_H_INCLUDED__
 #define __C_FILE_LIST_H_INCLUDED__
 
-#include "IFileList.h"
-#include "irrString.h"
-#include "irrArray.h"
+#include "./io/IFileList.h"
+#include "./core/irrString.h"
+#include "./core/irrArray.h"
 
 namespace irrgame
 {

@@ -5,7 +5,7 @@
 #ifndef __I_XML_READER_H_INCLUDED__
 #define __I_XML_READER_H_INCLUDED__
 
-#include "IReferenceCounted.h"
+#include "./core/IReferenceCounted.h"
 #include "irrXML.h"
 
 namespace irrgame

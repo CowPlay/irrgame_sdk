@@ -5,9 +5,9 @@
 #ifndef __I_XML_WRITER_H_INCLUDED__
 #define __I_XML_WRITER_H_INCLUDED__
 
-#include "IReferenceCounted.h"
-#include "irrArray.h"
-#include "irrString.h"
+#include "./core/IReferenceCounted.h"
+#include "./core/irrArray.h"
+#include "./core/irrString.h"
 
 namespace irrgame
 {

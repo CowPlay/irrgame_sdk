@@ -12,6 +12,11 @@
 
 namespace irrgame
 {
+	namespace io
+	{
+		class IFileSystem;
+	}
+
 	class irrgameApp;
 
 	class irrgamePlayer
@@ -25,7 +30,7 @@ namespace irrgame
 
 //			virtual void run(irrgameApp* application) = 0;
 
-			virtual void getFileSystem() = 0;
+			virtual class io::IFileSystem* getFileSystem() = 0;
 	};
 
 	//! irrgamePlayer creator

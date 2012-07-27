@@ -19,7 +19,5 @@ Debug/makefile
 #eclipse
 .settings/**
 Debug/**
-.project
-.cproject
 *.mk
 *.d

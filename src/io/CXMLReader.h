@@ -5,7 +5,7 @@
 #ifndef __C_XML_READER_H_INCLUDED__
 #define __C_XML_READER_H_INCLUDED__
 
-#include "IXMLReader.h"
+#include "./io/IXMLReader.h"
 
 namespace irrgame
 {

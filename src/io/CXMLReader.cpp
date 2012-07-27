@@ -4,7 +4,7 @@
 
 #include "CXMLReaderImpl.h"
 #include "CXMLReader.h"
-#include "IReadFile.h"
+#include "./io/IReadFile.h"
 
 namespace irrgame
 {

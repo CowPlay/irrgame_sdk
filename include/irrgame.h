@@ -8,20 +8,20 @@
 #ifndef IRRGAME_H_
 #define IRRGAME_H_
 
-#include "irrgameApp.h"
-#include "irrgamePlayer.h"
+#include "./irrgameApp.h"
+#include "./irrgamePlayer.h"
 
 //core
-#include "irrgameTypes.h"
+#include "./core/irrgameTypes.h"
 
 //io
-#include "ioutil.h"
-#include "IReadFile.h"
-#include "irrXML.h"
-#include "IWriteFile.h"
-#include "IXMLReader.h"
-#include "IXMLWriter.h"
-#include "SPath.h"
+#include "./io/ioutil.h"
+#include "./io/IReadFile.h"
+#include "./io/irrXML.h"
+#include "./io/IWriteFile.h"
+#include "./io/IXMLReader.h"
+#include "./io/IXMLWriter.h"
+#include "./io/SPath.h"
 
 //logic
 //#include "IGameObject.h"

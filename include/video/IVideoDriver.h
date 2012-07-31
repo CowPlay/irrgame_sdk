@@ -8,11 +8,12 @@
 #ifndef IVIDEODRIVER_H_
 #define IVIDEODRIVER_H_
 
+#include "./core/IReferenceCounted.h"
 namespace irrgame
 {
 	namespace video
 	{
-		class IVideoDriver
+		class IVideoDriver : public virtual IReferenceCounted
 		{
 
 		};

@@ -31,6 +31,8 @@ namespace irrgame
 //			virtual void run(irrgameApp* application) = 0;
 
 			virtual class io::IFileSystem* getFileSystem() = 0;
+
+			//get application
 	};
 
 	//! irrgamePlayer creator

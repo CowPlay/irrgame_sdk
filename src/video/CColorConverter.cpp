@@ -4,7 +4,7 @@
 
 #include "./video/CColorConverter.h"
 #include "./video/SColor.h"
-#include "./utils/IByteSwap.h"
+#include "./utils/ByteSwap.h"
 
 #include "./core/irrString.h"
 
@@ -492,8 +492,8 @@ namespace irrgame
 			for (s32 x = 0; x < sN; ++x)
 			{
 
-				*dB++ = utils::IByteSwap::byteswap(*sB);
-//						os::Byteswap::byteswap();
+				*dB++ = utils::ByteSwap::byteswap(*sB);
+
 				++sB;
 			}
 

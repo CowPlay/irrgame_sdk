@@ -13,7 +13,8 @@ namespace irrgame
 {
 	namespace utils
 	{
-		class IByteSwap
+		//! Platform dependies
+		class ByteSwap
 		{
 			public:
 				static u16 byteswap(u16 num);
@@ -30,6 +31,11 @@ namespace irrgame
 				static u8 byteswap(u8 num);
 
 				static c8 byteswap(c8 num);
+
+//			protected:
+//				virtual ~IByteSwap()	//for disable warning
+//				{
+//				}
 		};
 
 	}

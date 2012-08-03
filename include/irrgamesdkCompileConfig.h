@@ -11,6 +11,9 @@
 // --------------------------------------------
 //!MacOS X
 
+//TODO:detect MacOS X
+#define _IRRGAME_MACOSX_
+
 #define LINEBREAK "\r"
 
 // --------------------------------------------

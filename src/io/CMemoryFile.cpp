@@ -11,7 +11,7 @@ namespace irrgame
 	{
 
 		CMemoryFile::CMemoryFile(void* memory, long len,
-				const io::path& fileName, bool d) :
+				const core::stringc& fileName, bool d) :
 				Buffer(memory), Len(len), Pos(0), Filename(fileName), deleteMemoryWhenDropped(
 						d)
 		{
@@ -98,13 +98,13 @@ namespace irrgame
 		}
 
 		//! returns name of file
-		const io::path& CMemoryFile::getFileName() const
+		const core::stringc& CMemoryFile::getFileName() const
 		{
 			return Filename;
 		}
 
 		IReadFile* createMemoryReadFile(void* memory, long size,
-				const io::path& fileName, bool deleteMemoryWhenDropped)
+				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			CMemoryFile* file = new CMemoryFile(memory, size, fileName,
 					deleteMemoryWhenDropped);
@@ -112,7 +112,7 @@ namespace irrgame
 		}
 
 		IWriteFile* createMemoryWriteFile(void* memory, long size,
-				const io::path& fileName, bool deleteMemoryWhenDropped)
+				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			CMemoryFile* file = new CMemoryFile(memory, size, fileName,
 					deleteMemoryWhenDropped);

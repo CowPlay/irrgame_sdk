@@ -23,7 +23,7 @@ namespace irrgame
 		 IXMLReader is returned. After use, the reader
 		 has to be deleted using its IXMLReader::drop() method.
 		 See IReferenceCounted::drop() for more information. */
-		IXMLReader* IFileSystem::createXMLReader(const io::path& filename)
+		IXMLReader* IFileSystem::createXMLReader(const core::stringc& filename)
 		{
 			// Create the file using an absolute path so that it matches
 			// the scheme used by CNullDriver::getTexture().
@@ -53,15 +53,15 @@ namespace irrgame
 		}
 
 		//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-		io::path& IFileSystem::flattenFilename(io::path& directory,
-				const io::path& root)
+		core::stringc& IFileSystem::flattenFilename(core::stringc& directory,
+				const core::stringc& root)
 		{
 			directory.replace('\\', '/');
 			if (directory.lastChar() != '/')
 				directory.append('/');
 
-			io::path dir;
-			io::path subdir;
+			core::stringc dir;
+			core::stringc subdir;
 
 			s32 lastpos = 0;
 			s32 pos = 0;

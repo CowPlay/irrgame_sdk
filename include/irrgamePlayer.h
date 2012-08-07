@@ -31,7 +31,7 @@ namespace irrgame
 			}
 
 			//!
-			virtual void readConfig(const io::path& file) = 0;
+			virtual void readConfig(const core::stringc& file) = 0;
 
 			virtual io::IFileSystem* getFileSystem() = 0;
 

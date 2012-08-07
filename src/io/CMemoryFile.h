@@ -5,9 +5,8 @@
 #ifndef __C_MEMORY_READ_FILE_H_INCLUDED__
 #define __C_MEMORY_READ_FILE_H_INCLUDED__
 
-#include "./io/IReadFile.h"
-#include "./io/IWriteFile.h"
-#include "./core/irrString.h"
+#include "io/IReadFile.h"
+#include "io/IWriteFile.h"
 
 namespace irrgame
 {
@@ -23,7 +22,7 @@ namespace irrgame
 			public:
 
 				//! Constructor
-				CMemoryFile(void* memory, long len, const io::path& fileName,
+				CMemoryFile(void* memory, long len, const core::stringc& fileName,
 						bool deleteMemoryWhenDropped);
 
 				//! Destructor
@@ -45,14 +44,14 @@ namespace irrgame
 				virtual long getPos() const;
 
 				//! returns name of file
-				virtual const io::path& getFileName() const;
+				virtual const core::stringc& getFileName() const;
 
 			private:
 
 				void *Buffer;
 				long Len;
 				long Pos;
-				io::path Filename;
+				core::stringc Filename;
 				bool deleteMemoryWhenDropped;
 		};
 

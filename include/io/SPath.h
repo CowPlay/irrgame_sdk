@@ -11,11 +11,6 @@ namespace irrgame
 {
 	namespace io
 	{
-
-		//! Type used for all file system related strings.
-		/** This type will transparently handle different file system encodings. */
-		typedef core::string<fschar_t> path;
-
 		//! Used in places where we identify objects by a filename, but don't actually work with the real filename
 		/** Irrlicht is internally not case-sensitive when it comes to names.
 		 Also this class is a first step towards support for correctly serializing renamed objects.
@@ -28,7 +23,7 @@ namespace irrgame
 				}
 
 				//! Constructor
-				SPath(const path& p) :
+				SPath(const core::stringc& p) :
 						Path(p), InternalName(PathToName(p))
 				{
 				}
@@ -40,14 +35,14 @@ namespace irrgame
 				}
 
 				//! Set the path.
-				void setPath(const path& p)
+				void setPath(const core::stringc& p)
 				{
 					Path = p;
 					InternalName = PathToName(p);
 				}
 
 				//! Get the path.
-				const path& getPath() const
+				const core::stringc& getPath() const
 				{
 					return Path;
 				}
@@ -55,7 +50,7 @@ namespace irrgame
 
 				//! Get the name which is used to identify the file.
 				//! This string is similar to the names and filenames used before Irrlicht 1.7
-				const path& getInternalName() const
+				const core::stringc& getInternalName() const
 				{
 					return InternalName;
 				}
@@ -65,25 +60,20 @@ namespace irrgame
 				{
 					return core::stringc(getPath());
 				}
-				//! Implicit cast to io::path
-				operator core::stringw() const
-				{
-					return core::stringw(getPath());
-				}
 
 			protected:
 				// convert the given path string to a name string.
-				path PathToName(const path& p) const
+				core::stringc PathToName(const core::stringc& p) const
 				{
-					path name(p);
+					core::stringc name(p);
 					name.replace('\\', '/');
 					name.make_lower();
 					return name;
 				}
 
 			private:
-				path Path;
-				path InternalName;
+				core::stringc Path;
+				core::stringc InternalName;
 		};
 
 	} // io

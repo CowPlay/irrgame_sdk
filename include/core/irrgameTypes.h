@@ -67,37 +67,6 @@ typedef signed int s32;
 /** This is a typedef for float, it ensures portability of the engine. */
 typedef float f32;
 
-#include <wchar.h>
-#ifdef _IRR_WINDOWS_API_
-//! Defines for s{w,n}printf because these methods do not match the ISO C
-//! standard on Windows platforms, but it does on all others.
-//! These should be int snprintf(char *str, size_t size, const char *format, ...);
-//! and int swprintf(wchar_t *wcs, size_t maxlen, const wchar_t *format, ...);
-#if defined(_MSC_VER) && _MSC_VER > 1310 && !defined (_WIN32_WCE)
-#define swprintf swprintf_s
-#define snprintf sprintf_s
-#else
-#define swprintf _snwprintf
-#define snprintf _snprintf
-#endif
-
-// define the wchar_t type if not already built in.
-#ifdef _MSC_VER
-#ifndef _WCHAR_T_DEFINED
-//! A 16 bit wide character type.
-/**
- Defines the wchar_t-type.
- In VS6, its not possible to tell
- the standard compiler to treat wchar_t as a built-in type, and
- sometimes we just don't want to include the huge stdlib.h or wchar.h,
- so we'll use this.
- */
-typedef unsigned short wchar_t;
-#define _WCHAR_T_DEFINED
-#endif // wchar is not defined
-#endif // microsoft compiler
-#endif // _IRR_WINDOWS_API_
-
 
 //! Type name for character type used by the file system.
 /** Should the wide character version of the FileSystem be used it is a
@@ -105,11 +74,8 @@ typedef unsigned short wchar_t;
  Else it is a 8 bit character variable. Used for ansi Filesystem and non-unicode
  strings
  */
-#if defined(_IRR_WCHAR_FILESYSTEM)
-typedef wchar_t fschar_t;
-#else
-typedef char fschar_t;
-#endif
+//TODO: replace to c8
+//typedef char fschar_t;
 
 //} // end namespace irr
 
@@ -118,16 +84,16 @@ typedef char fschar_t;
 #if defined(_IRR_WINDOWS_API_) && defined(_MSC_VER) && !defined (_WIN32_WCE)
 #if defined(WIN64) || defined(_WIN64) // using portable common solution for x64 configuration
 #include <crtdbg.h>
-#define _IRR_DEBUG_BREAK_IF( _CONDITION_ ) if (_CONDITION_) {_CrtDbgBreak();}
+#define IRR_ASSERT( _CONDITION_ ) if (_CONDITION_) {_CrtDbgBreak();}
 #else
-#define _IRR_DEBUG_BREAK_IF( _CONDITION_ ) if (_CONDITION_) {_asm int 3}
+#define IRR_ASSERT( _CONDITION_ ) if (_CONDITION_) {_asm int 3}
 #endif
 #else
 #include "assert.h"
-#define _IRR_DEBUG_BREAK_IF( _CONDITION_ ) assert( !(_CONDITION_) );
+#define IRR_ASSERT( _CONDITION_ ) assert( !(_CONDITION_) );
 #endif
 #else
-#define _IRR_DEBUG_BREAK_IF( _CONDITION_ )
+#define IRR_ASSERT( _CONDITION_ )
 #endif
 
 //! Defines a deprecated macro which generates a warning at compile time

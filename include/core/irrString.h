@@ -323,14 +323,16 @@ namespace irrgame
 				//! Direct access operator
 				T& operator [](const u32 index)
 				{
-					_IRR_DEBUG_BREAK_IF(index>=used) // bad index
+					IRR_ASSERT(index>=used)
+					// bad index
 					return array[index];
 				}
 
 				//! Direct access operator
 				const T& operator [](const u32 index) const
 				{
-					_IRR_DEBUG_BREAK_IF(index>=used) // bad index
+					IRR_ASSERT(index>=used)
+					// bad index
 					return array[index];
 				}
 
@@ -957,7 +959,8 @@ namespace irrgame
 				 \param index: Index of element to be erased. */
 				void erase(u32 index)
 				{
-					_IRR_DEBUG_BREAK_IF(index>=used) // access violation
+					IRR_ASSERT(index>=used)
+					// access violation
 
 					for (u32 i = index + 1; i < used; ++i)
 						array[i - 1] = array[i];
@@ -1081,9 +1084,6 @@ namespace irrgame
 
 		//! Typedef for character strings
 		typedef string<c8> stringc;
-
-		//! Typedef for wide character strings
-		typedef string<wchar_t> stringw;
 
 	} // end namespace core
 } // end namespace irr

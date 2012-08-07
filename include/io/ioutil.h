@@ -5,23 +5,19 @@
 #ifndef __IRR_CORE_UTIL_H_INCLUDED__
 #define __IRR_CORE_UTIL_H_INCLUDED__
 
-#include "./core/irrString.h"
-#include "./io/SPath.h"
+#include "core/irrString.h"
+#include "io/SPath.h"
 
 namespace irrgame
 {
-	namespace core
+	namespace io
 	{
 
-		/*! \file irrxml.h
-		 \brief File containing useful basic utility functions
-		 */
-
-// ----------- some basic quite often used string functions -----------------
-//! search if a filename has a proper extension
-		inline s32 isFileExtension(const io::path& filename,
-				const io::path& ext0, const io::path& ext1,
-				const io::path& ext2)
+		// ----------- some basic quite often used string functions -----------------
+		//! search if a filename has a proper extension
+		inline s32 isFileExtension(const core::stringc& filename,
+				const core::stringc& ext0, const core::stringc& ext1,
+				const core::stringc& ext2)
 		{
 			s32 extPos = filename.findLast('.');
 			if (extPos < 0)
@@ -37,26 +33,26 @@ namespace irrgame
 			return 0;
 		}
 
-//! search if a filename has a proper extension
-		inline bool hasFileExtension(const io::path& filename,
-				const io::path& ext0, const io::path& ext1 = "",
-				const io::path& ext2 = "")
+		//! search if a filename has a proper extension
+		inline bool hasFileExtension(const core::stringc& filename,
+				const core::stringc& ext0, const core::stringc& ext1 = "",
+				const core::stringc& ext2 = "")
 		{
 			return isFileExtension(filename, ext0, ext1, ext2) > 0;
 		}
 
-//! cut the filename extension from a source file path and store it in a dest file path
-		inline io::path& cutFilenameExtension(io::path &dest,
-				const io::path &source)
+		//! cut the filename extension from a source file path and store it in a dest file path
+		inline core::stringc& cutFilenameExtension(core::stringc &dest,
+				const core::stringc &source)
 		{
 			s32 endPos = source.findLast('.');
 			dest = source.subString(0, endPos < 0 ? source.size() : endPos);
 			return dest;
 		}
 
-//! get the filename extension from a file path
-		inline io::path& getFileNameExtension(io::path &dest,
-				const io::path &source)
+		//! get the filename extension from a file path
+		inline core::stringc& getFileNameExtension(core::stringc &dest,
+				const core::stringc &source)
 		{
 			s32 endPos = source.findLast('.');
 			if (endPos < 0)
@@ -66,12 +62,12 @@ namespace irrgame
 			return dest;
 		}
 
-//! delete path from filename
-		inline io::path& deletePathFromFilename(io::path& filename)
+		//! delete path from filename
+		inline core::stringc& deletePathFromFilename(core::stringc& filename)
 		{
 			// delete path from filename
-			const fschar_t* s = filename.c_str();
-			const fschar_t* p = s + filename.size();
+			const c8* s = filename.c_str();
+			const c8* p = s + filename.size();
 
 			// search for path separator or beginning
 			while (*p != '/' && *p != '\\' && p != s)
@@ -85,8 +81,8 @@ namespace irrgame
 			return filename;
 		}
 
-//! trim paths
-		inline io::path& deletePathFromPath(io::path& filename, s32 pathCount)
+		//! trim paths
+		inline core::stringc& deletePathFromPath(core::stringc& filename, s32 pathCount)
 		{
 			// delete path from filename
 			s32 i = filename.size();
@@ -112,9 +108,9 @@ namespace irrgame
 			return filename;
 		}
 
-//! looks if file is in the same directory of path. returns offset of directory.
-//! 0 means in same directory. 1 means file is direct child of path
-		inline s32 isInSameDirectory(const io::path& path, const io::path& file)
+		//! looks if file is in the same directory of path. returns offset of directory.
+		//! 0 means in same directory. 1 means file is direct child of path
+		inline s32 isInSameDirectory(const core::stringc& path, const core::stringc& file)
 		{
 			s32 subA = 0;
 			s32 subB = 0;
@@ -140,7 +136,7 @@ namespace irrgame
 			return subB - subA;
 		}
 
-//! some standard function ( to remove dependencies )
+		//! some standard function ( to remove dependencies )
 #undef isdigit
 #undef isspace
 #undef isupper
@@ -156,6 +152,12 @@ namespace irrgame
 		inline s32 isupper(s32 c)
 		{
 			return c >= 'A' && c <= 'Z';
+		}
+
+		//! returns true if a character is whitespace
+		inline bool isWhiteSpace(c8 c)
+		{
+			return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
 		}
 
 	} // end namespace core

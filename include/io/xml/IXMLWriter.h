@@ -5,9 +5,9 @@
 #ifndef __I_XML_WRITER_H_INCLUDED__
 #define __I_XML_WRITER_H_INCLUDED__
 
-#include "./core/IReferenceCounted.h"
-#include "./core/irrArray.h"
-#include "./core/irrString.h"
+#include "core/IReferenceCounted.h"
+#include "core/irrArray.h"
+#include "core/irrString.h"
 
 namespace irrgame
 {
@@ -50,40 +50,35 @@ namespace irrgame
 				 \param attr4Value: 4th attributes value
 				 \param attr5Name: 5th attributes name
 				 \param attr5Value: 5th attributes value */
-				virtual void writeElement(const wchar_t* name, bool empty =
-						false, const wchar_t* attr1Name = 0,
-						const wchar_t* attr1Value = 0,
-						const wchar_t* attr2Name = 0,
-						const wchar_t* attr2Value = 0,
-						const wchar_t* attr3Name = 0,
-						const wchar_t* attr3Value = 0,
-						const wchar_t* attr4Name = 0,
-						const wchar_t* attr4Value = 0,
-						const wchar_t* attr5Name = 0,
-						const wchar_t* attr5Value = 0) = 0;
+				virtual void writeElement(const c8* name, bool empty = false,
+						const c8* attr1Name = 0, const c8* attr1Value = 0,
+						const c8* attr2Name = 0, const c8* attr2Value = 0,
+						const c8* attr3Name = 0, const c8* attr3Value = 0,
+						const c8* attr4Name = 0, const c8* attr4Value = 0,
+						const c8* attr5Name = 0, const c8* attr5Value = 0) = 0;
 
 				//! Writes an xml element with any number of attributes
-				virtual void writeElement(const wchar_t* name, bool empty,
-						core::array<core::stringw> &names,
-						core::array<core::stringw> &values) = 0;
+				virtual void writeElement(const c8* name, bool empty,
+						core::array<core::stringc> &names,
+						core::array<core::stringc> &values) = 0;
 
 				//! Writes a comment into the xml file
-				virtual void writeComment(const wchar_t* comment) = 0;
+				virtual void writeComment(const c8* comment) = 0;
 
 				//! Writes the closing tag for an element. Like "</foo>"
-				virtual void writeClosingTag(const wchar_t* name) = 0;
+				virtual void writeClosingTag(const c8* name) = 0;
 
 				//! Writes a text into the file.
 				/** All occurrences of special characters such as
 				 & (&amp;), < (&lt;), > (&gt;), and " (&quot;) are automaticly
 				 replaced. */
-				virtual void writeText(const wchar_t* text) = 0;
+				virtual void writeText(const c8* text) = 0;
 
 				//! Writes a line break
 				virtual void writeLineBreak() = 0;
 		};
 
-		//! Creates an instance of a wide character xml writer.
+		//! Creates an instance of a character xml writer.
 		IXMLWriter* createXMLWriter(IWriteFile* file);
 
 	} // end namespace io

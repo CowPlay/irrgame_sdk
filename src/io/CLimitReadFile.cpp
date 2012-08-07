@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CLimitReadFile.h"
-#include "./core/irrString.h"
+#include "core/irrString.h"
 
 namespace irrgame
 {
@@ -11,14 +11,13 @@ namespace irrgame
 	{
 
 		CLimitReadFile::CLimitReadFile(IReadFile* alreadyOpenedFile, long pos,
-				long areaSize, const io::path& name) :
+				long areaSize, const core::stringc& name) :
 				Filename(name), AreaStart(0), AreaEnd(0), Pos(0), File(
 						alreadyOpenedFile)
 		{
 #ifdef DEBUG
 			setDebugName("CLimitReadFile");
 #endif
-
 			if (File)
 			{
 				File->grab();
@@ -71,12 +70,12 @@ namespace irrgame
 		}
 
 		//! returns name of file
-		const io::path& CLimitReadFile::getFileName() const
+		const core::stringc& CLimitReadFile::getFileName() const
 		{
 			return Filename;
 		}
 
-		IReadFile* createLimitReadFile(const io::path& fileName,
+		IReadFile* createLimitReadFile(const core::stringc& fileName,
 				IReadFile* alreadyOpenedFile, long pos, long areaSize)
 		{
 			return new CLimitReadFile(alreadyOpenedFile, pos, areaSize,

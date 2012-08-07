@@ -11,9 +11,9 @@ namespace irrgame
 	namespace io
 	{
 
-		static const io::path emptyFileListEntry;
+		static const core::stringc emptyFileListEntry;
 
-		CFileList::CFileList(const io::path& path, bool ignoreCase,
+		CFileList::CFileList(const core::stringc& path, bool ignoreCase,
 				bool ignorePaths) :
 				IgnorePaths(ignorePaths), IgnoreCase(ignoreCase), Path(path)
 		{
@@ -39,7 +39,7 @@ namespace irrgame
 			Files.sort();
 		}
 
-		const io::path& CFileList::getFileName(u32 index) const
+		const core::stringc& CFileList::getFileName(u32 index) const
 		{
 			if (index >= Files.size())
 				return emptyFileListEntry;
@@ -48,7 +48,7 @@ namespace irrgame
 		}
 
 		//! Gets the full name of a file in the list, path included, based on an index.
-		const io::path& CFileList::getFullFileName(u32 index) const
+		const core::stringc& CFileList::getFullFileName(u32 index) const
 		{
 			if (index >= Files.size())
 				return emptyFileListEntry;
@@ -57,7 +57,7 @@ namespace irrgame
 		}
 
 		//! adds a file or folder
-		u32 CFileList::addItem(const io::path& fullPath, u32 size,
+		u32 CFileList::addItem(const core::stringc& fullPath, u32 size,
 				bool isDirectory, u32 id)
 		{
 			SFileListEntry entry;
@@ -80,7 +80,7 @@ namespace irrgame
 
 			entry.FullName = entry.Name;
 
-			core::deletePathFromFilename(entry.Name);
+			io::deletePathFromFilename(entry.Name);
 
 			if (IgnorePaths)
 				entry.FullName = entry.Name;
@@ -115,7 +115,7 @@ namespace irrgame
 		}
 
 		//! Searches for a file or folder within the list, returns the index
-		s32 CFileList::findFile(const io::path& filename, bool isDirectory =
+		s32 CFileList::findFile(const core::stringc& filename, bool isDirectory =
 				false) const
 		{
 			SFileListEntry entry;
@@ -137,19 +137,19 @@ namespace irrgame
 				entry.FullName.make_lower();
 
 			if (IgnorePaths)
-				core::deletePathFromFilename(entry.FullName);
+				io::deletePathFromFilename(entry.FullName);
 
 			return Files.binary_search(entry);
 		}
 
 		//! Returns the base path of the file list
-		const io::path& CFileList::getPath() const
+		const core::stringc& CFileList::getPath() const
 		{
 			return Path;
 		}
 
 		//! IFileList creator
-		IFileList* createFileList(const io::path& path, bool ignoreCase,
+		IFileList* createFileList(const core::stringc& path, bool ignoreCase,
 				bool ignorePaths)
 		{
 			return new CFileList(path, ignoreCase, ignorePaths);

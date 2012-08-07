@@ -26,7 +26,7 @@ namespace irrgame
 			public:
 
 				CLimitReadFile(IReadFile* alreadyOpenedFile, long pos,
-						long areaSize, const io::path& name);
+						long areaSize, const core::stringc& name);
 
 				virtual ~CLimitReadFile();
 
@@ -45,11 +45,11 @@ namespace irrgame
 				virtual long getPos() const;
 
 				//! returns name of file
-				virtual const io::path& getFileName() const;
+				virtual const core::stringc& getFileName() const;
 
 			private:
 
-				io::path Filename;
+				core::stringc Filename;
 				long AreaStart;
 				long AreaEnd;
 				long Pos;

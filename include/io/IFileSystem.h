@@ -6,7 +6,7 @@
 #define __I_FILE_SYSTEM_H_INCLUDED__
 
 #include "core/IReferenceCounted.h"
-#include "io/IXMLReader.h"
+#include "io/xml/IXMLReader.h"
 #include "io/SPath.h"
 //#include "IFileArchive.h"
 //#include "IArchiveLoader.h"
@@ -33,21 +33,21 @@ namespace irrgame
 		{
 				//! Static methods
 			public:
-				//! Creates a XML Reader from a file which returns all parsed strings as wide characters (wchar_t*).
-				/** Use createXMLReaderUTF8() if you prefer char* instead of wchar_t*. See IIrrXMLReader for
-				 more information on how to use the parser.
+				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
+				/** See IXMLReader for more information on how to use the parser.
 				 \return 0, if file could not be opened, otherwise a pointer to the created
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReader::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				static IXMLReader* createXMLReader(const path& filename);
+				static IXMLReader* createXMLReader(
+						const core::stringc& filename);
 
-				//! Creates a XML Reader from a file which returns all parsed strings as wide characters (wchar_t*).
-				/** Use createXMLReaderUTF8() if you prefer char* instead of wchar_t*. See IIrrXMLReader for
+				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
+				/** Use createXMLReader() if you prefer wchar_t* instead of char*. See IIrrXMLReader for
 				 more information on how to use the parser.
 				 \return 0, if file could not be opened, otherwise a pointer to the created
 				 IXMLReader is returned. After use, the reader
-				 has to be deleted using its IXMLReader::drop() method.
+				 has to be deleted using its IXMLReaderUTF8::drop() method.
 				 See IReferenceCounted::drop() for more information. */
 				static IXMLReader* createXMLReader(IReadFile* file);
 
@@ -55,11 +55,12 @@ namespace irrgame
 				//! Platform dependies
 				/** \param filename Possibly relative file or directory name to query.
 				 \result Absolute filename which points to the same file. */
-				static path getAbsolutePath(const path& filename);
+				static core::stringc getAbsolutePath(
+						const core::stringc& filename);
 
 				//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-				static path& flattenFilename(path& directory, const path& root =
-						"/");
+				static core::stringc& flattenFilename(core::stringc& directory,
+						const core::stringc& root = "/");
 
 				//! Instance
 			public:
@@ -280,7 +281,7 @@ namespace irrgame
 //				/** \return a Pointer to the created IFileList is returned. After the list has been used
 //				 it has to be deleted using its IFileList::drop() method.
 //				 See IReferenceCounted::drop() for more information. */
-//				virtual IFileList* createEmptyFileList(const io::path& path,
+//				virtual IFileList* createEmptyFileList(const core::stringc& path,
 //						bool ignoreCase, bool ignorePaths) =0;
 //
 //				//! Set the active type of file system.
@@ -292,24 +293,7 @@ namespace irrgame
 //				 \return Returns true if file exists, and false if it does not exist or an error occured. */
 //				virtual bool existFile(const path& filename) const =0;
 //
-//				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
-//				/** Use createXMLReader() if you prefer wchar_t* instead of char*. See IIrrXMLReader for
-//				 more information on how to use the parser.
-//				 \return 0, if file could not be opened, otherwise a pointer to the created
-//				 IXMLReader is returned. After use, the reader
-//				 has to be deleted using its IXMLReaderUTF8::drop() method.
-//				 See IReferenceCounted::drop() for more information. */
-//				virtual IXMLReaderUTF8* createXMLReaderUTF8(
-//						const path& filename) =0;
-//
-//				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
-//				/** Use createXMLReader() if you prefer wchar_t* instead of char*. See IIrrXMLReader for
-//				 more information on how to use the parser.
-//				 \return 0, if file could not be opened, otherwise a pointer to the created
-//				 IXMLReader is returned. After use, the reader
-//				 has to be deleted using its IXMLReaderUTF8::drop() method.
-//				 See IReferenceCounted::drop() for more information. */
-//				virtual IXMLReaderUTF8* createXMLReaderUTF8(IReadFile* file) =0;
+
 //
 //				//! Creates a XML Writer from a file.
 //				/** \return 0, if file could not be opened, otherwise a pointer to the created

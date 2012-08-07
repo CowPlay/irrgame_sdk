@@ -15,7 +15,7 @@ namespace irrgame
 	namespace core
 	{
 
-//! Self reallocating template array (like stl vector) with additional features.
+		//! Self reallocating template array (like stl vector) with additional features.
 		/** Some features are: Heap sorting, binary search methods, easier debugging.
 		 */
 		template<class T, typename TAlloc = irrAllocator<T> >
@@ -121,7 +121,8 @@ namespace irrgame
 				 \param index: Where position to insert the new element. */
 				void insert(const T& element, u32 index = 0)
 				{
-					_IRR_DEBUG_BREAK_IF(index>used) // access violation
+					IRR_ASSERT(index > used)
+					// access violation
 
 					if (used + 1 > allocated)
 					{
@@ -296,7 +297,8 @@ namespace irrgame
 				//! Direct access operator
 				T& operator [](u32 index)
 				{
-					_IRR_DEBUG_BREAK_IF(index>=used) // access violation
+					IRR_ASSERT(index >= used)
+					// access violation
 
 					return data[index];
 				}
@@ -304,7 +306,8 @@ namespace irrgame
 				//! Direct const access operator
 				const T& operator [](u32 index) const
 				{
-					_IRR_DEBUG_BREAK_IF(index>=used) // access violation
+					IRR_ASSERT(index >= used)
+					// access violation
 
 					return data[index];
 				}
@@ -312,7 +315,8 @@ namespace irrgame
 				//! Gets last element.
 				T& getLast()
 				{
-					_IRR_DEBUG_BREAK_IF(!used) // access violation
+					IRR_ASSERT(!used)
+					// access violation
 
 					return data[used - 1];
 				}
@@ -320,7 +324,8 @@ namespace irrgame
 				//! Gets last element
 				const T& getLast() const
 				{
-					_IRR_DEBUG_BREAK_IF(!used) // access violation
+					IRR_ASSERT(!used)
+					// access violation
 
 					return data[used - 1];
 				}
@@ -503,7 +508,8 @@ namespace irrgame
 				 \param index: Index of element to be erased. */
 				void erase(u32 index)
 				{
-					_IRR_DEBUG_BREAK_IF(index>=used) // access violation
+					IRR_ASSERT(index >= used)
+					// access violation
 
 					for (u32 i = index + 1; i < used; ++i)
 					{

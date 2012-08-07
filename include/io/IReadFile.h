@@ -42,19 +42,19 @@ namespace irrgame
 
 				//! Get name of file.
 				/** \return File name as zero terminated character string. */
-				virtual const io::path& getFileName() const = 0;
+				virtual const core::stringc& getFileName() const = 0;
 		};
 
 		//! Internal function, please do not use.
-		IReadFile* createReadFile(const io::path& fileName);
+		IReadFile* createReadFile(const core::stringc& fileName);
 
 		//! Internal function, please do not use.
-		IReadFile* createLimitReadFile(const io::path& fileName,
+		IReadFile* createLimitReadFile(const core::stringc& fileName,
 				IReadFile* alreadyOpenedFile, long pos, long areaSize);
 
 		//! Internal function, please do not use.
 		IReadFile* createMemoryReadFile(void* memory, long size,
-				const io::path& fileName, bool deleteMemoryWhenDropped);
+				const core::stringc& fileName, bool deleteMemoryWhenDropped);
 
 	} // end namespace io
 } // end namespace irr

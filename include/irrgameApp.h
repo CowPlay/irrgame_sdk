@@ -7,11 +7,13 @@
 
 #ifndef IRRGAMEAPPLICATION_H_
 #define IRRGAMEAPPLICATION_H_
+
+#include "core/IReferenceCounted.h"
 namespace irrgame
 {
 	class irrgamePlayer;
 
-	class irrgameApp
+	class irrgameApp : public IReferenceCounted
 	{
 
 		public:

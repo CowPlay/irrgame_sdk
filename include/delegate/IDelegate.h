@@ -7,6 +7,8 @@ template<class TRet TEMPLATE_PARAMS>
 class I_DELEGATE
 {
 	public:
+
+		//! Destructor
 		virtual ~I_DELEGATE()
 		{
 		}

@@ -8,6 +8,8 @@
 #ifndef IRRGAMEPLAYER_H_
 #define IRRGAMEPLAYER_H_
 
+#include "core/IReferenceCounted.h"
+#include "io/SPath.h"
 #include "irrgameApp.h"
 
 namespace irrgame
@@ -19,7 +21,7 @@ namespace irrgame
 
 	class irrgameApp;
 
-	class irrgamePlayer
+	class irrgamePlayer: public IReferenceCounted
 	{
 		public:
 
@@ -28,9 +30,12 @@ namespace irrgame
 			{
 			}
 
-//			virtual void run(irrgameApp* application) = 0;
+			//!
+			virtual void readConfig(const io::path& file) = 0;
 
-			virtual class io::IFileSystem* getFileSystem() = 0;
+			virtual io::IFileSystem* getFileSystem() = 0;
+
+			//			virtual void run(irrgameApp* application) = 0;
 
 			//get application
 	};

@@ -19,13 +19,13 @@ namespace irrgame
 		{
 			public:
 
-				//! returns the current time in milliseconds
-				//! Platform dependies
-				static u32 getTime();
-
 				//! initializes the real timer
 				//! Platform dependies
 				static void initTimer();
+
+				//! returns the current real time in milliseconds
+				//! Platform dependies
+				static u32 getRealTime();
 
 				//! sets the current virtual (game) time
 				static void setTime(u32 time);
@@ -48,8 +48,8 @@ namespace irrgame
 				//! makes the virtual timer update the time value based on the real time
 				static void tick();
 
-				//! returns the current real time in milliseconds
-				static u32 getRealTime();
+				//! returns the current time in milliseconds
+				static u32 getTime();
 
 			private:
 

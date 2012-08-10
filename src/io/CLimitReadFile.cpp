@@ -12,18 +12,16 @@ namespace irrgame
 
 		CLimitReadFile::CLimitReadFile(IReadFile* alreadyOpenedFile, long pos,
 				long areaSize, const core::stringc& name) :
-				Filename(name), AreaStart(0), AreaEnd(0), Pos(0), File(
+				Filename(name), AreaStart(pos), AreaEnd(AreaStart + areaSize), Pos(0), File(
 						alreadyOpenedFile)
 		{
+			IRR_ASSERT(alreadyOpenedFile != 0);
+			IRR_ASSERT((AreaStart + AreaEnd) < alreadyOpenedFile->getSize());
+
 #ifdef DEBUG
 			setDebugName("CLimitReadFile");
 #endif
-			if (File)
-			{
-				File->grab();
-				AreaStart = pos;
-				AreaEnd = AreaStart + areaSize;
-			}
+			File->grab();
 		}
 
 		CLimitReadFile::~CLimitReadFile()

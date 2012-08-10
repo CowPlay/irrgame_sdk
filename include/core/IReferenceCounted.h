@@ -119,7 +119,7 @@ namespace irrgame
 			bool drop() const
 			{
 				// someone is doing bad reference counting.
-				IRR_ASSERT(ReferenceCounter <= 0)
+				IRR_ASSERT(ReferenceCounter > 0)
 
 				--ReferenceCounter;
 				if (!ReferenceCounter)

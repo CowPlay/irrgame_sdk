@@ -18,7 +18,7 @@ namespace irrgame
 						EXNT_NONE), IsEmptyElement(true)
 		{
 
-			IRR_ASSERT(file == 0);
+			IRR_ASSERT(file != 0);
 
 			if (!file)
 				return;
@@ -44,13 +44,16 @@ namespace irrgame
 		//! reads the xml file and converts it into the wanted character format.
 		bool CXMLReader::readFile(IReadFile* file)
 		{
+			IRR_ASSERT(file != 0);
+
 			long size = file->getSize();
 			if (size < 0)
 				return false;
+
 			size += 4; // We need four terminating 0's at the end.
 					   // For ASCII we need 1 0's, for UTF-16 2, for UTF-32 4.
 
-			char* data8 = new char[size];
+			c8* data8 = new c8[size];
 
 			if (!file->read(data8, size - 4))
 			{
@@ -122,7 +125,7 @@ namespace irrgame
 		//! \param sizeWithoutHeader: Text size in characters without header
 		template<class src_c8>
 		void CXMLReader::convertTextData(ETEXT_FORMAT srcFormat, src_c8* source,
-				char* pointerToStore, int sizeWithoutHeader)
+				c8* pointerToStore, int sizeWithoutHeader)
 		{
 			// convert little to big endian if necessary
 			if (sizeof(src_c8) > 1 && !isLittleEndian(srcFormat))
@@ -581,7 +584,8 @@ namespace irrgame
 		}
 
 		// finds a current attribute by name, returns 0 if not found
-		const CXMLReader::SAttribute* CXMLReader::getAttributeByName(const c8* name) const
+		const CXMLReader::SAttribute* CXMLReader::getAttributeByName(
+				const c8* name) const
 		{
 			if (!name)
 				return 0;
@@ -646,6 +650,15 @@ namespace irrgame
 						origstr.subString(oldPos, origstr.size() - oldPos));
 
 			return newstr;
+		}
+
+		//! Creates an instance of an UFT-8 or ASCII character xml parser. Internal function. Please do not use.
+		IXMLReader* createXMLReader(IReadFile* file)
+		{
+			if (!file)
+				return 0;
+
+			return new CXMLReader(file);
 		}
 	}
 }

@@ -121,8 +121,8 @@ namespace irrgame
 				 \param index: Where position to insert the new element. */
 				void insert(const T& element, u32 index = 0)
 				{
-					IRR_ASSERT(index > used)
 					// access violation
+					IRR_ASSERT(index >= 0 && index < used)
 
 					if (used + 1 > allocated)
 					{
@@ -297,8 +297,8 @@ namespace irrgame
 				//! Direct access operator
 				T& operator [](u32 index)
 				{
-					IRR_ASSERT(index >= used)
 					// access violation
+					IRR_ASSERT(index >= 0 && index < used)
 
 					return data[index];
 				}
@@ -306,8 +306,8 @@ namespace irrgame
 				//! Direct const access operator
 				const T& operator [](u32 index) const
 				{
-					IRR_ASSERT(index >= used)
 					// access violation
+					IRR_ASSERT(index >= 0 && index < used)
 
 					return data[index];
 				}
@@ -315,8 +315,8 @@ namespace irrgame
 				//! Gets last element.
 				T& getLast()
 				{
-					IRR_ASSERT(!used)
 					// access violation
+					IRR_ASSERT(used > 0)
 
 					return data[used - 1];
 				}
@@ -324,8 +324,8 @@ namespace irrgame
 				//! Gets last element
 				const T& getLast() const
 				{
-					IRR_ASSERT(!used)
 					// access violation
+					IRR_ASSERT(used > 0)
 
 					return data[used - 1];
 				}
@@ -508,7 +508,7 @@ namespace irrgame
 				 \param index: Index of element to be erased. */
 				void erase(u32 index)
 				{
-					IRR_ASSERT(index >= used)
+					IRR_ASSERT(index >= 0 && index < used)
 					// access violation
 
 					for (u32 i = index + 1; i < used; ++i)

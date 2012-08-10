@@ -117,7 +117,7 @@ namespace irrgame
 				//! \param sizeWithoutHeader: Text size in characters without header
 				template<class src_char_type>
 				void convertTextData(ETEXT_FORMAT srcFormat,
-						src_char_type* source, char* pointerToStore,
+						src_char_type* source, c8* pointerToStore,
 						int sizeWithoutHeader);
 
 				//! Returns True if format is little endian. Otherwise - return False.

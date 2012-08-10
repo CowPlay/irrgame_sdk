@@ -1,0 +1,33 @@
+/*
+ * CBBoxAttribute.h
+ *
+ *  Created on: Aug 10, 2012
+ *      Author: gregorytkach
+ */
+
+#ifndef CBBOXATTRIBUTE_H_
+#define CBBOXATTRIBUTE_H_
+
+#include "CNumbersAttribute.h"
+
+namespace irrgame
+{
+	namespace io
+	{
+		// Attribute implemented for bounding boxes
+		class CBBoxAttribute: public CNumbersAttribute
+		{
+			public:
+
+				//! Default constructor
+				CBBoxAttribute(const c8* name, core::aabbox3df value);
+
+				virtual E_ATTRIBUTE_TYPE getType() const;
+
+				virtual const c8* getTypeString() const;
+
+		};
+	}
+}
+
+#endif /* CBBOXATTRIBUTE_H_ */

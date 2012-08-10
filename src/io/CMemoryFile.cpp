@@ -15,6 +15,8 @@ namespace irrgame
 				Buffer(memory), Len(len), Pos(0), Filename(fileName), deleteMemoryWhenDropped(
 						d)
 		{
+			IRR_ASSERT(memory != 0);
+
 #ifdef DEBUG
 			setDebugName("CMemoryFile");
 #endif
@@ -22,13 +24,15 @@ namespace irrgame
 
 		CMemoryFile::~CMemoryFile()
 		{
-			if (deleteMemoryWhenDropped)
+			if (deleteMemoryWhenDropped && Buffer)
 				delete[] (c8*) Buffer;
 		}
 
 		//! returns how much was read
 		s32 CMemoryFile::read(void* buffer, u32 sizeToRead)
 		{
+			IRR_ASSERT(buffer != 0);
+
 			s32 amount = static_cast<s32>(sizeToRead);
 			if (Pos + amount > Len)
 				amount -= Pos + amount - Len;
@@ -48,6 +52,7 @@ namespace irrgame
 		s32 CMemoryFile::write(const void* buffer, u32 sizeToWrite)
 		{
 			s32 amount = static_cast<s32>(sizeToWrite);
+
 			if (Pos + amount > Len)
 				amount -= Pos + amount - Len;
 
@@ -103,20 +108,20 @@ namespace irrgame
 			return Filename;
 		}
 
+		//! Internal function, please do not use.
 		IReadFile* createMemoryReadFile(void* memory, long size,
 				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
-			CMemoryFile* file = new CMemoryFile(memory, size, fileName,
+			return new CMemoryFile(memory, size, fileName,
 					deleteMemoryWhenDropped);
-			return file;
 		}
 
+		//! Internal function, please do not use.
 		IWriteFile* createMemoryWriteFile(void* memory, long size,
 				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
-			CMemoryFile* file = new CMemoryFile(memory, size, fileName,
+			return new CMemoryFile(memory, size, fileName,
 					deleteMemoryWhenDropped);
-			return file;
 		}
 
 	} // end namespace io

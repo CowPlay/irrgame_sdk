@@ -28,7 +28,6 @@ namespace irrgame
 
 		const s32 ROUNDING_ERROR_S32 = 0;
 		const f32 ROUNDING_ERROR_f32 = 0.000001f;
-		//	const f64 ROUNDING_ERROR_f64 = 0.00000001;
 
 #ifdef PI // make sure we don't collide with a define
 #undef PI

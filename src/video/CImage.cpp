@@ -42,7 +42,7 @@ namespace irrgame
 		//! assumes format and size has been set and creates the rest
 		void CImage::initData()
 		{
-#ifdef _DEBUG
+#ifdef DEBUG
 			setDebugName("CImage");
 #endif
 			BytesPerPixel = getBitsPerPixelFromFormat(Format) / 8;

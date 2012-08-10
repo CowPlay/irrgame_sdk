@@ -19,6 +19,13 @@ namespace irrgame
 		class dimension2d
 		{
 			public:
+				static const dimension2d& getEmpty(void)
+				{
+					static const dimension2d empty;
+					return empty;
+				}
+
+			public:
 				//! Default constructor for empty dimension
 				dimension2d() :
 						Width(0), Height(0)

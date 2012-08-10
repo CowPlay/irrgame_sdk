@@ -20,6 +20,12 @@ namespace irrgame
 		class vector2d
 		{
 			public:
+				static const vector2d& getEmpty(void)
+				{
+					static const vector2d empty;
+					return empty;
+				}
+			public:
 				//! Default constructor (null vector)
 				vector2d() :
 						X(0), Y(0)

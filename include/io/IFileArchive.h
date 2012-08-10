@@ -14,13 +14,7 @@ namespace irrgame
 	namespace io
 	{
 
-		//! FileSystemType: which Filesystem should be used for e.g. browsing
-		enum EFileSystemType
-		{
-			FILESYSTEM_NATIVE = 0,	// Native OS FileSystem
-			FILESYSTEM_VIRTUAL	// Virtual FileSystem
-		};
-
+		//! TODO: move to individual file
 		//! Contains the different types of archives
 		enum E_FILE_ARCHIVE_TYPE
 		{
@@ -56,18 +50,19 @@ namespace irrgame
 				 \param filename The file to open
 				 \return Returns A pointer to the created file on success,
 				 or 0 on failure. */
-				virtual IReadFile* createAndOpenFile(const path& filename) =0;
+				virtual IReadFile* createAndOpenFile(
+						const core::stringc& filename) = 0;
 
 				//! Opens a file based on its position in the file list.
 				/** Creates and returns
 				 \param index The zero based index of the file.
 				 \return Returns a pointer to the created file on success, or 0 on failure. */
-				virtual IReadFile* createAndOpenFile(u32 index) =0;
+				virtual IReadFile* createAndOpenFile(u32 index) = 0;
 
 				//! Returns the complete file tree
 				/** \return Returns the complete directory tree for the archive,
 				 including all files and folders */
-				virtual const IFileList* getFileList() const =0;
+				virtual const IFileList* getFileList() const = 0;
 
 				//! get the archive type
 				virtual E_FILE_ARCHIVE_TYPE getType() const
@@ -75,6 +70,7 @@ namespace irrgame
 					return EFAT_UNKNOWN;
 				}
 
+			public:
 				//! An optionally used password string
 				/** This variable is publicly accessible from the interface in order to
 				 avoid single access patterns to this place, and hence allow some more

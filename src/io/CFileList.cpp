@@ -2,9 +2,8 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#include "CFileList.h"
-#include "./core/irrArray.h"
-#include "./io/ioutil.h"
+#include "io/CFileList.h"
+#include "io/ioutil.h"
 
 namespace irrgame
 {
@@ -115,8 +114,8 @@ namespace irrgame
 		}
 
 		//! Searches for a file or folder within the list, returns the index
-		s32 CFileList::findFile(const core::stringc& filename, bool isDirectory =
-				false) const
+		s32 CFileList::findFile(const core::stringc& filename,
+				bool isDirectory = false) const
 		{
 			SFileListEntry entry;
 			entry.FullName = filename;

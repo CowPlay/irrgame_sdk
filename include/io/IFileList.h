@@ -6,7 +6,7 @@
 #define __I_FILE_LIST_H_INCLUDED__
 
 #include "core/IReferenceCounted.h"
-#include "SPath.h"
+#include "io/SPath.h"
 
 namespace irrgame
 {
@@ -125,7 +125,7 @@ namespace irrgame
 				virtual void sort() = 0;
 		};
 
-		//! IFileList creator
+		//! IFileList creator. Internal function. Please do not use.
 		IFileList* createFileList(const core::stringc& path, bool ignoreCase,
 				bool ignorePaths);
 	} // end namespace irr

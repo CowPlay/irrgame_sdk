@@ -82,7 +82,8 @@ namespace irrgame
 		}
 
 		//! trim paths
-		inline core::stringc& deletePathFromPath(core::stringc& filename, s32 pathCount)
+		inline core::stringc& deletePathFromPath(core::stringc& filename,
+				s32 pathCount)
 		{
 			// delete path from filename
 			s32 i = filename.size();
@@ -110,7 +111,8 @@ namespace irrgame
 
 		//! looks if file is in the same directory of path. returns offset of directory.
 		//! 0 means in same directory. 1 means file is direct child of path
-		inline s32 isInSameDirectory(const core::stringc& path, const core::stringc& file)
+		inline s32 isInSameDirectory(const core::stringc& path,
+				const core::stringc& file)
 		{
 			s32 subA = 0;
 			s32 subB = 0;
@@ -136,6 +138,22 @@ namespace irrgame
 			return subB - subA;
 		}
 
+		//! returns the directory part of a filename, i.e. all until the first
+		//! slash or backslash, excluding it. If no directory path is prefixed, a '.'
+		//! is returned.
+		inline core::stringc getFileDir(const core::stringc& filename)
+		{
+			// find last forward or backslash
+			s32 lastSlash = filename.findLast('/');
+			const s32 lastBackSlash = filename.findLast('\\');
+			lastSlash = lastSlash > lastBackSlash ? lastSlash : lastBackSlash;
+
+			if ((u32) lastSlash < filename.size())
+				return filename.subString(0, lastSlash);
+			else
+				return ".";
+		}
+
 		//! some standard function ( to remove dependencies )
 #undef isdigit
 #undef isspace
@@ -158,6 +176,32 @@ namespace irrgame
 		inline bool isWhiteSpace(c8 c)
 		{
 			return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
+		}
+
+		inline s32 getByteFromHex(c8 h)
+		{
+			if (h >= '0' && h <= '9')
+				return h - '0';
+
+			if (h >= 'a' && h <= 'f')
+				return h - 'a' + 10;
+
+			return 0;
+		}
+
+		inline void getHexStrFromByte(c8 byte, c8* out)
+		{
+			s32 b = (byte & 0xf0) >> 4;
+
+			for (s32 i = 0; i < 2; ++i)
+			{
+				if (b >= 0 && b <= 9)
+					out[i] = b + '0';
+				if (b >= 10 && b <= 15)
+					out[i] = (b - 10) + 'a';
+
+				b = byte & 0x0f;
+			}
 		}
 
 	} // end namespace core

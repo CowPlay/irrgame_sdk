@@ -36,7 +36,7 @@ namespace irrgame
 			if (!File)
 				return;
 
-			const unsigned char bom[] =
+			const u8 bom[] =
 			{ 0xEF, 0xBB, 0xBF }; // 0xEFBBBF;
 
 			File->write(&bom, sizeof(bom));

@@ -67,7 +67,6 @@ typedef signed int s32;
 /** This is a typedef for float, it ensures portability of the engine. */
 typedef float f32;
 
-
 //! Type name for character type used by the file system.
 /** Should the wide character version of the FileSystem be used it is a
  16 bit character variable. Used for unicode Filesystem and unicode strings.
@@ -76,21 +75,19 @@ typedef float f32;
  */
 //TODO: replace to c8
 //typedef char fschar_t;
-
 //} // end namespace irr
-
 //! define a break macro for debugging.
 #if defined(DEBUG)
 #if defined(_IRR_WINDOWS_API_) && defined(_MSC_VER) && !defined (_WIN32_WCE)
 #if defined(WIN64) || defined(_WIN64) // using portable common solution for x64 configuration
 #include <crtdbg.h>
-#define IRR_ASSERT( _CONDITION_ ) if (_CONDITION_) {_CrtDbgBreak();}
+#define IRR_ASSERT( _CONDITION_ ) if (!_CONDITION_) {_CrtDbgBreak();}
 #else
-#define IRR_ASSERT( _CONDITION_ ) if (_CONDITION_) {_asm int 3}
+#define IRR_ASSERT( _CONDITION_ ) if (!_CONDITION_) {_asm int 3}
 #endif
 #else
 #include "assert.h"
-#define IRR_ASSERT( _CONDITION_ ) assert( !(_CONDITION_) );
+#define IRR_ASSERT( _CONDITION_ ) assert( (_CONDITION_) );
 #endif
 #else
 #define IRR_ASSERT( _CONDITION_ )

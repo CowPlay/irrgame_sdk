@@ -5,8 +5,8 @@
 #ifndef __IRR_RECT_H_INCLUDED__
 #define __IRR_RECT_H_INCLUDED__
 
-#include "./core/irrgameTypes.h"
-#include "./core/dimension2d.h"
+#include "core/irrgameTypes.h"
+#include "core/dimension2d.h"
 
 namespace irrgame
 {
@@ -24,6 +24,12 @@ namespace irrgame
 		template<class T>
 		class rect
 		{
+			public:
+				static const rect& getEmpty(void)
+				{
+					static const rect empty;
+					return empty;
+				}
 			public:
 
 				//! Default constructor creating empty rectangle at (0,0)

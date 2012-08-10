@@ -5,9 +5,9 @@
 #ifndef __IRR_STRING_H_INCLUDED__
 #define __IRR_STRING_H_INCLUDED__
 
-#include "irrgameTypes.h"
-#include "irrAllocator.h"
-#include "irrMath.h"
+#include "core/irrgameTypes.h"
+#include "core/irrAllocator.h"
+#include "core/irrMath.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -323,16 +323,18 @@ namespace irrgame
 				//! Direct access operator
 				T& operator [](const u32 index)
 				{
-					IRR_ASSERT(index>=used)
 					// bad index
+					IRR_ASSERT(index >= 0 && index<=used)
+
 					return array[index];
 				}
 
 				//! Direct access operator
 				const T& operator [](const u32 index) const
 				{
-					IRR_ASSERT(index>=used)
 					// bad index
+					IRR_ASSERT(index >= 0 && index<=used)
+
 					return array[index];
 				}
 
@@ -959,8 +961,8 @@ namespace irrgame
 				 \param index: Index of element to be erased. */
 				void erase(u32 index)
 				{
-					IRR_ASSERT(index>=used)
 					// access violation
+					IRR_ASSERT(index >= 0 && index < used)
 
 					for (u32 i = index + 1; i < used; ++i)
 						array[i - 1] = array[i];

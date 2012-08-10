@@ -14,23 +14,10 @@ namespace irrgame
 
 		// we write [17] here instead of [] to work around a swig bug
 		const float fast_atof_table[17] =
-		{ 		0.f,
-				0.1f,
-				0.01f,
-				0.001f,
-				0.0001f,
-				0.00001f,
-				0.000001f,
-				0.0000001f,
-				0.00000001f,
-				0.000000001f,
-				0.0000000001f,
-				0.00000000001f,
-				0.000000000001f,
-				0.0000000000001f,
-				0.00000000000001f,
-				0.000000000000001f,
-				0.0000000000000001f };
+		{ 0.f, 0.1f, 0.01f, 0.001f, 0.0001f, 0.00001f, 0.000001f, 0.0000001f,
+				0.00000001f, 0.000000001f, 0.0000000001f, 0.00000000001f,
+				0.000000000001f, 0.0000000000001f, 0.00000000000001f,
+				0.000000000000001f, 0.0000000000000001f };
 
 		//! Convert a simple string of base 10 digits into a signed 32 bit integer.
 		//! \param[in] in: The string of digits to convert. Only a leading - or + followed
@@ -40,7 +27,7 @@ namespace irrgame
 		//!					 character not used in the calculation.
 		//! \return The signed integer value of the digits. If the string specifies too many
 		//!			digits to encode in an s32 then +INT_MAX or -INT_MAX will be returned.
-		inline s32 strtol10(const char* in, const char** out = 0)
+		inline s32 strtol10(const c8* in, const c8** out = 0)
 		{
 			if (!in)
 				return 0;
@@ -82,7 +69,7 @@ namespace irrgame
 		//! \param in: the sequence of digits to convert.
 		//! \param out: (optional) will be set to point at the first non-converted character.
 		//! \return The whole positive floating point representation of the digit sequence.
-		inline f32 strtof10(const char* in, const char * * out = 0)
+		inline f32 strtof10(const c8* in, const c8 * * out = 0)
 		{
 			if (out)
 				*out = in;
@@ -132,7 +119,7 @@ namespace irrgame
 		//! \param[out] out: The resultant float will be written here.
 		//! \return A pointer to the first character in the string that wasn't
 		//!         use to create the float value.
-		inline const char* fast_atof_move(const char * in, f32 & out)
+		inline const c8* fast_atof_move(const c8 * in, f32 & out)
 		{
 			// Please run this regression test when making any modifications to this function:
 			// https://sourceforge.net/tracker/download.php?group_id=74339&atid=540676&file_id=298968&aid=1865300
@@ -154,7 +141,7 @@ namespace irrgame
 			{
 				++in;
 
-				const char * afterDecimal = in;
+				const c8 * afterDecimal = in;
 				f32 decimal = strtof10(in, &afterDecimal);
 				decimal *= fast_atof_table[afterDecimal - in];
 
@@ -182,9 +169,9 @@ namespace irrgame
 
 		//! Convert a string to a floating point number
 		//! \param floatAsString: The string to convert.
-		inline float fast_atof(const char* floatAsString)
+		inline f32 fast_atof(const c8* floatAsString)
 		{
-			float ret;
+			f32 ret;
 			fast_atof_move(floatAsString, ret);
 			return ret;
 		}

@@ -65,6 +65,10 @@ namespace irrgame
 						bool readCurrentElementOnly = false,
 						const c8* nonDefaultElementName = 0);
 
+				//! Write these attributes into a xml file
+				virtual void write(io::IXMLWriter* writer, bool writeXMLHeader =
+						false, const c8* nonDefaultElementName = 0);
+
 				/*
 
 				 Integer Attribute
@@ -435,6 +439,33 @@ namespace irrgame
 
 				/*
 
+				 Dimension2d Attribute
+
+				 */
+
+				//! Adds an attribute as dimension2d
+				virtual void addDimension2d(const c8* attributeName,
+						core::dimension2df value);
+
+				//! Sets an attribute as rectangle
+				virtual void setAttribute(const c8* attributeName,
+						core::dimension2df v);
+
+				//! Sets an attribute as dimension2d
+				virtual void setAttribute(s32 index, core::dimension2df v);
+
+				//! Gets an attribute as dimension2d
+				//! \param attributeName: Name of the attribute to get.
+				//! \return Returns value of the attribute previously set by setAttribute()
+				virtual core::dimension2df getAttributeAsDimension2d(
+						const c8* attributeName);
+
+				//! Gets an attribute as dimension2d
+				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
+				virtual core::dimension2df getAttributeAsDimension2d(s32 index);
+
+				/*
+
 				 matrix attribute
 
 				 */
@@ -514,7 +545,113 @@ namespace irrgame
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
 				virtual core::aabbox3df getAttributeAsBox3d(s32 index);
 
+				/*
 
+				 plane
+
+				 */
+
+				//! Adds an attribute as 3d plane
+				virtual void addPlane3d(const c8* attributeName,
+						core::plane3df v);
+
+				//! Sets an attribute as 3d plane
+				virtual void setAttribute(const c8* attributeName,
+						core::plane3df v);
+
+				//! Sets an attribute as 3d plane
+				virtual void setAttribute(s32 index, core::plane3df v);
+
+				//! Gets an attribute as a 3d plane
+				//! \param attributeName: Name of the attribute to get.
+				//! \return Returns value of the attribute previously set by setAttribute()
+				virtual core::plane3df getAttributeAsPlane3d(
+						const c8* attributeName);
+
+				//! Gets an attribute as 3d plane
+				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
+				virtual core::plane3df getAttributeAsPlane3d(s32 index);
+
+				/*
+
+				 3d triangle
+
+				 */
+
+				//! Adds an attribute as 3d triangle
+				virtual void addTriangle3d(const c8* attributeName,
+						core::triangle3df v);
+
+				//! Sets an attribute as 3d trianle
+				virtual void setAttribute(const c8* attributeName,
+						core::triangle3df v);
+
+				//! Sets an attribute as 3d triangle
+				virtual void setAttribute(s32 index, core::triangle3df v);
+
+				//! Gets an attribute as a 3d triangle
+				//! \param attributeName: Name of the attribute to get.
+				//! \return Returns value of the attribute previously set by setAttribute()
+				virtual core::triangle3df getAttributeAsTriangle3d(
+						const c8* attributeName);
+
+				//! Gets an attribute as 3d triangle
+				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
+				virtual core::triangle3df getAttributeAsTriangle3d(s32 index);
+
+				/*
+
+				 line 2d
+
+				 */
+
+				//! Adds an attribute as a 2d line
+				virtual void addLine2d(const c8* attributeName,
+						core::line2df v);
+
+				//! Sets an attribute as a 2d line
+				virtual void setAttribute(const c8* attributeName,
+						core::line2df v);
+
+				//! Gets an attribute as a 2d line
+				//! \param attributeName: Name of the attribute to get.
+				//! \return Returns value of the attribute previously set by setAttribute()
+				virtual core::line2df getAttributeAsLine2d(
+						const c8* attributeName);
+
+				//! Gets an attribute as a 2d line
+				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
+				virtual core::line2df getAttributeAsLine2d(s32 index);
+
+				//! Sets an attribute as a 2d line
+				virtual void setAttribute(s32 index, core::line2df v);
+
+				/*
+
+				 line 3d
+
+				 */
+
+				//! Adds an attribute as a 3d line
+				virtual void addLine3d(const c8* attributeName,
+						core::line3df v);
+
+				//! Sets an attribute as a 3d line
+				virtual void setAttribute(const c8* attributeName,
+						core::line3df v);
+
+				//! Sets an attribute as a 3d line
+				virtual void setAttribute(s32 index, core::line3df v);
+
+				//! Gets an attribute as a 3d line
+				//! \param attributeName: Name of the attribute to get.
+				//! \return Returns value of the attribute previously set by setAttribute()
+				virtual core::line3df getAttributeAsLine3d(
+						const c8* attributeName);
+
+				//! Gets an attribute as a 3d line
+				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
+				virtual core::line3df getAttributeAsLine3d(s32 index);
 
 			protected:
 
@@ -527,155 +664,6 @@ namespace irrgame
 				core::array<IAttribute*> Attributes;
 
 		};
-
-//	//! Write these attributes into a xml file
-//	virtual bool write(io::IXMLWriter* writer, bool writeXMLHeader=false, const wchar_t* nonDefaultElementName=0);
-//
-//
-//
-//
-
-//
-//
-
-//
-//
-//
-
-//
-
-//
-
-//
-//
-//
-//
-
-//	/*
-//
-//		plane
-//
-//	*/
-//
-//	//! Adds an attribute as 3d plane
-//	virtual void addPlane3d(const c8* attributeName, core::plane3df v);
-//
-//	//! Sets an attribute as 3d plane
-//	virtual void setAttribute(const c8* attributeName, core::plane3df v);
-//
-//	//! Gets an attribute as a 3d plane
-//	//! \param attributeName: Name of the attribute to get.
-//	//! \return Returns value of the attribute previously set by setAttribute()
-//	virtual core::plane3df getAttributeAsPlane3d(const c8* attributeName);
-//
-//	//! Gets an attribute as 3d plane
-//	//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-//	virtual core::plane3df getAttributeAsPlane3d(s32 index);
-//
-//	//! Sets an attribute as 3d plane
-//	virtual void setAttribute(s32 index, core::plane3df v);
-//
-//
-//	/*
-//
-//		3d triangle
-//
-//	*/
-//
-//	//! Adds an attribute as 3d triangle
-//	virtual void addTriangle3d(const c8* attributeName, core::triangle3df v);
-//
-//	//! Sets an attribute as 3d trianle
-//	virtual void setAttribute(const c8* attributeName, core::triangle3df v);
-//
-//	//! Gets an attribute as a 3d triangle
-//	//! \param attributeName: Name of the attribute to get.
-//	//! \return Returns value of the attribute previously set by setAttribute()
-//	virtual core::triangle3df getAttributeAsTriangle3d(const c8* attributeName);
-//
-//	//! Gets an attribute as 3d triangle
-//	//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-//	virtual core::triangle3df getAttributeAsTriangle3d(s32 index);
-//
-//	//! Sets an attribute as 3d triangle
-//	virtual void setAttribute(s32 index, core::triangle3df v);
-//
-//
-//	/*
-//
-//		line 2d
-//
-//	*/
-//
-//	//! Adds an attribute as a 2d line
-//	virtual void addLine2d(const c8* attributeName, core::line2df v);
-//
-//	//! Sets an attribute as a 2d line
-//	virtual void setAttribute(const c8* attributeName, core::line2df v);
-//
-//	//! Gets an attribute as a 2d line
-//	//! \param attributeName: Name of the attribute to get.
-//	//! \return Returns value of the attribute previously set by setAttribute()
-//	virtual core::line2df getAttributeAsLine2d(const c8* attributeName);
-//
-//	//! Gets an attribute as a 2d line
-//	//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-//	virtual core::line2df getAttributeAsLine2d(s32 index);
-//
-//	//! Sets an attribute as a 2d line
-//	virtual void setAttribute(s32 index, core::line2df v);
-//
-//
-//	/*
-//
-//		line 3d
-//
-//	*/
-//
-//	//! Adds an attribute as a 3d line
-//	virtual void addLine3d(const c8* attributeName, core::line3df v);
-//
-//	//! Sets an attribute as a 3d line
-//	virtual void setAttribute(const c8* attributeName, core::line3df v);
-//
-//	//! Gets an attribute as a 3d line
-//	//! \param attributeName: Name of the attribute to get.
-//	//! \return Returns value of the attribute previously set by setAttribute()
-//	virtual core::line3df getAttributeAsLine3d(const c8* attributeName);
-//
-//	//! Gets an attribute as a 3d line
-//	//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-//	virtual core::line3df getAttributeAsLine3d(s32 index);
-//
-//	//! Sets an attribute as a 3d line
-//	virtual void setAttribute(s32 index, core::line3df v);
-//
-//
-//
-//
-//	/*
-//
-//		User Pointer Attribute
-//
-//	*/
-//
-//	//! Adds an attribute as user pointner
-//	virtual void addUserPointer(const c8* attributeName, void* userPointer);
-//
-//	//! Sets an attribute as user pointer
-//	virtual void setAttribute(const c8* attributeName, void* userPointer);
-//
-//	//! Gets an attribute as user pointer
-//	//! \param attributeName: Name of the attribute to get.
-//	virtual void* getAttributeAsUserPointer(const c8* attributeName);
-//
-//	//! Gets an attribute as user pointer
-//	//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-//	virtual void* getAttributeAsUserPointer(s32 index);
-//
-//	//! Sets an attribute as user pointer
-//	virtual void setAttribute(s32 index, void* userPointer);
-//
 
 	}
 // end namespace io

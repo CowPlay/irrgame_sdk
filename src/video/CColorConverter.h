@@ -5,8 +5,8 @@
 #ifndef __C_COLOR_CONVERTER_H_INCLUDED__
 #define __C_COLOR_CONVERTER_H_INCLUDED__
 
-#include "./core/irrgameTypes.h"
-#include "./video/IImage.h"
+#include "core/irrgameTypes.h"
+#include "video/IImage.h"
 
 namespace irrgame
 {

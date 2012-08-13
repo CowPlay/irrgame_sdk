@@ -60,7 +60,7 @@ namespace irrgame
 		//! Creates a XML Writer from a file.
 		IXMLWriter* IFileSystem::createXMLWriter(const core::stringc& filename)
 		{
-			IWriteFile* file = createAndWriteFile(filename);
+			IWriteFile* file = createWriteFile(filename);
 
 			IXMLWriter* writer = irrgame::io::createXMLWriter(file);
 
@@ -125,7 +125,7 @@ namespace irrgame
 		}
 
 		//! opens a file for read access
-		IReadFile* IFileSystem::createAndOpenFile(const core::stringc& filename)
+		IReadFile* IFileSystem::createReadFile(const core::stringc& filename)
 		{
 			return io::createReadFile(filename);
 		}
@@ -134,7 +134,7 @@ namespace irrgame
 		IReadFile* IFileSystem::createMemoryReadFile(void* memory, s32 len,
 				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
-			return irrgame::io::createMemoryReadFile(memory, len, fileName,
+			return io::createMemoryReadFile(memory, len, fileName,
 					deleteMemoryWhenDropped);
 		}
 
@@ -143,23 +143,23 @@ namespace irrgame
 				const core::stringc& fileName, IReadFile* alreadyOpenedFile,
 				long pos, long areaSize)
 		{
-			return irrgame::io::createLimitReadFile(fileName, alreadyOpenedFile,
-					pos, areaSize);
+			return io::createLimitReadFile(fileName, alreadyOpenedFile, pos,
+					areaSize);
 		}
 
 		//! Creates an IReadFile interface for treating memory like a file.
 		IWriteFile* IFileSystem::createMemoryWriteFile(void* memory, s32 len,
 				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
-			return irrgame::io::createMemoryWriteFile(memory, len, fileName,
+			return io::createMemoryWriteFile(memory, len, fileName,
 					deleteMemoryWhenDropped);
 		}
 
 		//! Opens a file for write access.
-		IWriteFile* IFileSystem::createAndWriteFile(
-				const core::stringc& filename, bool append)
+		IWriteFile* IFileSystem::createWriteFile(const core::stringc& filename,
+				bool append)
 		{
-			return createWriteFile(filename, append);
+			return io::createWriteFile(filename, append);
 		}
 
 		//! Creates a new empty collection of attributes, usable for serialization and more.

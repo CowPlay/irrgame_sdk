@@ -42,6 +42,13 @@ namespace irrgame
 				virtual const c8* getTypeString() const = 0;
 
 			public:
+
+				/*
+				 *
+				 *Getters
+				 *
+				 */
+
 				//! Dummies
 				virtual s32 getInt()
 				{
@@ -116,6 +123,37 @@ namespace irrgame
 					return core::aabbox3df();
 				}
 
+				virtual core::triangle3df getTriangle()
+				{
+					return core::triangle3df();
+				}
+
+				virtual core::plane3df getPlane()
+				{
+					return core::plane3df();
+				}
+
+				virtual core::line2df getLine2d()
+				{
+					return core::line2df();
+				}
+
+				virtual core::line3df getLine3d()
+				{
+					return core::line3df();
+				}
+
+				virtual core::dimension2df getDimension2d()
+				{
+					return core::dimension2df();
+				}
+
+				/*
+				 *
+				 *Setters
+				 *
+				 */
+
 				virtual void setInt(s32 intValue)
 				{
 				}
@@ -177,98 +215,29 @@ namespace irrgame
 				{
 				}
 
+				virtual void setTriangle(core::triangle3df v)
+				{
+				}
+
+				virtual void setPlane(core::plane3df v)
+				{
+				}
+
+				virtual void setLine2d(core::line2df v)
+				{
+				}
+
+				virtual void setLine3d(core::line3df v)
+				{
+				}
+
+				virtual void setDimension2d(core::dimension2df v)
+				{
+				}
+
 			public:
 
 				core::stringc Name;
-
-//				virtual core::triangle3df getTriangle()
-//				{
-//					return core::triangle3df();
-//				}
-//
-//
-//
-//				virtual core::line2df getLine2d()
-//				{
-//					return core::line2df();
-//				}
-//
-//				virtual core::line2di getLine2di()
-//				{
-//					return core::line2di();
-//				}
-//
-//				virtual core::line3df getLine3d()
-//				{
-//					return core::line3df();
-//				}
-//
-//				virtual core::line3di getLine3di()
-//				{
-//					return core::line3di();
-//				}
-//				virtual core::dimension2du getDimension2d()
-//				{
-//					return core::dimension2du();
-//				}
-//
-//				virtual core::plane3df getPlane()
-//				{
-//					return core::plane3df();
-//				}
-//
-//
-//
-//				virtual void* getUserPointer()
-//				{
-//					return 0;
-//				}
-
-//
-//				virtual void setVector(core::vector3df v)
-//				{
-//				}
-//
-
-//				virtual void setTriangle(core::triangle3df v)
-//				{
-//				}
-
-//				virtual void setLine2d(core::line2df v)
-//				{
-//				}
-//
-//				virtual void setLine2d(core::line2di v)
-//				{
-//				}
-//
-//				virtual void setLine3d(core::line3df v)
-//				{
-//				}
-//
-//				virtual void setLine3d(core::line3di v)
-//				{
-//				}
-//
-//				virtual void setDimension2d(core::dimension2du v)
-//				{
-//				}
-//
-//
-//
-//				virtual void setPlane(core::plane3df v)
-//				{
-//				}
-//
-//				virtual void setUserPointer(void* v)
-//				{
-//				}
-//
-//
-//
-//
-//
-//
 
 		};
 

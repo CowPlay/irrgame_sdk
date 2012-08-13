@@ -1,24 +1,25 @@
 /*
- * CRectAttribute.h
+ * CDimension2dAttribute.h
  *
  *  Created on: Aug 10, 2012
  *      Author: gregorytkach
  */
 
-#ifndef CRECTATTRIBUTE_H_
-#define CRECTATTRIBUTE_H_
+#ifndef CDIMENSION2DATTRIBUTE_H_
+#define CDIMENSION2DATTRIBUTE_H_
+
 #include "io/serialize/CNumbersAttribute.h"
 namespace irrgame
 {
 	namespace io
 	{
-		// Attribute implemented for rectangles
-		class CRectAttribute: public CNumbersAttribute
+		// Attribute implemented for dimension2d
+		class CDimension2dAttribute: public CNumbersAttribute
 		{
 			public:
 
 				//! Default constructor
-				CRectAttribute(const c8* name, core::recti value);
+				CDimension2dAttribute(const c8* name, core::dimension2df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 
@@ -29,4 +30,4 @@ namespace irrgame
 	}
 }
 
-#endif /* CRECTATTRIBUTE_H_ */
+#endif /* CDIMENSION2DATTRIBUTE_H_ */

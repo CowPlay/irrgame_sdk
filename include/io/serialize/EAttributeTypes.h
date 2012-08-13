@@ -34,6 +34,9 @@ namespace irrgame
 			// floating point color attribute
 			EAT_COLORF,
 
+			// dimension2df attribute
+			EAT_DIMENSION2D,
+
 			// 2d vector attribute
 			EAT_VECTOR2D,
 

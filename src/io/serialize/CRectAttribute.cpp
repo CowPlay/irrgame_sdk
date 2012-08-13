@@ -10,6 +10,7 @@ namespace irrgame
 	namespace io
 	{
 
+		//! Default constructor
 		CRectAttribute::CRectAttribute(const c8* name, core::recti value) :
 				CNumbersAttribute(name, value)
 		{

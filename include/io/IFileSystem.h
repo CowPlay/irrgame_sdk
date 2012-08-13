@@ -75,12 +75,12 @@ namespace irrgame
 				static core::stringc& flattenFilename(core::stringc& directory,
 						const core::stringc& root = "/");
 
-				//! Opens a file for read access.
+				//! Opens a file for read access. File should be exists.
 				/** \param filename: Name of file to open.
 				 \return Returns a pointer to the created file interface.
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information. */
-				static IReadFile* createAndOpenFile(
+				static IReadFile* createReadFile(
 						const core::stringc& filename);
 
 				//! Creates an IReadFile interface for accessing memory like a file.
@@ -131,11 +131,11 @@ namespace irrgame
 				//! Opens a file for write access.
 				/** \param filename: Name of file to open.
 				 \param append: If the file already exist, all write operations are
-				 appended to the file.
+				 appended to the file. Otherwise - file will create.
 				 \return Returns a pointer to the created file interface
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information. */
-				static IWriteFile* createAndWriteFile(
+				static IWriteFile* createWriteFile(
 						const core::stringc& filename, bool append = false);
 
 				//! Get the current working directory.

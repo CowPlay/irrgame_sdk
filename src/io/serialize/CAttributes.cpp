@@ -129,7 +129,6 @@ namespace irrgame
 		//! Reads attributes from a xml file.
 		//! \param readCurrentElementOnly: If set to true, reading only works if current element has the name 'attributes'.
 		//! IF set to false, the first appearing list attributes are read.
-		//! TODO: add contract
 		bool CAttributes::read(io::IXMLReader* reader,
 				bool readCurrentElementOnly, const c8* nonDefaultElementName)
 		{

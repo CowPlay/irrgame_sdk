@@ -16,6 +16,7 @@ namespace irrgame
 						d)
 		{
 			IRR_ASSERT(memory != 0);
+			IRR_ASSERT(len >= 0);
 
 #ifdef DEBUG
 			setDebugName("CMemoryFile");

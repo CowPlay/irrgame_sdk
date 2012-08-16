@@ -1,17 +1,19 @@
 #ifndef __C_DELEGATE_H_INCLUDED__
 #define __C_DELEGATE_H_INCLUDED__
-#include "irrArray.h"
+#include "core/irrArray.h"
 #include "IDelegate.h"
 
 template<class TRet TEMPLATE_PARAMS>
 class C_DELEGATE
 {
 	public:
+
 		//TODO: replace this data
 		void* Data;
 
 	public:
 		typedef I_DELEGATE<TRet TEMPLATE_ARGS> IDelegate;
+
 		typedef irrgame::core::array<IDelegate*> DelegateArray;
 
 		C_DELEGATE(IDelegate* pDelegate = NULL) :

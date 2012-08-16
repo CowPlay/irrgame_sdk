@@ -14,7 +14,14 @@
 //TODO:detect MacOS X
 #define _IRRGAME_MACOSX_
 
+
+//! io
 #define LINEBREAK "\r"
+
+//! threads
+#define PRIORITY_LOW	-20
+#define PRIORITY_NORMAL	0
+#define PRIORITY_HIGH	20
 
 // --------------------------------------------
 //!Windows

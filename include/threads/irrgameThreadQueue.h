@@ -12,7 +12,7 @@
 
 namespace irrgame
 {
-	namespace thread
+	namespace threads
 	{
 
 		//! Use this delegate for add action to specify queue
@@ -26,11 +26,9 @@ namespace irrgame
 			//! Use for logic
 			EQT_HIGHPRIORITY,
 
-			//! Use for
+			//! Use for load resources in background or actions with low priority
 			EQT_BACKGROUND
 		};
-
-
 
 		//! Represents thread queue
 		class irrgameThreadQueue: public IReferenceCounted
@@ -42,11 +40,11 @@ namespace irrgame
 
 				}
 
+				//! Start process actions.
+				static void startProcess();
+
 				//! Adds action to specify queue
 				static void addAction(delegateAction* action, EQueueType qType);
-
-
-
 		};
 	}
 }

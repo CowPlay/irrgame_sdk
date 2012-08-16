@@ -26,6 +26,11 @@
 //logic
 //#include "IGameObject.h"
 
+//threads
+
+#include "threads/irrgameMonitor.h"
+#include "threads/irrgameThread.h"
+
 //video
 
 

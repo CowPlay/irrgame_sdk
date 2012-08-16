@@ -12,6 +12,18 @@ namespace irrgame
 	namespace threads
 	{
 
+		//! Gets callback input args
+		void* irrgameThread::getCallbackArg()
+		{
+			return CallbackArg;
+		}
+
+		//! Gets thread callback
+		delegateThreadCallback* irrgameThread::getCallback()
+		{
+			return Callback;
+		}
+
 		//! Gets thread name
 		core::stringc irrgameThread::getName()
 		{

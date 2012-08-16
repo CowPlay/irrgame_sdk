@@ -5,8 +5,8 @@
 #ifndef __I_IREFERENCE_COUNTED_H_INCLUDED__
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
-#include "irrgameTypes.h"
-
+#include "core/irrgameTypes.h"
+#include "core/collections.h"
 namespace irrgame
 {
 
@@ -43,15 +43,10 @@ namespace irrgame
 		public:
 
 			//! Constructor.
-			IReferenceCounted() :
-					DebugName(0), ReferenceCounter(1)
-			{
-			}
+			IReferenceCounted();
 
 			//! Destructor.
-			virtual ~IReferenceCounted()
-			{
-			}
+			virtual ~IReferenceCounted();
 
 			//! Grabs the object. Increments the reference counter by one.
 			/** Someone who calls grab() to an object, should later also
@@ -83,10 +78,7 @@ namespace irrgame
 			 You will not have to drop the pointer to the loaded texture,
 			 because the name of the method does not start with 'create'.
 			 The texture is stored somewhere by the driver. */
-			void grab() const
-			{
-				++ReferenceCounter;
-			}
+			void grab() const;
 
 			//! Drops the object. Decrements the reference counter by one.
 			/** The IReferenceCounted class provides a basic reference
@@ -116,36 +108,22 @@ namespace irrgame
 			 because the name of the method does not start with 'create'.
 			 The texture is stored somewhere by the driver.
 			 \return True, if the object was deleted. */
-			bool drop() const
-			{
-				// someone is doing bad reference counting.
-				IRR_ASSERT(ReferenceCounter > 0)
-
-				--ReferenceCounter;
-				if (!ReferenceCounter)
-				{
-					delete this;
-					return true;
-				}
-
-				return false;
-			}
+			bool drop() const;
 
 			//! Get the reference count.
 			/** \return Current value of the reference counter. */
-			s32 getReferenceCount() const
-			{
-				return ReferenceCounter;
-			}
+			s32 getReferenceCount() const;
 
 			//! Returns the debug name of the object.
 			/** The Debugname may only be set and changed by the object
 			 itself. This method should only be used in Debug mode.
 			 \return Returns a string, previously set by setDebugName(); */
-			const c8* getDebugName() const
-			{
-				return DebugName;
-			}
+			const c8* getDebugName() const;
+
+			//! Return True if object have dependies(reference count more 0) from specify thread.
+			//! Otherwise return False.
+			//@ param0 - thread id
+			bool haveDependiesFromThread(s32 threadID) const;
 
 		protected:
 
@@ -153,12 +131,16 @@ namespace irrgame
 			/** The Debugname may only be set and changed by the object
 			 itself. This method should only be used in Debug mode.
 			 \param newName: New debug name to set. */
-			void setDebugName(const c8* newName)
-			{
-				DebugName = newName;
-			}
+			void setDebugName(const c8* newName);
 
 		private:
+
+			//! Reference counters for each thread, which have dependies by this object.
+			//! Key 	- thread id
+			//! Value 	- reference count
+			//! TODO: change to threadsafe collection
+			//! TODO:review collection type. Maybe need change for productivity reason.
+			mutable DictIntInt ThreadsReferenceCounters;
 
 			//! The debug name.
 			const c8* DebugName;

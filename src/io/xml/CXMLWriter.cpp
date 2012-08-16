@@ -131,7 +131,7 @@ namespace irrgame
 			if (!name || !value)
 				return;
 
-			File->write(" ", sizeof(wchar_t));
+			File->write(" ", sizeof(c8));
 			File->write(name, strlen(name) * sizeof(c8));
 			File->write("=\"", 2 * sizeof(c8));
 			writeText(value);
@@ -163,9 +163,9 @@ namespace irrgame
 					File->write("\t", sizeof(c8));
 			}
 
-			File->write(L"</", 2 * sizeof(c8));
+			File->write("</", 2 * sizeof(c8));
 			File->write(name, strlen(name) * sizeof(c8));
-			File->write(L">", sizeof(c8));
+			File->write(">", sizeof(c8));
 			TextWrittenLast = false;
 		}
 
@@ -205,7 +205,7 @@ namespace irrgame
 			}
 
 			// write new string
-			File->write(s.c_str(), s.size() * sizeof(wchar_t));
+			File->write(s.c_str(), s.size() * sizeof(c8));
 			TextWrittenLast = true;
 		}
 

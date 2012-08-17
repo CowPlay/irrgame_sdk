@@ -63,7 +63,6 @@ namespace irrgame
 			node->setValue(node->getValue() + 1);
 		}
 		else
-
 			ThreadsReferenceCounters.insert(threadID, 1);
 
 		++ReferenceCounter;
@@ -101,7 +100,7 @@ namespace irrgame
 	bool IReferenceCounted::drop() const
 	{
 		// someone is doing bad reference counting.
-		IRR_ASSERT(ReferenceCounter < 0)
+		IRR_ASSERT(ReferenceCounter > 0)
 
 		s32 threadID = threads::irrgameThread::getCurrentThreadID();
 
@@ -114,7 +113,8 @@ namespace irrgame
 		}
 		else
 		{
-			//TODO: add assert
+			//something wrong
+			IRR_ASSERT(false);
 		}
 
 		if (!ReferenceCounter)
@@ -138,7 +138,7 @@ namespace irrgame
 	//@ param0 - thread id
 	bool IReferenceCounted::haveDependiesFromThread(s32 threadID) const
 	{
-		return ThreadsReferenceCounters.find(threadID) == 0;
+		return ThreadsReferenceCounters.find(threadID) != 0;
 	}
 
 	//! Returns the debug name of the object.

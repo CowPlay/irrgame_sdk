@@ -15,6 +15,7 @@ namespace irrgame
 #ifdef DEBUG
 			setDebugName("CReadFile");
 #endif
+			IRR_ASSERT(sizeof(fileName) > 0);
 
 			openFile();
 		}
@@ -28,8 +29,6 @@ namespace irrgame
 		//! returns how much was read
 		s32 CReadFile::read(void* buffer, u32 sizeToRead)
 		{
-			IRR_ASSERT(File != 0);
-
 			return (s32) fread(buffer, 1, sizeToRead, File);
 		}
 
@@ -38,8 +37,6 @@ namespace irrgame
 		//! otherwise from begin of file
 		bool CReadFile::seek(long finalPos, bool relativeMovement)
 		{
-			IRR_ASSERT(File != 0);
-
 			return fseek(File, finalPos, relativeMovement ? SEEK_CUR : SEEK_SET)
 					== 0;
 		}
@@ -65,8 +62,6 @@ namespace irrgame
 		//! opens the file for read
 		void CReadFile::openFile()
 		{
-			IRR_ASSERT(Filename.size() != 0);
-
 			File = fopen(Filename.c_str(), "rb");
 
 			// could not open file

@@ -8,15 +8,21 @@ namespace irrgame
 {
 	namespace io
 	{
+		int foo()
+		{
+			int i = 0;
+			return i;
+		}
 
 		CWriteFile::CWriteFile(const core::stringc& fileName, bool append) :
-				FileSize(0)
+				FileSize(0), Filename(fileName)
 		{
 #ifdef DEBUG
 			setDebugName("CWriteFile");
 #endif
+			IRR_ASSERT(sizeof(fileName) > 0);
 
-			Filename = fileName;
+			foo();
 			openFile(append);
 		}
 
@@ -29,8 +35,6 @@ namespace irrgame
 		//! returns how much was read
 		s32 CWriteFile::write(const void* buffer, u32 sizeToWrite)
 		{
-			IRR_ASSERT(File != 0);
-
 			return (s32) fwrite(buffer, 1, sizeToWrite, File);
 		}
 
@@ -39,8 +43,6 @@ namespace irrgame
 		//! otherwise from begin of file
 		bool CWriteFile::seek(long finalPos, bool relativeMovement)
 		{
-			IRR_ASSERT(File != 0);
-
 			return fseek(File, finalPos, relativeMovement ? SEEK_CUR : SEEK_SET)
 					== 0;
 		}
@@ -54,8 +56,6 @@ namespace irrgame
 		//! opens the file
 		void CWriteFile::openFile(bool append)
 		{
-			IRR_ASSERT(Filename.size() == 0);
-
 			File = fopen(Filename.c_str(), append ? "ab" : "wb");
 
 			IRR_ASSERT(File != 0);

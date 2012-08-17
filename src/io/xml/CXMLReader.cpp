@@ -17,11 +17,7 @@ namespace irrgame
 				TextData(0), P(0), TextBegin(0), TextSize(0), CurrentNodeType(
 						EXNT_NONE), IsEmptyElement(true)
 		{
-
 			IRR_ASSERT(file != 0);
-
-			if (!file)
-				return;
 
 			// read whole xml file
 
@@ -44,9 +40,8 @@ namespace irrgame
 		//! reads the xml file and converts it into the wanted character format.
 		bool CXMLReader::readFile(IReadFile* file)
 		{
-			IRR_ASSERT(file != 0);
-
 			long size = file->getSize();
+
 			if (size < 0)
 				return false;
 
@@ -214,7 +209,7 @@ namespace irrgame
 		bool CXMLReader::read()
 		{
 			// if not end reached, parse the node
-			if (P && (unsigned int) (P - TextBegin) < TextSize - 1 && *P != 0)
+			if (P && (u32) (P - TextBegin) < TextSize - 1 && *P != 0)
 			{
 				return parseCurrentNode();
 			}
@@ -238,18 +233,12 @@ namespace irrgame
 		//! Returns name of an attribute.
 		const c8* CXMLReader::getAttributeName(int idx) const
 		{
-			if ((u32) idx >= Attributes.size())
-				return 0;
-
 			return Attributes[idx].Name.c_str();
 		}
 
 		//! Returns the value of an attribute.
 		const c8* CXMLReader::getAttributeValue(int idx) const
 		{
-			if ((unsigned int) idx >= Attributes.size())
-				return 0;
-
 			return Attributes[idx].Value.c_str();
 		}
 
@@ -257,8 +246,8 @@ namespace irrgame
 		const c8* CXMLReader::getAttributeValue(const c8* name) const
 		{
 			const SAttribute* attr = getAttributeByName(name);
-			if (!attr)
-				return 0;
+
+			IRR_ASSERT(attr != 0);
 
 			return attr->Value.c_str();
 		}
@@ -267,6 +256,7 @@ namespace irrgame
 		const c8* CXMLReader::getAttributeValueSafe(const c8* name) const
 		{
 			const SAttribute* attr = getAttributeByName(name);
+
 			if (!attr)
 				return EmptyString.c_str();
 
@@ -289,8 +279,8 @@ namespace irrgame
 		f32 CXMLReader::getAttributeValueAsFloat(const c8* name) const
 		{
 			const SAttribute* attr = getAttributeByName(name);
-			if (!attr)
-				return 0;
+
+			IRR_ASSERT(attr != 0);
 
 			core::stringc c = attr->Value.c_str();
 			return core::fast_atof(c.c_str());
@@ -300,8 +290,8 @@ namespace irrgame
 		f32 CXMLReader::getAttributeValueAsFloat(int idx) const
 		{
 			const c8* attrvalue = getAttributeValue(idx);
-			if (!attrvalue)
-				return 0;
+
+			IRR_ASSERT(sizeof(attrvalue) > 0);
 
 			core::stringc c = attrvalue;
 			return core::fast_atof(c.c_str());
@@ -587,8 +577,7 @@ namespace irrgame
 		const CXMLReader::SAttribute* CXMLReader::getAttributeByName(
 				const c8* name) const
 		{
-			if (!name)
-				return 0;
+			IRR_ASSERT(sizeof(name) > 0);
 
 			core::stringc n = name;
 
@@ -655,9 +644,6 @@ namespace irrgame
 		//! Creates an instance of an UFT-8 or ASCII character xml parser. Internal function. Please do not use.
 		IXMLReader* createXMLReader(IReadFile* file)
 		{
-			if (!file)
-				return 0;
-
 			return new CXMLReader(file);
 		}
 	}

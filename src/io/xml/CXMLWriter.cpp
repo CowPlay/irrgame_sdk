@@ -19,8 +19,9 @@ namespace irrgame
 			setDebugName("CXMLWriter");
 #endif
 
-			if (File)
-				File->grab();
+			IRR_ASSERT(File != 0);
+
+			File->grab();
 		}
 
 		//! Destructor
@@ -33,9 +34,6 @@ namespace irrgame
 		//! Writes a xml 1.0 header like <?xml version="1.0"?>
 		void CXMLWriter::writeXMLHeader()
 		{
-			if (!File)
-				return;
-
 			const u8 bom[] =
 			{ 0xEF, 0xBB, 0xBF }; // 0xEFBBBF;
 
@@ -55,8 +53,7 @@ namespace irrgame
 				const c8* attr4Name, const c8* attr4Value, const c8* attr5Name,
 				const c8* attr5Value)
 		{
-			if (!File || !name)
-				return;
+			IRR_ASSERT(sizeof(name) > 0);
 
 			if (Tabs > 0)
 			{
@@ -94,8 +91,7 @@ namespace irrgame
 				core::array<core::stringc> &names,
 				core::array<core::stringc> &values)
 		{
-			if (!File || !name)
-				return;
+			IRR_ASSERT(sizeof(name) > 0);
 
 			if (Tabs > 0)
 			{
@@ -125,11 +121,9 @@ namespace irrgame
 			TextWrittenLast = false;
 		}
 
-		void CXMLWriter::writeAttribute(const c8* name,
-				const c8* value)
+		void CXMLWriter::writeAttribute(const c8* name, const c8* value)
 		{
-			if (!name || !value)
-				return;
+			IRR_ASSERT(sizeof(name) > 0 && sizeof(value) > 0);
 
 			File->write(" ", sizeof(c8));
 			File->write(name, strlen(name) * sizeof(c8));
@@ -141,8 +135,7 @@ namespace irrgame
 		//! Writes a comment into the xml file
 		void CXMLWriter::writeComment(const c8* comment)
 		{
-			if (!File || !comment)
-				return;
+			IRR_ASSERT(sizeof(comment) > 0);
 
 			File->write("<!--", 4 * sizeof(c8));
 			writeText(comment);
@@ -152,8 +145,7 @@ namespace irrgame
 		//! Writes the closing tag for an element. Like </foo>
 		void CXMLWriter::writeClosingTag(const c8* name)
 		{
-			if (!File || !name)
-				return;
+			IRR_ASSERT(sizeof(name) > 0);
 
 			--Tabs;
 
@@ -181,8 +173,7 @@ namespace irrgame
 		//! & (&amp;), < (&lt;), > (&gt;), and " (&quot;) are automaticly replaced.
 		void CXMLWriter::writeText(const c8* text)
 		{
-			if (!File || !text)
-				return;
+			IRR_ASSERT(sizeof(text) > 0);
 
 			core::stringc s;
 			const c8* p = text;
@@ -212,21 +203,15 @@ namespace irrgame
 		//! Writes a line break
 		void CXMLWriter::writeLineBreak()
 		{
-			if (!File)
-				return;
-
 			File->write(LINEBREAK, sizeof(LINEBREAK));
 		}
 
 		//! Creates an instance of a wide character xml writer.
 		IXMLWriter* createXMLWriter(IWriteFile* file)
 		{
-			if (!file)
-				return 0;
-
 			return new CXMLWriter(file);
 		}
 
-	}// end namespace irr
+	}		// end namespace irr
 } // end namespace io
 

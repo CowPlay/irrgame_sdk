@@ -73,9 +73,9 @@ namespace irrgame
 				 \return Name of the attribute, 0 if an attribute with this index does not exist. */
 				virtual const c8* getAttributeName(int idx) const = 0;
 
-				//! Returns the value of an attribute.
+				//! Returns the value of an attribute. Attribute must be exists.
 				/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
-				 \return Value of the attribute, 0 if an attribute with this index does not exist. */
+				 \return Value of the attribute. */
 				virtual const c8* getAttributeValue(int idx) const = 0;
 
 				//! Returns the value of an attribute.

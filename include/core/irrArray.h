@@ -307,7 +307,7 @@ namespace irrgame
 				const T& operator [](u32 index) const
 				{
 					// access violation
-					IRR_ASSERT(index >= 0 && index < used)
+					IRR_ASSERT(index >= 0 && index < used);
 
 					return data[index];
 				}

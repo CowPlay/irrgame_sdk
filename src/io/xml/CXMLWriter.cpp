@@ -203,7 +203,8 @@ namespace irrgame
 		//! Writes a line break
 		void CXMLWriter::writeLineBreak()
 		{
-			File->write(LINEBREAK, sizeof(LINEBREAK));
+			// sizeof - 1 because '\0' is unwanted symbol
+			File->write(LINEBREAK, sizeof(LINEBREAK) - 1);
 		}
 
 		//! Creates an instance of a wide character xml writer.

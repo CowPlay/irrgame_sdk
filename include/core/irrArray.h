@@ -10,6 +10,7 @@
 #include "irrAllocator.h"
 #include "irrMath.h"
 
+#include "stdio.h"
 namespace irrgame
 {
 	namespace core
@@ -122,7 +123,7 @@ namespace irrgame
 				void insert(const T& element, u32 index = 0)
 				{
 					// access violation
-					IRR_ASSERT(index >= 0 && index < used)
+					IRR_ASSERT(index >= 0 && index <= used)
 
 					if (used + 1 > allocated)
 					{

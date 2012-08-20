@@ -52,8 +52,9 @@ namespace irrgame
 				void openFile(bool append);
 
 				core::stringc Filename;
-				FILE* File;
 				long FileSize;
+				FILE* File;
+
 		};
 
 	} // end namespace io

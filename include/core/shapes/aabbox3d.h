@@ -5,9 +5,9 @@
 #ifndef __IRR_AABBOX_3D_H_INCLUDED__
 #define __IRR_AABBOX_3D_H_INCLUDED__
 
-#include "core/irrMath.h"
-#include "core/plane3d.h"
-#include "core/line3d.h"
+#include "core/shapes/line3d.h"
+#include "core/shapes/plane3d.h"
+#include "core/shapes/vector3d.h"
 
 namespace irrgame
 {
@@ -379,12 +379,6 @@ namespace irrgame
 				//! The far edge
 				vector3d<T> MaxEdge;
 		};
-
-		//! Typedef for a f32 3d bounding box.
-		typedef aabbox3d<f32> aabbox3df;
-		//! Typedef for an integer 3d bounding box.
-		typedef aabbox3d<s32> aabbox3di;
-
 	} // end namespace core
 } // end namespace irr
 

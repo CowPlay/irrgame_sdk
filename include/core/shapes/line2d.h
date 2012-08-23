@@ -5,8 +5,8 @@
 #ifndef __IRR_LINE_2D_H_INCLUDED__
 #define __IRR_LINE_2D_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/vector2d.h"
+#include "core/base/irrgameTypes.h"
+#include "core/shapes/vector2d.h"
 
 namespace irrgame
 {
@@ -331,12 +331,6 @@ namespace irrgame
 				//! End point of the line.
 				vector2d<T> end;
 		};
-
-		//! Typedef for an f32 line.
-		typedef line2d<f32> line2df;
-		//! Typedef for an integer line.
-		typedef line2d<s32> line2di;
-
 	} // end namespace core
 } // end namespace irr
 

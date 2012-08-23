@@ -12,19 +12,18 @@ namespace irrgame
 	{
 		//! Default constructor
 		CStringArrayAttribute::CStringArrayAttribute(const c8* name,
-				const core::array<core::stringc>& value)
+				const arraystr& value)
 		{
 			Name = name;
 			setArray(value);
 		}
 
-		core::array<core::stringc> CStringArrayAttribute::getArray()
+		arraystr CStringArrayAttribute::getArray()
 		{
 			return Value;
 		}
 
-		void CStringArrayAttribute::setArray(
-				const core::array<core::stringc>& value)
+		void CStringArrayAttribute::setArray(const arraystr& value)
 		{
 			Value = value;
 		}

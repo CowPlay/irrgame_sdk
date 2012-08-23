@@ -33,9 +33,9 @@ namespace irrgame
 			return (Value != 0);
 		}
 
-		core::stringc CIntAttribute::getString()
+		stringc CIntAttribute::getString()
 		{
-			return core::stringc(Value);
+			return stringc(Value);
 		}
 
 		void CIntAttribute::setInt(s32 intValue)

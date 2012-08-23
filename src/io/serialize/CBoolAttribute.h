@@ -27,7 +27,7 @@ namespace irrgame
 
 				virtual bool getBool();
 
-				virtual core::stringc getString();
+				virtual stringc getString();
 
 				virtual void setInt(s32 intValue);
 

@@ -8,7 +8,7 @@
 #ifndef VIDEOUTILS_H_
 #define VIDEOUTILS_H_
 
-#include "./core/irrMath.h"
+#include "core/irrgamemath.h"
 
 namespace irrgame
 {

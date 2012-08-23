@@ -1,6 +1,6 @@
 #ifndef __C_DELEGATE_H_INCLUDED__
 #define __C_DELEGATE_H_INCLUDED__
-#include "core/irrArray.h"
+#include "core/irrgamecollections.h"
 #include "IDelegate.h"
 
 template<class TRet TEMPLATE_PARAMS>

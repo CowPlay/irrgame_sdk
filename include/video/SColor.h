@@ -5,8 +5,8 @@
 #ifndef __COLOR_H_INCLUDED__
 #define __COLOR_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/irrMath.h"
+#include "core/irrgamebase.h"
+#include "core/irrgamemath.h"
 #include "video/videoutils.h"
 
 namespace irrgame

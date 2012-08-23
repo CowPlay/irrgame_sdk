@@ -5,11 +5,8 @@
 #ifndef __IRR_QUATERNION_H_INCLUDED__
 #define __IRR_QUATERNION_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/irrMath.h"
-#include "core/matrix4.h"
-#include "core/vector3d.h"
-
+#include "core/base/irrgameTypes.h"
+#include "core/math/matrix4.h"
 namespace irrgame
 {
 	namespace core
@@ -38,10 +35,10 @@ namespace irrgame
 				quaternion(f32 x, f32 y, f32 z);
 
 				//! Constructor which converts euler angles (radians) to a quaternion
-				quaternion(const vector3df& vec);
+				quaternion(const vector3d<f32>& vec);
 
 				//! Constructor which converts a matrix to a quaternion
-				quaternion(const matrix4& mat);
+				quaternion(const CMatrix4<f32>& mat);
 
 				//! Equalilty operator
 				bool operator==(const quaternion& other) const;
@@ -53,7 +50,7 @@ namespace irrgame
 				inline quaternion& operator=(const quaternion& other);
 
 				//! Matrix assignment operator
-				inline quaternion& operator=(const matrix4& other);
+				inline quaternion& operator=(const CMatrix4<f32>& other);
 
 				//! Add operator
 				quaternion operator+(const quaternion& other) const;
@@ -68,7 +65,7 @@ namespace irrgame
 				quaternion& operator*=(f32 s);
 
 				//! Multiplication operator
-				vector3df operator*(const vector3df& v) const;
+				vector3d<f32> operator*(const vector3d<f32>& v) const;
 
 				//! Multiplication operator
 				quaternion& operator*=(const quaternion& other);
@@ -83,7 +80,7 @@ namespace irrgame
 				inline quaternion& set(f32 x, f32 y, f32 z);
 
 				//! Sets new quaternion based on euler angles (radians)
-				inline quaternion& set(const core::vector3df& vec);
+				inline quaternion& set(const vector3d<f32>& vec);
 
 				//! Sets new quaternion from other quaternion
 				inline quaternion& set(const core::quaternion& quat);
@@ -92,11 +89,11 @@ namespace irrgame
 				inline quaternion& normalize();
 
 				//! Creates a matrix from this quaternion
-				matrix4 getMatrix() const;
+				CMatrix4<f32> getMatrix() const;
 
 				//! Creates a matrix from this quaternion
-				void getMatrix(matrix4 &dest,
-						const core::vector3df &translation) const;
+				void getMatrix(CMatrix4<f32> &dest,
+						const vector3d<f32> &translation) const;
 
 				/*!
 				 Creates a matrix from this quaternion
@@ -115,12 +112,12 @@ namespace irrgame
 				 lookat *= m3;
 
 				 */
-				void getMatrixCenter(matrix4 &dest,
-						const core::vector3df &center,
-						const core::vector3df &translation) const;
+				void getMatrixCenter(CMatrix4<f32> &dest,
+						const vector3d<f32> &center,
+						const vector3d<f32> &translation) const;
 
 				//! Creates a matrix from this quaternion
-				inline void getMatrix_transposed(matrix4 &dest) const;
+				inline void getMatrix_transposed(CMatrix4<f32> &dest) const;
 
 				//! Inverts this quaternion
 				quaternion& makeInverse();
@@ -135,20 +132,20 @@ namespace irrgame
 				 q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k).
 				 \param angle Rotation Angle in radians.
 				 \param axis Rotation axis. */
-				quaternion& fromAngleAxis(f32 angle, const vector3df& axis);
+				quaternion& fromAngleAxis(f32 angle, const vector3d<f32>& axis);
 
 				//! Fills an angle (radians) around an axis (unit vector)
-				void toAngleAxis(f32 &angle, core::vector3df& axis) const;
+				void toAngleAxis(f32 &angle, vector3d<f32>& axis) const;
 
 				//! Output this quaternion to an euler angle (radians)
-				void toEuler(vector3df& euler) const;
+				void toEuler(vector3d<f32>& euler) const;
 
 				//! Set quaternion to identity
 				quaternion& makeIdentity();
 
 				//! Set quaternion to represent a rotation from one vector to another.
-				quaternion& rotationFromTo(const vector3df& from,
-						const vector3df& to);
+				quaternion& rotationFromTo(const vector3d<f32>& from,
+						const vector3d<f32>& to);
 
 			public:
 				//! Quaternion elements.
@@ -165,13 +162,13 @@ namespace irrgame
 		}
 
 		// Constructor which converts euler angles to a quaternion
-		inline quaternion::quaternion(const vector3df& vec)
+		inline quaternion::quaternion(const vector3d<f32>& vec)
 		{
 			set(vec.X, vec.Y, vec.Z);
 		}
 
 		// Constructor which converts a matrix to a quaternion
-		inline quaternion::quaternion(const matrix4& mat)
+		inline quaternion::quaternion(const CMatrix4<f32>& mat)
 		{
 			(*this) = mat;
 		}
@@ -200,7 +197,7 @@ namespace irrgame
 		}
 
 		// matrix assignment operator
-		inline quaternion& quaternion::operator=(const matrix4& m)
+		inline quaternion& quaternion::operator=(const CMatrix4<f32>& m)
 		{
 			const f32 diag = m(0, 0) + m(1, 1) + m(2, 2) + 1;
 
@@ -306,9 +303,9 @@ namespace irrgame
 		}
 
 		// Creates a matrix from this quaternion
-		inline matrix4 quaternion::getMatrix() const
+		inline CMatrix4<f32> quaternion::getMatrix() const
 		{
-			core::matrix4 m;
+			CMatrix4<f32> m;
 			getMatrix_transposed(m);
 			return m;
 		}
@@ -316,8 +313,8 @@ namespace irrgame
 		/*!
 		 Creates a matrix from this quaternion
 		 */
-		inline void quaternion::getMatrix(matrix4 &dest,
-				const core::vector3df &center) const
+		inline void quaternion::getMatrix(CMatrix4<f32> &dest,
+				const vector3d<f32> &center) const
 		{
 			f32 * m = dest.pointer();
 
@@ -357,9 +354,9 @@ namespace irrgame
 		 m2.setInverseTranslation ( center );
 		 lookat *= m2;
 		 */
-		inline void quaternion::getMatrixCenter(matrix4 &dest,
-				const core::vector3df &center,
-				const core::vector3df &translation) const
+		inline void quaternion::getMatrixCenter(CMatrix4<f32> &dest,
+				const vector3d<f32> &center,
+				const vector3d<f32> &translation) const
 		{
 			f32 * m = dest.pointer();
 
@@ -382,7 +379,7 @@ namespace irrgame
 		}
 
 		// Creates a matrix from this quaternion
-		inline void quaternion::getMatrix_transposed(matrix4 &dest) const
+		inline void quaternion::getMatrix_transposed(CMatrix4<f32> &dest) const
 		{
 			dest[0] = 1.0f - 2.0f * Y * Y - 2.0f * Z * Z;
 			dest[4] = 2.0f * X * Y + 2.0f * Z * W;
@@ -457,7 +454,7 @@ namespace irrgame
 		}
 
 		// sets new quaternion based on euler angles
-		inline quaternion& quaternion::set(const core::vector3df& vec)
+		inline quaternion& quaternion::set(const vector3d<f32>& vec)
 		{
 			return set(vec.X, vec.Y, vec.Z);
 		}
@@ -529,7 +526,7 @@ namespace irrgame
 		//! axis must be unit length
 		//! angle in radians
 		inline quaternion& quaternion::fromAngleAxis(f32 angle,
-				const vector3df& axis)
+				const vector3d<f32>& axis)
 		{
 			const f32 fHalfAngle = 0.5f * angle;
 			const f32 fSin = sinf(fHalfAngle);
@@ -541,7 +538,7 @@ namespace irrgame
 		}
 
 		inline void quaternion::toAngleAxis(f32 &angle,
-				core::vector3df &axis) const
+				vector3d<f32> &axis) const
 		{
 			const f32 scale = sqrtf(X * X + Y * Y + Z * Z);
 
@@ -562,7 +559,7 @@ namespace irrgame
 			}
 		}
 
-		inline void quaternion::toEuler(vector3df& euler) const
+		inline void quaternion::toEuler(vector3d<f32>& euler) const
 		{
 			const f32 sqw = W * W;
 			const f32 sqx = X * X;
@@ -581,12 +578,12 @@ namespace irrgame
 			euler.Y = asinf(clamp(-2.0f * (X * Z - Y * W), -1.0f, 1.0f));
 		}
 
-		inline vector3df quaternion::operator*(const vector3df& v) const
+		inline vector3d<f32> quaternion::operator*(const vector3d<f32>& v) const
 		{
 			// nVidia SDK implementation
 
-			vector3df uv, uuv;
-			vector3df qvec(X, Y, Z);
+			vector3d<f32> uv, uuv;
+			vector3d<f32> qvec(X, Y, Z);
 			uv = qvec.crossProduct(v);
 			uuv = qvec.crossProduct(uv);
 			uv *= (2.0f * W);
@@ -606,12 +603,12 @@ namespace irrgame
 		}
 
 		inline core::quaternion& quaternion::rotationFromTo(
-				const vector3df& from, const vector3df& to)
+				const vector3d<f32>& from, const vector3d<f32>& to)
 		{
 			// Based on Stan Melax's article in Game Programming Gems
 			// Copy, since cannot modify local
-			vector3df v0 = from;
-			vector3df v1 = to;
+			vector3d<f32> v0 = from;
+			vector3d<f32> v1 = to;
 			v0.normalize();
 			v1.normalize();
 
@@ -623,7 +620,7 @@ namespace irrgame
 
 			const f32 s = sqrtf((1 + d) * 2); // optimize inv_sqrt
 			const f32 invs = 1.f / s;
-			const vector3df c = v0.crossProduct(v1) * invs;
+			const vector3d<f32> c = v0.crossProduct(v1) * invs;
 			X = c.X;
 			Y = c.Y;
 			Z = c.Z;

@@ -1,10 +1,6 @@
 #ifndef __I_DELEGATE_H_INCLUDED__
 #define __I_DELEGATE_H_INCLUDED__
 
-#ifndef NULL
-#define NULL 0
-#endif
-
 template<class TRet TEMPLATE_PARAMS>
 class I_DELEGATE
 {

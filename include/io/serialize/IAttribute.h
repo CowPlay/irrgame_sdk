@@ -5,18 +5,9 @@
 #ifndef __I_ATTRIBUTE_H_INCLUDED__
 #define __I_ATTRIBUTE_H_INCLUDED__
 
-#include "core/IReferenceCounted.h"
-#include "core/irrString.h"
-#include "core/irrArray.h"
-#include "core/line2d.h"
-#include "core/line3d.h"
-#include "core/triangle3d.h"
-#include "core/rect.h"
-#include "core/matrix4.h"
-#include "core/quaternion.h"
-#include "core/plane3d.h"
-#include "core/vector2d.h"
-#include "core/vector3d.h"
+#include "core/irrgamebase.h"
+#include "core/irrgamecollections.h"
+#include "core/irrgameshapes.h"
 
 #include "video/SColor.h"
 
@@ -65,18 +56,18 @@ namespace irrgame
 					return false;
 				}
 
-				virtual core::stringc getString()
+				virtual stringc getString()
 				{
-					return core::stringc();
+					return stringc();
 				}
 
 				virtual void getBinary(void* outdata, s32 maxLength)
 				{
 				}
 
-				virtual core::array<core::stringc> getArray()
+				virtual arraystr getArray()
 				{
-					return core::array<core::stringc>();
+					return arraystr();
 				}
 
 				virtual video::SColorf getColorf()
@@ -93,24 +84,24 @@ namespace irrgame
 					return 0;
 				}
 
-				virtual core::vector2df getVector2d()
+				virtual vector2df getVector2d()
 				{
-					return core::vector2df();
+					return vector2df();
 				}
 
-				virtual core::vector3df getVector3d()
+				virtual vector3df getVector3d()
 				{
-					return core::vector3df();
+					return vector3df();
 				}
 
-				virtual core::recti getRect()
+				virtual recti getRect()
 				{
-					return core::recti();
+					return recti();
 				}
 
-				virtual core::matrix4 getMatrix()
+				virtual matrix4 getMatrix()
 				{
-					return core::matrix4();
+					return matrix4();
 				}
 
 				virtual core::quaternion getQuaternion()
@@ -118,34 +109,34 @@ namespace irrgame
 					return core::quaternion();
 				}
 
-				virtual core::aabbox3df getBBox()
+				virtual aabbox3df getBBox()
 				{
-					return core::aabbox3df();
+					return aabbox3df();
 				}
 
-				virtual core::triangle3df getTriangle()
+				virtual triangle3df getTriangle()
 				{
-					return core::triangle3df();
+					return triangle3df();
 				}
 
-				virtual core::plane3df getPlane()
+				virtual plane3df getPlane()
 				{
-					return core::plane3df();
+					return plane3df();
 				}
 
-				virtual core::line2df getLine2d()
+				virtual line2df getLine2d()
 				{
-					return core::line2df();
+					return line2df();
 				}
 
-				virtual core::line3df getLine3d()
+				virtual line3df getLine3d()
 				{
-					return core::line3df();
+					return line3df();
 				}
 
-				virtual core::dimension2df getDimension2d()
+				virtual dimension2df getDimension2d()
 				{
-					return core::dimension2df();
+					return dimension2df();
 				}
 
 				/*
@@ -170,7 +161,7 @@ namespace irrgame
 				{
 				}
 
-				virtual void setArray(const core::array<core::stringc>& arr)
+				virtual void setArray(const arraystr& arr)
 				{
 				}
 
@@ -191,19 +182,19 @@ namespace irrgame
 				{
 				}
 
-				virtual void setVector2d(core::vector2df v)
+				virtual void setVector2d(vector2df v)
 				{
 				}
 
-				virtual void setVector3d(core::vector3df v)
+				virtual void setVector3d(vector3df v)
 				{
 				}
 
-				virtual void setRect(core::recti v)
+				virtual void setRect(recti v)
 				{
 				}
 
-				virtual void setMatrix(core::matrix4 v)
+				virtual void setMatrix(matrix4 v)
 				{
 				}
 
@@ -211,33 +202,33 @@ namespace irrgame
 				{
 				}
 
-				virtual void setBBox(core::aabbox3df v)
+				virtual void setBBox(aabbox3df v)
 				{
 				}
 
-				virtual void setTriangle(core::triangle3df v)
+				virtual void setTriangle(triangle3df v)
 				{
 				}
 
-				virtual void setPlane(core::plane3df v)
+				virtual void setPlane(plane3df v)
 				{
 				}
 
-				virtual void setLine2d(core::line2df v)
+				virtual void setLine2d(line2df v)
 				{
 				}
 
-				virtual void setLine3d(core::line3df v)
+				virtual void setLine3d(line3df v)
 				{
 				}
 
-				virtual void setDimension2d(core::dimension2df v)
+				virtual void setDimension2d(dimension2df v)
 				{
 				}
 
 			public:
 
-				core::stringc Name;
+				stringc Name;
 
 		};
 

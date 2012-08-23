@@ -6,7 +6,7 @@
 #include "video/SColor.h"
 #include "utils/ByteSwap.h"
 
-#include "core/irrString.h"
+#include "core/irrgamecollections.h"
 
 namespace irrgame
 {

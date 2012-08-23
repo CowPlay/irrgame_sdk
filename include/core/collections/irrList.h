@@ -5,15 +5,12 @@
 #ifndef __IRR_LIST_H_INCLUDED__
 #define __IRR_LIST_H_INCLUDED__
 
-#include "./core/irrgameTypes.h"
-#include "./core/irrAllocator.h"
-#include "./core/irrMath.h"
+#include "core/base/irrAllocator.h"
 
 namespace irrgame
 {
 	namespace core
 	{
-
 		//! Doubly linked list template.
 		template<class T>
 		class list

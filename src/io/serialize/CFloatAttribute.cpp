@@ -5,7 +5,7 @@
  *      Author: gregorytkach
  */
 #include "CFloatAttribute.h"
-#include "core/fast_atof.h"
+#include "core/irrgamemath.h"
 namespace irrgame
 {
 	namespace io
@@ -33,9 +33,9 @@ namespace irrgame
 			return (Value != 0);
 		}
 
-		core::stringc CFloatAttribute::getString()
+		stringc CFloatAttribute::getString()
 		{
-			return core::stringc(Value);
+			return stringc(Value);
 		}
 
 		void CFloatAttribute::setInt(s32 intValue)

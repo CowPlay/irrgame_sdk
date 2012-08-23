@@ -9,8 +9,7 @@
 #define CXMLREADER_H_
 
 #include "io/xml/IXMLReader.h"
-#include "core/irrString.h"
-#include "core/irrArray.h"
+#include "core/irrgamecollections.h"
 namespace irrgame
 {
 	namespace io
@@ -22,8 +21,8 @@ namespace irrgame
 				// structure for storing attribute-name pairs
 				struct SAttribute
 				{
-						core::stringc Name;
-						core::stringc Value;
+						stringc Name;
+						stringc Value;
 				};
 
 			public:
@@ -108,7 +107,7 @@ namespace irrgame
 				const SAttribute* getAttributeByName(const c8* name) const;
 
 				// replaces xml special characters in a string and creates a new one
-				core::stringc replaceSpecialCharacters(core::stringc& origstr);
+				stringc replaceSpecialCharacters(stringc& origstr);
 
 				//! converts the text file into the desired format.
 				//! \param source: begin of the text (without byte order mark)
@@ -140,12 +139,12 @@ namespace irrgame
 				EXML_NODE_TYPE CurrentNodeType; // type of the currently parsed node
 				// source format of the xml file
 
-				core::stringc NodeName; // name of the node currently in
-				core::stringc EmptyString; // empty string to be returned by getSafe() methods
+				stringc NodeName; // name of the node currently in
+				stringc EmptyString; // empty string to be returned by getSafe() methods
 
 				bool IsEmptyElement; // is the currently parsed node empty?
 
-				core::array<core::stringc> SpecialCharacters; // see createSpecialCharacterList()
+				core::array<stringc> SpecialCharacters; // see createSpecialCharacterList()
 
 				core::array<SAttribute> Attributes; // attributes of current element
 		};

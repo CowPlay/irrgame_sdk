@@ -22,7 +22,7 @@ namespace irrgame
 			public:
 
 				//! Constructor
-				CMemoryFile(void* memory, long len, const core::stringc& fileName,
+				CMemoryFile(void* memory, long len, const stringc& fileName,
 						bool deleteMemoryWhenDropped);
 
 				//! Destructor
@@ -44,14 +44,14 @@ namespace irrgame
 				virtual long getPos() const;
 
 				//! returns name of file
-				virtual const core::stringc& getFileName() const;
+				virtual const stringc& getFileName() const;
 
 			private:
 
 				void *Buffer;
 				long Len;
 				long Pos;
-				core::stringc Filename;
+				stringc Filename;
 				bool deleteMemoryWhenDropped;
 		};
 

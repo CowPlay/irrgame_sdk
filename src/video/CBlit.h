@@ -5,7 +5,7 @@
 #ifndef _C_BLIT_H_INCLUDED_
 #define _C_BLIT_H_INCLUDED_
 
-#include "./video/videoutils.h"
+#include "video/videoutils.h"
 
 namespace irrgame
 {
@@ -41,7 +41,7 @@ namespace irrgame
 			CLIPCODE_RIGHT = 8
 		};
 
-		inline u32 GetClipCode(const AbsRectangle &r, const core::vector2di &p)
+		inline u32 GetClipCode(const AbsRectangle &r, const vector2di &p)
 		{
 			u32 code = CLIPCODE_EMPTY;
 
@@ -63,9 +63,8 @@ namespace irrgame
 		 @return: 1 if valid
 		 */
 
-		static int ClipLine(const AbsRectangle &clipping, core::vector2di &p0,
-				core::vector2di &p1, const core::vector2di& p0_in,
-				const core::vector2di& p1_in)
+		static int ClipLine(const AbsRectangle &clipping, vector2di &p0,
+				vector2di &p1, const vector2di& p0_in, const vector2di& p1_in)
 		{
 			u32 code0;
 			u32 code1;
@@ -193,8 +192,8 @@ namespace irrgame
 
 		/*
 		 */
-		static void RenderLine32_Decal(video::IImage *t,
-				const core::vector2di &p0, const core::vector2di &p1, u32 argb)
+		static void RenderLine32_Decal(video::IImage *t, const vector2di &p0,
+				const vector2di &p1, u32 argb)
 		{
 			s32 dx = p1.X - p0.X;
 			s32 dy = p1.Y - p0.Y;
@@ -258,9 +257,8 @@ namespace irrgame
 
 		/*
 		 */
-		static void RenderLine32_Blend(video::IImage *t,
-				const core::vector2di &p0, const core::vector2di &p1, u32 argb,
-				u32 alpha)
+		static void RenderLine32_Blend(IImage *t, const vector2di &p0,
+				const vector2di &p1, u32 argb, u32 alpha)
 		{
 			s32 dx = p1.X - p0.X;
 			s32 dy = p1.Y - p0.Y;
@@ -308,7 +306,7 @@ namespace irrgame
 			const u32 packA = packAlpha(alpha);
 			while (run)
 			{
-				*dst = packA | video::PixelBlend32(*dst, argb, alpha);
+				*dst = packA | PixelBlend32(*dst, argb, alpha);
 
 				dst = (u32*) ((u8*) dst + xInc);	// x += xInc
 				d += m;
@@ -325,8 +323,8 @@ namespace irrgame
 
 		/*
 		 */
-		static void RenderLine16_Decal(video::IImage *t,
-				const core::vector2di &p0, const core::vector2di &p1, u32 argb)
+		static void RenderLine16_Decal(IImage *t, const vector2di &p0,
+				const vector2di &p1, u32 argb)
 		{
 			s32 dx = p1.X - p0.X;
 			s32 dy = p1.Y - p0.Y;
@@ -390,9 +388,8 @@ namespace irrgame
 
 		/*
 		 */
-		static void RenderLine16_Blend(video::IImage *t,
-				const core::vector2di &p0, const core::vector2di &p1, u16 argb,
-				u16 alpha)
+		static void RenderLine16_Blend(IImage *t, const vector2di &p0,
+				const vector2di &p1, u16 argb, u16 alpha)
 		{
 			s32 dx = p1.X - p0.X;
 			s32 dy = p1.Y - p0.Y;
@@ -440,7 +437,7 @@ namespace irrgame
 			const u16 packA = alpha ? 0x8000 : 0;
 			while (run)
 			{
-				*dst = packA | video::PixelBlend16(*dst, argb, alpha);
+				*dst = packA | PixelBlend16(*dst, argb, alpha);
 
 				dst = (u16*) ((u8*) dst + xInc);	// x += xInc
 				d += m;
@@ -857,8 +854,8 @@ namespace irrgame
 		}
 
 		// bounce clipping to texture
-		inline void setClip(AbsRectangle &out, const core::recti *clip,
-				const video::IImage * tex, s32 passnative)
+		inline void setClip(AbsRectangle &out, const recti *clip,
+				const IImage * tex, s32 passnative)
 		{
 			if (clip && 0 == tex && passnative)
 			{
@@ -891,10 +888,9 @@ namespace irrgame
 		/*!
 		 a generic 2D Blitter
 		 */
-		static s32 Blit(eBlitter operation, video::IImage * dest,
-				const core::recti *destClipping, const core::vector2di *destPos,
-				video::IImage * const source, const core::recti *sourceClipping,
-				u32 argb)
+		static s32 Blit(eBlitter operation, IImage * dest,
+				const recti *destClipping, const vector2di *destPos,
+				IImage * const source, const recti *sourceClipping, u32 argb)
 		{
 			tExecuteBlit blitter = getBlitter2(operation, dest, source);
 			if (0 == blitter)

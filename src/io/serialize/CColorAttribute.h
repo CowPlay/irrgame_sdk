@@ -31,7 +31,7 @@ namespace irrgame
 
 				virtual void setFloat(f32 floatValue);
 
-				virtual core::stringc getString();
+				virtual stringc getString();
 
 				virtual void setString(const c8* text);
 

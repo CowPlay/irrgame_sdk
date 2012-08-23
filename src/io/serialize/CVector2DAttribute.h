@@ -18,7 +18,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CVector2DAttribute(const c8* name, core::vector2df value);
+				CVector2DAttribute(const c8* name, vector2df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

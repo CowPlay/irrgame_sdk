@@ -5,9 +5,8 @@
 #ifndef __I_XML_WRITER_H_INCLUDED__
 #define __I_XML_WRITER_H_INCLUDED__
 
-#include "core/IReferenceCounted.h"
-#include "core/irrArray.h"
-#include "core/irrString.h"
+#include "core/irrgamebase.h"
+#include "core/irrgamecollections.h"
 
 namespace irrgame
 {
@@ -59,8 +58,8 @@ namespace irrgame
 
 				//! Writes an xml element with any number of attributes
 				virtual void writeElement(const c8* name, bool empty,
-						core::array<core::stringc> &names,
-						core::array<core::stringc> &values) = 0;
+						arraystr &names,
+						arraystr &values) = 0;
 
 				//! Writes a comment into the xml file
 				virtual void writeComment(const c8* comment) = 0;

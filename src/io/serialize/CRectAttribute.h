@@ -18,7 +18,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CRectAttribute(const c8* name, core::recti value);
+				CRectAttribute(const c8* name, recti value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

@@ -5,8 +5,8 @@
 #ifndef __IRR_RECT_H_INCLUDED__
 #define __IRR_RECT_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/dimension2d.h"
+#include "core/base/irrgameTypes.h"
+#include "core/shapes/dimension2d.h"
 
 namespace irrgame
 {
@@ -282,12 +282,6 @@ namespace irrgame
 				//! Lower right corner
 				vector2d<T> LowerRightCorner;
 		};
-
-		//! Rectangle with float values
-		typedef rect<f32> rectf;
-		//! Rectangle with int values
-		typedef rect<s32> recti;
-
 	} // end namespace core
 } // end namespace irr
 

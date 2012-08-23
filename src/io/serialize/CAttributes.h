@@ -141,7 +141,7 @@ namespace irrgame
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
 				//! or 0 if attribute is not set.
-				virtual core::stringc getAttributeAsString(
+				virtual stringc getAttributeAsString(
 						const c8* attributeName);
 
 				//! Gets an attribute as string.
@@ -152,7 +152,7 @@ namespace irrgame
 
 				//! Returns attribute value as string by index.
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::stringc getAttributeAsString(s32 index);
+				virtual stringc getAttributeAsString(s32 index);
 
 				/*
 
@@ -196,29 +196,26 @@ namespace irrgame
 
 				//! Adds an attribute as wide string array
 				virtual void addArray(const c8* attributeName,
-						const core::array<core::stringc>& value);
+						const arraystr& value);
 
 				//! Sets an attribute value as a string array.
 				//! \param attributeName: Name for the attribute
 				//! \param value: Value for the attribute. Set this to 0 to delete the attribute
 				virtual void setAttribute(const c8* attributeName,
-						const core::array<core::stringc>& value);
+						const arraystr& value);
 
 				//! Sets an attribute as an array of wide strings
-				virtual void setAttribute(s32 index,
-						const core::array<core::stringc>& value);
+				virtual void setAttribute(s32 index, const arraystr& value);
 
 				//! Gets an attribute as an array of wide strings.
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
 				//! or 0 if attribute is not set.
-				virtual core::array<core::stringc> getAttributeAsArray(
-						const c8* attributeName);
+				virtual arraystr getAttributeAsArray(const c8* attributeName);
 
 				//! Returns attribute value as an array of wide strings by index.
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::array<core::stringc> getAttributeAsArray(
-						s32 index);
+				virtual arraystr getAttributeAsArray(s32 index);
 
 				/*
 
@@ -295,13 +292,12 @@ namespace irrgame
 				//! Gets the list of enumeration literals of an enumeration attribute
 				//! \param attributeName: Name of the attribute to get.
 				virtual void getAttributeEnumerationLiteralsOfEnumeration(
-						const c8* attributeName,
-						core::array<core::stringc>& outLiterals);
+						const c8* attributeName, arraystr& outLiterals);
 
 				//! Gets the list of enumeration literals of an enumeration attribute
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
 				virtual void getAttributeEnumerationLiteralsOfEnumeration(
-						s32 index, core::array<core::stringc>& outLiterals);
+						s32 index, arraystr& outLiterals);
 
 				/*
 
@@ -365,24 +361,24 @@ namespace irrgame
 
 				//! Adds an attribute as 3d vector
 				virtual void addVector2d(const c8* attributeName,
-						core::vector2df value);
+						vector2df value);
 
 				//! Sets a attribute as 2d vector
 				virtual void setAttribute(const c8* attributeName,
-						core::vector2df v);
+						vector2df v);
 
 				//! Sets an attribute as vector
-				virtual void setAttribute(s32 index, core::vector2df v);
+				virtual void setAttribute(s32 index, vector2df v);
 
 				//! Gets an attribute as 2d vector
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::vector2df getAttributeAsVector2d(
+				virtual vector2df getAttributeAsVector2d(
 						const c8* attributeName);
 
 				//! Gets an attribute as 2d vector
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::vector2df getAttributeAsVector2d(s32 index);
+				virtual vector2df getAttributeAsVector2d(s32 index);
 
 				/*
 
@@ -392,24 +388,23 @@ namespace irrgame
 
 				//! Adds an attribute as 3d vector
 				virtual void addVector3d(const c8* attributeName,
-						core::vector3df value);
+						vector3df value);
 
 				//! Sets an attribute as 3d vector
-				virtual void setAttribute(s32 index, core::vector3df v);
+				virtual void setAttribute(s32 index, vector3df v);
 
 				//! Sets a attribute as 3d vector
-				virtual void setAttribute(const c8* attributeName,
-						core::vector3df v);
+				virtual void setAttribute(const c8* attributeName, vector3df v);
 
 				//! Gets an attribute as 3d vector
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::vector3df getAttributeAsVector3d(
+				virtual vector3df getAttributeAsVector3d(
 						const c8* attributeName);
 
 				//! Gets an attribute as 3d vector
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::vector3df getAttributeAsVector3d(s32 index);
+				virtual vector3df getAttributeAsVector3d(s32 index);
 
 				/*
 
@@ -418,24 +413,22 @@ namespace irrgame
 				 */
 
 				//! Adds an attribute as rectangle
-				virtual void addRect(const c8* attributeName,
-						core::recti value);
+				virtual void addRect(const c8* attributeName, recti value);
 
 				//! Sets an attribute as rectangle
-				virtual void setAttribute(const c8* attributeName,
-						core::recti v);
+				virtual void setAttribute(const c8* attributeName, recti v);
 
 				//! Sets an attribute as rectangle
-				virtual void setAttribute(s32 index, core::recti v);
+				virtual void setAttribute(s32 index, recti v);
 
 				//! Gets an attribute as rectangle
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::recti getAttributeAsRect(const c8* attributeName);
+				virtual recti getAttributeAsRect(const c8* attributeName);
 
 				//! Gets an attribute as rectangle
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::recti getAttributeAsRect(s32 index);
+				virtual recti getAttributeAsRect(s32 index);
 
 				/*
 
@@ -445,24 +438,24 @@ namespace irrgame
 
 				//! Adds an attribute as dimension2d
 				virtual void addDimension2d(const c8* attributeName,
-						core::dimension2df value);
+						dimension2df value);
 
 				//! Sets an attribute as rectangle
 				virtual void setAttribute(const c8* attributeName,
-						core::dimension2df v);
+						dimension2df v);
 
 				//! Sets an attribute as dimension2d
-				virtual void setAttribute(s32 index, core::dimension2df v);
+				virtual void setAttribute(s32 index, dimension2df v);
 
 				//! Gets an attribute as dimension2d
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::dimension2df getAttributeAsDimension2d(
+				virtual dimension2df getAttributeAsDimension2d(
 						const c8* attributeName);
 
 				//! Gets an attribute as dimension2d
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::dimension2df getAttributeAsDimension2d(s32 index);
+				virtual dimension2df getAttributeAsDimension2d(s32 index);
 
 				/*
 
@@ -472,24 +465,23 @@ namespace irrgame
 
 				//! Adds an attribute as matrix
 				virtual void addMatrix(const c8* attributeName,
-						const core::matrix4& v);
+						const matrix4& v);
 
 				//! Sets an attribute as matrix
 				virtual void setAttribute(const c8* attributeName,
-						const core::matrix4& v);
+						const matrix4& v);
 
 				//! Gets an attribute as a matrix4
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::matrix4 getAttributeAsMatrix(
-						const c8* attributeName);
+				virtual matrix4 getAttributeAsMatrix(const c8* attributeName);
 
 				//! Gets an attribute as matrix
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::matrix4 getAttributeAsMatrix(s32 index);
+				virtual matrix4 getAttributeAsMatrix(s32 index);
 
 				//! Sets an attribute as matrix
-				virtual void setAttribute(s32 index, const core::matrix4& v);
+				virtual void setAttribute(s32 index, const matrix4& v);
 
 				/*
 
@@ -525,25 +517,22 @@ namespace irrgame
 				 */
 
 				//! Adds an attribute as axis aligned bounding box
-				virtual void addBox3d(const c8* attributeName,
-						core::aabbox3df v);
+				virtual void addBox3d(const c8* attributeName, aabbox3df v);
 
 				//! Sets an attribute as axis aligned bounding box
-				virtual void setAttribute(const c8* attributeName,
-						core::aabbox3df v);
+				virtual void setAttribute(const c8* attributeName, aabbox3df v);
 
 				//! Sets an attribute as axis aligned bounding box
-				virtual void setAttribute(s32 index, core::aabbox3df v);
+				virtual void setAttribute(s32 index, aabbox3df v);
 
 				//! Gets an attribute as a axis aligned bounding box
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::aabbox3df getAttributeAsBox3d(
-						const c8* attributeName);
+				virtual aabbox3df getAttributeAsBox3d(const c8* attributeName);
 
 				//! Gets an attribute as axis aligned bounding box
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::aabbox3df getAttributeAsBox3d(s32 index);
+				virtual aabbox3df getAttributeAsBox3d(s32 index);
 
 				/*
 
@@ -552,25 +541,23 @@ namespace irrgame
 				 */
 
 				//! Adds an attribute as 3d plane
-				virtual void addPlane3d(const c8* attributeName,
-						core::plane3df v);
+				virtual void addPlane3d(const c8* attributeName, plane3df v);
 
 				//! Sets an attribute as 3d plane
-				virtual void setAttribute(const c8* attributeName,
-						core::plane3df v);
+				virtual void setAttribute(const c8* attributeName, plane3df v);
 
 				//! Sets an attribute as 3d plane
-				virtual void setAttribute(s32 index, core::plane3df v);
+				virtual void setAttribute(s32 index, plane3df v);
 
 				//! Gets an attribute as a 3d plane
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::plane3df getAttributeAsPlane3d(
+				virtual plane3df getAttributeAsPlane3d(
 						const c8* attributeName);
 
 				//! Gets an attribute as 3d plane
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::plane3df getAttributeAsPlane3d(s32 index);
+				virtual plane3df getAttributeAsPlane3d(s32 index);
 
 				/*
 
@@ -580,24 +567,24 @@ namespace irrgame
 
 				//! Adds an attribute as 3d triangle
 				virtual void addTriangle3d(const c8* attributeName,
-						core::triangle3df v);
+						triangle3df v);
 
 				//! Sets an attribute as 3d trianle
 				virtual void setAttribute(const c8* attributeName,
-						core::triangle3df v);
+						triangle3df v);
 
 				//! Sets an attribute as 3d triangle
-				virtual void setAttribute(s32 index, core::triangle3df v);
+				virtual void setAttribute(s32 index, triangle3df v);
 
 				//! Gets an attribute as a 3d triangle
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::triangle3df getAttributeAsTriangle3d(
+				virtual triangle3df getAttributeAsTriangle3d(
 						const c8* attributeName);
 
 				//! Gets an attribute as 3d triangle
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::triangle3df getAttributeAsTriangle3d(s32 index);
+				virtual triangle3df getAttributeAsTriangle3d(s32 index);
 
 				/*
 
@@ -606,25 +593,22 @@ namespace irrgame
 				 */
 
 				//! Adds an attribute as a 2d line
-				virtual void addLine2d(const c8* attributeName,
-						core::line2df v);
+				virtual void addLine2d(const c8* attributeName, line2df v);
 
 				//! Sets an attribute as a 2d line
-				virtual void setAttribute(const c8* attributeName,
-						core::line2df v);
+				virtual void setAttribute(const c8* attributeName, line2df v);
 
 				//! Gets an attribute as a 2d line
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::line2df getAttributeAsLine2d(
-						const c8* attributeName);
+				virtual line2df getAttributeAsLine2d(const c8* attributeName);
 
 				//! Gets an attribute as a 2d line
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::line2df getAttributeAsLine2d(s32 index);
+				virtual line2df getAttributeAsLine2d(s32 index);
 
 				//! Sets an attribute as a 2d line
-				virtual void setAttribute(s32 index, core::line2df v);
+				virtual void setAttribute(s32 index, line2df v);
 
 				/*
 
@@ -633,25 +617,22 @@ namespace irrgame
 				 */
 
 				//! Adds an attribute as a 3d line
-				virtual void addLine3d(const c8* attributeName,
-						core::line3df v);
+				virtual void addLine3d(const c8* attributeName, line3df v);
 
 				//! Sets an attribute as a 3d line
-				virtual void setAttribute(const c8* attributeName,
-						core::line3df v);
+				virtual void setAttribute(const c8* attributeName, line3df v);
 
 				//! Sets an attribute as a 3d line
-				virtual void setAttribute(s32 index, core::line3df v);
+				virtual void setAttribute(s32 index, line3df v);
 
 				//! Gets an attribute as a 3d line
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual core::line3df getAttributeAsLine3d(
-						const c8* attributeName);
+				virtual line3df getAttributeAsLine3d(const c8* attributeName);
 
 				//! Gets an attribute as a 3d line
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual core::line3df getAttributeAsLine3d(s32 index);
+				virtual line3df getAttributeAsLine3d(s32 index);
 
 			protected:
 

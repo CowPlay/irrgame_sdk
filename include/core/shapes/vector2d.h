@@ -5,8 +5,8 @@
 #ifndef __IRR_POINT_2D_H_INCLUDED__
 #define __IRR_POINT_2D_H_INCLUDED__
 
-#include "irrMath.h"
-#include "dimension2d.h"
+#include "core/math/irrMath.h"
+#include "core/shapes/dimension2d.h"
 
 namespace irrgame
 {
@@ -460,12 +460,6 @@ namespace irrgame
 				//! Y coordinate of vector.
 				T Y;
 		};
-
-		//! Typedef for f32 2d vector.
-		typedef vector2d<f32> vector2df;
-
-		//! Typedef for integer 2d vector.
-		typedef vector2d<s32> vector2di;
 
 		template<class S, class T>
 		vector2d<T> operator*(const S scalar, const vector2d<T>& vector)

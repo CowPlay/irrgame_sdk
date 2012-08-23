@@ -12,7 +12,7 @@ namespace irrgame
 
 		//! Default constructor
 		CDimension2dAttribute::CDimension2dAttribute(const c8* name,
-				core::dimension2df value) :
+				dimension2df value) :
 				CNumbersAttribute(name, value)
 		{
 		}

@@ -15,14 +15,19 @@ namespace irrgame
 {
 	namespace io
 	{
-		//! Currently used FileSystemType
-		EFileSystemType IFileSystem::FileSystemType;
 
-		//! WorkingDirectory for Native and Virtual filesystems
-		core::stringc IFileSystem::WorkingDirectory[2];
+		//! Singleton realization
+		IFileSystem& IFileSystem::getInstance()
+		{
+			static IFileSystem instance;
+			return instance;
+		}
 
-		//! currently attached Archives
-		core::array<IFileArchive*> IFileSystem::FileArchives;
+		//! Default constructor. Should use only one time.
+		IFileSystem::IFileSystem() :
+				FileSystemType(FILESYSTEM_NATIVE)
+		{
+		}
 
 		//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
 		/** See IXMLReader for more information on how to use the parser.
@@ -30,12 +35,11 @@ namespace irrgame
 		 IXMLReader is returned. After use, the reader
 		 has to be deleted using its IXMLReader::drop() method.
 		 See IReferenceCounted::drop() for more information. */
-		IXMLReader* IFileSystem::createXMLReader(const core::stringc& filename)
+		IXMLReader* IFileSystem::createXMLReader(const stringc& filename)
 		{
 			// Create the file using an absolute path so that it matches
 			// the scheme used by CNullDriver::getTexture().
-			IReadFile * file = createReadFile(
-					IFileSystem::getAbsolutePath(filename));
+			IReadFile * file = createReadFile(this->getAbsolutePath(filename));
 
 			IXMLReader* reader = irrgame::io::createXMLReader(file);
 
@@ -58,7 +62,7 @@ namespace irrgame
 		}
 
 		//! Creates a XML Writer from a file.
-		IXMLWriter* IFileSystem::createXMLWriter(const core::stringc& filename)
+		IXMLWriter* IFileSystem::createXMLWriter(const stringc& filename)
 		{
 			IWriteFile* file = createWriteFile(filename);
 
@@ -77,15 +81,15 @@ namespace irrgame
 		}
 
 		//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-		core::stringc& IFileSystem::flattenFilename(core::stringc& directory,
-				const core::stringc& root)
+		stringc& IFileSystem::flattenFilename(stringc& directory,
+				const stringc& root)
 		{
 			directory.replace('\\', '/');
 			if (directory.lastChar() != '/')
 				directory.append('/');
 
-			core::stringc dir;
-			core::stringc subdir;
+			stringc dir;
+			stringc subdir;
 
 			s32 lastpos = 0;
 			s32 pos = 0;
@@ -125,14 +129,14 @@ namespace irrgame
 		}
 
 		//! opens a file for read access
-		IReadFile* IFileSystem::createReadFile(const core::stringc& filename)
+		IReadFile* IFileSystem::createReadFile(const stringc& filename)
 		{
 			return io::createReadFile(filename);
 		}
 
 		//! Creates an IReadFile interface for treating memory like a file.
 		IReadFile* IFileSystem::createMemoryReadFile(void* memory, s32 len,
-				const core::stringc& fileName, bool deleteMemoryWhenDropped)
+				const stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			return io::createMemoryReadFile(memory, len, fileName,
 					deleteMemoryWhenDropped);
@@ -140,7 +144,7 @@ namespace irrgame
 
 		//! Creates an IReadFile interface for reading files inside files
 		IReadFile* IFileSystem::createLimitReadFile(
-				const core::stringc& fileName, IReadFile* alreadyOpenedFile,
+				const stringc& fileName, IReadFile* alreadyOpenedFile,
 				long pos, long areaSize)
 		{
 			return io::createLimitReadFile(fileName, alreadyOpenedFile, pos,
@@ -149,14 +153,14 @@ namespace irrgame
 
 		//! Creates an IReadFile interface for treating memory like a file.
 		IWriteFile* IFileSystem::createMemoryWriteFile(void* memory, s32 len,
-				const core::stringc& fileName, bool deleteMemoryWhenDropped)
+				const stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			return io::createMemoryWriteFile(memory, len, fileName,
 					deleteMemoryWhenDropped);
 		}
 
 		//! Opens a file for write access.
-		IWriteFile* IFileSystem::createWriteFile(const core::stringc& filename,
+		IWriteFile* IFileSystem::createWriteFile(const stringc& filename,
 				bool append)
 		{
 			return io::createWriteFile(filename, append);

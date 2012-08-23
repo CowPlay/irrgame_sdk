@@ -5,8 +5,6 @@
 #ifndef __I_FILE_SYSTEM_H_INCLUDED__
 #define __I_FILE_SYSTEM_H_INCLUDED__
 
-#include "core/IReferenceCounted.h"
-#include "core/irrArray.h"
 #include "io/xml/IXMLReader.h"
 #include "io/xml/IXMLWriter.h"
 #include "io/SPath.h"
@@ -30,7 +28,20 @@ namespace irrgame
 		 as file on disk, using the IFileSystem makes no difference to this. */
 		class IFileSystem: public virtual IReferenceCounted
 		{
-				//! Static methods
+			public:
+				//! Singleton realization
+				static IFileSystem& getInstance();
+
+			private:
+				//! Default constructor. Should use only one time.
+				IFileSystem();
+
+				//! Copy constructor. Do not implement.
+				IFileSystem(const IFileSystem& root);
+
+				//! Override equal operator. Do not implement.
+				const IFileSystem& operator=(IFileSystem&);
+
 			public:
 				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
 				/** See IXMLReader for more information on how to use the parser.
@@ -38,8 +49,7 @@ namespace irrgame
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReader::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				static IXMLReader* createXMLReader(
-						const core::stringc& filename);
+				IXMLReader* createXMLReader(const stringc& filename);
 
 				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
 				/** See IXMLReader for more information on how to use the parser.
@@ -47,41 +57,38 @@ namespace irrgame
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReader::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				static IXMLReader* createXMLReader(IReadFile* file);
+				IXMLReader* createXMLReader(IReadFile* file);
 
 				//! Creates a XML Writer from a file.
 				/** \return 0, if file could not be opened, otherwise a pointer to the created
 				 IXMLWriter is returned. After use, the reader
 				 has to be deleted using its IXMLWriter::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				static IXMLWriter* createXMLWriter(
-						const core::stringc& filename);
+				IXMLWriter* createXMLWriter(const stringc& filename);
 
 				//! Creates a XML Writer from a file.
 				/** \return 0, if file could not be opened, otherwise a pointer to the created
 				 IXMLWriter is returned. After use, the reader
 				 has to be deleted using its IXMLWriter::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				static IXMLWriter* createXMLWriter(IWriteFile* file);
+				IXMLWriter* createXMLWriter(IWriteFile* file);
 
 				//! Converts a relative path to an absolute (unique) path, resolving symbolic links if required
 				//! Platform dependies
 				/** \param filename Possibly relative file or directory name to query.
 				 \result Absolute filename which points to the same file. */
-				static core::stringc getAbsolutePath(
-						const core::stringc& filename);
+				stringc getAbsolutePath(const stringc& filename);
 
 				//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-				static core::stringc& flattenFilename(core::stringc& directory,
-						const core::stringc& root = "/");
+				stringc& flattenFilename(stringc& directory,
+						const stringc& root = "/");
 
 				//! Opens a file for read access. File should be exists.
 				/** \param filename: Name of file to open.
 				 \return Returns a pointer to the created file interface.
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information. */
-				static IReadFile* createReadFile(
-						const core::stringc& filename);
+				IReadFile* createReadFile(const stringc& filename);
 
 				//! Creates an IReadFile interface for accessing memory like a file.
 				/** This allows you to use a pointer to memory where an IReadFile is requested.
@@ -94,9 +101,9 @@ namespace irrgame
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information.
 				 */
-				static IReadFile* createMemoryReadFile(void* memory, s32 len,
-						const core::stringc& fileName,
-						bool deleteMemoryWhenDropped = false);
+				IReadFile* createMemoryReadFile(void* memory, s32 len,
+						const stringc& fileName, bool deleteMemoryWhenDropped =
+								false);
 
 				//! Creates an IReadFile interface for accessing files inside files.
 				/** This is useful e.g. for archives.
@@ -108,8 +115,7 @@ namespace irrgame
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information.
 				 */
-				static IReadFile* createLimitReadFile(
-						const core::stringc& fileName,
+				IReadFile* createLimitReadFile(const stringc& fileName,
 						IReadFile* alreadyOpenedFile, long pos, long areaSize);
 
 				//! Creates an IWriteFile interface for accessing memory like a file.
@@ -124,9 +130,9 @@ namespace irrgame
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information.
 				 */
-				static IWriteFile* createMemoryWriteFile(void* memory, s32 len,
-						const core::stringc& fileName,
-						bool deleteMemoryWhenDropped = false);
+				IWriteFile* createMemoryWriteFile(void* memory, s32 len,
+						const stringc& fileName, bool deleteMemoryWhenDropped =
+								false);
 
 				//! Opens a file for write access.
 				/** \param filename: Name of file to open.
@@ -135,54 +141,52 @@ namespace irrgame
 				 \return Returns a pointer to the created file interface
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information. */
-				static IWriteFile* createWriteFile(
-						const core::stringc& filename, bool append = false);
+				IWriteFile* createWriteFile(const stringc& filename,
+						bool append = false);
 
 				//! Get the current working directory.
 				/** \return Current working directory as a string. */
 				//! Platform dependies
-				static const core::stringc& getWorkingDirectory();
+				const stringc& getWorkingDirectory();
 
 				//! Changes the current working directory.
 				/** \param newDirectory: A string specifying the new working directory.
 				 The string is operating system dependent. Under Windows it has
 				 the form "<drive>:\<directory>\<sudirectory>\<..>". An example would be: "C:\Windows\"
 				 \return True if successful, otherwise false. */
-				static bool changeWorkingDirectoryTo(
-						const core::stringc& value);
+				bool changeWorkingDirectoryTo(const stringc& value);
 
 				//! Determines if a file exists and could be opened.
 				/** \param filename is the string identifying the file which should be tested for existence.
 				 \return Returns true if file exists, and false if it does not exist or an error occured. */
-				static bool existFile(const core::stringc& filename);
+				bool existFile(const stringc& filename);
 
 				//! Creates a list of files and directories in the current working directory and returns it.
 				/** \return a Pointer to the created IFileList is returned. After the list has been used
 				 it has to be deleted using its IFileList::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				static IFileList* createFileList();
+				IFileList* createFileList();
 
 				//! Creates a new empty collection of attributes, usable for serialization and more.
 				/** Can be null to prevent automatic texture loading by attributes.
 				 \return Pointer to the created object.
 				 If you no longer need the object, you should call IAttributes::drop().
 				 See IReferenceCounted::drop() for more information. */
-				static IAttributes* createEmptyAttributes();
+				IAttributes* createEmptyAttributes();
 
 			protected:
 
 				//! Currently used FileSystemType
-				static EFileSystemType FileSystemType;
+				EFileSystemType FileSystemType;
 
 				//! WorkingDirectory for Native and Virtual filesystems
-				static core::stringc WorkingDirectory[2];
+				stringc WorkingDirectory[2];
 
 				//				//! currently attached ArchiveLoaders
-				//				core::array<IArchiveLoader*> ArchiveLoader;
+				//				array<IArchiveLoader*> ArchiveLoader;
 
 				//! currently attached Archives
-				static core::array<IFileArchive*> FileArchives;
-
+				core::array<IFileArchive*> FileArchives;
 
 //				//! Adds an archive to the file system.
 //				/** After calling this, the Irrlicht Engine will also search and open
@@ -337,10 +341,6 @@ namespace irrgame
 //
 //
 		};
-
-		//! IFileSystem creator. Internal function. Please do not use.
-		IFileSystem* createFileSystem();
-
 	} // end namespace io
 } // end namespace irr
 

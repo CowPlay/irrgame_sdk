@@ -20,7 +20,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CLine3dAttribute(const c8* name, core::line3df value);
+				CLine3dAttribute(const c8* name, line3df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

@@ -22,7 +22,7 @@ namespace irrgame
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 
-				virtual core::matrix4 getMatrix();
+				virtual matrix4 getMatrix();
 
 				virtual const c8* getTypeString() const;
 

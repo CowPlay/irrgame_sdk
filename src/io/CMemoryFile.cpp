@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CMemoryFile.h"
-#include "./core/irrString.h"
+#include "core/irrgamecollections.h"
 
 namespace irrgame
 {
@@ -11,7 +11,7 @@ namespace irrgame
 	{
 
 		CMemoryFile::CMemoryFile(void* memory, long len,
-				const core::stringc& fileName, bool d) :
+				const stringc& fileName, bool d) :
 				Buffer(memory), Len(len), Pos(0), Filename(fileName), deleteMemoryWhenDropped(
 						d)
 		{
@@ -104,14 +104,14 @@ namespace irrgame
 		}
 
 		//! returns name of file
-		const core::stringc& CMemoryFile::getFileName() const
+		const stringc& CMemoryFile::getFileName() const
 		{
 			return Filename;
 		}
 
 		//! Internal function, please do not use.
 		IReadFile* createMemoryReadFile(void* memory, long size,
-				const core::stringc& fileName, bool deleteMemoryWhenDropped)
+				const stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			return new CMemoryFile(memory, size, fileName,
 					deleteMemoryWhenDropped);
@@ -119,7 +119,7 @@ namespace irrgame
 
 		//! Internal function, please do not use.
 		IWriteFile* createMemoryWriteFile(void* memory, long size,
-				const core::stringc& fileName, bool deleteMemoryWhenDropped)
+				const stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			return new CMemoryFile(memory, size, fileName,
 					deleteMemoryWhenDropped);

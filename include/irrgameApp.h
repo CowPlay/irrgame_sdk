@@ -8,12 +8,12 @@
 #ifndef IRRGAMEAPPLICATION_H_
 #define IRRGAMEAPPLICATION_H_
 
-#include "core/IReferenceCounted.h"
+#include "core/irrgamebase.h"
 namespace irrgame
 {
 	class irrgamePlayer;
 
-	class irrgameApp : public IReferenceCounted
+	class irrgameApp: public IReferenceCounted
 	{
 
 		public:
@@ -22,11 +22,12 @@ namespace irrgame
 			{
 			}
 
-			irrgameApp(irrgamePlayer* player);
+			//! Default constructor
+//			irrgameApp(irrgamePlayer* player);
 
 			virtual void run() = 0;
 
-			void onApplicationSuspend();
+//			virtual void onApplicationSuspend() = 0;
 
 	};
 }

@@ -5,8 +5,8 @@
 #ifndef __IRR_PLANE_3D_H_INCLUDED__
 #define __IRR_PLANE_3D_H_INCLUDED__
 
-#include "core/irrMath.h"
-#include "core/vector3d.h"
+#include "core/math/irrMath.h"
+#include "core/shapes/vector3d.h"
 
 namespace irrgame
 {
@@ -260,13 +260,6 @@ namespace irrgame
 				//! Distance from origin.
 				T D;
 		};
-
-		//! Typedef for a f32 3d plane.
-		typedef plane3d<f32> plane3df;
-
-		//! Typedef for an integer 3d plane.
-		typedef plane3d<s32> plane3di;
-
 	} // end namespace core
 } // end namespace irr
 

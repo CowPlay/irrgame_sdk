@@ -23,7 +23,7 @@ namespace irrgame
 			return EAT_QUATERNION;
 		}
 
-		core::matrix4 CQuaternionAttribute::getMatrix()
+		matrix4 CQuaternionAttribute::getMatrix()
 		{
 			return getQuaternion().getMatrix();
 		}

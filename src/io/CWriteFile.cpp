@@ -14,8 +14,8 @@ namespace irrgame
 			return i;
 		}
 
-		CWriteFile::CWriteFile(const core::stringc& fileName, bool append) :
-				FileSize(0), Filename(fileName)
+		CWriteFile::CWriteFile(const stringc& fileName, bool append) :
+				File(0), FileSize(0), Filename(fileName)
 		{
 #ifdef DEBUG
 			setDebugName("CWriteFile");
@@ -67,13 +67,13 @@ namespace irrgame
 		}
 
 		//! returns name of file
-		const core::stringc& CWriteFile::getFileName() const
+		const stringc& CWriteFile::getFileName() const
 		{
 			return Filename;
 		}
 
 		//! Internal function, please do not use.
-		IWriteFile* createWriteFile(const core::stringc& fileName, bool append)
+		IWriteFile* createWriteFile(const stringc& fileName, bool append)
 		{
 			return new CWriteFile(fileName, append);
 		}

@@ -27,6 +27,7 @@
 #include "io/serialize/CVector3DAttribute.h"
 #include "io/serialize/CQuaternionAttribute.h"
 
+#include "irrgameConstants.h"
 namespace irrgame
 {
 	namespace io
@@ -136,7 +137,7 @@ namespace irrgame
 
 			clear();
 
-			core::stringc elementName = "attributes";
+			stringc elementName = XML_TAG_ATTRIBUTES;
 
 			if (nonDefaultElementName)
 				elementName = nonDefaultElementName;
@@ -175,7 +176,7 @@ namespace irrgame
 			if (writeXMLHeader)
 				writer->writeXMLHeader();
 
-			core::stringc elementName = "attributes";
+			stringc elementName = XML_TAG_ATTRIBUTES;
 
 			if (nonDefaultElementName)
 				elementName = nonDefaultElementName;
@@ -188,29 +189,25 @@ namespace irrgame
 			{
 				if (Attributes[i]->getType() == EAT_STRINGARRAY)
 				{
-					core::array<core::stringc> arraynames, arrayvalues;
-					core::array<core::stringc> arrayinput =
-							Attributes[i]->getArray();
+					arraystr arraynames, arrayvalues;
+					arraystr arrayinput = Attributes[i]->getArray();
 
 					// build arrays
 
 					// name
-					arraynames.push_back(core::stringc("name"));
-					arrayvalues.push_back(
-							core::stringc(Attributes[i]->Name.c_str()));
+					arraynames.push_back(stringc("name"));
+					arrayvalues.push_back(stringc(Attributes[i]->Name.c_str()));
 
 					// count
-					arraynames.push_back(core::stringc("count"));
-					arrayvalues.push_back(
-							core::stringc((s32) arrayinput.size()));
+					arraynames.push_back(stringc("count"));
+					arrayvalues.push_back(stringc((s32) arrayinput.size()));
 
 					// array...
 					u32 n = 0;
-					const core::stringc tmpName("value");
+					const stringc tmpName("value");
 					for (; n < arrayinput.size(); ++n)
 					{
-						arraynames.push_back(
-								(tmpName + core::stringc(n)).c_str());
+						arraynames.push_back((tmpName + stringc(n)).c_str());
 						arrayvalues.push_back(arrayinput[n]);
 					}
 
@@ -222,7 +219,7 @@ namespace irrgame
 				{
 					writer->writeElement(Attributes[i]->getTypeString(), true,
 							"name",
-							core::stringc(Attributes[i]->Name.c_str()).c_str(),
+							stringc(Attributes[i]->Name.c_str()).c_str(),
 							"value", Attributes[i]->getString().c_str());
 				}
 
@@ -237,8 +234,8 @@ namespace irrgame
 		{
 			IRR_ASSERT(reader != 0);
 
-			core::stringc element = reader->getNodeName();
-			core::stringc name = reader->getAttributeValue("name");
+			stringc element = reader->getNodeName();
+			stringc name = reader->getAttributeValue("name");
 
 			if (element == "int")
 			{
@@ -266,16 +263,16 @@ namespace irrgame
 			}
 			else if (element == "stringarray")
 			{
-				core::array<core::stringc> tmpArray;
+				arraystr tmpArray;
 
 				s32 count = reader->getAttributeValueAsInt("count");
 				s32 n = 0;
-				const core::stringc tmpName("value");
+				const stringc tmpName("value");
 				for (; n < count; ++n)
 				{
 					tmpArray.push_back(
 							reader->getAttributeValue(
-									(tmpName + core::stringc(n)).c_str()));
+									(tmpName + stringc(n)).c_str()));
 				}
 				addArray(name.c_str(), tmpArray);
 			}
@@ -305,31 +302,31 @@ namespace irrgame
 			}
 			else if (element == "vector2d")
 			{
-				addVector2d(name.c_str(), core::vector2df());
+				addVector2d(name.c_str(), vector2df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "vector3d")
 			{
-				addVector3d(name.c_str(), core::vector3df());
+				addVector3d(name.c_str(), vector3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "rect")
 			{
-				addRect(name.c_str(), core::recti());
+				addRect(name.c_str(), recti());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "dimension2d")
 			{
-				addDimension2d(name.c_str(), core::dimension2df());
+				addDimension2d(name.c_str(), dimension2df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "matrix")
 			{
-				addMatrix(name.c_str(), core::matrix4());
+				addMatrix(name.c_str(), matrix4());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
@@ -341,31 +338,31 @@ namespace irrgame
 			}
 			else if (element == "box3d")
 			{
-				addBox3d(name.c_str(), core::aabbox3df());
+				addBox3d(name.c_str(), aabbox3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "plane")
 			{
-				addPlane3d(name.c_str(), core::plane3df());
+				addPlane3d(name.c_str(), plane3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "triangle")
 			{
-				addTriangle3d(name.c_str(), core::triangle3df());
+				addTriangle3d(name.c_str(), triangle3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "line2d")
 			{
-				addLine2d(name.c_str(), core::line2df());
+				addLine2d(name.c_str(), line2df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "line3d")
 			{
-				addLine3d(name.c_str(), core::line3df());
+				addLine3d(name.c_str(), line3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
@@ -515,7 +512,7 @@ namespace irrgame
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setStringAttribute()
 		//! or 0 if attribute is not set.
-		core::stringc CAttributes::getAttributeAsString(const c8* attributeName)
+		stringc CAttributes::getAttributeAsString(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -533,14 +530,14 @@ namespace irrgame
 
 			IRR_ASSERT(att != 0);
 
-			core::stringc str = att->getString();
+			stringc str = att->getString();
 
 			strcpy(out, str.c_str());
 		}
 
 		//! Returns string attribute value by index.
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		core::stringc CAttributes::getAttributeAsString(s32 index)
+		stringc CAttributes::getAttributeAsString(s32 index)
 		{
 			return Attributes[index]->getString();
 		}
@@ -614,7 +611,7 @@ namespace irrgame
 
 		//! Adds an attribute as an array of wide strings
 		void CAttributes::addArray(const c8* attributeName,
-				const core::array<core::stringc>& value)
+				const arraystr& value)
 		{
 			Attributes.push_back(
 					new CStringArrayAttribute(attributeName, value));
@@ -622,7 +619,7 @@ namespace irrgame
 
 		//! Sets an attribute value as an array of strings.
 		void CAttributes::setAttribute(const c8* attributeName,
-				const core::array<core::stringc>& value)
+				const arraystr& value)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -634,15 +631,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as an array of wide strings
-		void CAttributes::setAttribute(s32 index,
-				const core::array<core::stringc>& value)
+		void CAttributes::setAttribute(s32 index, const arraystr& value)
 		{
 			Attributes[index]->setArray(value);
 		}
 
 		//! Gets an attribute as an array of  strings.
-		core::array<core::stringc> CAttributes::getAttributeAsArray(
-				const c8* attributeName)
+		arraystr CAttributes::getAttributeAsArray(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -652,7 +647,7 @@ namespace irrgame
 		}
 
 		//! Returns attribute value as an array of wide strings by index.
-		core::array<core::stringc> CAttributes::getAttributeAsArray(s32 index)
+		arraystr CAttributes::getAttributeAsArray(s32 index)
 		{
 			return Attributes[index]->getArray();
 		}
@@ -819,8 +814,7 @@ namespace irrgame
 		//! Gets the list of enumeration literals of an enumeration attribute
 		//! \param attributeName: Name of the attribute to get.
 		void CAttributes::getAttributeEnumerationLiteralsOfEnumeration(
-				const c8* attributeName,
-				core::array<core::stringc>& outLiterals)
+				const c8* attributeName, arraystr& outLiterals)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -834,7 +828,7 @@ namespace irrgame
 		//! Gets the list of enumeration literals of an enumeration attribute
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
 		void CAttributes::getAttributeEnumerationLiteralsOfEnumeration(
-				s32 index, core::array<core::stringc>& outLiterals)
+				s32 index, arraystr& outLiterals)
 		{
 			IRR_ASSERT(Attributes[index]->getType() != EAT_ENUM);
 
@@ -949,21 +943,19 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as 3d vector
-		void CAttributes::addVector2d(const c8* attributeName,
-				core::vector2df value)
+		void CAttributes::addVector2d(const c8* attributeName, vector2df value)
 		{
 			Attributes.push_back(new CVector2DAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as vector
-		void CAttributes::setAttribute(s32 index, core::vector2df v)
+		void CAttributes::setAttribute(s32 index, vector2df v)
 		{
 			Attributes[index]->setVector2d(v);
 		}
 
 		//! Sets a attribute as 2d vector
-		void CAttributes::setAttribute(const c8* attributeName,
-				core::vector2df value)
+		void CAttributes::setAttribute(const c8* attributeName, vector2df value)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -977,8 +969,7 @@ namespace irrgame
 		//! Gets an attribute as vector
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setAttribute()
-		core::vector2df CAttributes::getAttributeAsVector2d(
-				const c8* attributeName)
+		vector2df CAttributes::getAttributeAsVector2d(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -989,7 +980,7 @@ namespace irrgame
 
 		//! Gets an attribute as 3d vector
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		core::vector2df CAttributes::getAttributeAsVector2d(s32 index)
+		vector2df CAttributes::getAttributeAsVector2d(s32 index)
 		{
 			return Attributes[index]->getVector2d();
 		}
@@ -1001,21 +992,19 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as 3d vector
-		void CAttributes::addVector3d(const c8* attributeName,
-				core::vector3df value)
+		void CAttributes::addVector3d(const c8* attributeName, vector3df value)
 		{
 			Attributes.push_back(new CVector3DAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as vector
-		void CAttributes::setAttribute(s32 index, core::vector3df v)
+		void CAttributes::setAttribute(s32 index, vector3df v)
 		{
 			Attributes[index]->setVector3d(v);
 		}
 
 		//! Sets a attribute as 3d vector
-		void CAttributes::setAttribute(const c8* attributeName,
-				core::vector3df value)
+		void CAttributes::setAttribute(const c8* attributeName, vector3df value)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1029,8 +1018,7 @@ namespace irrgame
 		//! Gets an attribute as vector
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setAttribute()
-		core::vector3df CAttributes::getAttributeAsVector3d(
-				const c8* attributeName)
+		vector3df CAttributes::getAttributeAsVector3d(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1041,7 +1029,7 @@ namespace irrgame
 
 		//! Gets an attribute as 3d vector
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		core::vector3df CAttributes::getAttributeAsVector3d(s32 index)
+		vector3df CAttributes::getAttributeAsVector3d(s32 index)
 		{
 			return Attributes[index]->getVector3d();
 		}
@@ -1053,14 +1041,13 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as rectangle
-		void CAttributes::addRect(const c8* attributeName, core::recti value)
+		void CAttributes::addRect(const c8* attributeName, recti value)
 		{
 			Attributes.push_back(new CRectAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as rectangle
-		void CAttributes::setAttribute(const c8* attributeName,
-				core::recti value)
+		void CAttributes::setAttribute(const c8* attributeName, recti value)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1071,14 +1058,14 @@ namespace irrgame
 		}
 
 		//! Sets a attribute as rectangle
-		void CAttributes::setAttribute(s32 index, core::recti v)
+		void CAttributes::setAttribute(s32 index, recti v)
 		{
 			Attributes[index]->setRect(v);
 		}
 
 		//! Gets an attribute as rectangle
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		core::recti CAttributes::getAttributeAsRect(s32 index)
+		recti CAttributes::getAttributeAsRect(s32 index)
 		{
 			return Attributes[index]->getRect();
 		}
@@ -1086,7 +1073,7 @@ namespace irrgame
 		//! Gets an attribute as rectangle
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setAttribute()
-		core::recti CAttributes::getAttributeAsRect(const c8* attributeName)
+		recti CAttributes::getAttributeAsRect(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1103,7 +1090,7 @@ namespace irrgame
 
 		//! Adds an attribute as dimension2d
 		void CAttributes::addDimension2d(const c8* attributeName,
-				core::dimension2df value)
+				dimension2df value)
 		{
 			Attributes.push_back(
 					new CDimension2dAttribute(attributeName, value));
@@ -1111,7 +1098,7 @@ namespace irrgame
 
 		//! Sets an attribute as rectangle
 		void CAttributes::setAttribute(const c8* attributeName,
-				core::dimension2df value)
+				dimension2df value)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1123,7 +1110,7 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as dimension2d
-		void CAttributes::setAttribute(s32 index, core::dimension2df v)
+		void CAttributes::setAttribute(s32 index, dimension2df v)
 		{
 			Attributes[index]->setDimension2d(v);
 		}
@@ -1131,7 +1118,7 @@ namespace irrgame
 		//! Gets an attribute as dimension2d
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setAttribute()
-		core::dimension2df CAttributes::getAttributeAsDimension2d(
+		dimension2df CAttributes::getAttributeAsDimension2d(
 				const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
@@ -1143,7 +1130,7 @@ namespace irrgame
 
 		//! Gets an attribute as dimension2d
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		core::dimension2df CAttributes::getAttributeAsDimension2d(s32 index)
+		dimension2df CAttributes::getAttributeAsDimension2d(s32 index)
 		{
 			return Attributes[index]->getDimension2d();
 		}
@@ -1155,15 +1142,14 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as matrix
-		void CAttributes::addMatrix(const c8* attributeName,
-				const core::matrix4& v)
+		void CAttributes::addMatrix(const c8* attributeName, const matrix4& v)
 		{
 			Attributes.push_back(new CMatrixAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as matrix
 		void CAttributes::setAttribute(const c8* attributeName,
-				const core::matrix4& v)
+				const matrix4& v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 			if (att)
@@ -1173,13 +1159,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as matrix
-		void CAttributes::setAttribute(s32 index, const core::matrix4& v)
+		void CAttributes::setAttribute(s32 index, const matrix4& v)
 		{
 			Attributes[index]->setMatrix(v);
 		}
 
 		//! Gets an attribute as a matrix4
-		core::matrix4 CAttributes::getAttributeAsMatrix(const c8* attributeName)
+		matrix4 CAttributes::getAttributeAsMatrix(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1189,7 +1175,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as matrix
-		core::matrix4 CAttributes::getAttributeAsMatrix(s32 index)
+		matrix4 CAttributes::getAttributeAsMatrix(s32 index)
 		{
 			return Attributes[index]->getMatrix();
 		}
@@ -1252,14 +1238,13 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as axis aligned bounding box
-		void CAttributes::addBox3d(const c8* attributeName, core::aabbox3df v)
+		void CAttributes::addBox3d(const c8* attributeName, aabbox3df v)
 		{
 			Attributes.push_back(new CBBoxAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as axis aligned bounding box
-		void CAttributes::setAttribute(const c8* attributeName,
-				core::aabbox3df v)
+		void CAttributes::setAttribute(const c8* attributeName, aabbox3df v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1270,14 +1255,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as axis aligned bounding box
-		void CAttributes::setAttribute(s32 index, core::aabbox3df v)
+		void CAttributes::setAttribute(s32 index, aabbox3df v)
 		{
 			Attributes[index]->setBBox(v);
 		}
 
 		//! Gets an attribute as a axis aligned bounding box
-		core::aabbox3df CAttributes::getAttributeAsBox3d(
-				const c8* attributeName)
+		aabbox3df CAttributes::getAttributeAsBox3d(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1287,7 +1271,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as axis aligned bounding box
-		core::aabbox3df CAttributes::getAttributeAsBox3d(s32 index)
+		aabbox3df CAttributes::getAttributeAsBox3d(s32 index)
 		{
 			return Attributes[index]->getBBox();
 		}
@@ -1299,14 +1283,13 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as 3d plane
-		void CAttributes::addPlane3d(const c8* attributeName, core::plane3df v)
+		void CAttributes::addPlane3d(const c8* attributeName, plane3df v)
 		{
 			Attributes.push_back(new CPlaneAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as 3d plane
-		void CAttributes::setAttribute(const c8* attributeName,
-				core::plane3df v)
+		void CAttributes::setAttribute(const c8* attributeName, plane3df v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1318,14 +1301,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as 3d plane
-		void CAttributes::setAttribute(s32 index, core::plane3df v)
+		void CAttributes::setAttribute(s32 index, plane3df v)
 		{
 			Attributes[index]->setPlane(v);
 		}
 
 		//! Gets an attribute as a 3d plane
-		core::plane3df CAttributes::getAttributeAsPlane3d(
-				const c8* attributeName)
+		plane3df CAttributes::getAttributeAsPlane3d(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1335,7 +1317,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as 3d plane
-		core::plane3df CAttributes::getAttributeAsPlane3d(s32 index)
+		plane3df CAttributes::getAttributeAsPlane3d(s32 index)
 		{
 			return Attributes[index]->getPlane();
 		}
@@ -1347,15 +1329,13 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as 3d triangle
-		void CAttributes::addTriangle3d(const c8* attributeName,
-				core::triangle3df v)
+		void CAttributes::addTriangle3d(const c8* attributeName, triangle3df v)
 		{
 			Attributes.push_back(new CTriangleAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as 3d triangle
-		void CAttributes::setAttribute(const c8* attributeName,
-				core::triangle3df v)
+		void CAttributes::setAttribute(const c8* attributeName, triangle3df v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1366,13 +1346,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as 3d triangle
-		void CAttributes::setAttribute(s32 index, core::triangle3df v)
+		void CAttributes::setAttribute(s32 index, triangle3df v)
 		{
 			Attributes[index]->setTriangle(v);
 		}
 
 		//! Gets an attribute as a 3d triangle
-		core::triangle3df CAttributes::getAttributeAsTriangle3d(
+		triangle3df CAttributes::getAttributeAsTriangle3d(
 				const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
@@ -1383,7 +1363,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as 3d triangle
-		core::triangle3df CAttributes::getAttributeAsTriangle3d(s32 index)
+		triangle3df CAttributes::getAttributeAsTriangle3d(s32 index)
 		{
 			return Attributes[index]->getTriangle();
 		}
@@ -1395,13 +1375,13 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as a 2d line
-		void CAttributes::addLine2d(const c8* attributeName, core::line2df v)
+		void CAttributes::addLine2d(const c8* attributeName, line2df v)
 		{
 			Attributes.push_back(new CLine2dAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as a 2d line
-		void CAttributes::setAttribute(const c8* attributeName, core::line2df v)
+		void CAttributes::setAttribute(const c8* attributeName, line2df v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1412,13 +1392,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as a 2d line
-		void CAttributes::setAttribute(s32 index, core::line2df v)
+		void CAttributes::setAttribute(s32 index, line2df v)
 		{
 			Attributes[index]->setLine2d(v);
 		}
 
 		//! Gets an attribute as a 2d line
-		core::line2df CAttributes::getAttributeAsLine2d(const c8* attributeName)
+		line2df CAttributes::getAttributeAsLine2d(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1428,7 +1408,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as a 2d line
-		core::line2df CAttributes::getAttributeAsLine2d(s32 index)
+		line2df CAttributes::getAttributeAsLine2d(s32 index)
 		{
 			return Attributes[index]->getLine2d();
 		}
@@ -1440,13 +1420,13 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as a 3d line
-		void CAttributes::addLine3d(const c8* attributeName, core::line3df v)
+		void CAttributes::addLine3d(const c8* attributeName, line3df v)
 		{
 			Attributes.push_back(new CLine3dAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as a 3d line
-		void CAttributes::setAttribute(const c8* attributeName, core::line3df v)
+		void CAttributes::setAttribute(const c8* attributeName, line3df v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1457,13 +1437,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as a 3d line
-		void CAttributes::setAttribute(s32 index, core::line3df v)
+		void CAttributes::setAttribute(s32 index, line3df v)
 		{
 			Attributes[index]->setLine3d(v);
 		}
 
 		//! Gets an attribute as a 3d line
-		core::line3df CAttributes::getAttributeAsLine3d(const c8* attributeName)
+		line3df CAttributes::getAttributeAsLine3d(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1473,7 +1453,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as a 3d line
-		core::line3df CAttributes::getAttributeAsLine3d(s32 index)
+		line3df CAttributes::getAttributeAsLine3d(s32 index)
 		{
 			return Attributes[index]->getLine3d();
 		}

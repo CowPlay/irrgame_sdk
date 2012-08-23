@@ -5,9 +5,10 @@
 #ifndef __IRR_STRING_H_INCLUDED__
 #define __IRR_STRING_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/irrAllocator.h"
-#include "core/irrMath.h"
+
+#include "core/base/irrAllocator.h"
+#include "core/math/irrMath.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,7 +17,6 @@ namespace irrgame
 {
 	namespace core
 	{
-
 		//! Very simple string class with some useful features.
 		/** string<c8> and string<wchar_t> both accept Unicode AND ASCII/Latin-1,
 		 so you can assign Unicode to string<c8> and ASCII/Latin-1 to string<wchar_t>
@@ -1083,10 +1083,6 @@ namespace irrgame
 				u32 used;
 				TAlloc allocator;
 		};
-
-		//! Typedef for character strings
-		typedef string<c8> stringc;
-
 	} // end namespace core
 } // end namespace irr
 

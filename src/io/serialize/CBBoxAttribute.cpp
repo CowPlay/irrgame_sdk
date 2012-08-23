@@ -12,7 +12,7 @@ namespace irrgame
 	{
 
 		//! Default constructor
-		CBBoxAttribute::CBBoxAttribute(const c8* name, core::aabbox3df value) :
+		CBBoxAttribute::CBBoxAttribute(const c8* name, aabbox3df value) :
 				CNumbersAttribute(name, value)
 		{
 		}

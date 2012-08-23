@@ -11,7 +11,7 @@ namespace irrgame
 	namespace io
 	{
 		//! Default constructor
-		CLine3dAttribute::CLine3dAttribute(const c8* name, core::line3df value) :
+		CLine3dAttribute::CLine3dAttribute(const c8* name, line3df value) :
 				CNumbersAttribute(name, value)
 		{
 		}

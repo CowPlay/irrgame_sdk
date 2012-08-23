@@ -7,7 +7,7 @@
 #include "CXMLReader.h"
 #include "io/IReadFile.h"
 #include "io/ioutil.h"
-#include "core/fast_atof.h"
+#include "core/irrgamemath.h"
 namespace irrgame
 {
 	namespace io
@@ -282,7 +282,7 @@ namespace irrgame
 
 			IRR_ASSERT(attr != 0);
 
-			core::stringc c = attr->Value.c_str();
+			stringc c = attr->Value.c_str();
 			return core::fast_atof(c.c_str());
 		}
 
@@ -293,7 +293,7 @@ namespace irrgame
 
 			IRR_ASSERT(sizeof(attrvalue) > 0);
 
-			core::stringc c = attrvalue;
+			stringc c = attrvalue;
 			return core::fast_atof(c.c_str());
 		}
 
@@ -375,7 +375,7 @@ namespace irrgame
 			}
 
 			// set current text to the parsed text, and replace xml special characters
-			core::stringc s(start, (int) (end - start));
+			stringc s(start, (int) (end - start));
 			NodeName = replaceSpecialCharacters(s);
 
 			// current XML node type is text
@@ -418,7 +418,7 @@ namespace irrgame
 			}
 
 			P -= 3;
-			NodeName = core::stringc(pCommentBegin + 2,
+			NodeName = stringc(pCommentBegin + 2,
 					(int) (P - pCommentBegin - 2));
 			P += 3;
 		}
@@ -482,10 +482,10 @@ namespace irrgame
 						++P;
 
 						SAttribute attr;
-						attr.Name = core::stringc(attributeNameBegin,
+						attr.Name = stringc(attributeNameBegin,
 								(int) (attributeNameEnd - attributeNameBegin));
 
-						core::stringc s(attributeValueBegin,
+						stringc s(attributeValueBegin,
 								(int) (attributeValueEnd - attributeValueBegin));
 
 						attr.Value = replaceSpecialCharacters(s);
@@ -509,7 +509,7 @@ namespace irrgame
 				endName--;
 			}
 
-			NodeName = core::stringc(startName, (int) (endName - startName));
+			NodeName = stringc(startName, (int) (endName - startName));
 
 			++P;
 		}
@@ -527,7 +527,7 @@ namespace irrgame
 			while (*P != '>')
 				++P;
 
-			NodeName = core::stringc(pBeginClose, (int) (P - pBeginClose));
+			NodeName = stringc(pBeginClose, (int) (P - pBeginClose));
 			++P;
 		}
 
@@ -565,7 +565,7 @@ namespace irrgame
 			}
 
 			if (cDataEnd)
-				NodeName = core::stringc(cDataBegin,
+				NodeName = stringc(cDataBegin,
 						(int) (cDataEnd - cDataBegin));
 			else
 				NodeName = "";
@@ -579,7 +579,7 @@ namespace irrgame
 		{
 			IRR_ASSERT(sizeof(name) > 0);
 
-			core::stringc n = name;
+			stringc n = name;
 
 			for (int i = 0; i < (int) Attributes.size(); ++i)
 				if (Attributes[i].Name == n)
@@ -589,8 +589,8 @@ namespace irrgame
 		}
 
 		// replaces xml special characters in a string and creates a new one
-		core::stringc CXMLReader::replaceSpecialCharacters(
-				core::stringc& origstr)
+		stringc CXMLReader::replaceSpecialCharacters(
+				stringc& origstr)
 		{
 			int pos = origstr.findFirst('&');
 			int oldPos = 0;
@@ -598,7 +598,7 @@ namespace irrgame
 			if (pos == -1)
 				return origstr;
 
-			core::stringc newstr;
+			stringc newstr;
 
 			while (pos != -1 && pos < (int) origstr.size() - 2)
 			{

@@ -19,7 +19,7 @@ namespace irrgame
 		{
 			public:
 				//! Default constructor
-				CPlaneAttribute(const c8* name, core::plane3df value);
+				CPlaneAttribute(const c8* name, plane3df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

@@ -5,10 +5,10 @@
 #ifndef __IRR_TRIANGLE_3D_H_INCLUDED__
 #define __IRR_TRIANGLE_3D_H_INCLUDED__
 
-#include "core/vector3d.h"
-#include "core/line3d.h"
-#include "core/plane3d.h"
-#include "core/aabbox3d.h"
+#include "core/shapes/vector3d.h"
+#include "core/shapes/line3d.h"
+#include "core/shapes/plane3d.h"
+#include "core/shapes/aabbox3d.h"
 
 namespace irrgame
 {
@@ -258,13 +258,6 @@ namespace irrgame
 					return (cp1.dotProduct(cp2) >= 0.0f);
 				}
 		};
-
-		//! Typedef for a f32 3d triangle.
-		typedef triangle3d<f32> triangle3df;
-
-		//! Typedef for an integer 3d triangle.
-		typedef triangle3d<s32> triangle3di;
-
 	} // end namespace core
 } // end namespace irr
 

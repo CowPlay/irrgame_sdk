@@ -7,7 +7,7 @@
 
 #ifndef IBYTESWAP_H_
 #define IBYTESWAP_H_
-#include "./core/irrgameTypes.h"
+#include "core/base/irrgameTypes.h"
 
 namespace irrgame
 {
@@ -31,11 +31,6 @@ namespace irrgame
 				static u8 byteswap(u8 num);
 
 				static c8 byteswap(c8 num);
-
-//			protected:
-//				virtual ~IByteSwap()	//for disable warning
-//				{
-//				}
 		};
 
 	}

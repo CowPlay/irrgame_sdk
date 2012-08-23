@@ -5,17 +5,14 @@
 #ifndef __IRR_ARRAY_H_INCLUDED__
 #define __IRR_ARRAY_H_INCLUDED__
 
-#include "irrgameTypes.h"
-#include "heapsort.h"
-#include "irrAllocator.h"
-#include "irrMath.h"
-
+#include "core/base/irrAllocator.h"
+#include "core/math/irrMath.h"
+#include "core/math/heapsort.h"
 #include "stdio.h"
 namespace irrgame
 {
 	namespace core
 	{
-
 		//! Self reallocating template array (like stl vector) with additional features.
 		/** Some features are: Heap sorting, binary search methods, easier debugging.
 		 */

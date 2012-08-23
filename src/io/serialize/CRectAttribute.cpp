@@ -11,7 +11,7 @@ namespace irrgame
 	{
 
 		//! Default constructor
-		CRectAttribute::CRectAttribute(const c8* name, core::recti value) :
+		CRectAttribute::CRectAttribute(const c8* name, recti value) :
 				CNumbersAttribute(name, value)
 		{
 		}

@@ -20,7 +20,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CBBoxAttribute(const c8* name, core::aabbox3df value);
+				CBBoxAttribute(const c8* name, aabbox3df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

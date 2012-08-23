@@ -12,8 +12,7 @@ namespace irrgame
 	{
 
 		//! Default constructor
-		CLine2dAttribute::CLine2dAttribute(const char* name,
-				core::line2df value) :
+		CLine2dAttribute::CLine2dAttribute(const c8* name, line2df value) :
 				CNumbersAttribute(name, value)
 		{
 		}

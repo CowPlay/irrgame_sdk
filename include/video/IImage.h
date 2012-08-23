@@ -12,11 +12,10 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#include "./core/IReferenceCounted.h"
-#include "./video/EColorFormat.h"
-#include "./core/vector2d.h"
-#include "./core/rect.h"
-#include "./video/SColor.h"
+#include "core/irrgamebase.h"
+#include "video/EColorFormat.h"
+#include "core/irrgameshapes.h"
+#include "video/SColor.h"
 
 namespace irrgame
 {
@@ -44,7 +43,7 @@ namespace irrgame
 				virtual void unlock() = 0;
 
 				//! Returns width and height of image data.
-				virtual const core::dimension2d<u32>& getDimension() const = 0;
+				virtual const dimension2du& getDimension() const = 0;
 
 				//! Returns bits per pixel.
 				virtual u32 getBitsPerPixel() const = 0;
@@ -91,19 +90,17 @@ namespace irrgame
 				virtual void copyToScaling(IImage* target) =0;
 
 				//! copies this surface into another
-				virtual void copyTo(IImage* target, const core::vector2di& pos =
-						core::vector2di(0, 0)) =0;
+				virtual void copyTo(IImage* target, const vector2di& pos =
+						vector2di(0, 0)) =0;
 
 				//! copies this surface into another
-				virtual void copyTo(IImage* target, const core::vector2di& pos,
-						const core::rect<s32>& sourceRect,
-						const core::rect<s32>* clipRect = 0) =0;
+				virtual void copyTo(IImage* target, const vector2di& pos,
+						const recti& sourceRect, const recti* clipRect = 0) =0;
 
 				//! copies this surface into another, using the alpha mask, an cliprect and a color to add with
 				virtual void copyToWithAlpha(IImage* target,
-						const core::vector2di& pos,
-						const core::rect<s32>& sourceRect, const SColor &color,
-						const core::rect<s32>* clipRect = 0) =0;
+						const vector2di& pos, const recti& sourceRect,
+						const SColor &color, const recti* clipRect = 0) =0;
 
 				//! copies this surface into another, scaling it to fit, appyling a box filter
 				virtual void copyToScalingBoxFilter(IImage* target,

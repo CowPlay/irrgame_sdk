@@ -5,7 +5,7 @@
 #ifndef __IRR_POINT_3D_H_INCLUDED__
 #define __IRR_POINT_3D_H_INCLUDED__
 
-#include "irrMath.h"
+#include "core/math/irrMath.h"
 
 namespace irrgame
 {
@@ -565,12 +565,6 @@ namespace irrgame
 			Z /= val;
 			return *this;
 		}
-
-		//! Typedef for a f32 3d vector.
-		typedef vector3d<f32> vector3df;
-
-		//! Typedef for an integer 3d vector.
-		typedef vector3d<s32> vector3di;
 
 		//! Function multiplying a scalar and a vector component-wise.
 		template<class S, class T>

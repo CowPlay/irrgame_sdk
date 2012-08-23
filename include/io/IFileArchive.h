@@ -51,7 +51,7 @@ namespace irrgame
 				 \return Returns A pointer to the created file on success,
 				 or 0 on failure. */
 				virtual IReadFile* createAndOpenFile(
-						const core::stringc& filename) = 0;
+						const stringc& filename) = 0;
 
 				//! Opens a file based on its position in the file list.
 				/** Creates and returns
@@ -76,7 +76,7 @@ namespace irrgame
 				 avoid single access patterns to this place, and hence allow some more
 				 obscurity.
 				 */
-				core::stringc Password;
+				stringc Password;
 		};
 	} // end namespace io
 } // end namespace irr

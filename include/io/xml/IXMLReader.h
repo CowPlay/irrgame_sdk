@@ -5,8 +5,7 @@
 #ifndef IRRXMLREADER_H_
 #define IRRXMLREADER_H_
 #include "EXmlNodeTypes.h"
-#include "core/irrgameTypes.h"
-#include "core/IReferenceCounted.h"
+#include "core/irrgamebase.h"
 namespace irrgame
 {
 	namespace io

@@ -8,8 +8,9 @@
 #ifndef IRRGAMEPLAYER_H_
 #define IRRGAMEPLAYER_H_
 
-#include "core/IReferenceCounted.h"
+#include "core/irrgamebase.h"
 #include "io/SPath.h"
+#include "io/config/IPlayerConfigReader.h"
 #include "irrgameApp.h"
 
 namespace irrgame
@@ -30,10 +31,7 @@ namespace irrgame
 			{
 			}
 
-			//!
-			virtual void readConfig(const core::stringc& file) = 0;
-
-			virtual io::IFileSystem* getFileSystem() = 0;
+			virtual io::IPlayerConfigReader* getConfigReader() = 0;
 
 			//			virtual void run(irrgameApp* application) = 0;
 

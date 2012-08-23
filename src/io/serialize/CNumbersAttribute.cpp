@@ -5,7 +5,7 @@
  *      Author: gregorytkach
  */
 #include "CNumbersAttribute.h"
-#include "core/fast_atof.h"
+#include "core/irrgamemath.h"
 namespace irrgame
 {
 	namespace io
@@ -35,8 +35,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for vector3df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::vector3df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, vector3df value) :
 				ValueI(), ValueF(), Count(3), IsFloat(true)
 		{
 			Name = name;
@@ -46,7 +45,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for recti list
-		CNumbersAttribute::CNumbersAttribute(const c8* name, core::recti value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, recti value) :
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
@@ -57,7 +56,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for rectf list
-		CNumbersAttribute::CNumbersAttribute(const c8* name, core::rectf value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, rectf value) :
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
@@ -68,8 +67,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for matrix4 list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::matrix4 value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, matrix4 value) :
 				ValueI(), ValueF(), Count(16), IsFloat(true)
 		{
 			Name = name;
@@ -79,8 +77,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for quaternion list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::quaternion value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, core::quaternion value) :
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
@@ -91,8 +88,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for aabbox3df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::aabbox3df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, aabbox3df value) :
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
@@ -105,8 +101,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for plane3df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::plane3df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, plane3df value) :
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
@@ -117,8 +112,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for triangle3df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::triangle3df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, triangle3df value) :
 				ValueI(), ValueF(), Count(9), IsFloat(true)
 		{
 			Name = name;
@@ -134,8 +128,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for vector2df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::vector2df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, vector2df value) :
 				ValueI(), ValueF(), Count(2), IsFloat(true)
 		{
 			Name = name;
@@ -144,8 +137,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for line2di list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::line2di value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, line2di value) :
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
@@ -156,8 +148,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for line2df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::line2df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, line2df value) :
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
@@ -168,8 +159,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for line3df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::line3df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, line3df value) :
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
@@ -182,8 +172,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for dimension2du list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::dimension2du value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, dimension2du value) :
 				ValueI(), ValueF(), Count(2), IsFloat(false)
 		{
 			Name = name;
@@ -192,8 +181,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for dimension2df list
-		CNumbersAttribute::CNumbersAttribute(const c8* name,
-				core::dimension2df value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, dimension2df value) :
 				ValueI(), ValueF(), Count(2), IsFloat(true)
 		{
 			Name = name;
@@ -233,9 +221,9 @@ namespace irrgame
 			return ret;
 		}
 
-		core::stringc CNumbersAttribute::getString()
+		stringc CNumbersAttribute::getString()
 		{
-			core::stringc outstr;
+			stringc outstr;
 
 			for (u32 i = 0; i < Count; ++i)
 			{
@@ -247,9 +235,9 @@ namespace irrgame
 			return outstr;
 		}
 
-		core::vector2df CNumbersAttribute::getVector2d()
+		vector2df CNumbersAttribute::getVector2d()
 		{
-			core::vector2df v;
+			vector2df v;
 
 			if (IsFloat)
 			{
@@ -266,9 +254,9 @@ namespace irrgame
 			return v;
 		}
 
-		core::vector3df CNumbersAttribute::getVector3d()
+		vector3df CNumbersAttribute::getVector3d()
 		{
-			core::vector3df v;
+			vector3df v;
 
 			if (IsFloat)
 			{
@@ -316,9 +304,9 @@ namespace irrgame
 			return getColorf().toSColor();
 		}
 
-		core::recti CNumbersAttribute::getRect()
+		recti CNumbersAttribute::getRect()
 		{
-			core::recti r;
+			recti r;
 
 			if (IsFloat)
 			{
@@ -341,9 +329,9 @@ namespace irrgame
 			return r;
 		}
 
-		core::matrix4 CNumbersAttribute::getMatrix()
+		matrix4 CNumbersAttribute::getMatrix()
 		{
-			core::matrix4 ret;
+			matrix4 ret;
 			if (IsFloat)
 			{
 				for (u32 r = 0; r < 4; ++r)
@@ -381,9 +369,9 @@ namespace irrgame
 			return ret;
 		}
 
-		core::triangle3df CNumbersAttribute::getTriangle()
+		triangle3df CNumbersAttribute::getTriangle()
 		{
-			core::triangle3df ret;
+			triangle3df ret;
 
 			if (IsFloat)
 			{
@@ -413,9 +401,9 @@ namespace irrgame
 			return ret;
 		}
 
-		core::plane3df CNumbersAttribute::getPlane()
+		plane3df CNumbersAttribute::getPlane()
 		{
-			core::plane3df ret;
+			plane3df ret;
 
 			if (IsFloat)
 			{
@@ -435,9 +423,9 @@ namespace irrgame
 			return ret;
 		}
 
-		core::aabbox3df CNumbersAttribute::getBBox()
+		aabbox3df CNumbersAttribute::getBBox()
 		{
-			core::aabbox3df ret;
+			aabbox3df ret;
 			if (IsFloat)
 			{
 				ret.MinEdge.X = Count > 0 ? ValueF[0] : 0.0f;
@@ -460,9 +448,9 @@ namespace irrgame
 
 		}
 
-		core::line2df CNumbersAttribute::getLine2d()
+		line2df CNumbersAttribute::getLine2d()
 		{
-			core::line2df ret;
+			line2df ret;
 			if (IsFloat)
 			{
 				ret.start.X = Count > 0 ? ValueF[0] : 0.0f;
@@ -480,9 +468,9 @@ namespace irrgame
 			return ret;
 		}
 
-		core::line3df CNumbersAttribute::getLine3d()
+		line3df CNumbersAttribute::getLine3d()
 		{
-			core::line3df ret;
+			line3df ret;
 			if (IsFloat)
 			{
 				ret.start.X = Count > 0 ? ValueF[0] : 0.0f;
@@ -505,7 +493,7 @@ namespace irrgame
 		}
 
 		//! get float array
-		core::array<f32> CNumbersAttribute::getFloatArray()
+		arrayf CNumbersAttribute::getFloatArray()
 		{
 			if (!IsFloat)
 			{
@@ -518,7 +506,7 @@ namespace irrgame
 		}
 
 		//! get int array
-		core::array<s32> CNumbersAttribute::getIntArray()
+		arrayi CNumbersAttribute::getIntArray()
 		{
 			if (IsFloat)
 			{
@@ -598,7 +586,7 @@ namespace irrgame
 			//}
 		}
 
-		void CNumbersAttribute::setVector2d(core::vector2df v)
+		void CNumbersAttribute::setVector2d(vector2df v)
 		{
 			reset();
 			if (IsFloat)
@@ -617,7 +605,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setVector3d(core::vector3df v)
+		void CNumbersAttribute::setVector3d(vector3df v)
 		{
 			reset();
 			if (IsFloat)
@@ -695,7 +683,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setRect(core::recti value)
+		void CNumbersAttribute::setRect(recti value)
 		{
 			reset();
 			if (IsFloat)
@@ -722,7 +710,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setMatrix(core::matrix4 value)
+		void CNumbersAttribute::setMatrix(matrix4 value)
 		{
 			reset();
 			if (IsFloat)
@@ -768,7 +756,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setBoundingBox(core::aabbox3d<f32> value)
+		void CNumbersAttribute::setBoundingBox(aabbox3df value)
 		{
 			reset();
 			if (IsFloat)
@@ -803,7 +791,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setPlane(core::plane3df value)
+		void CNumbersAttribute::setPlane(plane3df value)
 		{
 			reset();
 			if (IsFloat)
@@ -830,7 +818,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setTriangle3d(core::triangle3df value)
+		void CNumbersAttribute::setTriangle3d(triangle3df value)
 		{
 			reset();
 			if (IsFloat)
@@ -877,7 +865,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setLine2d(core::line2di v)
+		void CNumbersAttribute::setLine2d(line2di v)
 		{
 			reset();
 			if (IsFloat)
@@ -904,7 +892,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setLine2d(core::line2df v)
+		void CNumbersAttribute::setLine2d(line2df v)
 		{
 			reset();
 			if (IsFloat)
@@ -931,7 +919,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setDimension2d(core::dimension2du v)
+		void CNumbersAttribute::setDimension2d(dimension2du v)
 		{
 			reset();
 			if (IsFloat)
@@ -951,7 +939,7 @@ namespace irrgame
 		}
 
 		//! set float array
-		void CNumbersAttribute::setFloatArray(core::array<f32> &vals)
+		void CNumbersAttribute::setFloatArray(arrayf &vals)
 		{
 			reset();
 
@@ -965,7 +953,7 @@ namespace irrgame
 		}
 
 		//! set int array
-		void CNumbersAttribute::setIntArray(core::array<s32> &vals)
+		void CNumbersAttribute::setIntArray(arrayi &vals)
 		{
 			reset();
 

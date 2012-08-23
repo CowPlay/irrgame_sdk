@@ -12,7 +12,7 @@ namespace irrgame
 	namespace io
 	{
 
-		CMatrixAttribute::CMatrixAttribute(const c8* name, core::matrix4 value) :
+		CMatrixAttribute::CMatrixAttribute(const c8* name, matrix4 value) :
 				CNumbersAttribute(name, value)
 		{
 		}

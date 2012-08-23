@@ -37,8 +37,8 @@ namespace irrgame
 
 				//! Writes an xml element with any number of attributes
 				virtual void writeElement(const c8* name, bool empty,
-						core::array<core::stringc> &names,
-						core::array<core::stringc> &values);
+						arraystr &names,
+						arraystr &values);
 
 				//! Writes a comment into the xml file
 				virtual void writeComment(const c8* comment);

@@ -59,7 +59,7 @@ namespace irrgame
 			return (getInt() != 0); // does not make a lot of sense, I know
 		}
 
-		core::stringc CEnumAttribute::getString()
+		stringc CEnumAttribute::getString()
 		{
 			return Value;
 		}
@@ -76,7 +76,6 @@ namespace irrgame
 		{
 			setInt((s32) floatValue);
 		}
-
 
 		void CEnumAttribute::setString(const c8* text)
 		{

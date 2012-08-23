@@ -6,12 +6,12 @@
 #define __IRR_MATH_H_INCLUDED__
 
 #include "irrgamesdkCompileConfig.h"
-#include "irrgameTypes.h"
+#include "core/base/irrgameTypes.h"
+
 #include <math.h>
 #include <float.h>
 #include <stdlib.h> // for abs() etc.
 #include <limits.h> // For INT_MAX / UINT_MAX
-
 //TODO: review
 //#define IRRLICHT_FAST_MATH
 
@@ -278,6 +278,7 @@ namespace irrgame
 #define	F32_A_GREATER_B(a,b)	((a) > (b))
 #endif
 
+		//TODO:move to compileconfig
 #ifndef REALINLINE
 #ifdef _MSC_VER
 #define REALINLINE __forceinline
@@ -392,173 +393,173 @@ namespace irrgame
 			// One Newtown-Raphson Iteration:
 			// f(i+1) = 2 * rcpss(f) - f * rcpss(f) * rcpss(f)
 			f32 rec;
-		__asm rcpss xmm0, f			// xmm0 = rcpss(f)
-		__asm movss xmm1, f// xmm1 = f
-		__asm mulss xmm1, xmm0// xmm1 = f * rcpss(f)
-		__asm mulss xmm1, xmm0// xmm2 = f * rcpss(f) * rcpss(f)
-		__asm addss xmm0, xmm0// xmm0 = 2 * rcpss(f)
-		__asm subss xmm0, xmm1// xmm0 = 2 * rcpss(f)
-							  //        - f * rcpss(f) * rcpss(f)
-		__asm movss rec, xmm0 // return xmm0
-		return rec;
+			__asm rcpss xmm0, f// xmm0 = rcpss(f)
+			__asm movss xmm1, f// xmm1 = f
+			__asm mulss xmm1, xmm0// xmm1 = f * rcpss(f)
+			__asm mulss xmm1, xmm0// xmm2 = f * rcpss(f) * rcpss(f)
+			__asm addss xmm0, xmm0// xmm0 = 2 * rcpss(f)
+			__asm subss xmm0, xmm1// xmm0 = 2 * rcpss(f)
+								  //        - f * rcpss(f) * rcpss(f)
+			__asm movss rec, xmm0 // return xmm0
+			return rec;
 
-							  //! i do not divide through 0.. (fpu expection)
-							  // instead set f to a high value to get a return value near zero..
-							  // -1000000000000.f.. is use minus to stay negative..
-							  // must test's here (plane.normal dot anything ) checks on <= 0.f
-							  //u32 x = (-(AIR(f) != 0 ) >> 31 ) & ( IR(f) ^ 0xd368d4a5 ) ^ 0xd368d4a5;
-							  //return 1.f / FR ( x );
+								  //! i do not divide through 0.. (fpu expection)
+								  // instead set f to a high value to get a return value near zero..
+								  // -1000000000000.f.. is use minus to stay negative..
+								  // must test's here (plane.normal dot anything ) checks on <= 0.f
+								  //u32 x = (-(AIR(f) != 0 ) >> 31 ) & ( IR(f) ^ 0xd368d4a5 ) ^ 0xd368d4a5;
+								  //return 1.f / FR ( x );
 
 #else // no fast math
-		return 1.f / f;
+			return 1.f / f;
 #endif
-	}
+		}
 
-	// calculate: 1 / x, low precision allowed
-	REALINLINE f32 reciprocal_approxim(const f32 f)
-	{
+		// calculate: 1 / x, low precision allowed
+		REALINLINE f32 reciprocal_approxim(const f32 f)
+		{
 #if defined( IRRLICHT_FAST_MATH)
 
-		// SSE Newton-Raphson reciprocal estimate, accurate to 23 significant
-		// bi ts of the mantissa
-		// One Newtown-Raphson Iteration:
-		// f(i+1) = 2 * rcpss(f) - f * rcpss(f) * rcpss(f)
-		f32 rec;
-	__asm rcpss xmm0, f			// xmm0 = rcpss(f)
-	__asm movss xmm1, f// xmm1 = f
-	__asm mulss xmm1, xmm0// xmm1 = f * rcpss(f)
-	__asm mulss xmm1, xmm0// xmm2 = f * rcpss(f) * rcpss(f)
-	__asm addss xmm0, xmm0// xmm0 = 2 * rcpss(f)
-	__asm subss xmm0, xmm1// xmm0 = 2 * rcpss(f)
-						  //        - f * rcpss(f) * rcpss(f)
-	__asm movss rec, xmm0 // return xmm0
-	return rec;
+			// SSE Newton-Raphson reciprocal estimate, accurate to 23 significant
+			// bi ts of the mantissa
+			// One Newtown-Raphson Iteration:
+			// f(i+1) = 2 * rcpss(f) - f * rcpss(f) * rcpss(f)
+			f32 rec;
+			__asm rcpss xmm0, f// xmm0 = rcpss(f)
+			__asm movss xmm1, f// xmm1 = f
+			__asm mulss xmm1, xmm0// xmm1 = f * rcpss(f)
+			__asm mulss xmm1, xmm0// xmm2 = f * rcpss(f) * rcpss(f)
+			__asm addss xmm0, xmm0// xmm0 = 2 * rcpss(f)
+			__asm subss xmm0, xmm1// xmm0 = 2 * rcpss(f)
+								  //        - f * rcpss(f) * rcpss(f)
+			__asm movss rec, xmm0 // return xmm0
+			return rec;
 
-	/*
-	 // SSE reciprocal estimate, accurate to 12 significant bits of
-	 f32 rec;
-	 __asm rcpss xmm0, f             // xmm0 = rcpss(f)
-	 __asm movss rec , xmm0          // return xmm0
-	 return rec;
-	 */
-	/*
-	 register u32 x = 0x7F000000 - IR ( p );
-	 const f32 r = FR ( x );
-	 return r * (2.0f - p * r);
-	 */
+			/*
+			 // SSE reciprocal estimate, accurate to 12 significant bits of
+			 f32 rec;
+			 __asm rcpss xmm0, f             // xmm0 = rcpss(f)
+			 __asm movss rec , xmm0          // return xmm0
+			 return rec;
+			 */
+			/*
+			 register u32 x = 0x7F000000 - IR ( p );
+			 const f32 r = FR ( x );
+			 return r * (2.0f - p * r);
+			 */
 #else // no fast math
-	return 1.f / f;
+			return 1.f / f;
 #endif
-}
+		}
 
-REALINLINE s32 floor32(f32 x)
-{
+		REALINLINE s32 floor32(f32 x)
+		{
 #ifdef IRRLICHT_FAST_MATH
-	const f32 h = 0.5f;
+			const f32 h = 0.5f;
 
-	s32 t;
+			s32 t;
 
 #if defined(_MSC_VER)
-	__asm
-	{
-		fld x
-		fsub h
-		fistp t
-	}
+			__asm
+			{
+				fld x
+				fsub h
+				fistp t
+			}
 #elif defined(__GNUC__)
-	__asm__ __volatile__ (
-			"fsub %2 \n\t"
-			"fistpl %0"
-			: "=m" (t)
-			: "t" (x), "f" (h)
-			: "st"
-	);
+			__asm__ __volatile__ (
+					"fsub %2 \n\t"
+					"fistpl %0"
+					: "=m" (t)
+					: "t" (x), "f" (h)
+					: "st"
+			);
 #else
 #  warn IRRLICHT_FAST_MATH not supported.
-	return (s32) floorf ( x );
+			return (s32) floorf ( x );
 #endif
-	return t;
+			return t;
 #else // no fast math
-	return (s32) floorf(x);
+			return (s32) floorf(x);
 #endif
-}
+		}
 
-REALINLINE s32 ceil32(f32 x)
-{
+		REALINLINE s32 ceil32(f32 x)
+		{
 #ifdef IRRLICHT_FAST_MATH
-	const f32 h = 0.5f;
+			const f32 h = 0.5f;
 
-	s32 t;
+			s32 t;
 
 #if defined(_MSC_VER)
-	__asm
-	{
-		fld x
-		fadd h
-		fistp t
-	}
+			__asm
+			{
+				fld x
+				fadd h
+				fistp t
+			}
 #elif defined(__GNUC__)
-	__asm__ __volatile__ (
-			"fadd %2 \n\t"
-			"fistpl %0 \n\t"
-			: "=m"(t)
-			: "t"(x), "f"(h)
-			: "st"
-	);
+			__asm__ __volatile__ (
+					"fadd %2 \n\t"
+					"fistpl %0 \n\t"
+					: "=m"(t)
+					: "t"(x), "f"(h)
+					: "st"
+			);
 #else
 #  warn IRRLICHT_FAST_MATH not supported.
-	return (s32) ceilf ( x );
+			return (s32) ceilf ( x );
 #endif
-	return t;
+			return t;
 #else // not fast math
-	return (s32) ceilf(x);
+			return (s32) ceilf(x);
 #endif
-}
+		}
 
-REALINLINE s32 round32(f32 x)
-{
+		REALINLINE s32 round32(f32 x)
+		{
 #if defined(IRRLICHT_FAST_MATH)
-	s32 t;
+			s32 t;
 
 #if defined(_MSC_VER)
-	__asm
-	{
-		fld x
-		fistp t
-	}
+			__asm
+			{
+				fld x
+				fistp t
+			}
 #elif defined(__GNUC__)
-	__asm__ __volatile__ (
-			"fistpl %0 \n\t"
-			: "=m"(t)
-			: "t"(x)
-			: "st"
-	);
+			__asm__ __volatile__ (
+					"fistpl %0 \n\t"
+					: "=m"(t)
+					: "t"(x)
+					: "st"
+			);
 #else
 #  warn IRRLICHT_FAST_MATH not supported.
-	return (s32) round_(x);
+			return (s32) round_(x);
 #endif
-	return t;
+			return t;
 #else // no fast math
-	return (s32) round_(x);
+			return (s32) round_(x);
 #endif
-}
+		}
 
-inline f32 f32_max3(const f32 a, const f32 b, const f32 c)
-{
-	return a > b ? (a > c ? a : c) : (b > c ? b : c);
-}
+		inline f32 f32_max3(const f32 a, const f32 b, const f32 c)
+		{
+			return a > b ? (a > c ? a : c) : (b > c ? b : c);
+		}
 
-inline f32 f32_min3(const f32 a, const f32 b, const f32 c)
-{
-	return a < b ? (a < c ? a : c) : (b < c ? b : c);
-}
+		inline f32 f32_min3(const f32 a, const f32 b, const f32 c)
+		{
+			return a < b ? (a < c ? a : c) : (b < c ? b : c);
+		}
 
-inline f32 fract(f32 x)
-{
-	return x - floorf(x);
-}
+		inline f32 fract(f32 x)
+		{
+			return x - floorf(x);
+		}
 
-} // end namespace core
+	} // end namespace core
 } // end namespace irr
 
 //TODO: review

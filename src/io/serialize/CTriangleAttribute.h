@@ -20,11 +20,11 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CTriangleAttribute(const c8* name, core::triangle3df value);
+				CTriangleAttribute(const c8* name, triangle3df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 
-				virtual core::plane3df getPlane();
+				virtual plane3df getPlane();
 
 				virtual const c8* getTypeString() const;
 		};

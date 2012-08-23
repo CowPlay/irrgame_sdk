@@ -6,7 +6,7 @@
  */
 #include "CStringAttribute.h"
 #include "io/ioutil.h"
-#include "core/fast_atof.h"
+#include "core/irrgamemath.h"
 namespace irrgame
 {
 	namespace io
@@ -42,19 +42,19 @@ namespace irrgame
 			return Value.equals_ignore_case("true");
 		}
 
-		core::stringc CStringAttribute::getString()
+		stringc CStringAttribute::getString()
 		{
 			return Value;
 		}
 
 		void CStringAttribute::setInt(s32 intValue)
 		{
-			Value = core::stringc(intValue);
+			Value = stringc(intValue);
 		}
 
 		void CStringAttribute::setFloat(f32 floatValue)
 		{
-			Value = core::stringc(floatValue);
+			Value = stringc(floatValue);
 
 		}
 

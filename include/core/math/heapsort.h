@@ -5,7 +5,7 @@
 #ifndef __IRR_HEAPSORT_H_INCLUDED__
 #define __IRR_HEAPSORT_H_INCLUDED__
 
-#include "irrgameTypes.h"
+#include "core/irrgamebase.h"
 
 namespace irrgame
 {

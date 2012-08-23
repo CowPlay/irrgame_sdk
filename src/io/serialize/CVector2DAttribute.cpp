@@ -13,8 +13,7 @@ namespace irrgame
 	{
 
 		//! Default constructor
-		CVector2DAttribute::CVector2DAttribute(const c8* name,
-				core::vector2df value) :
+		CVector2DAttribute::CVector2DAttribute(const c8* name, vector2df value) :
 				CNumbersAttribute(name, value)
 		{
 		}

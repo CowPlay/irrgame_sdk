@@ -5,8 +5,8 @@
 #ifndef __I_IREFERENCE_COUNTED_H_INCLUDED__
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/collections.h"
+#include "core/base/irrgameTypes.h"
+#include "core/irrgamecollections.h"
 namespace irrgame
 {
 

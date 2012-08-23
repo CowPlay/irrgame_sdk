@@ -5,8 +5,8 @@
 #ifndef __IRR_DIMENSION2D_H_INCLUDED__
 #define __IRR_DIMENSION2D_H_INCLUDED__
 
-#include "irrgameTypes.h"
-#include "irrMath.h" // for irr::core::equals()
+#include "core/base/irrgameTypes.h"
+#include "core/math/irrMath.h" // for irr::core::equals()
 namespace irrgame
 {
 	namespace core
@@ -211,17 +211,6 @@ namespace irrgame
 				//! Height of the dimension.
 				T Height;
 		};
-
-		//! Typedef for an f32 dimension.
-		typedef dimension2d<f32> dimension2df;
-		//! Typedef for an unsigned integer dimension.
-		typedef dimension2d<u32> dimension2du;
-
-		//! Typedef for an integer dimension.
-		/** There are few cases where negative dimensions make sense. Please consider using
-		 dimension2du instead. */
-		typedef dimension2d<s32> dimension2di;
-
 	} // end namespace core
 } // end namespace irr
 

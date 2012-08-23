@@ -8,7 +8,7 @@
 #ifndef ITIMER_H_
 #define ITIMER_H_
 
-#include "core/irrgameTypes.h"
+#include "core/irrgamebase.h"
 
 namespace irrgame
 {

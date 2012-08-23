@@ -13,8 +13,7 @@ namespace irrgame
 	{
 
 		//! Default constructor
-		CVector3DAttribute::CVector3DAttribute(const c8* name,
-				core::vector3df value) :
+		CVector3DAttribute::CVector3DAttribute(const c8* name, vector3df value) :
 				CNumbersAttribute(name, value)
 		{
 		}
@@ -24,12 +23,11 @@ namespace irrgame
 			return EAT_VECTOR3D;
 		}
 
-		core::matrix4 CVector3DAttribute::getMatrix()
+		matrix4 CVector3DAttribute::getMatrix()
 		{
-			core::matrix4 ret;
+			matrix4 ret;
 			ret.makeIdentity();
-			ret.setTranslation(
-					core::vector3df(ValueF[0], ValueF[1], ValueF[2]));
+			ret.setTranslation(vector3df(ValueF[0], ValueF[1], ValueF[2]));
 			return ret;
 		}
 

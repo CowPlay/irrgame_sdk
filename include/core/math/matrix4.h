@@ -5,13 +5,13 @@
 #ifndef __IRR_MATRIX_H_INCLUDED__
 #define __IRR_MATRIX_H_INCLUDED__
 
-#include "core/irrMath.h"
-#include "core/vector3d.h"
-#include "core/vector2d.h"
-#include "core/plane3d.h"
-#include "core/aabbox3d.h"
-#include "core/rect.h"
-#include "core/irrString.h"
+#include "core/collections/irrString.h"
+#include "core/math/irrMath.h"
+#include "core/shapes/aabbox3d.h"
+#include "core/shapes/plane3d.h"
+#include "core/shapes/rect.h"
+#include "core/shapes/vector3d.h"
+#include "core/shapes/vector2d.h"
 
 // enable this to keep track of changes to the matrix
 // and make simpler identity check for seldomly changing matrices
@@ -213,32 +213,32 @@ namespace irrgame
 				core::vector3d<T> getScale() const;
 
 				//! Translate a vector by the inverse of the translation part of this matrix.
-				void inverseTranslateVect(vector3df& vect) const;
+				void inverseTranslateVect(vector3d<f32>& vect) const;
 
 				//! Rotate a vector by the inverse of the rotation part of this matrix.
-				void inverseRotateVect(vector3df& vect) const;
+				void inverseRotateVect(vector3d<f32>& vect) const;
 
 				//! Rotate a vector by the rotation part of this matrix.
-				void rotateVect(vector3df& vect) const;
+				void rotateVect(core::vector3d<f32>& vect) const;
 
 				//! An alternate transform vector method, writing into a second vector
-				void rotateVect(core::vector3df& out,
-						const core::vector3df& in) const;
+				void rotateVect(core::vector3d<f32>& out,
+						const vector3d<f32>& in) const;
 
 				//! An alternate transform vector method, writing into an array of 3 floats
-				void rotateVect(T *out, const core::vector3df &in) const;
+				void rotateVect(T *out, const vector3d<f32> &in) const;
 
 				//! Transforms the vector by this matrix
-				void transformVect(vector3df& vect) const;
+				void transformVect(vector3d<f32>& vect) const;
 
 				//! Transforms input vector by this matrix and stores result in output vector
-				void transformVect(vector3df& out, const vector3df& in) const;
+				void transformVect(vector3d<f32>& out, const vector3d<f32>& in) const;
 
 				//! An alternate transform vector method, writing into an array of 4 floats
-				void transformVect(T *out, const core::vector3df &in) const;
+				void transformVect(T *out, const core::vector3d<f32> &in) const;
 
 				//! Translate a vector by the translation part of this matrix.
-				void translateVect(vector3df& vect) const;
+				void translateVect(vector3d<f32>& vect) const;
 
 				//! Transforms a plane by this matrix
 				void transformPlane(core::plane3d<f32> &plane) const;
@@ -303,31 +303,31 @@ namespace irrgame
 
 				//! Builds a left-handed look-at matrix.
 				CMatrix4<T>& buildCameraLookAtMatrixLH(
-						const vector3df& position, const vector3df& target,
-						const vector3df& upVector);
+						const vector3d<f32>& position, const vector3d<f32>& target,
+						const vector3d<f32>& upVector);
 
 				//! Builds a right-handed look-at matrix.
 				CMatrix4<T>& buildCameraLookAtMatrixRH(
-						const vector3df& position, const vector3df& target,
-						const vector3df& upVector);
+						const vector3d<f32>& position, const vector3d<f32>& target,
+						const vector3d<f32>& upVector);
 
 				//! Builds a matrix that flattens geometry into a plane.
 				/** \param light: light source
 				 \param plane: plane into which the geometry if flattened into
 				 \param point: value between 0 and 1, describing the light source.
 				 If this is 1, it is a point light, if it is 0, it is a directional light. */
-				CMatrix4<T>& buildShadowMatrix(const core::vector3df& light,
-						core::plane3df plane, f32 point = 1.0f);
+				CMatrix4<T>& buildShadowMatrix(const vector3d<f32>& light,
+						plane3d<f32> plane, f32 point = 1.0f);
 
 				//! Builds a matrix which transforms a normalized Device Coordinate to Device Coordinates.
 				/** Used to scale <-1,-1><1,1> to viewport, for example from von <-1,-1> <1,1> to the viewport <0,0><0,640> */
-				CMatrix4<T>& buildNDCToDCMatrix(const core::rect<s32>& area,
+				CMatrix4<T>& buildNDCToDCMatrix(const rect<s32>& area,
 						f32 zScale);
 
 				//! Creates a new matrix as interpolated matrix from two other ones.
 				/** \param b: other matrix to interpolate with
 				 \param time: Must be a value between 0 and 1. */
-				CMatrix4<T> interpolate(const core::CMatrix4<T>& b,
+				CMatrix4<T> interpolate(const CMatrix4<T>& b,
 						f32 time) const;
 
 				//! Gets transposed matrix
@@ -340,15 +340,15 @@ namespace irrgame
 				/** \param from: vector to rotate from
 				 \param to: vector to rotate to
 				 */
-				CMatrix4<T>& buildRotateFromTo(const core::vector3df& from,
-						const core::vector3df& to);
+				CMatrix4<T>& buildRotateFromTo(const vector3d<f32>& from,
+						const vector3d<f32>& to);
 
 				//! Builds a combined matrix which translates to a center before rotation and translates from origin afterwards
 				/** \param center Position to rotate around
 				 \param translate Translation applied after the rotation
 				 */
-				void setRotationCenter(const core::vector3df& center,
-						const core::vector3df& translate);
+				void setRotationCenter(const vector3d<f32>& center,
+						const vector3d<f32>& translate);
 
 				//! Builds a matrix which rotates a source vector to a look vector over an arbitrary axis
 				/** \param camPos: viewer position in world coo
@@ -357,11 +357,11 @@ namespace irrgame
 				 \param axis: axis to rotate about
 				 \param from: source vector to rotate from
 				 */
-				void buildAxisAlignedBillboard(const core::vector3df& camPos,
-						const core::vector3df& center,
-						const core::vector3df& translation,
-						const core::vector3df& axis,
-						const core::vector3df& from);
+				void buildAxisAlignedBillboard(const vector3d<f32>& camPos,
+						const vector3d<f32>& center,
+						const vector3d<f32>& translation,
+						const vector3d<f32>& axis,
+						const vector3d<f32>& from);
 
 				/*
 				 construct 2D Texture transformations
@@ -369,9 +369,9 @@ namespace irrgame
 				 */
 				//! Set to a texture transformation matrix with the given parameters.
 				CMatrix4<T>& buildTextureTransform(f32 rotateRad,
-						const core::vector2df &rotatecenter,
-						const core::vector2df &translate,
-						const core::vector2df &scale);
+						const vector2d<f32> &rotatecenter,
+						const vector2d<f32> &translate,
+						const vector2d<f32> &scale);
 
 				//! Set texture transformation rotation
 				/** Rotate about z axis, recenter at (0.5,0.5).
@@ -419,7 +419,7 @@ namespace irrgame
 				bool getDefinitelyIdentityMatrix() const;
 
 				//! Compare two matrices using the equal method
-				bool equals(const core::CMatrix4<T>& other, const T tolerance =
+				bool equals(const CMatrix4<T>& other, const T tolerance =
 						(T) ROUNDING_ERROR_f32) const;
 
 			private:
@@ -857,8 +857,8 @@ namespace irrgame
 
 			// Deal with the 0 rotation case first
 			// Prior to Irrlicht 1.6, we always returned this value.
-			if (core::iszero(M[1]) && core::iszero(M[2]) && core::iszero(M[4])
-					&& core::iszero(M[6]) && core::iszero(M[8])
+			if (iszero(M[1]) && iszero(M[2]) && iszero(M[4])
+					&& core::iszero(M[6]) && iszero(M[8])
 					&& core::iszero(M[9]))
 				return vector3d<T>(M[0], M[5], M[10]);
 
@@ -922,7 +922,7 @@ namespace irrgame
 		{
 			const CMatrix4<T> &mat = *this;
 			const core::vector3d<T> scale = getScale();
-			const core::vector3df invScale(core::reciprocal(scale.X),
+			const vector3d<f32> invScale(core::reciprocal(scale.X),
 					core::reciprocal(scale.Y), core::reciprocal(scale.Z));
 
 			f32 Y = -asin(mat[2] * invScale.X);
@@ -1112,9 +1112,9 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::rotateVect(vector3df& vect) const
+		inline void CMatrix4<T>::rotateVect(vector3d<f32>& vect) const
 		{
-			vector3df tmp = vect;
+			vector3d<f32> tmp = vect;
 			vect.X = tmp.X * M[0] + tmp.Y * M[4] + tmp.Z * M[8];
 			vect.Y = tmp.X * M[1] + tmp.Y * M[5] + tmp.Z * M[9];
 			vect.Z = tmp.X * M[2] + tmp.Y * M[6] + tmp.Z * M[10];
@@ -1122,8 +1122,8 @@ namespace irrgame
 
 		//! An alternate transform vector method, writing into a second vector
 		template<class T>
-		inline void CMatrix4<T>::rotateVect(core::vector3df& out,
-				const core::vector3df& in) const
+		inline void CMatrix4<T>::rotateVect(vector3d<f32>& out,
+				const vector3d<f32>& in) const
 		{
 			out.X = in.X * M[0] + in.Y * M[4] + in.Z * M[8];
 			out.Y = in.X * M[1] + in.Y * M[5] + in.Z * M[9];
@@ -1133,7 +1133,7 @@ namespace irrgame
 		//! An alternate transform vector method, writing into an array of 3 floats
 		template<class T>
 		inline void CMatrix4<T>::rotateVect(T *out,
-				const core::vector3df& in) const
+				const vector3d<f32>& in) const
 		{
 			out[0] = in.X * M[0] + in.Y * M[4] + in.Z * M[8];
 			out[1] = in.X * M[1] + in.Y * M[5] + in.Z * M[9];
@@ -1141,16 +1141,16 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::inverseRotateVect(vector3df& vect) const
+		inline void CMatrix4<T>::inverseRotateVect(vector3d<f32>& vect) const
 		{
-			vector3df tmp = vect;
+			vector3d<f32> tmp = vect;
 			vect.X = tmp.X * M[0] + tmp.Y * M[1] + tmp.Z * M[2];
 			vect.Y = tmp.X * M[4] + tmp.Y * M[5] + tmp.Z * M[6];
 			vect.Z = tmp.X * M[8] + tmp.Y * M[9] + tmp.Z * M[10];
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::transformVect(vector3df& vect) const
+		inline void CMatrix4<T>::transformVect(vector3d<f32>& vect) const
 		{
 			f32 vector[3];
 
@@ -1164,8 +1164,8 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::transformVect(vector3df& out,
-				const vector3df& in) const
+		inline void CMatrix4<T>::transformVect(vector3d<f32>& out,
+				const vector3d<f32>& in) const
 		{
 			out.X = in.X * M[0] + in.Y * M[4] + in.Z * M[8] + M[12];
 			out.Y = in.X * M[1] + in.Y * M[5] + in.Z * M[9] + M[13];
@@ -1174,7 +1174,7 @@ namespace irrgame
 
 		template<class T>
 		inline void CMatrix4<T>::transformVect(T *out,
-				const core::vector3df &in) const
+				const vector3d<f32> &in) const
 		{
 			out[0] = in.X * M[0] + in.Y * M[4] + in.Z * M[8] + M[12];
 			out[1] = in.X * M[1] + in.Y * M[5] + in.Z * M[9] + M[13];
@@ -1186,13 +1186,13 @@ namespace irrgame
 		template<class T>
 		inline void CMatrix4<T>::transformPlane(core::plane3d<f32> &plane) const
 		{
-			vector3df member;
+			vector3d<f32> member;
 			// Transform the plane member point, i.e. rotate, translate and scale it.
 			transformVect(member, plane.getMemberPoint());
 
 			// Transform the normal by the transposed inverse of the matrix
 			CMatrix4<T> transposedInverse(*this, EM4CONST_INVERSE_TRANSPOSED);
-			vector3df normal = plane.Normal;
+			vector3d<f32> normal = plane.Normal;
 			transposedInverse.transformVect(normal);
 
 			plane.setPlane(member, normal);
@@ -1301,7 +1301,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::inverseTranslateVect(vector3df& vect) const
+		inline void CMatrix4<T>::inverseTranslateVect(vector3d<f32>& vect) const
 		{
 			vect.X = vect.X - M[12];
 			vect.Y = vect.Y - M[13];
@@ -1309,7 +1309,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::translateVect(vector3df& vect) const
+		inline void CMatrix4<T>::translateVect(vector3d<f32>& vect) const
 		{
 			vect.X = vect.X + M[12];
 			vect.Y = vect.Y + M[13];
@@ -1834,7 +1834,7 @@ namespace irrgame
 		// Builds a matrix that flattens geometry into a plane.
 		template<class T>
 		inline CMatrix4<T>& CMatrix4<T>::buildShadowMatrix(
-				const core::vector3df& light, core::plane3df plane, f32 point)
+				const vector3d<f32>& light, plane3d<f32> plane, f32 point)
 		{
 			plane.Normal.normalize();
 			const f32 d = plane.Normal.dotProduct(light);
@@ -1867,16 +1867,16 @@ namespace irrgame
 		// Builds a left-handed look-at matrix.
 		template<class T>
 		inline CMatrix4<T>& CMatrix4<T>::buildCameraLookAtMatrixLH(
-				const vector3df& position, const vector3df& target,
-				const vector3df& upVector)
+				const vector3d<f32>& position, const vector3d<f32>& target,
+				const vector3d<f32>& upVector)
 		{
-			vector3df zaxis = target - position;
+			vector3d<f32> zaxis = target - position;
 			zaxis.normalize();
 
-			vector3df xaxis = upVector.crossProduct(zaxis);
+			vector3d<f32> xaxis = upVector.crossProduct(zaxis);
 			xaxis.normalize();
 
-			vector3df yaxis = zaxis.crossProduct(xaxis);
+			vector3d<f32> yaxis = zaxis.crossProduct(xaxis);
 
 			M[0] = (T) xaxis.X;
 			M[1] = (T) yaxis.X;
@@ -1906,16 +1906,16 @@ namespace irrgame
 		// Builds a right-handed look-at matrix.
 		template<class T>
 		inline CMatrix4<T>& CMatrix4<T>::buildCameraLookAtMatrixRH(
-				const vector3df& position, const vector3df& target,
-				const vector3df& upVector)
+				const vector3d<f32>& position, const vector3d<f32>& target,
+				const vector3d<f32>& upVector)
 		{
-			vector3df zaxis = position - target;
+			vector3d<f32> zaxis = position - target;
 			zaxis.normalize();
 
-			vector3df xaxis = upVector.crossProduct(zaxis);
+			vector3d<f32> xaxis = upVector.crossProduct(zaxis);
 			xaxis.normalize();
 
-			vector3df yaxis = zaxis.crossProduct(xaxis);
+			vector3d<f32> yaxis = zaxis.crossProduct(xaxis);
 
 			M[0] = (T) xaxis.X;
 			M[1] = (T) yaxis.X;
@@ -2028,25 +2028,25 @@ namespace irrgame
 		 */
 		template<class T>
 		inline CMatrix4<T>& CMatrix4<T>::buildRotateFromTo(
-				const core::vector3df& from, const core::vector3df& to)
+				const vector3d<f32>& from, const vector3d<f32>& to)
 		{
 			// unit vectors
-			core::vector3df f(from);
-			core::vector3df t(to);
+			vector3d<f32> f(from);
+			vector3d<f32> t(to);
 			f.normalize();
 			t.normalize();
 
 			// axis multiplication by sin
-			core::vector3df vs(t.crossProduct(f));
+			vector3d<f32> vs(t.crossProduct(f));
 
 			// axis of rotation
-			core::vector3df v(vs);
+			vector3d<f32> v(vs);
 			v.normalize();
 
 			// cosinus angle
 			T ca = f.dotProduct(t);
 
-			core::vector3df vt(v * ((T) 1 - ca));
+			vector3d<f32> vt(v * ((T) 1 - ca));
 
 			M[0] = vt.X * v.X + ca;
 			M[5] = vt.Y * v.Y + ca;
@@ -2085,32 +2085,32 @@ namespace irrgame
 		 */
 		template<class T>
 		inline void CMatrix4<T>::buildAxisAlignedBillboard(
-				const core::vector3df& camPos, const core::vector3df& center,
-				const core::vector3df& translation, const core::vector3df& axis,
-				const core::vector3df& from)
+				const vector3d<f32>& camPos, const vector3d<f32>& center,
+				const vector3d<f32>& translation, const vector3d<f32>& axis,
+				const vector3d<f32>& from)
 		{
 			// axis of rotation
-			core::vector3df up = axis;
+			vector3d<f32> up = axis;
 			up.normalize();
 
-			core::vector3df forward = camPos - center;
+			vector3d<f32> forward = camPos - center;
 			forward.normalize();
 
-			core::vector3df right = up.crossProduct(forward);
+			vector3d<f32> right = up.crossProduct(forward);
 			right.normalize();
 
 			// correct look vector
-			core::vector3df look = right.crossProduct(up);
+			vector3d<f32> look = right.crossProduct(up);
 
 			// rotate from to
 
 			// axis multiplication by sin
-			core::vector3df vs = look.crossProduct(from);
+			vector3d<f32> vs = look.crossProduct(from);
 
 			// cosinus angle
 			f32 ca = from.dotProduct(look);
 
-			core::vector3df vt(up * (1.f - ca));
+			vector3d<f32> vt(up * (1.f - ca));
 
 			M[0] = vt.X * up.X + ca;
 			M[5] = vt.Y * up.Y + ca;
@@ -2139,8 +2139,8 @@ namespace irrgame
 		//! Builds a combined matrix which translate to a center before rotation and translate afterwards
 		template<class T>
 		inline void CMatrix4<T>::setRotationCenter(
-				const core::vector3df& center,
-				const core::vector3df& translation)
+				const vector3d<f32>& center,
+				const vector3d<f32>& translation)
 		{
 			M[12] = -M[0] * center.X - M[4] * center.Y - M[8] * center.Z
 					+ (center.X - translation.X);
@@ -2167,8 +2167,8 @@ namespace irrgame
 
 		template<class T>
 		inline CMatrix4<T>& CMatrix4<T>::buildTextureTransform(f32 rotateRad,
-				const core::vector2df &rotatecenter,
-				const core::vector2df &translate, const core::vector2df &scale)
+				const vector2d<f32> &rotatecenter,
+				const vector2d<f32> &translate, const vector2d<f32> &scale)
 		{
 			const f32 c = cosf(rotateRad);
 			const f32 s = sinf(rotateRad);
@@ -2326,13 +2326,6 @@ namespace irrgame
 		{
 			return mat * scalar;
 		}
-
-		//! Typedef for f32 matrix
-		typedef CMatrix4<f32> matrix4;
-
-		//! global const identity matrix
-		extern const matrix4 IdentityMatrix;
-
 	} // end namespace core
 } // end namespace irr
 

@@ -17,7 +17,7 @@ namespace irrgame
 		{
 			public:
 
-				CMatrixAttribute(const c8* name, core::matrix4 value);
+				CMatrixAttribute(const c8* name, matrix4 value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

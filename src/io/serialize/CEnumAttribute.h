@@ -31,7 +31,7 @@ namespace irrgame
 
 				virtual bool getBool();
 
-				virtual core::stringc getString();
+				virtual stringc getString();
 
 				virtual void setInt(s32 intValue);
 
@@ -46,8 +46,8 @@ namespace irrgame
 				virtual const c8* getTypeString() const;
 
 			public:
-				core::stringc Value;
-				core::array<core::stringc> EnumLiterals;
+				stringc Value;
+				arraystr EnumLiterals;
 		};
 	}
 }

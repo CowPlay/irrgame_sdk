@@ -5,7 +5,7 @@
  *      Author: gregorytkach
  */
 
-#include "core/IReferenceCounted.h"
+#include "core/irrgamebase.h"
 #include "threads/irrgameThread.h"
 namespace irrgame
 {
@@ -14,8 +14,8 @@ namespace irrgame
 	IReferenceCounted::IReferenceCounted() :
 			DebugName(0), ReferenceCounter(1)
 	{
-		s32 threadID = threads::irrgameThread::getCurrentThreadID();
-		ThreadsReferenceCounters.insert(threadID, 1);
+//		s32 threadID = threads::irrgameThread::getCurrentThreadID();
+//		ThreadsReferenceCounters.insert(threadID, 1);
 	}
 
 	//! Destructor.
@@ -55,15 +55,15 @@ namespace irrgame
 	 The texture is stored somewhere by the driver. */
 	void IReferenceCounted::grab() const
 	{
-		s32 threadID = threads::irrgameThread::getCurrentThreadID();
+//		s32 threadID = threads::irrgameThread::getCurrentThreadID();
 
-		if (haveDependiesFromThread(threadID))
-		{
-			DictIntInt::Node* node = ThreadsReferenceCounters.find(threadID);
-			node->setValue(node->getValue() + 1);
-		}
-		else
-			ThreadsReferenceCounters.insert(threadID, 1);
+//		if (haveDependiesFromThread(threadID))
+//		{
+//			DictIntInt::Node* node = ThreadsReferenceCounters.find(threadID);
+//			node->setValue(node->getValue() + 1);
+//		}
+//		else
+//			ThreadsReferenceCounters.insert(threadID, 1);
 
 		++ReferenceCounter;
 
@@ -102,20 +102,20 @@ namespace irrgame
 		// someone is doing bad reference counting.
 		IRR_ASSERT(ReferenceCounter > 0)
 
-		s32 threadID = threads::irrgameThread::getCurrentThreadID();
+//		s32 threadID = threads::irrgameThread::getCurrentThreadID();
 
-		if (haveDependiesFromThread(threadID))
-		{
-			DictIntInt::Node* node = ThreadsReferenceCounters.find(threadID);
-			node->setValue(node->getValue() - 1);
+//		if (haveDependiesFromThread(threadID))
+//		{
+//			DictIntInt::Node* node = ThreadsReferenceCounters.find(threadID);
+//			node->setValue(node->getValue() - 1);
 
-			--ReferenceCounter;
-		}
-		else
-		{
-			//something wrong
-			IRR_ASSERT(false);
-		}
+		--ReferenceCounter;
+//		}
+//		else
+//		{
+//			//something wrong
+//			IRR_ASSERT(false);
+//		}
 
 		if (!ReferenceCounter)
 		{

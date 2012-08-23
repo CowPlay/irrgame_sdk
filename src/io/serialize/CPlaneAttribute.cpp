@@ -11,7 +11,7 @@ namespace irrgame
 	namespace io
 	{
 		//! Default constructor
-		CPlaneAttribute::CPlaneAttribute(const c8* name, core::plane3df value) :
+		CPlaneAttribute::CPlaneAttribute(const c8* name, plane3df value) :
 				CNumbersAttribute(name, value)
 		{
 		}

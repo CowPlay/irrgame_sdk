@@ -19,7 +19,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CDimension2dAttribute(const c8* name, core::dimension2df value);
+				CDimension2dAttribute(const c8* name, dimension2df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

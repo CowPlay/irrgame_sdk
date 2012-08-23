@@ -48,13 +48,13 @@ namespace irrgame
 			setInt((s32) floatValue);
 		}
 
-		core::stringc CColorAttribute::getString()
+		stringc CColorAttribute::getString()
 		{
 			c8 tmp[10];
 			const video::SColor c = getColor();
 			sprintf(tmp, "%02x%02x%02x%02x", c.getAlpha(), c.getRed(),
 					c.getGreen(), c.getBlue());
-			return core::stringc(tmp);
+			return stringc(tmp);
 		}
 
 		void CColorAttribute::setString(const c8* text)

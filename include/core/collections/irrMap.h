@@ -5,14 +5,10 @@
 #ifndef __IRR_MAP_H_INCLUDED__
 #define __IRR_MAP_H_INCLUDED__
 
-#include "core/irrgameTypes.h"
-#include "core/irrMath.h"
-
 namespace irrgame
 {
 	namespace core
 	{
-
 		//! map template for associative arrays using a red-black tree
 		template<class KeyType, class ValueType>
 		class map
@@ -469,7 +465,7 @@ namespace irrgame
 						Node& operator*()
 						{
 							// access violation
-							IRR_ASSERT(atEnd())
+							IRR_ASSERT (atEnd())
 
 							return *getNode();
 						}
@@ -779,7 +775,6 @@ namespace irrgame
 					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 					return Root == 0;
 				}
-
 
 				//! Search for a node with the specified key.
 				//! \param keyToFind: The key to find

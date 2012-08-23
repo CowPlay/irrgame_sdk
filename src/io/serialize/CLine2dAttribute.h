@@ -18,7 +18,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CLine2dAttribute(const c8* name, core::line2df value);
+				CLine2dAttribute(const c8* name, line2df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 

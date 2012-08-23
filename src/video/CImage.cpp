@@ -3,9 +3,9 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CImage.h"
-#include "./core/irrString.h"
-#include "./video/CColorConverter.h"
-#include "./video/CBlit.h"
+#include "core/irrgamecollections.h"
+#include "video/CColorConverter.h"
+#include "video/CBlit.h"
 
 namespace irrgame
 {
@@ -254,23 +254,22 @@ namespace irrgame
 		}
 
 		//! copies this surface into another at given position
-		void CImage::copyTo(IImage* target, const core::vector2di& pos)
+		void CImage::copyTo(IImage* target, const vector2di& pos)
 		{
 			Blit(BLITTER_TEXTURE, target, 0, &pos, this, 0, 0);
 		}
 
 		//! copies this surface partially into another at given position
-		void CImage::copyTo(IImage* target, const core::vector2di& pos,
-				const core::rect<s32>& sourceRect,
-				const core::rect<s32>* clipRect)
+		void CImage::copyTo(IImage* target, const vector2di& pos,
+				const recti& sourceRect, const recti* clipRect)
 		{
 			Blit(BLITTER_TEXTURE, target, clipRect, &pos, this, &sourceRect, 0);
 		}
 
 		//! copies this surface into another, using the alpha mask, a cliprect and a color to add with
-		void CImage::copyToWithAlpha(IImage* target, const core::vector2di& pos,
-				const core::rect<s32>& sourceRect, const SColor &color,
-				const core::rect<s32>* clipRect)
+		void CImage::copyToWithAlpha(IImage* target, const vector2di& pos,
+				const recti& sourceRect, const SColor &color,
+				const recti* clipRect)
 		{
 			// color blend only necessary on not full spectrum aka. color.color != 0xFFFFFFFF
 			Blit(
@@ -483,15 +482,15 @@ namespace irrgame
 		}
 
 		//! draws a line from to with color
-		void CImage::drawLine(const core::vector2di& from,
-				const core::vector2di& to, const SColor &color)
+		void CImage::drawLine(const vector2di& from, const vector2di& to,
+				const SColor &color)
 		{
 			AbsRectangle clip;
 			GetClip(clip, this);
 
-			core::vector2di p[2];
+			vector2di p[2];
 
-			if (video::ClipLine(clip, p[0], p[1], from, to))
+			if (ClipLine(clip, p[0], p[1], from, to))
 			{
 				u32 alpha = extractAlpha(color.color);
 

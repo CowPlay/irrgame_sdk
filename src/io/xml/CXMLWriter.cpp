@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CXMLWriter.h"
-#include "core/irrString.h"
+#include "core/irrgamecollections.h"
 #include "irrgamesdkCompileConfig.h"
 
 namespace irrgame
@@ -88,8 +88,8 @@ namespace irrgame
 
 		//! Writes an xml element with any number of attributes
 		void CXMLWriter::writeElement(const c8* name, bool empty,
-				core::array<core::stringc> &names,
-				core::array<core::stringc> &values)
+				core::array<stringc> &names,
+				core::array<stringc> &values)
 		{
 			IRR_ASSERT(sizeof(name) > 0);
 
@@ -175,7 +175,7 @@ namespace irrgame
 		{
 			IRR_ASSERT(sizeof(text) > 0);
 
-			core::stringc s;
+			stringc s;
 			const c8* p = text;
 
 			while (*p)

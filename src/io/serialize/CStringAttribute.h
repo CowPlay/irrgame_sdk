@@ -32,7 +32,7 @@ namespace irrgame
 
 				virtual bool getBool();
 
-				virtual core::stringc getString();
+				virtual stringc getString();
 
 				virtual void setInt(s32 intValue);
 
@@ -49,7 +49,7 @@ namespace irrgame
 				virtual void setBinary(void* data, s32 maxLength);
 
 			public:
-				core::stringc Value;
+				stringc Value;
 		};
 
 	}

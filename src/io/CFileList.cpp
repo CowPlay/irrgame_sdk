@@ -10,9 +10,9 @@ namespace irrgame
 	namespace io
 	{
 
-		static const core::stringc emptyFileListEntry;
+		static const stringc emptyFileListEntry;
 
-		CFileList::CFileList(const core::stringc& path, bool ignoreCase,
+		CFileList::CFileList(const stringc& path, bool ignoreCase,
 				bool ignorePaths) :
 				IgnorePaths(ignorePaths), IgnoreCase(ignoreCase), Path(path)
 		{
@@ -38,7 +38,7 @@ namespace irrgame
 			Files.sort();
 		}
 
-		const core::stringc& CFileList::getFileName(u32 index) const
+		const stringc& CFileList::getFileName(u32 index) const
 		{
 			if (index >= Files.size())
 				return emptyFileListEntry;
@@ -47,7 +47,7 @@ namespace irrgame
 		}
 
 		//! Gets the full name of a file in the list, path included, based on an index.
-		const core::stringc& CFileList::getFullFileName(u32 index) const
+		const stringc& CFileList::getFullFileName(u32 index) const
 		{
 			if (index >= Files.size())
 				return emptyFileListEntry;
@@ -56,7 +56,7 @@ namespace irrgame
 		}
 
 		//! adds a file or folder
-		u32 CFileList::addItem(const core::stringc& fullPath, u32 size,
+		u32 CFileList::addItem(const stringc& fullPath, u32 size,
 				bool isDirectory, u32 id)
 		{
 			SFileListEntry entry;
@@ -114,7 +114,7 @@ namespace irrgame
 		}
 
 		//! Searches for a file or folder within the list, returns the index
-		s32 CFileList::findFile(const core::stringc& filename,
+		s32 CFileList::findFile(const stringc& filename,
 				bool isDirectory = false) const
 		{
 			SFileListEntry entry;
@@ -142,13 +142,13 @@ namespace irrgame
 		}
 
 		//! Returns the base path of the file list
-		const core::stringc& CFileList::getPath() const
+		const stringc& CFileList::getPath() const
 		{
 			return Path;
 		}
 
 		//! IFileList creator
-		IFileList* createFileList(const core::stringc& path, bool ignoreCase,
+		IFileList* createFileList(const stringc& path, bool ignoreCase,
 				bool ignorePaths)
 		{
 			return new CFileList(path, ignoreCase, ignorePaths);

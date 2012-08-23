@@ -20,11 +20,11 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CVector3DAttribute(const c8* name, core::vector3df value);
+				CVector3DAttribute(const c8* name, vector3df value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 
-				virtual core::matrix4 getMatrix();
+				virtual matrix4 getMatrix();
 
 				virtual const c8* getTypeString() const;
 

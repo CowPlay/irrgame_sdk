@@ -8,8 +8,8 @@
 #ifndef IRRGAMETHREAD_H_
 #define IRRGAMETHREAD_H_
 
-#include "core/IReferenceCounted.h"
-#include "core/irrString.h"
+#include "core/irrgamebase.h"
+#include "core/irrgamecollections.h"
 #include "delegate/delegate.h"
 namespace irrgame
 {
@@ -63,7 +63,7 @@ namespace irrgame
 //				virtual void kill() = 0;
 
 				//! Gets thread name
-				virtual core::stringc getName();
+				virtual stringc getName();
 
 				//! Gets thread callback
 				virtual delegateThreadCallback* getCallback();
@@ -73,7 +73,7 @@ namespace irrgame
 
 			protected:
 				//! Thread name
-				core::stringc Name;
+				stringc Name;
 				//! Function which will be started
 				delegateThreadCallback* Callback;
 				//! Callback input args
@@ -83,8 +83,8 @@ namespace irrgame
 
 		//! irrgameThread creator. Internal function. Please do not use.
 		irrgameThread* createIrrgameThread(delegateThreadCallback* callback,
-				void* callbackArg = NULL, EThreadPriority prior =
-						ETP_NORMAL, core::stringc name = "");
+				void* callbackArg = NULL, EThreadPriority prior = ETP_NORMAL,
+				stringc name = "");
 	}
 }
 

@@ -20,12 +20,11 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				CStringArrayAttribute(const c8* name,
-						const core::array<core::stringc>& value);
+				CStringArrayAttribute(const c8* name, const arraystr& value);
 
-				virtual core::array<core::stringc> getArray();
+				virtual arraystr getArray();
 
-				virtual void setArray(const core::array<core::stringc>& value);
+				virtual void setArray(const arraystr& value);
 
 				virtual E_ATTRIBUTE_TYPE getType() const;
 
@@ -33,7 +32,7 @@ namespace irrgame
 
 			public:
 
-				core::array<core::stringc> Value;
+				arraystr Value;
 		};
 	}
 }

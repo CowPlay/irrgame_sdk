@@ -13,7 +13,7 @@ namespace irrgame
 	{
 
 		CTriangleAttribute::CTriangleAttribute(const c8* name,
-				core::triangle3df value) :
+				triangle3df value) :
 				CNumbersAttribute(name, value)
 		{
 		}
@@ -23,7 +23,7 @@ namespace irrgame
 			return EAT_TRIANGLE3D;
 		}
 
-		core::plane3df CTriangleAttribute::getPlane()
+		plane3df CTriangleAttribute::getPlane()
 		{
 			return getTriangle().getPlane();
 		}

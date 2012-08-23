@@ -5,8 +5,8 @@
 #ifndef __C_IMAGE_H_INCLUDED__
 #define __C_IMAGE_H_INCLUDED__
 
-#include "./video/IImage.h"
-#include "./core/rect.h"
+#include "video/IImage.h"
+#include "core/irrgameshapes.h"
 
 namespace irrgame
 {
@@ -23,7 +23,7 @@ namespace irrgame
 				/** \param useForeignMemory: If true, the image will use the data pointer
 				 directly and own it from now on, which means it will also try to delete [] the
 				 data when the image will be destructed. If false, the memory will by copied. */
-				CImage(ECOLOR_FORMAT format, const core::dimension2d<u32>& size,
+				CImage(ECOLOR_FORMAT format, const dimension2du& size,
 						void* data, bool ownForeignMemory = true,
 						bool deleteMemory = true);
 
@@ -46,7 +46,7 @@ namespace irrgame
 				}
 
 				//! Returns width and height of image data.
-				virtual const core::dimension2du& getDimension() const;
+				virtual const dimension2du& getDimension() const;
 
 				//! Returns bits per pixel.
 				virtual u32 getBitsPerPixel() const;
@@ -96,19 +96,17 @@ namespace irrgame
 				virtual void copyToScaling(IImage* target);
 
 				//! copies this surface into another
-				virtual void copyTo(IImage* target, const core::vector2di& pos =
-						core::vector2di(0, 0));
+				virtual void copyTo(IImage* target, const vector2di& pos =
+						vector2di(0, 0));
 
 				//! copies this surface into another
-				virtual void copyTo(IImage* target, const core::vector2di& pos,
-						const core::rect<s32>& sourceRect,
-						const core::rect<s32>* clipRect = 0);
+				virtual void copyTo(IImage* target, const vector2di& pos,
+						const recti& sourceRect, const recti* clipRect = 0);
 
 				//! copies this surface into another, using the alpha mask, an cliprect and a color to add with
 				virtual void copyToWithAlpha(IImage* target,
-						const core::vector2di& pos,
-						const core::rect<s32>& sourceRect, const SColor &color,
-						const core::rect<s32>* clipRect = 0);
+						const vector2di& pos, const recti& sourceRect,
+						const SColor &color, const recti* clipRect = 0);
 
 				//! copies this surface into another, scaling it to fit, appyling a box filter
 				virtual void copyToScalingBoxFilter(IImage* target,
@@ -118,12 +116,11 @@ namespace irrgame
 				virtual void fill(const SColor &color);
 
 				//! draws a rectangle
-				void drawRectangle(const core::recti& rect,
-						const SColor &color);
+				void drawRectangle(const recti& rect, const SColor &color);
 
 				//! draws a line from to
-				void drawLine(const core::vector2di& from,
-						const core::vector2di& to, const SColor &color);
+				void drawLine(const vector2di& from, const vector2di& to,
+						const SColor &color);
 
 			private:
 
@@ -134,7 +131,7 @@ namespace irrgame
 						s32 bias) const;
 
 				u8* Data;
-				core::dimension2d<u32> Size;
+				dimension2du Size;
 				u32 BytesPerPixel;
 				u32 Pitch;
 				ECOLOR_FORMAT Format;

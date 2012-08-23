@@ -5,7 +5,7 @@
 #ifndef __IRR_ALLOCATOR_H_INCLUDED__
 #define __IRR_ALLOCATOR_H_INCLUDED__
 
-#include "irrgameTypes.h"
+#include "core/base/irrgameTypes.h"
 #include <new>
 // necessary for older compilers
 #include <memory.h>
@@ -14,7 +14,6 @@ namespace irrgame
 {
 	namespace core
 	{
-
 #ifdef DEBUG_CLIENTBLOCK
 #undef DEBUG_CLIENTBLOCK
 #define DEBUG_CLIENTBLOCK new
@@ -114,7 +113,6 @@ namespace irrgame
 			ALLOC_STRATEGY_DOUBLE = 1,
 			ALLOC_STRATEGY_SQRT = 2
 		};
-
 	} // end namespace core
 } // end namespace irr
 

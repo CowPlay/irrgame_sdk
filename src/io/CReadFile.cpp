@@ -9,7 +9,7 @@ namespace irrgame
 	namespace io
 	{
 
-		CReadFile::CReadFile(const core::stringc& fileName) :
+		CReadFile::CReadFile(const stringc& fileName) :
 				File(0), FileSize(0), Filename(fileName)
 		{
 #ifdef DEBUG
@@ -75,13 +75,13 @@ namespace irrgame
 		}
 
 		//! returns name of file
-		const core::stringc& CReadFile::getFileName() const
+		const stringc& CReadFile::getFileName() const
 		{
 			return Filename;
 		}
 
 		//! Internal function, please do not use.
-		IReadFile* createReadFile(const core::stringc& fileName)
+		IReadFile* createReadFile(const stringc& fileName)
 		{
 			return new CReadFile(fileName);
 		}

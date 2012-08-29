@@ -15,7 +15,7 @@ namespace irrgame
 		template<class T>
 		class list
 		{
-			private:
+			protected:
 
 				//! List element node with pointer to previous and next element in the list.
 				struct SKListNode
@@ -260,7 +260,7 @@ namespace irrgame
 				}
 
 				//! Destructor
-				~list()
+				virtual ~list()
 				{
 					clear();
 				}
@@ -289,6 +289,7 @@ namespace irrgame
 				{
 					return Size;
 				}
+
 				u32 getSize() const
 				{
 					return Size;

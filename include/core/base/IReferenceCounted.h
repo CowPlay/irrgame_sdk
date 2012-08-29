@@ -6,7 +6,7 @@
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
 #include "core/base/irrgameTypes.h"
-#include "core/irrgamecollections.h"
+#include "core/collections/irrMap.h"
 namespace irrgame
 {
 
@@ -140,7 +140,7 @@ namespace irrgame
 			//! Value 	- reference count
 			//! TODO: change to threadsafe collection
 			//! TODO:review collection type. Maybe need change for productivity reason.
-			mutable DictIntInt ThreadsReferenceCounters;
+			mutable irrgame::core::map<s32, s32> ThreadsReferenceCounters;
 
 			//! The debug name.
 			const c8* DebugName;

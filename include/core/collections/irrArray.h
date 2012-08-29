@@ -19,7 +19,6 @@ namespace irrgame
 		template<class T, typename TAlloc = irrAllocator<T> >
 		class array
 		{
-
 			public:
 
 				//! Default constructor for empty array.
@@ -37,7 +36,7 @@ namespace irrgame
 								ALLOC_STRATEGY_DOUBLE), free_when_destroyed(
 								true), is_sorted(true)
 				{
-					reallocate(start_count);
+					array<T, TAlloc>::reallocate(start_count);
 				}
 
 				//! Copy constructor
@@ -50,14 +49,14 @@ namespace irrgame
 				//! Destructor.
 				/** Frees allocated memory, if set_free_when_destroyed was not set to
 				 false by the user before. */
-				~array()
+				virtual ~array()
 				{
-					clear();
+					array<T, TAlloc>::clear();
 				}
 
 				//! Reallocates the array, make it bigger or smaller.
 				/** \param new_size New size of array. */
-				void reallocate(u32 new_size)
+				virtual void reallocate(u32 new_size)
 				{
 					T* old_data = data;
 
@@ -87,7 +86,7 @@ namespace irrgame
 				/** if the maximum size of the array is unknown, you can define how big the
 				 allocation should happen.
 				 \param newStrategy New strategy to apply to this array. */
-				void setAllocStrategy(eAllocStrategy newStrategy =
+				virtual void setAllocStrategy(eAllocStrategy newStrategy =
 						ALLOC_STRATEGY_DOUBLE)
 				{
 					strategy = newStrategy;
@@ -117,7 +116,7 @@ namespace irrgame
 				 push_back().
 				 \param element: Element to be inserted
 				 \param index: Where position to insert the new element. */
-				void insert(const T& element, u32 index = 0)
+				virtual void insert(const T& element, u32 index = 0)
 				{
 					// access violation
 					IRR_ASSERT(index >= 0 && index <= used)
@@ -144,7 +143,7 @@ namespace irrgame
 								newAlloc = used + 1;
 								break;
 						}
-						reallocate(newAlloc);
+						array<T, TAlloc>::reallocate(newAlloc);
 
 						// move array content and construct new element
 						// first move end one up
@@ -187,7 +186,7 @@ namespace irrgame
 				}
 
 				//! Clears the array and deletes all allocated memory.
-				void clear()
+				virtual void clear()
 				{
 					if (free_when_destroyed)
 					{
@@ -211,10 +210,11 @@ namespace irrgame
 				 \param _free_when_destroyed Sets whether the new memory area shall be
 				 freed by the array upon destruction, or if this will be up to the user
 				 application. */
-				void set_pointer(T* newPointer, u32 size, bool _is_sorted =
-						false, bool _free_when_destroyed = true)
+				virtual void set_pointer(T* newPointer, u32 size,
+						bool _is_sorted = false, bool _free_when_destroyed =
+								true)
 				{
-					clear();
+					array<T, TAlloc>::clear();
 					data = newPointer;
 					allocated = size;
 					used = size;
@@ -230,7 +230,7 @@ namespace irrgame
 				 troubles depending on the intended use of the memory area.
 				 \param f If true, the array frees the allocated memory in its
 				 destructor, otherwise not. The default is true. */
-				void set_free_when_destroyed(bool f)
+				virtual void set_free_when_destroyed(bool f)
 				{
 					free_when_destroyed = f;
 				}
@@ -242,20 +242,23 @@ namespace irrgame
 				void set_used(u32 usedNow)
 				{
 					if (allocated < usedNow)
-						reallocate(usedNow);
+						array<T, TAlloc>::reallocate(usedNow);
 
 					used = usedNow;
 				}
 
 				//! Assignment operator
-				const array<T, TAlloc>& operator=(const array<T, TAlloc>& other)
+				virtual array<T, TAlloc>& operator=(
+						const array<T, TAlloc>& other)
 				{
+					//handle self-assignment
 					if (this == &other)
 						return *this;
+
 					strategy = other.strategy;
 
 					if (data)
-						clear();
+						array<T, TAlloc>::clear();
 
 					//if (allocated < other.allocated)
 					if (other.allocated == 0)
@@ -274,8 +277,8 @@ namespace irrgame
 					return *this;
 				}
 
-				//! Equality operator
-				bool operator ==(const array<T, TAlloc>& other) const
+				//! Equality operator. Typename T must implement operator!=
+				virtual bool operator ==(const array<T, TAlloc>& other) const
 				{
 					if (used != other.used)
 						return false;
@@ -283,35 +286,36 @@ namespace irrgame
 					for (u32 i = 0; i < other.used; ++i)
 						if (data[i] != other[i])
 							return false;
+
 					return true;
 				}
 
 				//! Inequality operator
-				bool operator !=(const array<T, TAlloc>& other) const
+				virtual bool operator !=(const array<T, TAlloc>& other) const
 				{
 					return !(*this == other);
 				}
 
 				//! Direct access operator
-				T& operator [](u32 index)
+				virtual T& operator [](u32 index)
 				{
 					// access violation
-					IRR_ASSERT(index >= 0 && index < used)
+					IRR_ASSERT(index >= 0 && index <= used)
 
 					return data[index];
 				}
 
 				//! Direct const access operator
-				const T& operator [](u32 index) const
+				virtual const T& operator [](u32 index) const
 				{
 					// access violation
-					IRR_ASSERT(index >= 0 && index < used);
+					IRR_ASSERT(index >= 0 && index <= used);
 
 					return data[index];
 				}
 
 				//! Gets last element.
-				T& getLast()
+				virtual T& getLast()
 				{
 					// access violation
 					IRR_ASSERT(used > 0)
@@ -320,7 +324,7 @@ namespace irrgame
 				}
 
 				//! Gets last element
-				const T& getLast() const
+				virtual const T& getLast() const
 				{
 					// access violation
 					IRR_ASSERT(used > 0)
@@ -330,21 +334,21 @@ namespace irrgame
 
 				//! Gets a pointer to the array.
 				/** \return Pointer to the array. */
-				T* pointer()
+				virtual T* pointer()
 				{
 					return data;
 				}
 
 				//! Gets a const pointer to the array.
 				/** \return Pointer to the array. */
-				const T* const_pointer() const
+				virtual const T* const_pointer() const
 				{
 					return data;
 				}
 
 				//! Get number of occupied elements of the array.
 				/** \return Size of elements in the array which are actually occupied. */
-				u32 size() const
+				virtual u32 size() const
 				{
 					return used;
 				}
@@ -352,7 +356,7 @@ namespace irrgame
 				//! Get amount of memory allocated.
 				/** \return Amount of memory allocated. The amount of bytes
 				 allocated would be allocated_size() * sizeof(ElementTypeUsed); */
-				u32 allocated_size() const
+				virtual u32 allocated_size() const
 				{
 					return allocated;
 				}
@@ -367,7 +371,7 @@ namespace irrgame
 				//! Sorts the array using heapsort.
 				/** There is no additional memory waste and the algorithm performs
 				 O(n*log n) in worst case. */
-				void sort()
+				virtual void sort()
 				{
 					if (!is_sorted && used > 1)
 						heapsort(data, used);
@@ -381,10 +385,10 @@ namespace irrgame
 				 \param element Element to search for.
 				 \return Position of the searched element if it was found,
 				 otherwise -1 is returned. */
-				s32 binary_search(const T& element)
+				virtual s32 binary_search(const T& element)
 				{
-					sort();
-					return binary_search(element, 0, used - 1);
+					array<T, TAlloc>::sort();
+					return array<T, TAlloc>::binary_search(element, 0, used - 1);
 				}
 
 				//! Performs a binary search for an element if possible, returns -1 if not found.
@@ -393,12 +397,13 @@ namespace irrgame
 				 \param element Element to search for.
 				 \return Position of the searched element if it was found,
 				 otherwise -1 is returned. */
-				s32 binary_search(const T& element) const
+				virtual s32 binary_search(const T& element) const
 				{
 					if (is_sorted)
-						return binary_search(element, 0, used - 1);
+						return array<T, TAlloc>::binary_search(element, 0,
+								used - 1);
 					else
-						return linear_search(element);
+						return array<T, TAlloc>::linear_search(element);
 				}
 
 				//! Performs a binary search for an element, returns -1 if not found.
@@ -407,7 +412,8 @@ namespace irrgame
 				 \param right Last right index.
 				 \return Position of the searched element if it was found, otherwise -1
 				 is returned. */
-				s32 binary_search(const T& element, s32 left, s32 right) const
+				virtual s32 binary_search(const T& element, s32 left,
+						s32 right) const
 				{
 					if (!used)
 						return -1;
@@ -444,10 +450,11 @@ namespace irrgame
 				 \param &last	return lastIndex of equal elements
 				 \return Position of the first searched element if it was found,
 				 otherwise -1 is returned. */
-				s32 binary_search_multi(const T& element, s32 &last)
+				virtual s32 binary_search_multi(const T& element, s32 &last)
 				{
-					sort();
-					s32 index = binary_search(element, 0, used - 1);
+					array<T, TAlloc>::sort();
+					s32 index = array<T, TAlloc>::binary_search(element, 0,
+							used - 1);
 					if (index < 0)
 						return index;
 
@@ -476,7 +483,7 @@ namespace irrgame
 				 \param element Element to search for.
 				 \return Position of the searched element if it was found, otherwise -1
 				 is returned. */
-				s32 linear_search(const T& element) const
+				virtual s32 linear_search(const T& element) const
 				{
 					for (u32 i = 0; i < used; ++i)
 						if (element == data[i])
@@ -491,7 +498,7 @@ namespace irrgame
 				 \param element: Element to search for.
 				 \return Position of the searched element if it was found, otherwise -1
 				 is returned. */
-				s32 linear_reverse_search(const T& element) const
+				virtual s32 linear_reverse_search(const T& element) const
 				{
 					for (s32 i = used - 1; i >= 0; --i)
 						if (data[i] == element)
@@ -504,9 +511,9 @@ namespace irrgame
 				/** May be slow, because all elements following after the erased
 				 element have to be copied.
 				 \param index: Index of element to be erased. */
-				void erase(u32 index)
+				virtual void erase(u32 index)
 				{
-					IRR_ASSERT(index >= 0 && index < used)
+					IRR_ASSERT(index >= 0 && index <= used)
 					// access violation
 
 					for (u32 i = index + 1; i < used; ++i)
@@ -525,7 +532,7 @@ namespace irrgame
 				 element have to be copied.
 				 \param index: Index of the first element to be erased.
 				 \param count: Amount of elements to be erased. */
-				void erase(u32 index, s32 count)
+				virtual void erase(u32 index, s32 count)
 				{
 					if (index >= used || count < 1)
 						return;
@@ -551,7 +558,7 @@ namespace irrgame
 				}
 
 				//! Sets if the array is sorted
-				void set_sorted(bool _is_sorted)
+				virtual void set_sorted(bool _is_sorted)
 				{
 					is_sorted = _is_sorted;
 				}
@@ -560,7 +567,7 @@ namespace irrgame
 				/** Afterwards this object will contain the content of the other object and the other
 				 object will contain the content of this object.
 				 \param other Swap content with this object	*/
-				void swap(array<T, TAlloc>& other)
+				virtual void swap(array<T, TAlloc>& other)
 				{
 					core::swap(data, other.data);
 					core::swap(allocated, other.allocated);
@@ -577,7 +584,7 @@ namespace irrgame
 					other.is_sorted = helper_is_sorted;
 				}
 
-			private:
+			protected:
 				T* data;
 				u32 allocated;
 				u32 used;

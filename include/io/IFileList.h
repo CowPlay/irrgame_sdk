@@ -46,6 +46,12 @@ namespace irrgame
 					return FullName.equals_ignore_case(other.FullName);
 				}
 
+				//! Inequality operator
+				bool operator !=(const struct SFileListEntry& other) const
+				{
+					return !(*this == other);
+				}
+
 				//! The < operator is provided so that CFileList can sort and quickly search the list.
 				bool operator <(const struct SFileListEntry& other) const
 				{

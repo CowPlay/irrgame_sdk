@@ -5,7 +5,7 @@
 #ifndef __I_ATTRIBUTE_EXCHANGING_OBJECT_H_INCLUDED__
 #define __I_ATTRIBUTE_EXCHANGING_OBJECT_H_INCLUDED__
 
-#include "core/IReferenceCounted.h"
+#include "core/irrgamebase.h"
 
 namespace irrgame
 {
@@ -67,7 +67,7 @@ namespace irrgame
 
 		};
 
-	}// end namespace io
+	} // end namespace io
 } // end namespace irr
 
 #endif

@@ -58,8 +58,8 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.macosx.lib.debug.option.optimization.level.925936723" name="Optimization Level" superClass="gnu.c.compiler.macosx.lib.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.macosx.lib.debug.option.debugging.level.997734833" name="Debug Level" superClass="gnu.c.compiler.macosx.lib.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.126191281" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Users/gregorytkach/workspace/irrgame_sdk/include"/>
-									<listOptionValue builtIn="false" value="/Users/gregorytkach/workspace/irrgame_sdk/src"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1802520191" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="DEBUG"/>

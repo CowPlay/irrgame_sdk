@@ -37,7 +37,7 @@ namespace irrgame
 
 				//! Causes the operating system to sleep current thread.
 				//! Platform dependies
-				//@ param0 - time in msec.
+				//@ param0 - time in ms.
 				static void sleep(s32 time);
 
 				//! Returns current thread id

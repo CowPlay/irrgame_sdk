@@ -5,6 +5,8 @@
 #ifndef __IRR_MAP_H_INCLUDED__
 #define __IRR_MAP_H_INCLUDED__
 
+#include "core/math/irrMath.h"
+
 namespace irrgame
 {
 	namespace core

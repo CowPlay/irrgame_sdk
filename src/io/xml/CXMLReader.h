@@ -21,8 +21,34 @@ namespace irrgame
 				// structure for storing attribute-name pairs
 				struct SAttribute
 				{
+					public:
 						stringc Name;
 						stringc Value;
+					public:
+						//! Equality operator
+						bool operator ==(const SAttribute& other) const
+						{
+							return this->Name == other.Name;
+						}
+
+						//! Inequality operator
+						bool operator !=(const SAttribute& other) const
+						{
+							return !(*this == other);
+						}
+
+						//! Is smaller comparator. Copmared only attributes lengths.
+						bool operator <(const SAttribute& other) const
+						{
+							return (this->Name < other.Name
+									&& this->Value < other.Value);
+						}
+
+						//! Is bigger comparator. Copmared only attributes lengths.
+						bool operator >(const SAttribute& other) const
+						{
+							return !(*this < other);
+						}
 				};
 
 			public:
@@ -144,7 +170,7 @@ namespace irrgame
 
 				bool IsEmptyElement; // is the currently parsed node empty?
 
-				core::array<stringc> SpecialCharacters; // see createSpecialCharacterList()
+				arraystr SpecialCharacters; // see createSpecialCharacterList()
 
 				core::array<SAttribute> Attributes; // attributes of current element
 		};

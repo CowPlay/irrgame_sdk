@@ -9,6 +9,7 @@
 #define IPLAYERCONFIGREADER_H_
 
 #include "io/config/IConfigReader.h"
+#include "core/irrgamecollections.h"
 namespace irrgame
 {
 	class irrgamePlayer;

@@ -14,7 +14,7 @@ namespace irrgame
 
 		//! Sinks an element into the heap.
 		template<class T>
-		inline void heapsink(T*array, s32 element, s32 max)
+		inline void heapsink(T* array, s32 element, s32 max)
 		{
 			while ((element << 1) < max) // there is a left child
 			{

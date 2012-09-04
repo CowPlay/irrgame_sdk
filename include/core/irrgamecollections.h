@@ -11,7 +11,7 @@
 #include "core/base/irrgameTypes.h"
 #include "core/collections/irrArray.h"
 #include "core/collections/list/list.h"
-#include "core/collections/irrMap.h"
+#include "core/collections/map/map.h"
 #include "core/collections/irrString.h"
 
 //! Threadsafe collections

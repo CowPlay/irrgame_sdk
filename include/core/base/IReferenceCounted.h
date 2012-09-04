@@ -6,7 +6,7 @@
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
 #include "core/base/irrgameTypes.h"
-#include "core/collections/irrMap.h"
+#include "core/collections/map/map.h"
 namespace irrgame
 {
 

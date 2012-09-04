@@ -234,7 +234,7 @@ namespace irrgame
 		//! Copy constructor
 		template<class T>
 		inline arraysafe<T>::arraysafe(const arraysafe<T>& other) :
-				array<T>::arraysafe(other), Monitor(0)
+				array<T>::array(other), Monitor(0)
 		{
 			*this = other;
 		}

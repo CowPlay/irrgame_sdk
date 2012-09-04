@@ -347,6 +347,13 @@ namespace irrgame
 		{
 			arraysafe<T> result;
 
+			//handle self-assignment
+			if (this == &other)
+				return *this;
+
+			if (Monitor)
+				Monitor->drop();
+
 			other.Monitor->enter();
 
 			(*result) = static_cast<arraysafe<T>&>(array<T>::operator=(other));
@@ -358,14 +365,20 @@ namespace irrgame
 		}
 
 		//! Equality operator
-		//TODO: add locker for other
 		template<class T>
 		inline bool arraysafe<T>::operator ==(const arraysafe<T>& other) const
 		{
 			bool result = false;
 
+			if (this == &other)
+				return true;
+
+			other.Monitor->enter();
 			Monitor->enter();
+
 			result = array<T>::operator==(other);
+
+			other.Monitor->exit();
 			Monitor->exit();
 
 			return result;
@@ -377,8 +390,15 @@ namespace irrgame
 		{
 			bool result = false;
 
+			if (this == &other)
+				return false;
+
+			other.Monitor->enter();
 			Monitor->enter();
+
 			result = array<T>::operator!=(other);
+
+			other.Monitor->exit();
 			Monitor->exit();
 
 			return result;

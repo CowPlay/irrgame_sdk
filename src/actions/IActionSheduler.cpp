@@ -38,8 +38,6 @@ namespace irrgame
 		{
 			IRR_ASSERT(action != 0);
 
-			//TODO: add monitor::enter
-
 			switch (qType)
 			{
 				case EAP_REALTIME:

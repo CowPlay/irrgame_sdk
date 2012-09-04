@@ -996,6 +996,7 @@ namespace irrgame
 				}
 
 				//! gets the last char of a string or null
+				//TODO: return last char when used = 1
 				T lastChar() const
 				{
 					return used > 1 ? array[used - 2] : 0;

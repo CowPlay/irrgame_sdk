@@ -345,7 +345,7 @@ namespace irrgame
 		template<class T>
 		inline arraysafe<T>& arraysafe<T>::operator=(const arraysafe<T>& other)
 		{
-			arraysafe<T> result;
+			arraysafe<T>* result = 0;
 
 			//handle self-assignment
 			if (this == &other)
@@ -357,7 +357,7 @@ namespace irrgame
 			other.Monitor->enter();
 
 			(*result) = static_cast<arraysafe<T>&>(array<T>::operator=(other));
-			&result.Monitor = other.Monitor;
+			result->Monitor = other.Monitor;
 
 			other.Monitor->exit();
 
@@ -408,7 +408,7 @@ namespace irrgame
 		template<class T>
 		inline T& arraysafe<T>::operator [](u32 index)
 		{
-			T result;
+			T* result = 0;
 
 			Monitor->enter();
 			(*result) = array<T>::operator[](index);
@@ -421,7 +421,7 @@ namespace irrgame
 		template<class T>
 		inline const T& arraysafe<T>::operator [](u32 index) const
 		{
-			T result;
+			T* result = 0;
 
 			Monitor->enter();
 			(*result) = array<T>::operator[](index);
@@ -434,7 +434,7 @@ namespace irrgame
 		template<class T>
 		inline T& arraysafe<T>::getLast()
 		{
-			T result;
+			T* result;
 
 			Monitor->enter();
 			(*result) = array<T>::getLast();
@@ -447,7 +447,7 @@ namespace irrgame
 		template<class T>
 		inline const T& arraysafe<T>::getLast() const
 		{
-			T result;
+			T* result;
 
 			Monitor->enter();
 			(*result) = array<T>::getLast();

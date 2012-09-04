@@ -54,7 +54,6 @@ namespace irrgame
 		template<class Key, class Value>
 		class map
 		{
-
 			public:
 
 				typedef RBTree<Key, Value> Node;
@@ -62,13 +61,14 @@ namespace irrgame
 				typedef CParentFirstIterator<Key, Value> ParentFirstIterator;
 				typedef CParentLastIterator<Key, Value> ParentLastIterator;
 				typedef CAccessClass<Key, Value> AccessClass;
+
 			public:
 
 				//! Default constructor.
 				map();
 
 				//! Destructor
-				~map();
+				virtual ~map();
 
 				//------------------------------
 				// Public Commands
@@ -78,68 +78,68 @@ namespace irrgame
 				/** \param keyNew: the index for this value
 				 \param v: the value to insert
 				 \return True if successful, false if it fails (already exists) */
-				bool insert(const Key& keyNew, const Value& v);
+				virtual bool insert(const Key& keyNew, const Value& v);
 
 				//! Replaces the value if the key already exists, otherwise inserts a new element.
 				/** \param k The index for this value
 				 \param v The new value of */
-				void set(const Key& k, const Value& v);
+				virtual void set(const Key& k, const Value& v);
 
 				//! Removes a node from the tree and returns it.
 				/** The returned node must be deleted by the user
 				 \param k the key to remove
 				 \return A pointer to the node, or 0 if not found */
-				Node* delink(const Key& k);
+				virtual Node* delink(const Key& k);
 
 				//! Removes a node from the tree and deletes it.
 				/** \return True if the node was found and deleted */
-				bool remove(const Key& k);
+				virtual bool remove(const Key& k);
 
 				//! Clear the entire tree
-				void clear();
+				virtual void clear();
 
 				//! Is the tree empty?
 				//! \return Returns true if empty, false if not
-				bool empty() const;
+				virtual bool empty() const;
 
 				//! Search for a node with the specified key.
 				//! \param keyToFind: The key to find
 				//! \return Returns 0 if node couldn't be found.
-				Node* find(const Key& keyToFind) const;
+				virtual Node* find(const Key& keyToFind) const;
 
 				//! Gets the root element.
 				//! \return Returns a pointer to the root node, or
 				//! 0 if the tree is empty.
-				Node* getRoot() const;
+				virtual Node* getRoot() const;
 
 				//! Returns the number of nodes in the tree.
-				u32 size() const;
+				virtual u32 size() const;
 
 				//! Swap the content of this map container with the content of another map
 				/** Afterwards this object will contain the content of the other object and the other
 				 object will contain the content of this object. Iterators will afterwards be valid for
 				 the swapped object.
 				 \param other Swap content with this object	*/
-				void swap(map<Key, Value>& other);
+				virtual void swap(map<Key, Value>& other);
 
 				//------------------------------
 				// Public Iterators
 				//------------------------------
 
 				//! Returns an iterator
-				Iterator getIterator();
+				virtual Iterator getIterator();
 				//! Returns a ParentFirstIterator.
 				//! Traverses the tree from top to bottom. Typical usage is
 				//! when storing the tree structure, because when reading it
 				//! later (and inserting elements) the tree structure will
 				//! be the same.
-				ParentFirstIterator getParentFirstIterator();
+				virtual ParentFirstIterator getParentFirstIterator();
 				//! Returns a ParentLastIterator to traverse the tree from
 				//! bottom to top.
 				//! Typical usage is when deleting all elements in the tree
 				//! because you must delete the children before you delete
 				//! their parent.
-				ParentLastIterator getParentLastIterator();
+				virtual ParentLastIterator getParentLastIterator();
 
 				//------------------------------
 				// Public Operators
@@ -147,8 +147,8 @@ namespace irrgame
 
 				//! operator [] for access to elements
 				/** for example myMap["key"] */
-				AccessClass operator[](const Key& k);
-			private:
+				virtual AccessClass operator[](const Key& k);
+			protected:
 
 				//------------------------------
 				// Disabled methods
@@ -159,122 +159,36 @@ namespace irrgame
 				explicit map(const map& src);
 				map& operator =(const map& src);
 
-			private:
+			protected:
 
 				//! Set node as new root.
 				/** The node will be set to black, otherwise core dumps may arise
 				 (patch provided by rogerborg).
 				 \param newRoot Node which will be the new root
 				 */
-				void setRoot(Node* newRoot)
-				{
-					Root = newRoot;
-					if (Root != 0)
-					{
-						Root->setParent(0);
-						Root->setBlack();
-					}
-				}
+				virtual void setRoot(Node* newRoot);
 
 				//! Insert a node into the tree without using any fancy balancing logic.
 				/** \return false if that key already exist in the tree. */
-				bool insert(Node* newNode)
-				{
-					bool result = true; // Assume success
-
-					if (Root == 0)
-					{
-						setRoot(newNode);
-						Size = 1;
-					}
-					else
-					{
-						Node* pNode = Root;
-						Key keyNew = newNode->getKey();
-						while (pNode)
-						{
-							Key key(pNode->getKey());
-
-							if (keyNew == key)
-							{
-								result = false;
-								pNode = 0;
-							}
-							else if (keyNew < key)
-							{
-								if (pNode->getLeftChild() == 0)
-								{
-									pNode->setLeftChild(newNode);
-									pNode = 0;
-								}
-								else
-									pNode = pNode->getLeftChild();
-							}
-							else // keyNew > key
-							{
-								if (pNode->getRightChild() == 0)
-								{
-									pNode->setRightChild(newNode);
-									pNode = 0;
-								}
-								else
-								{
-									pNode = pNode->getRightChild();
-								}
-							}
-						}
-
-						if (result)
-							++Size;
-					}
-
-					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-					return result;
-				}
+				virtual bool insert(Node* newNode);
 
 				//! Rotate left.
 				//! Pull up node's right child and let it knock node down to the left
-				void rotateLeft(Node* p)
-				{
-					Node* right = p->getRightChild();
-
-					p->setRightChild(right->getLeftChild());
-
-					if (p->isLeftChild())
-						p->getParent()->setLeftChild(right);
-					else if (p->isRightChild())
-						p->getParent()->setRightChild(right);
-					else
-						setRoot(right);
-
-					right->setLeftChild(p);
-				}
+				virtual void rotateLeft(Node* p);
 
 				//! Rotate right.
 				//! Pull up node's left child and let it knock node down to the right
-				void rotateRight(Node* p)
-				{
-					Node* left = p->getLeftChild();
+				virtual void rotateRight(Node* p);
 
-					p->setLeftChild(left->getRightChild());
-
-					if (p->isLeftChild())
-						p->getParent()->setLeftChild(left);
-					else if (p->isRightChild())
-						p->getParent()->setRightChild(left);
-					else
-						setRoot(left);
-
-					left->setRightChild(p);
-				}
-
-			private:
+			protected:
 
 				Node* Root; // The top node. 0 if empty.
 				u32 Size; // Number of nodes in the tree
 		};
 
-		//--------- CAccessClass realization
+		//------------------------------
+		// CAccessClass realization
+		//------------------------------
 
 		// Assignment operator. Handles the myTree["Foo"] = 32; situation
 		template<class Key, class Value>
@@ -306,7 +220,10 @@ namespace irrgame
 		{
 		}
 
-		//--------- map realization
+		//------------------------------
+		// map realization
+		//------------------------------
+
 		//! Default constructor.
 		template<class Key, class Value>
 		inline map<Key, Value>::map() :
@@ -318,12 +235,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline map<Key, Value>::~map()
 		{
-			clear();
+			map<Key, Value>::clear();
 		}
-
-		//------------------------------
-		// Public Commands
-		//------------------------------
 
 		//! Inserts a new node into the tree
 		/** \param keyNew: the index for this value
@@ -334,7 +247,7 @@ namespace irrgame
 		{
 			// First insert node the "usual" way (no fancy balance logic yet)
 			Node* newNode = new Node(keyNew, v);
-			if (!insert(newNode))
+			if (!map<Key, Value>::insert(newNode))
 			{
 				delete newNode;
 				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
@@ -366,12 +279,13 @@ namespace irrgame
 							// and newNode is to the right
 							// case 2 - move newNode up and rotate
 							newNode = newNode->getParent();
-							rotateLeft(newNode);
+							map<Key, Value>::rotateLeft(newNode);
 						}
 						// case 3
 						newNode->getParent()->setBlack();
 						newNode->getParent()->getParent()->setRed();
-						rotateRight(newNode->getParent()->getParent());
+						map<Key, Value>::rotateRight(
+								newNode->getParent()->getParent());
 					}
 				}
 				else
@@ -396,12 +310,13 @@ namespace irrgame
 							// and newNode is to the left
 							// case 2 - move newNode up and rotate
 							newNode = newNode->getParent();
-							rotateRight(newNode);
+							map<Key, Value>::rotateRight(newNode);
 						}
 						// case 3
 						newNode->getParent()->setBlack();
 						newNode->getParent()->getParent()->setRed();
-						rotateLeft(newNode->getParent()->getParent());
+						map<Key, Value>::rotateLeft(
+								newNode->getParent()->getParent());
 					}
 
 				}
@@ -417,11 +332,11 @@ namespace irrgame
 		template<class Key, class Value>
 		inline void map<Key, Value>::set(const Key& k, const Value& v)
 		{
-			Node* p = find(k);
+			Node* p = map<Key, Value>::find(k);
 			if (p)
 				p->setValue(v);
 			else
-				insert(k, v);
+				map<Key, Value>::insert(k, v);
 		}
 
 		//! Removes a node from the tree and returns it.
@@ -431,7 +346,7 @@ namespace irrgame
 		template<class Key, class Value>
 		inline RBTree<Key, Value>* map<Key, Value>::delink(const Key& k)
 		{
-			Node* p = find(k);
+			Node* p = map<Key, Value>::find(k);
 			if (p == 0)
 				return 0;
 
@@ -440,7 +355,7 @@ namespace irrgame
 			while (p->getRightChild())
 			{
 				// "Pull up my right child and let it knock me down to the left"
-				rotateLeft(p);
+				map<Key, Value>::rotateLeft(p);
 			}
 			// p now has no right child but might have a left child
 			Node* left = p->getLeftChild();
@@ -456,7 +371,7 @@ namespace irrgame
 			{
 				// p has no parent => p is the root.
 				// Let the left child be the new root.
-				setRoot(left);
+				map<Key, Value>::setRoot(left);
 			}
 
 			// p is now gone from the tree in the sense that
@@ -471,7 +386,7 @@ namespace irrgame
 		template<class Key, class Value>
 		inline bool map<Key, Value>::remove(const Key& k)
 		{
-			Node* p = find(k);
+			Node* p = map<Key, Value>::find(k);
 			if (p == 0)
 			{
 				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
@@ -483,7 +398,7 @@ namespace irrgame
 			while (p->getRightChild())
 			{
 				// "Pull up my right child and let it knock me down to the left"
-				rotateLeft(p);
+				map<Key, Value>::rotateLeft(p);
 			}
 			// p now has no right child but might have a left child
 			Node* left = p->getLeftChild();
@@ -499,7 +414,7 @@ namespace irrgame
 			{
 				// p has no parent => p is the root.
 				// Let the left child be the new root.
-				setRoot(left);
+				map<Key, Value>::setRoot(left);
 			}
 
 			// p is now gone from the tree in the sense that
@@ -514,7 +429,7 @@ namespace irrgame
 		template<class Key, class Value>
 		inline void map<Key, Value>::clear()
 		{
-			ParentLastIterator i(getParentLastIterator());
+			ParentLastIterator i(map<Key, Value>::getParentLastIterator());
 
 			while (!i.atEnd())
 			{
@@ -597,7 +512,7 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CMapIterator<Key, Value> map<Key, Value>::getIterator()
 		{
-			Iterator it(getRoot());
+			Iterator it(map<Key, Value>::getRoot());
 			return it;
 		}
 
@@ -609,7 +524,7 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CParentFirstIterator<Key, Value> map<Key, Value>::getParentFirstIterator()
 		{
-			ParentFirstIterator it(getRoot());
+			ParentFirstIterator it(map<Key, Value>::getRoot());
 			return it;
 		}
 
@@ -621,7 +536,7 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CParentLastIterator<Key, Value> map<Key, Value>::getParentLastIterator()
 		{
-			ParentLastIterator it(getRoot());
+			ParentLastIterator it(map<Key, Value>::getRoot());
 			return it;
 		}
 
@@ -637,6 +552,122 @@ namespace irrgame
 		{
 			return AccessClass(*this, k);
 		}
+
+		//------------------------------
+		// Protected funcs
+		//------------------------------
+
+		//! Set node as new root.
+		/** The node will be set to black, otherwise core dumps may arise
+		 (patch provided by rogerborg).
+		 \param newRoot Node which will be the new root
+		 */
+		template<class Key, class Value>
+		inline void map<Key, Value>::setRoot(Node* newRoot)
+		{
+			Root = newRoot;
+			if (Root != 0)
+			{
+				Root->setParent(0);
+				Root->setBlack();
+			}
+		}
+
+		//! Insert a node into the tree without using any fancy balancing logic.
+		/** \return false if that key already exist in the tree. */
+		template<class Key, class Value>
+		inline bool map<Key, Value>::insert(Node* newNode)
+		{
+			bool result = true; // Assume success
+
+			if (Root == 0)
+			{
+				map<Key, Value>::setRoot(newNode);
+				Size = 1;
+			}
+			else
+			{
+				Node* pNode = Root;
+				Key keyNew = newNode->getKey();
+				while (pNode)
+				{
+					Key key(pNode->getKey());
+
+					if (keyNew == key)
+					{
+						result = false;
+						pNode = 0;
+					}
+					else if (keyNew < key)
+					{
+						if (pNode->getLeftChild() == 0)
+						{
+							pNode->setLeftChild(newNode);
+							pNode = 0;
+						}
+						else
+							pNode = pNode->getLeftChild();
+					}
+					else // keyNew > key
+					{
+						if (pNode->getRightChild() == 0)
+						{
+							pNode->setRightChild(newNode);
+							pNode = 0;
+						}
+						else
+						{
+							pNode = pNode->getRightChild();
+						}
+					}
+				}
+
+				if (result)
+					++Size;
+			}
+
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+			return result;
+		}
+
+		//! Rotate left.
+		//! Pull up node's right child and let it knock node down to the left
+		template<class Key, class Value>
+		inline void map<Key, Value>::rotateLeft(Node* p)
+		{
+			Node* right = p->getRightChild();
+
+			p->setRightChild(right->getLeftChild());
+
+			if (p->isLeftChild())
+				p->getParent()->setLeftChild(right);
+			else if (p->isRightChild())
+				p->getParent()->setRightChild(right);
+			else
+				map<Key, Value>::setRoot(right);
+
+			right->setLeftChild(p);
+		}
+
+		//! Rotate right.
+		//! Pull up node's left child and let it knock node down to the right
+		template<class Key, class Value>
+		inline void map<Key, Value>::rotateRight(Node* p)
+		{
+			Node* left = p->getLeftChild();
+
+			p->setLeftChild(left->getRightChild());
+
+			if (p->isLeftChild())
+				p->getParent()->setLeftChild(left);
+			else if (p->isRightChild())
+				p->getParent()->setRightChild(left);
+			else
+				map<Key, Value>::setRoot(left);
+
+			left->setRightChild(p);
+		}
+
 	}
 // end namespace core
 }// end namespace irr

@@ -17,6 +17,7 @@
 //! Threadsafe collections
 #include "core/collections/threadsafe/irrarraysafe.h"
 #include "core/collections/threadsafe/irrlistsafe.h"
+#include "core/collections/threadsafe/irrmapsafe.h"
 
 //! array typedefs
 typedef irrgame::core::array<s32> arrayi;

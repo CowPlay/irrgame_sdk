@@ -93,10 +93,10 @@ namespace irrgame
 				virtual arraysafe<T>& operator=(const arraysafe<T>& other);
 
 				//! Equality operator
-				virtual bool operator ==(const array<T>& other) const;
+				virtual bool operator ==(const arraysafe<T>& other) const;
 
 				//! Inequality operator
-				virtual bool operator !=(const array<T>& other) const;
+				virtual bool operator !=(const arraysafe<T>& other) const;
 
 				//! Direct access operator. Can be get or set value.
 				virtual T& operator [](u32 index);
@@ -208,7 +208,7 @@ namespace irrgame
 				/** Afterwards this object will contain the content of the other object and the other
 				 object will contain the content of this object.
 				 \param other Swap content with this object	*/
-				virtual void swap(array<T>& other);
+				virtual void swap(arraysafe<T>& other);
 
 			protected:
 				threads::irrgameMonitor* Monitor;
@@ -234,7 +234,7 @@ namespace irrgame
 		//! Copy constructor
 		template<class T>
 		inline arraysafe<T>::arraysafe(const arraysafe<T>& other) :
-				array<T>::array(other), Monitor(0)
+				Monitor(0)
 		{
 			*this = other;
 		}
@@ -347,16 +347,20 @@ namespace irrgame
 		{
 			arraysafe<T> result;
 
-			Monitor->enter();
+			other.Monitor->enter();
+
 			(*result) = static_cast<arraysafe<T>&>(array<T>::operator=(other));
-			Monitor->exit();
+			&result.Monitor = other.Monitor;
+
+			other.Monitor->exit();
 
 			return (*result);
 		}
 
 		//! Equality operator
+		//TODO: add locker for other
 		template<class T>
-		inline bool arraysafe<T>::operator ==(const array<T>& other) const
+		inline bool arraysafe<T>::operator ==(const arraysafe<T>& other) const
 		{
 			bool result = false;
 
@@ -369,7 +373,7 @@ namespace irrgame
 
 		//! Inequality operator
 		template<class T>
-		inline bool arraysafe<T>::operator !=(const array<T>& other) const
+		inline bool arraysafe<T>::operator !=(const arraysafe<T>& other) const
 		{
 			bool result = false;
 
@@ -665,11 +669,20 @@ namespace irrgame
 		/** Afterwards this object will contain the content of the other object and the other
 		 object will contain the content of this object.
 		 \param other Swap content with this object	*/
+		//TODO: add locker for other
 		template<class T>
-		inline void arraysafe<T>::swap(array<T>& other)
+		inline void arraysafe<T>::swap(arraysafe<T>& other)
 		{
+			if (this == &other)
+				return;
+
 			Monitor->enter();
+
 			array<T>::swap(other);
+			irrgame::threads::irrgameMonitor* helper_monitor(Monitor);
+			Monitor = other.Monitor;
+			other.Monitor = helper_monitor;
+
 			Monitor->exit();
 		}
 	}

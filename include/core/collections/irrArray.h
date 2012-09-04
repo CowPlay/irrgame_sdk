@@ -805,6 +805,9 @@ namespace irrgame
 		template<class T>
 		inline void array<T>::swap(array<T>& other)
 		{
+			if (this == &other)
+				return;
+
 			core::swap(data, other.data);
 			core::swap(allocated, other.allocated);
 			core::swap(used, other.used);

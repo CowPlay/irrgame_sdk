@@ -10,12 +10,13 @@
 
 #include "core/base/irrgameTypes.h"
 #include "core/collections/irrArray.h"
-#include "core/collections/irrList.h"
+#include "core/collections/list/list.h"
 #include "core/collections/irrMap.h"
 #include "core/collections/irrString.h"
 
 //! Threadsafe collections
 #include "core/collections/threadsafe/irrarraysafe.h"
+#include "core/collections/threadsafe/irrlistsafe.h"
 
 //! array typedefs
 typedef irrgame::core::array<s32> arrayi;

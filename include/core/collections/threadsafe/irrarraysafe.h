@@ -355,7 +355,7 @@ namespace irrgame
 			other.Monitor->enter();
 
 			(*this) = static_cast<arraysafe<T>&>(array<T>::operator=(other));
-			this->Monitor = other.Monitor;
+			this->Monitor = threads::createIrrgameMonitor();
 
 			other.Monitor->exit();
 
@@ -406,52 +406,44 @@ namespace irrgame
 		template<class T>
 		inline T& arraysafe<T>::operator [](u32 index)
 		{
-			T* result = 0;
-
 			Monitor->enter();
-			(*result) = array<T>::operator[](index);
+			T& result = array<T>::operator[](index);
 			Monitor->exit();
 
-			return (*result);
+			return result;
 		}
 
 		//! Direct const access operator. Can be get or set value.
 		template<class T>
 		inline const T& arraysafe<T>::operator [](u32 index) const
 		{
-			T* result = 0;
-
 			Monitor->enter();
-			(*result) = array<T>::operator[](index);
+			const T& result = array<T>::operator[](index);
 			Monitor->exit();
 
-			return (*result);
+			return result;
 		}
 
 		//! Gets last element. Can be get or set value.
 		template<class T>
 		inline T& arraysafe<T>::getLast()
 		{
-			T* result;
-
 			Monitor->enter();
-			(*result) = array<T>::getLast();
+			T& result = array<T>::getLast();
 			Monitor->exit();
 
-			return (*result);
+			return result;
 		}
 
 		//! Gets last element. Can be get or set value.
 		template<class T>
 		inline const T& arraysafe<T>::getLast() const
 		{
-			T* result;
-
 			Monitor->enter();
-			(*result) = array<T>::getLast();
+			const T& result = array<T>::getLast();
 			Monitor->exit();
 
-			return (*result);
+			return result;
 		}
 
 		//! Gets a pointer to the array. Can be get or set value.

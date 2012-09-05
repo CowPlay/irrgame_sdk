@@ -82,31 +82,31 @@ namespace irrgame
 				 object will contain the content of this object. Iterators will afterwards be valid for
 				 the swapped object.
 				 \param other Swap content with this object	*/
-				virtual void swap(list<T>& other);
+				virtual void swap(listsafe<T>& other);
 
 				//! Gets first node.
 				/** \return A list iterator pointing to the beginning of the list. */
-				Iterator begin();
+				virtual Iterator begin();
 
 				//! Gets end node.
 				/** \return List iterator pointing to null. */
-				Iterator end();
+				virtual Iterator end();
 
 				//! Gets last element.
 				/** \return List iterator pointing to the last element of the list. */
-				Iterator getLast();
+				virtual Iterator getLast();
 
 				//! Gets first node.
 				/** \return A const list iterator pointing to the beginning of the list. */
-				ConstIterator begin() const;
+				virtual ConstIterator begin() const;
 
 				//! Gets end node.
 				/** \return Const list iterator pointing to null. */
-				ConstIterator end() const;
+				virtual ConstIterator end() const;
 
 				//! Gets last element.
 				/** \return Const list iterator pointing to the last element of the list. */
-				ConstIterator getLast() const;
+				virtual ConstIterator getLast() const;
 
 			protected:
 				threads::irrgameMonitor* Monitor;
@@ -122,7 +122,7 @@ namespace irrgame
 		//! Copy constructor.
 		template<class T>
 		inline listsafe<T>::listsafe(const listsafe<T>& other) :
-				list<T>::list(other), Monitor(0)
+				Monitor(0)
 		{
 			*this = other;
 		}
@@ -188,7 +188,7 @@ namespace irrgame
 		inline void listsafe<T>::push_back(const T& element)
 		{
 			Monitor->enter();
-			list<T>::push_back();
+			list<T>::push_back(element);
 			Monitor->exit();
 		}
 
@@ -198,7 +198,7 @@ namespace irrgame
 		inline void listsafe<T>::push_front(const T& element)
 		{
 			Monitor->enter();
-			list<T>::push_front();
+			list<T>::push_front(element);
 			Monitor->exit();
 		}
 
@@ -251,11 +251,21 @@ namespace irrgame
 		 the swapped object.
 		 \param other Swap content with this object	*/
 		template<class T>
-		inline void listsafe<T>::swap(list<T>& other)
+		inline void listsafe<T>::swap(listsafe<T>& other)
 		{
+			if (this == &other)
+				return;
+
 			Monitor->enter();
+			other.Monitor->enter();
+
 			list<T>::swap(other);
+			irrgame::threads::irrgameMonitor* helper_monitor(Monitor);
+			Monitor = other.Monitor;
+			other.Monitor = helper_monitor;
+
 			Monitor->exit();
+			other.Monitor->exit();
 		}
 
 		//! Gets first node.

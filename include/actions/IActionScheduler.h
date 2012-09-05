@@ -68,10 +68,10 @@ namespace irrgame
 
 			private:
 				//! TODO: mb need change collection
-				core::arraysafe<u32> DeleteAfterBuild;
-				core::arraysafe<delegateAction*> RealtimeActions;
-				core::arraysafe<delegateAction*> HighpriorityActions;
-				core::arraysafe<delegateAction*> BackgroundActions;
+				listsafeu DeleteAfterBuild;
+				core::listsafe<delegateAction*> RealtimeActions;
+				core::listsafe<delegateAction*> HighpriorityActions;
+				core::listsafe<delegateAction*> BackgroundActions;
 		};
 	}
 

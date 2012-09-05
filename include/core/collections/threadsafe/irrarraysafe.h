@@ -345,8 +345,6 @@ namespace irrgame
 		template<class T>
 		inline arraysafe<T>& arraysafe<T>::operator=(const arraysafe<T>& other)
 		{
-			arraysafe<T>* result = 0;
-
 			//handle self-assignment
 			if (this == &other)
 				return *this;
@@ -356,12 +354,12 @@ namespace irrgame
 
 			other.Monitor->enter();
 
-			(*result) = static_cast<arraysafe<T>&>(array<T>::operator=(other));
-			result->Monitor = other.Monitor;
+			(*this) = static_cast<arraysafe<T>&>(array<T>::operator=(other));
+			this->Monitor = other.Monitor;
 
 			other.Monitor->exit();
 
-			return (*result);
+			return (*this);
 		}
 
 		//! Equality operator
@@ -689,7 +687,6 @@ namespace irrgame
 		/** Afterwards this object will contain the content of the other object and the other
 		 object will contain the content of this object.
 		 \param other Swap content with this object	*/
-		//TODO: add locker for other
 		template<class T>
 		inline void arraysafe<T>::swap(arraysafe<T>& other)
 		{
@@ -697,6 +694,7 @@ namespace irrgame
 				return;
 
 			Monitor->enter();
+			other.Monitor->enter();
 
 			array<T>::swap(other);
 			irrgame::threads::irrgameMonitor* helper_monitor(Monitor);
@@ -704,6 +702,7 @@ namespace irrgame
 			other.Monitor = helper_monitor;
 
 			Monitor->exit();
+			other.Monitor->exit();
 		}
 	}
 }

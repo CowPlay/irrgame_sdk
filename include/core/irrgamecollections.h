@@ -31,6 +31,20 @@ typedef irrgame::core::arraysafe<u32> arrsafeu;
 typedef irrgame::core::arraysafe<f32> arrsafef;
 typedef irrgame::core::arraysafe<irrgame::core::string<c8> > arrsafestr;
 
+//! list typedefs
+typedef irrgame::core::list<s32> listi;
+typedef irrgame::core::list<u32> listu;
+typedef irrgame::core::list<f32> listf;
+typedef irrgame::core::list<irrgame::core::string<c8> > liststr;
+
+//! threadsafe list typedefs
+typedef irrgame::core::listsafe<s32> listsafei;
+typedef irrgame::core::listsafe<u32> listsafeu;
+typedef irrgame::core::listsafe<f32> listsafef;
+typedef irrgame::core::listsafe<irrgame::core::string<c8> > listsafestr;
+
+
+
 //! map typedefs
 typedef irrgame::core::map<s32, s32> DictIntInt;
 

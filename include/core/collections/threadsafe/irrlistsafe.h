@@ -117,6 +117,7 @@ namespace irrgame
 		inline listsafe<T>::listsafe() :
 				list<T>::list(), Monitor(0)
 		{
+			Monitor = irrgame::threads::createIrrgameMonitor();
 		}
 
 		//! Copy constructor.
@@ -139,9 +140,13 @@ namespace irrgame
 		template<class T>
 		inline void listsafe<T>::operator=(const listsafe<T>& other)
 		{
-			Monitor->enter();
+			if (Monitor)
+				Monitor->drop();
+
+			other.Monitor->enter();
 			list<T>::operator =(other);
-			Monitor->exit();
+			Monitor = irrgame::threads::createIrrgameMonitor();
+			other.Monitor->exit();
 		}
 
 		//! Returns amount of elements in list.
@@ -149,10 +154,8 @@ namespace irrgame
 		template<class T>
 		inline u32 listsafe<T>::size() const
 		{
-			u32 result = 0;
-
 			Monitor->enter();
-			result = list<T>::size();
+			u32 result = list<T>::size();
 			Monitor->exit();
 
 			return result;
@@ -173,10 +176,8 @@ namespace irrgame
 		template<class T>
 		inline bool listsafe<T>::empty() const
 		{
-			bool result = 0;
-
 			Monitor->enter();
-			result = list<T>::empty();
+			bool result = list<T>::empty();
 			Monitor->exit();
 
 			return result;
@@ -236,10 +237,8 @@ namespace irrgame
 		template<class T>
 		inline CIterator<T> listsafe<T>::erase(CIterator<T>& it)
 		{
-			CIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::erase(it);
+			CIterator<T> result = list<T>::erase(it);
 			Monitor->exit();
 
 			return result;
@@ -273,10 +272,8 @@ namespace irrgame
 		template<class T>
 		inline CIterator<T> listsafe<T>::begin()
 		{
-			CIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::begin();
+			CIterator<T> result = list<T>::begin();
 			Monitor->exit();
 
 			return result;
@@ -287,10 +284,8 @@ namespace irrgame
 		template<class T>
 		inline CIterator<T> listsafe<T>::end()
 		{
-			CIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::end();
+			CIterator<T> result = list<T>::end();
 			Monitor->exit();
 
 			return result;
@@ -300,10 +295,8 @@ namespace irrgame
 		template<class T>
 		inline CIterator<T> listsafe<T>::getLast()
 		{
-			CIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::getLast();
+			CIterator<T> result = list<T>::getLast();
 			Monitor->exit();
 
 			return result;
@@ -314,10 +307,8 @@ namespace irrgame
 		template<class T>
 		inline CConstIterator<T> listsafe<T>::begin() const
 		{
-			CConstIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::begin();
+			CConstIterator<T> result = list<T>::begin();
 			Monitor->exit();
 
 			return result;
@@ -328,10 +319,8 @@ namespace irrgame
 		template<class T>
 		inline CConstIterator<T> listsafe<T>::end() const
 		{
-			CConstIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::end();
+			CConstIterator<T> result = list<T>::end();
 			Monitor->exit();
 
 			return result;
@@ -342,10 +331,8 @@ namespace irrgame
 		template<class T>
 		inline CConstIterator<T> listsafe<T>::getLast() const
 		{
-			CConstIterator<T> result;
-
 			Monitor->enter();
-			result = list<T>::getLast();
+			CConstIterator<T> result = list<T>::getLast();
 			Monitor->exit();
 
 			return result;

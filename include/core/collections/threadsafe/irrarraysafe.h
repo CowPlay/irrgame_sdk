@@ -366,15 +366,13 @@ namespace irrgame
 		template<class T>
 		inline bool arraysafe<T>::operator ==(const arraysafe<T>& other) const
 		{
-			bool result = false;
-
 			if (this == &other)
 				return true;
 
 			other.Monitor->enter();
 			Monitor->enter();
 
-			result = array<T>::operator==(other);
+			bool result = array<T>::operator==(other);
 
 			other.Monitor->exit();
 			Monitor->exit();
@@ -386,15 +384,13 @@ namespace irrgame
 		template<class T>
 		inline bool arraysafe<T>::operator !=(const arraysafe<T>& other) const
 		{
-			bool result = false;
-
 			if (this == &other)
 				return false;
 
 			other.Monitor->enter();
 			Monitor->enter();
 
-			result = array<T>::operator!=(other);
+			bool result = array<T>::operator!=(other);
 
 			other.Monitor->exit();
 			Monitor->exit();
@@ -451,10 +447,8 @@ namespace irrgame
 		template<class T>
 		inline T* arraysafe<T>::pointer()
 		{
-			T* result = 0;
-
 			Monitor->enter();
-			result = array<T>::pointer();
+			T* result = array<T>::pointer();
 			Monitor->exit();
 
 			return result;
@@ -465,10 +459,8 @@ namespace irrgame
 		template<class T>
 		inline const T* arraysafe<T>::const_pointer() const
 		{
-			const T* result;
-
 			Monitor->enter();
-			result = array<T>::const_pointer();
+			const T* result = array<T>::const_pointer();
 			Monitor->exit();
 
 			return result;
@@ -479,10 +471,8 @@ namespace irrgame
 		template<class T>
 		inline u32 arraysafe<T>::size() const
 		{
-			u32 result = 0;
-
 			Monitor->enter();
-			result = array<T>::size();
+			u32 result = array<T>::size();
 			Monitor->exit();
 
 			return result;
@@ -494,10 +484,8 @@ namespace irrgame
 		template<class T>
 		inline u32 arraysafe<T>::allocated_size() const
 		{
-			u32 result = false;
-
 			Monitor->enter();
-			result = array<T>::allocated_size();
+			u32 result = array<T>::allocated_size();
 			Monitor->exit();
 
 			return result;
@@ -508,10 +496,8 @@ namespace irrgame
 		template<class T>
 		inline bool arraysafe<T>::empty() const
 		{
-			bool result = false;
-
 			Monitor->enter();
-			result = array<T>::empty();
+			bool result = array<T>::empty();
 			Monitor->exit();
 
 			return result;
@@ -538,10 +524,8 @@ namespace irrgame
 		template<class T>
 		inline s32 arraysafe<T>::binary_search(const T& element)
 		{
-			s32 result = -1;
-
 			Monitor->enter();
-			result = array<T>::binary_search(element);
+			s32 result = array<T>::binary_search(element);
 			Monitor->exit();
 
 			return result;
@@ -556,10 +540,8 @@ namespace irrgame
 		template<class T>
 		inline s32 arraysafe<T>::binary_search(const T& element) const
 		{
-			s32 result = -1;
-
 			Monitor->enter();
-			result = array<T>::binary_search(element);
+			s32 result = array<T>::binary_search(element);
 			Monitor->exit();
 
 			return result;
@@ -575,10 +557,8 @@ namespace irrgame
 		inline s32 arraysafe<T>::binary_search(const T& element, s32 left,
 				s32 right) const
 		{
-			s32 result = -1;
-
 			Monitor->enter();
-			result = array<T>::binary_search(element, left, right);
+			s32 result = array<T>::binary_search(element, left, right);
 			Monitor->exit();
 
 			return result;
@@ -596,10 +576,8 @@ namespace irrgame
 		inline s32 arraysafe<T>::binary_search_multi(const T& element,
 				s32 &last)
 		{
-			s32 result = -1;
-
 			Monitor->enter();
-			result = array<T>::binary_search_multi(element, last);
+			s32 result = array<T>::binary_search_multi(element, last);
 			Monitor->exit();
 
 			return result;
@@ -614,10 +592,8 @@ namespace irrgame
 		template<class T>
 		inline s32 arraysafe<T>::linear_search(const T& element) const
 		{
-			s32 result = -1;
-
 			Monitor->enter();
-			result = array<T>::linear_search(element);
+			s32 result = array<T>::linear_search(element);
 			Monitor->exit();
 
 			return result;
@@ -632,10 +608,8 @@ namespace irrgame
 		template<class T>
 		inline s32 arraysafe<T>::linear_reverse_search(const T& element) const
 		{
-			s32 result = -1;
-
 			Monitor->enter();
-			result = array<T>::linear_reverse_search(element);
+			s32 result = array<T>::linear_reverse_search(element);
 			Monitor->exit();
 
 			return result;

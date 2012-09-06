@@ -5,6 +5,7 @@
 #ifndef __IRR_ARRAY_H_INCLUDED__
 #define __IRR_ARRAY_H_INCLUDED__
 
+#include "core/collections/ICollection.h"
 #include "core/base/irrAllocator.h"
 #include "core/math/irrMath.h"
 #include "core/math/heapsort.h"
@@ -17,7 +18,7 @@ namespace irrgame
 		/** Some features are: Heap sorting, binary search methods, easier debugging.
 		 */
 		template<class T>
-		class array
+		class array: public ICollection<T>
 		{
 			public:
 
@@ -91,7 +92,7 @@ namespace irrgame
 				 troubles depending on the intended use of the memory area.
 				 \param f If true, the array frees the allocated memory in its
 				 destructor, otherwise not. The default is true. */
-				virtual void set_free_when_destroyed(bool f);
+				virtual void set_free_when_destroyed(bool f = true);
 
 				//! Sets the size of the array and allocates new elements if necessary.
 				/** Please note: This is only secure when using it with simple types,
@@ -115,9 +116,13 @@ namespace irrgame
 				virtual const T& operator [](u32 index) const;
 
 				//! Gets last element.
+				//! Can be get or set value.
+				//! Size must be greater than zero.
 				virtual T& getLast();
 
-				//! Gets last element
+				//! Gets last element.
+				//! Can be get or set value.
+				//! Size must be greater than zero.
 				virtual const T& getLast() const;
 
 				//! Gets a pointer to the array.
@@ -239,7 +244,6 @@ namespace irrgame
 		}
 
 		//! Constructs an array and allocates an initial chunk of memory.
-		/** \param start_count Amount of elements to pre-allocate. */
 		template<class T>
 		inline array<T>::array(u32 start_count) :
 				data(0), allocated(0), used(0), strategy(ALLOC_STRATEGY_DOUBLE), free_when_destroyed(
@@ -257,8 +261,6 @@ namespace irrgame
 		}
 
 		//! Destructor.
-		/** Frees allocated memory, if set_free_when_destroyed was not set to
-		 false by the user before. */
 		template<class T>
 		inline array<T>::~array()
 		{
@@ -295,9 +297,6 @@ namespace irrgame
 		}
 
 		//! set a new allocation strategy
-		/** if the maximum size of the array is unknown, you can define how big the
-		 allocation should happen.
-		 \param newStrategy New strategy to apply to this array. */
 		template<class T>
 		inline void array<T>::setAllocStrategy(eAllocStrategy newStrategy)
 		{
@@ -305,8 +304,6 @@ namespace irrgame
 		}
 
 		//! Adds an element at back of array.
-		/** If the array is too small to add this new element it is made bigger.
-		 \param element: Element to add at the back of the array. */
 		template<class T>
 		inline void array<T>::push_back(const T& element)
 		{
@@ -314,10 +311,6 @@ namespace irrgame
 		}
 
 		//! Adds an element at the front of the array.
-		/** If the array is to small to add this new element, the array is
-		 made bigger. Please note that this is slow, because the whole array
-		 needs to be copied for this.
-		 \param element Element to add at the back of the array. */
 		template<class T>
 		inline void array<T>::push_front(const T& element)
 		{
@@ -325,11 +318,6 @@ namespace irrgame
 		}
 
 		//! Insert item into array at specified position.
-		/** Please use this only if you know what you are doing (possible
-		 performance loss). The preferred method of adding elements should be
-		 push_back().
-		 \param element: Element to be inserted
-		 \param index: Where position to insert the new element. */
 		template<class T>
 		inline void array<T>::insert(const T& element, u32 index)
 		{
@@ -417,14 +405,6 @@ namespace irrgame
 		}
 
 		//! Sets pointer to new array, using this as new workspace.
-		/** Make sure that set_free_when_destroyed is used properly.
-		 \param newPointer: Pointer to new array of elements.
-		 \param size: Size of the new array.
-		 \param _is_sorted Flag which tells whether the new array is already
-		 sorted.
-		 \param _free_when_destroyed Sets whether the new memory area shall be
-		 freed by the array upon destruction, or if this will be up to the user
-		 application. */
 		template<class T>
 		inline void array<T>::set_pointer(T* newPointer, u32 size,
 				bool _is_sorted, bool _free_when_destroyed)
@@ -438,13 +418,6 @@ namespace irrgame
 		}
 
 		//! Sets if the array should delete the memory it uses upon destruction.
-		/** Also clear and set_pointer will only delete the (original) memory
-		 area if this flag is set to true, which is also the default. The
-		 methods reallocate, set_used, push_back, push_front, insert, and erase
-		 will still try to deallocate the original memory, which might cause
-		 troubles depending on the intended use of the memory area.
-		 \param f If true, the array frees the allocated memory in its
-		 destructor, otherwise not. The default is true. */
 		template<class T>
 		inline void array<T>::set_free_when_destroyed(bool f)
 		{
@@ -452,9 +425,6 @@ namespace irrgame
 		}
 
 		//! Sets the size of the array and allocates new elements if necessary.
-		/** Please note: This is only secure when using it with simple types,
-		 because no default constructor will be called for the added elements.
-		 \param usedNow Amount of elements now used. */
 		template<class T>
 		inline void array<T>::set_used(u32 usedNow)
 		{
@@ -494,7 +464,6 @@ namespace irrgame
 			return *this;
 		}
 
-		//! Equality operator. Typename T must implement operator!=
 		template<class T>
 		inline bool array<T>::operator ==(const array<T>& other) const
 		{
@@ -502,20 +471,18 @@ namespace irrgame
 				return false;
 
 			for (u32 i = 0; i < other.used; ++i)
-				if (data[i] != other[i])
+				if (data[i] != other.data[i])
 					return false;
 
 			return true;
 		}
 
-		//! Inequality operator
 		template<class T>
 		inline bool array<T>::operator !=(const array<T>& other) const
 		{
 			return !(*this == other);
 		}
 
-		//! Direct access operator
 		template<class T>
 		inline T& array<T>::operator [](u32 index)
 		{
@@ -525,7 +492,6 @@ namespace irrgame
 			return data[index];
 		}
 
-		//! Direct const access operator
 		template<class T>
 		inline const T& array<T>::operator [](u32 index) const
 		{
@@ -535,7 +501,6 @@ namespace irrgame
 			return data[index];
 		}
 
-		//! Gets last element.
 		template<class T>
 		inline T& array<T>::getLast()
 		{
@@ -545,7 +510,6 @@ namespace irrgame
 			return data[used - 1];
 		}
 
-		//! Gets last element
 		template<class T>
 		inline const T& array<T>::getLast() const
 		{
@@ -555,41 +519,30 @@ namespace irrgame
 			return data[used - 1];
 		}
 
-		//! Gets a pointer to the array.
-		/** \return Pointer to the array. */
 		template<class T>
 		inline T* array<T>::pointer()
 		{
 			return data;
 		}
 
-		//! Gets a const pointer to the array.
-		/** \return Pointer to the array. */
 		template<class T>
 		inline const T* array<T>::const_pointer() const
 		{
 			return data;
 		}
 
-		//! Get number of occupied elements of the array.
-		/** \return Size of elements in the array which are actually occupied. */
 		template<class T>
 		inline u32 array<T>::size() const
 		{
 			return used;
 		}
 
-		//! Get amount of memory allocated.
-		/** \return Amount of memory allocated. The amount of bytes
-		 allocated would be allocated_size() * sizeof(ElementTypeUsed); */
 		template<class T>
 		inline u32 array<T>::allocated_size() const
 		{
 			return allocated;
 		}
 
-		//! Check if array is empty.
-		/** \return True if the array is empty false if not. */
 		template<class T>
 		inline bool array<T>::empty() const
 		{
@@ -597,8 +550,6 @@ namespace irrgame
 		}
 
 		//! Sorts the array using heapsort.
-		/** There is no additional memory waste and the algorithm performs
-		 O(n*log n) in worst case. */
 		template<class T>
 		inline void array<T>::sort()
 		{
@@ -608,12 +559,6 @@ namespace irrgame
 		}
 
 		//! Performs a binary search for an element, returns -1 if not found.
-		/** The array will be sorted before the binary search if it is not
-		 already sorted. Caution is advised! Be careful not to call this on
-		 unsorted const arrays, or the slower method will be used.
-		 \param element Element to search for.
-		 \return Position of the searched element if it was found,
-		 otherwise -1 is returned. */
 		template<class T>
 		inline s32 array<T>::binary_search(const T& element)
 		{
@@ -622,11 +567,6 @@ namespace irrgame
 		}
 
 		//! Performs a binary search for an element if possible, returns -1 if not found.
-		/** This method is for const arrays and so cannot call sort(), if the array is
-		 not sorted then linear_search will be used instead. Potentially very slow!
-		 \param element Element to search for.
-		 \return Position of the searched element if it was found,
-		 otherwise -1 is returned. */
 		template<class T>
 		inline s32 array<T>::binary_search(const T& element) const
 		{
@@ -637,11 +577,6 @@ namespace irrgame
 		}
 
 		//! Performs a binary search for an element, returns -1 if not found.
-		/** \param element: Element to search for.
-		 \param left First left index
-		 \param right Last right index.
-		 \return Position of the searched element if it was found, otherwise -1
-		 is returned. */
 		template<class T>
 		inline s32 array<T>::binary_search(const T& element, s32 left,
 				s32 right) const
@@ -672,14 +607,6 @@ namespace irrgame
 			return -1;
 		}
 
-		//! Performs a binary search for an element, returns -1 if not found.
-		//! it is used for searching a multiset
-		/** The array will be sorted before the binary search if it is not
-		 already sorted.
-		 \param element	Element to search for.
-		 \param &last	return lastIndex of equal elements
-		 \return Position of the first searched element if it was found,
-		 otherwise -1 is returned. */
 		template<class T>
 		inline s32 array<T>::binary_search_multi(const T& element, s32 &last)
 		{
@@ -746,8 +673,8 @@ namespace irrgame
 		template<class T>
 		inline void array<T>::erase(u32 index)
 		{
-			IRR_ASSERT(index >= 0 && index <= used)
 			// access violation
+			IRR_ASSERT(index >= 0 && index <= used)
 
 			for (u32 i = index + 1; i < used; ++i)
 			{
@@ -768,8 +695,8 @@ namespace irrgame
 		template<class T>
 		inline void array<T>::erase(u32 index, s32 count)
 		{
-			if (index >= used || count < 1)
-				return;
+			IRR_ASSERT(index >= used || count < 1);
+
 			if (index + count > used)
 				count = used - index;
 

@@ -5,7 +5,7 @@
 #ifndef __IRR_MATRIX_H_INCLUDED__
 #define __IRR_MATRIX_H_INCLUDED__
 
-#include "core/collections/irrString.h"
+#include "core/collections/string.h"
 #include "core/math/irrMath.h"
 #include "core/shapes/aabbox3d.h"
 #include "core/shapes/plane3d.h"
@@ -232,7 +232,8 @@ namespace irrgame
 				void transformVect(vector3d<f32>& vect) const;
 
 				//! Transforms input vector by this matrix and stores result in output vector
-				void transformVect(vector3d<f32>& out, const vector3d<f32>& in) const;
+				void transformVect(vector3d<f32>& out,
+						const vector3d<f32>& in) const;
 
 				//! An alternate transform vector method, writing into an array of 4 floats
 				void transformVect(T *out, const core::vector3d<f32> &in) const;
@@ -303,12 +304,14 @@ namespace irrgame
 
 				//! Builds a left-handed look-at matrix.
 				CMatrix4<T>& buildCameraLookAtMatrixLH(
-						const vector3d<f32>& position, const vector3d<f32>& target,
+						const vector3d<f32>& position,
+						const vector3d<f32>& target,
 						const vector3d<f32>& upVector);
 
 				//! Builds a right-handed look-at matrix.
 				CMatrix4<T>& buildCameraLookAtMatrixRH(
-						const vector3d<f32>& position, const vector3d<f32>& target,
+						const vector3d<f32>& position,
+						const vector3d<f32>& target,
 						const vector3d<f32>& upVector);
 
 				//! Builds a matrix that flattens geometry into a plane.
@@ -327,8 +330,7 @@ namespace irrgame
 				//! Creates a new matrix as interpolated matrix from two other ones.
 				/** \param b: other matrix to interpolate with
 				 \param time: Must be a value between 0 and 1. */
-				CMatrix4<T> interpolate(const CMatrix4<T>& b,
-						f32 time) const;
+				CMatrix4<T> interpolate(const CMatrix4<T>& b, f32 time) const;
 
 				//! Gets transposed matrix
 				CMatrix4<T> getTransposed() const;
@@ -360,8 +362,7 @@ namespace irrgame
 				void buildAxisAlignedBillboard(const vector3d<f32>& camPos,
 						const vector3d<f32>& center,
 						const vector3d<f32>& translation,
-						const vector3d<f32>& axis,
-						const vector3d<f32>& from);
+						const vector3d<f32>& axis, const vector3d<f32>& from);
 
 				/*
 				 construct 2D Texture transformations
@@ -858,8 +859,7 @@ namespace irrgame
 			// Deal with the 0 rotation case first
 			// Prior to Irrlicht 1.6, we always returned this value.
 			if (iszero(M[1]) && iszero(M[2]) && iszero(M[4])
-					&& core::iszero(M[6]) && iszero(M[8])
-					&& core::iszero(M[9]))
+					&& core::iszero(M[6]) && iszero(M[8]) && core::iszero(M[9]))
 				return vector3d<T>(M[0], M[5], M[10]);
 
 			// We have to do the full calculation.
@@ -2138,8 +2138,7 @@ namespace irrgame
 
 		//! Builds a combined matrix which translate to a center before rotation and translate afterwards
 		template<class T>
-		inline void CMatrix4<T>::setRotationCenter(
-				const vector3d<f32>& center,
+		inline void CMatrix4<T>::setRotationCenter(const vector3d<f32>& center,
 				const vector3d<f32>& translation)
 		{
 			M[12] = -M[0] * center.X - M[4] * center.Y - M[8] * center.Z

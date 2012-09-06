@@ -111,7 +111,7 @@ namespace irrgame
 				//! operator [] for access to elements
 				/** for example myMap["key"] */
 				virtual AccessClass operator[](const Key& k);
-			protected:
+			private:
 
 				//------------------------------
 				// Disabled methods
@@ -135,6 +135,7 @@ namespace irrgame
 		inline mapsafe<Key, Value>::mapsafe() :
 				map<Key, Value>::map(), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Destructor
@@ -153,10 +154,8 @@ namespace irrgame
 		inline bool mapsafe<Key, Value>::insert(const Key& keyNew,
 				const Value& v)
 		{
-			bool result = 0;
-
 			Monitor->enter();
-			result = map<Key, Value>::insert(keyNew, v);
+			bool result = map<Key, Value>::insert(keyNew, v);
 			Monitor->exit();
 
 			return result;
@@ -180,10 +179,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline RBTree<Key, Value>* mapsafe<Key, Value>::delink(const Key& k)
 		{
-			Node* result = 0;
-
 			Monitor->enter();
-			result = map<Key, Value>::delink(k);
+			Node* result = map<Key, Value>::delink(k);
 			Monitor->exit();
 
 			return result;
@@ -194,10 +191,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline bool mapsafe<Key, Value>::remove(const Key& k)
 		{
-			bool result = false;
-
 			Monitor->enter();
-			result = map<Key, Value>::remove(k);
+			bool result = map<Key, Value>::remove(k);
 			Monitor->exit();
 
 			return result;
@@ -217,10 +212,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline bool mapsafe<Key, Value>::empty() const
 		{
-			bool result = false;
-
 			Monitor->enter();
-			result = map<Key, Value>::empty();
+			bool result = map<Key, Value>::empty();
 			Monitor->exit();
 
 			return result;
@@ -233,10 +226,8 @@ namespace irrgame
 		inline RBTree<Key, Value>* mapsafe<Key, Value>::find(
 				const Key& keyToFind) const
 		{
-			Node* result = 0;
-
 			Monitor->enter();
-			result = map<Key, Value>::find(keyToFind);
+			Node* result = map<Key, Value>::find(keyToFind);
 			Monitor->exit();
 
 			return result;
@@ -248,10 +239,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline RBTree<Key, Value>* mapsafe<Key, Value>::getRoot() const
 		{
-			Node* result = 0;
-
 			Monitor->enter();
-			result = map<Key, Value>::getRoot();
+			Node* result = map<Key, Value>::getRoot();
 			Monitor->exit();
 
 			return result;
@@ -261,10 +250,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline u32 mapsafe<Key, Value>::size() const
 		{
-			u32 result = 0;
-
 			Monitor->enter();
-			result = map<Key, Value>::size();
+			u32 result = map<Key, Value>::size();
 			Monitor->exit();
 
 			return result;
@@ -278,9 +265,19 @@ namespace irrgame
 		template<class Key, class Value>
 		inline void mapsafe<Key, Value>::swap(mapsafe<Key, Value>& other)
 		{
+			if (this == &other)
+				return;
+
 			Monitor->enter();
+			other.Monitor->enter();
+
 			map<Key, Value>::swap(other);
+			irrgame::threads::irrgameMonitor* helper_monitor(Monitor);
+			Monitor = other.Monitor;
+			other.Monitor = helper_monitor;
+
 			Monitor->exit();
+			other.Monitor->exit();
 		}
 
 		//------------------------------
@@ -291,10 +288,8 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CMapIterator<Key, Value> mapsafe<Key, Value>::getIterator()
 		{
-			Iterator result;
-
 			Monitor->enter();
-			result = map<Key, Value>::getIterator();
+			Iterator result = map<Key, Value>::getIterator();
 			Monitor->exit();
 
 			return result;
@@ -308,10 +303,9 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CParentFirstIterator<Key, Value> mapsafe<Key, Value>::getParentFirstIterator()
 		{
-			ParentFirstIterator result;
-
 			Monitor->enter();
-			result = map<Key, Value>::getParentFirstIterator();
+			ParentFirstIterator result =
+					map<Key, Value>::getParentFirstIterator();
 			Monitor->exit();
 
 			return result;
@@ -325,10 +319,9 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CParentLastIterator<Key, Value> mapsafe<Key, Value>::getParentLastIterator()
 		{
-			ParentLastIterator result;
-
 			Monitor->enter();
-			result = map<Key, Value>::getParentFirstIterator();
+			ParentLastIterator result =
+					map<Key, Value>::getParentFirstIterator();
 			Monitor->exit();
 
 			return result;
@@ -344,11 +337,8 @@ namespace irrgame
 		inline CAccessClass<Key, Value> mapsafe<Key, Value>::operator[](
 				const Key& k)
 		{
-
-			AccessClass result;
-
 			Monitor->enter();
-			result = map<Key, Value>::operator[](k);
+			AccessClass result = map<Key, Value>::operator[](k);
 			Monitor->exit();
 
 			return result;

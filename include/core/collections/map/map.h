@@ -159,7 +159,7 @@ namespace irrgame
 				explicit map(const map& src);
 				map& operator =(const map& src);
 
-			protected:
+			private:
 
 				//! Set node as new root.
 				/** The node will be set to black, otherwise core dumps may arise

@@ -5,6 +5,7 @@
 #ifndef __IRR_LIST_H_INCLUDED__
 #define __IRR_LIST_H_INCLUDED__
 
+#include "core/collections/ICollection.h"
 #include "core/base/irrAllocator.h"
 #include "SKListNode.h"
 #include "iterators.h"
@@ -15,7 +16,7 @@ namespace irrgame
 	{
 		//! Doubly linked list template.
 		template<class T>
-		class list
+		class list: public ICollection<T>
 		{
 			public:
 				typedef CIterator<T> Iterator;
@@ -156,7 +157,6 @@ namespace irrgame
 		}
 
 		//! Returns amount of elements in list.
-		/** \return Amount of elements in the list. */
 		template<class T>
 		inline u32 list<T>::size() const
 		{
@@ -164,7 +164,6 @@ namespace irrgame
 		}
 
 		//! Clears the list, deletes all elements in the list.
-		/** All existing iterators of this list will be invalid. */
 		template<class T>
 		inline void list<T>::clear()
 		{
@@ -182,7 +181,6 @@ namespace irrgame
 		}
 
 		//! Checks for empty list.
-		/** \return True if the list is empty and false if not. */
 		template<class T>
 		inline bool list<T>::empty() const
 		{
@@ -190,7 +188,6 @@ namespace irrgame
 		}
 
 		//! Adds an element at the end of the list.
-		/** \param element Element to add to the list. */
 		template<class T>
 		inline void list<T>::push_back(const T& element)
 		{
@@ -211,7 +208,6 @@ namespace irrgame
 		}
 
 		//! Adds an element at the begin of the list.
-		/** \param element: Element to add to the list. */
 		template<class T>
 		inline void list<T>::push_front(const T& element)
 		{
@@ -234,10 +230,6 @@ namespace irrgame
 		}
 
 		//! Inserts an element after an element.
-		/** \param it Iterator pointing to element after which the new element
-		 should be inserted.
-		 \param element The new element to be inserted into the list.
-		 */
 		template<class T>
 		inline void list<T>::insert_after(const CIterator<T>& it,
 				const T& element)
@@ -259,10 +251,6 @@ namespace irrgame
 		}
 
 		//! Inserts an element before an element.
-		/** \param it Iterator pointing to element before which the new element
-		 should be inserted.
-		 \param element The new element to be inserted into the list.
-		 */
 		template<class T>
 		inline void list<T>::insert_before(const CIterator<T>& it,
 				const T& element)
@@ -284,8 +272,6 @@ namespace irrgame
 		}
 
 		//! Erases an element.
-		/** \param it Iterator pointing to the element which shall be erased.
-		 \return Iterator pointing to next element. */
 		template<class T>
 		inline CIterator<T> list<T>::erase(CIterator<T>& it)
 		{
@@ -314,10 +300,6 @@ namespace irrgame
 		}
 
 		//! Swap the content of this list container with the content of another list
-		/** Afterwards this object will contain the content of the other object and the other
-		 object will contain the content of this object. Iterators will afterwards be valid for
-		 the swapped object.
-		 \param other Swap content with this object	*/
 		template<class T>
 		inline void list<T>::swap(list<T>& other)
 		{
@@ -328,21 +310,20 @@ namespace irrgame
 		}
 
 		//! Gets first node.
-		/** \return A list iterator pointing to the beginning of the list. */
 		template<class T>
 		inline CIterator<T> list<T>::begin()
 		{
 			return CIterator<T>(First);
 		}
 
-		/** \return List iterator pointing to null. */
+		//! Gets end node.
 		template<class T>
 		inline CIterator<T> list<T>::end()
 		{
 			return CIterator<T>(0);
 		}
 
-		/** \return List iterator pointing to the last element of the list. */
+		//! Gets last element.
 		template<class T>
 		inline CIterator<T> list<T>::getLast()
 		{
@@ -350,7 +331,6 @@ namespace irrgame
 		}
 
 		//! Gets first node.
-		/** \return A const list iterator pointing to the beginning of the list. */
 		template<class T>
 		inline CConstIterator<T> list<T>::begin() const
 		{
@@ -358,7 +338,6 @@ namespace irrgame
 		}
 
 		//! Gets end node.
-		/** \return Const list iterator pointing to null. */
 		template<class T>
 		inline CConstIterator<T> list<T>::end() const
 		{
@@ -366,7 +345,6 @@ namespace irrgame
 		}
 
 		//! Gets last element.
-		/** \return Const list iterator pointing to the last element of the list. */
 		template<class T>
 		inline CConstIterator<T> list<T>::getLast() const
 		{

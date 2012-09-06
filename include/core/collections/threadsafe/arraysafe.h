@@ -8,7 +8,7 @@
 #ifndef IRRARRAYSAFE_H_
 #define IRRARRAYSAFE_H_
 
-#include "core/collections/irrArray.h"
+#include "core/collections/array.h"
 #include "threads/irrgameMonitor.h"
 
 namespace irrgame
@@ -81,7 +81,7 @@ namespace irrgame
 				 troubles depending on the intended use of the memory area.
 				 \param f If true, the array frees the allocated memory in its
 				 destructor, otherwise not. The default is true. */
-				virtual void set_free_when_destroyed(bool f);
+				virtual void set_free_when_destroyed(bool f = true);
 
 				//! Sets the size of the array and allocates new elements if necessary.
 				/** Please note: This is only secure when using it with simple types,
@@ -90,7 +90,7 @@ namespace irrgame
 				virtual void set_used(u32 usedNow);
 
 				//! Assignment operator
-				virtual arraysafe<T>& operator=(const arraysafe<T>& other);
+				virtual arraysafe<T>& operator =(const arraysafe<T>& other);
 
 				//! Equality operator
 				virtual bool operator ==(const arraysafe<T>& other) const;
@@ -104,10 +104,14 @@ namespace irrgame
 				//! Direct const access operator. Can be get or set value.
 				virtual const T& operator [](u32 index) const;
 
-				//! Gets last element. Can be get or set value.
+				//! Gets last element.
+				//! Can be get or set value.
+				//! Size must be greater than zero.
 				virtual T& getLast();
 
-				//! Gets last element. Can be get or set value.
+				//! Gets last element.
+				//! Can be get or set value.
+				//! Size must be greater than zero.
 				virtual const T& getLast() const;
 
 				//! Gets a pointer to the array. Can be get or set value.
@@ -271,12 +275,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Insert item into array at specified position.
-		/** Please use this only if you know what you are doing (possible
-		 performance loss). The preferred method of adding elements should be
-		 push_back().
-		 \param element: Element to be inserted
-		 \param index: Where position to insert the new element. */
 		template<class T>
 		inline void arraysafe<T>::insert(const T& element, u32 index)
 		{
@@ -285,7 +283,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Clears the array and deletes all allocated memory.
 		template<class T>
 		inline void arraysafe<T>::clear()
 		{
@@ -294,15 +291,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Sets pointer to new array, using this as new workspace.
-		/** Make sure that set_free_when_destroyed is used properly.
-		 \param newPointer: Pointer to new array of elements.
-		 \param size: Size of the new array.
-		 \param _is_sorted Flag which tells whether the new array is already
-		 sorted.
-		 \param _free_when_destroyed Sets whether the new memory area shall be
-		 freed by the array upon destruction, or if this will be up to the user
-		 application. */
 		template<class T>
 		inline void arraysafe<T>::set_pointer(T* newPointer, u32 size,
 				bool _is_sorted, bool _free_when_destroyed)
@@ -313,14 +301,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Sets if the array should delete the memory it uses upon destruction.
-		/** Also clear and set_pointer will only delete the (original) memory
-		 area if this flag is set to true, which is also the default. The
-		 methods reallocate, set_used, push_back, push_front, insert, and erase
-		 will still try to deallocate the original memory, which might cause
-		 troubles depending on the intended use of the memory area.
-		 \param f If true, the array frees the allocated memory in its
-		 destructor, otherwise not. The default is true. */
 		template<class T>
 		inline void arraysafe<T>::set_free_when_destroyed(bool f)
 		{
@@ -329,21 +309,16 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Sets the size of the array and allocates new elements if necessary.
-		/** Please note: This is only secure when using it with simple types,
-		 because no default constructor will be called for the added elements.
-		 \param usedNow Amount of elements now used. */
 		template<class T>
 		inline void arraysafe<T>::set_used(u32 usedNow)
 		{
 			Monitor->enter();
-			set_used(usedNow);
+			array<T>::set_used(usedNow);
 			Monitor->exit();
 		}
 
-		//! Assignment operator
 		template<class T>
-		inline arraysafe<T>& arraysafe<T>::operator=(const arraysafe<T>& other)
+		inline arraysafe<T>& arraysafe<T>::operator =(const arraysafe<T>& other)
 		{
 			//handle self-assignment
 			if (this == &other)
@@ -362,7 +337,6 @@ namespace irrgame
 			return (*this);
 		}
 
-		//! Equality operator
 		template<class T>
 		inline bool arraysafe<T>::operator ==(const arraysafe<T>& other) const
 		{
@@ -380,7 +354,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Inequality operator
 		template<class T>
 		inline bool arraysafe<T>::operator !=(const arraysafe<T>& other) const
 		{
@@ -398,7 +371,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Direct access operator. Can be get or set value.
 		template<class T>
 		inline T& arraysafe<T>::operator [](u32 index)
 		{
@@ -409,18 +381,16 @@ namespace irrgame
 			return result;
 		}
 
-		//! Direct const access operator. Can be get or set value.
 		template<class T>
 		inline const T& arraysafe<T>::operator [](u32 index) const
 		{
 			Monitor->enter();
-			const T& result = array<T>::operator[](index);
+			const T& result = array<T>::operator [](index);
 			Monitor->exit();
 
 			return result;
 		}
 
-		//! Gets last element. Can be get or set value.
 		template<class T>
 		inline T& arraysafe<T>::getLast()
 		{
@@ -431,7 +401,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Gets last element. Can be get or set value.
 		template<class T>
 		inline const T& arraysafe<T>::getLast() const
 		{
@@ -442,8 +411,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Gets a pointer to the array. Can be get or set value.
-		/** \return Pointer to the array. */
 		template<class T>
 		inline T* arraysafe<T>::pointer()
 		{
@@ -454,8 +421,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Gets a const pointer to the array.
-		/** \return Pointer to the array. */
 		template<class T>
 		inline const T* arraysafe<T>::const_pointer() const
 		{
@@ -466,8 +431,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Get number of occupied elements of the array.
-		/** \return Size of elements in the array which are actually occupied. */
 		template<class T>
 		inline u32 arraysafe<T>::size() const
 		{
@@ -478,9 +441,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Get amount of memory allocated.
-		/** \return Amount of memory allocated. The amount of bytes
-		 allocated would be allocated_size() * sizeof(ElementTypeUsed); */
 		template<class T>
 		inline u32 arraysafe<T>::allocated_size() const
 		{
@@ -491,8 +451,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Check if array is empty.
-		/** \return True if the array is empty false if not. */
 		template<class T>
 		inline bool arraysafe<T>::empty() const
 		{
@@ -503,9 +461,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Sorts the array using heapsort.
-		/** There is no additional memory waste and the algorithm performs
-		 O(n*log n) in worst case. */
 		template<class T>
 		inline void arraysafe<T>::sort()
 		{
@@ -514,13 +469,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Performs a binary search for an element, returns -1 if not found.
-		/** The array will be sorted before the binary search if it is not
-		 already sorted. Caution is advised! Be careful not to call this on
-		 unsorted const arrays, or the slower method will be used.
-		 \param element Element to search for.
-		 \return Position of the searched element if it was found,
-		 otherwise -1 is returned. */
 		template<class T>
 		inline s32 arraysafe<T>::binary_search(const T& element)
 		{
@@ -531,12 +479,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Performs a binary search for an element if possible, returns -1 if not found.
-		/** This method is for const arrays and so cannot call sort(), if the array is
-		 not sorted then linear_search will be used instead. Potentially very slow!
-		 \param element Element to search for.
-		 \return Position of the searched element if it was found,
-		 otherwise -1 is returned. */
 		template<class T>
 		inline s32 arraysafe<T>::binary_search(const T& element) const
 		{
@@ -547,12 +489,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Performs a binary search for an element, returns -1 if not found.
-		/** \param element: Element to search for.
-		 \param left First left index
-		 \param right Last right index.
-		 \return Position of the searched element if it was found, otherwise -1
-		 is returned. */
 		template<class T>
 		inline s32 arraysafe<T>::binary_search(const T& element, s32 left,
 				s32 right) const
@@ -564,14 +500,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Performs a binary search for an element, returns -1 if not found.
-		//! it is used for searching a multiset
-		/** The array will be sorted before the binary search if it is not
-		 already sorted.
-		 \param element	Element to search for.
-		 \param &last	return lastIndex of equal elements
-		 \return Position of the first searched element if it was found,
-		 otherwise -1 is returned. */
 		template<class T>
 		inline s32 arraysafe<T>::binary_search_multi(const T& element,
 				s32 &last)
@@ -583,12 +511,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Finds an element in linear time, which is very slow.
-		/** Use binary_search for faster finding. Only works if ==operator is
-		 implemented.
-		 \param element Element to search for.
-		 \return Position of the searched element if it was found, otherwise -1
-		 is returned. */
 		template<class T>
 		inline s32 arraysafe<T>::linear_search(const T& element) const
 		{
@@ -599,12 +521,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Finds an element in linear time, which is very slow.
-		/** Use binary_search for faster finding. Only works if ==operator is
-		 implemented.
-		 \param element: Element to search for.
-		 \return Position of the searched element if it was found, otherwise -1
-		 is returned. */
 		template<class T>
 		inline s32 arraysafe<T>::linear_reverse_search(const T& element) const
 		{
@@ -615,10 +531,6 @@ namespace irrgame
 			return result;
 		}
 
-		//! Erases an element from the array.
-		/** May be slow, because all elements following after the erased
-		 element have to be copied.
-		 \param index: Index of element to be erased. */
 		template<class T>
 		inline void arraysafe<T>::erase(u32 index)
 		{
@@ -627,11 +539,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Erases some elements from the array.
-		/** May be slow, because all elements following after the erased
-		 element have to be copied.
-		 \param index: Index of the first element to be erased.
-		 \param count: Amount of elements to be erased. */
 		template<class T>
 		inline void arraysafe<T>::erase(u32 index, s32 count)
 		{
@@ -640,7 +547,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Sets if the array is sorted
 		template<class T>
 		inline void arraysafe<T>::set_sorted(bool _is_sorted)
 		{
@@ -649,10 +555,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Swap the content of this array container with the content of another array
-		/** Afterwards this object will contain the content of the other object and the other
-		 object will contain the content of this object.
-		 \param other Swap content with this object	*/
 		template<class T>
 		inline void arraysafe<T>::swap(arraysafe<T>& other)
 		{

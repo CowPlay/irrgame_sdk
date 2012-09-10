@@ -75,7 +75,7 @@ namespace irrgame
 			}
 
 			if (IgnoreCase)
-				entry.Name.make_lower();
+				entry.Name.makeLower();
 
 			entry.FullName = entry.Name;
 
@@ -133,7 +133,7 @@ namespace irrgame
 			}
 
 			if (IgnoreCase)
-				entry.FullName.make_lower();
+				entry.FullName.makeLower();
 
 			if (IgnorePaths)
 				io::deletePathFromFilename(entry.FullName);

@@ -62,7 +62,7 @@ namespace irrgame
 		//! opens the file for read
 		void CReadFile::openFile()
 		{
-			File = fopen(Filename.c_str(), "rb");
+			File = fopen(Filename.cStr(), "rb");
 
 			// could not open file
 			IRR_ASSERT(File != 0);

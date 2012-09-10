@@ -65,7 +65,7 @@ namespace irrgame
 		//! \param index: Index value, must be between 0 and getStringAttributeCount()-1.
 		const c8* CAttributes::getAttributeName(s32 index)
 		{
-			return Attributes[index]->Name.c_str();
+			return Attributes[index]->Name.cStr();
 		}
 
 		IAttribute* CAttributes::getAttributeByName(const c8* name)
@@ -181,7 +181,7 @@ namespace irrgame
 			if (nonDefaultElementName)
 				elementName = nonDefaultElementName;
 
-			writer->writeElement(elementName.c_str(), false);
+			writer->writeElement(elementName.cStr(), false);
 			writer->writeLineBreak();
 
 			s32 i = 0;
@@ -196,7 +196,7 @@ namespace irrgame
 
 					// name
 					arraynames.pushBack(stringc("name"));
-					arrayvalues.pushBack(stringc(Attributes[i]->Name.c_str()));
+					arrayvalues.pushBack(stringc(Attributes[i]->Name.cStr()));
 
 					// count
 					arraynames.pushBack(stringc("count"));
@@ -207,7 +207,7 @@ namespace irrgame
 					const stringc tmpName("value");
 					for (; n < arrayinput.size(); ++n)
 					{
-						arraynames.pushBack((tmpName + stringc(n)).c_str());
+						arraynames.pushBack((tmpName + stringc(n)).cStr());
 						arrayvalues.pushBack(arrayinput[n]);
 					}
 
@@ -219,14 +219,14 @@ namespace irrgame
 				{
 					writer->writeElement(Attributes[i]->getTypeString(), true,
 							"name",
-							stringc(Attributes[i]->Name.c_str()).c_str(),
-							"value", Attributes[i]->getString().c_str());
+							stringc(Attributes[i]->Name.cStr()).cStr(),
+							"value", Attributes[i]->getString().cStr());
 				}
 
 				writer->writeLineBreak();
 			}
 
-			writer->writeClosingTag(elementName.c_str());
+			writer->writeClosingTag(elementName.cStr());
 			writer->writeLineBreak();
 		}
 
@@ -239,25 +239,25 @@ namespace irrgame
 
 			if (element == "int")
 			{
-				addInt(name.c_str(), 0);
+				addInt(name.cStr(), 0);
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "float")
 			{
-				addFloat(name.c_str(), 0);
+				addFloat(name.cStr(), 0);
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "string")
 			{
-				addString(name.c_str(), "");
+				addString(name.cStr(), "");
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "binary")
 			{
-				addBinary(name.c_str(), 0, 0);
+				addBinary(name.cStr(), 0, 0);
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
@@ -272,97 +272,97 @@ namespace irrgame
 				{
 					tmpArray.pushBack(
 							reader->getAttributeValue(
-									(tmpName + stringc(n)).c_str()));
+									(tmpName + stringc(n)).cStr()));
 				}
-				addArray(name.c_str(), tmpArray);
+				addArray(name.cStr(), tmpArray);
 			}
 			else if (element == "enum")
 			{
-				addEnum(name.c_str(), 0, 0);
+				addEnum(name.cStr(), 0, 0);
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "bool")
 			{
-				addBool(name.c_str(), 0);
+				addBool(name.cStr(), 0);
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "color")
 			{
-				addColor(name.c_str(), video::SColor());
+				addColor(name.cStr(), video::SColor());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "colorf")
 			{
-				addColorf(name.c_str(), video::SColorf());
+				addColorf(name.cStr(), video::SColorf());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "vector2d")
 			{
-				addVector2d(name.c_str(), vector2df());
+				addVector2d(name.cStr(), vector2df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "vector3d")
 			{
-				addVector3d(name.c_str(), vector3df());
+				addVector3d(name.cStr(), vector3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "rect")
 			{
-				addRect(name.c_str(), recti());
+				addRect(name.cStr(), recti());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "dimension2d")
 			{
-				addDimension2d(name.c_str(), dimension2df());
+				addDimension2d(name.cStr(), dimension2df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "matrix")
 			{
-				addMatrix(name.c_str(), matrix4());
+				addMatrix(name.cStr(), matrix4());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "quaternion")
 			{
-				addQuaternion(name.c_str(), core::quaternion());
+				addQuaternion(name.cStr(), core::quaternion());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "box3d")
 			{
-				addBox3d(name.c_str(), aabbox3df());
+				addBox3d(name.cStr(), aabbox3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "plane")
 			{
-				addPlane3d(name.c_str(), plane3df());
+				addPlane3d(name.cStr(), plane3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "triangle")
 			{
-				addTriangle3d(name.c_str(), triangle3df());
+				addTriangle3d(name.cStr(), triangle3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "line2d")
 			{
-				addLine2d(name.c_str(), line2df());
+				addLine2d(name.cStr(), line2df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
 			else if (element == "line3d")
 			{
-				addLine3d(name.c_str(), line3df());
+				addLine3d(name.cStr(), line3df());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
@@ -532,7 +532,7 @@ namespace irrgame
 
 			stringc str = att->getString();
 
-			strcpy(out, str.c_str());
+			strcpy(out, str.cStr());
 		}
 
 		//! Returns string attribute value by index.

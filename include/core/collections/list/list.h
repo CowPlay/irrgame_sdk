@@ -217,6 +217,7 @@ namespace irrgame
 			bool result = First == 0;
 			Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 

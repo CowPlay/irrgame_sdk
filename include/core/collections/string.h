@@ -50,105 +50,105 @@ namespace irrgame
 				virtual ~string();
 
 				//! Assignment operator
-				virtual string& operator=(const string& other);
+				string& operator=(const string& other);
 				//! Assignment operator for strings, ascii and unicode
-				virtual string& operator=(const c8* const c);
+				string& operator=(const c8* const c);
 
 				//! Append operator for other strings
-				virtual string operator+(const string& other) const;
+				string operator+(const string& other) const;
 				//! Append operator for strings, ascii and unicode
 				string operator+(const c8* const c) const;
 
 				//! Direct access operator
-				virtual c8& operator [](const u32 index);
+				c8& operator [](const u32 index);
 				//! Direct access operator
-				virtual const c8& operator [](const u32 index) const;
+				const c8& operator [](const u32 index) const;
 
 				//! Equality operator
-				virtual bool operator ==(const string& other) const;
+				bool operator ==(const string& other) const;
 				//! Equality operator
-				virtual bool operator ==(const c8* const str) const;
+				bool operator ==(const c8* const str) const;
 
 				//! Is smaller comparator
-				virtual bool operator <(const string& other) const;
+				bool operator <(const string& other) const;
 
 				//! Inequality operator
-				virtual bool operator !=(const c8* const str) const;
+				bool operator !=(const c8* const str) const;
 				//! Inequality operator
-				virtual bool operator !=(const string& other) const;
+				bool operator !=(const string& other) const;
 
 				//! Returns length of the string's content
 				/** \return Length of the string's content in characters, excluding
 				 the trailing NUL. */
-				virtual u32 size() const;
+				u32 size() const;
 
 				//! Return True if this string is empty. Otherwise return False.
-				virtual bool empty();
+				bool empty();
 
 				//! Return True if this string have only whitespaces. Otherwise returns False.
-				virtual bool blank();
+				bool blank();
 
 				//! Returns character string
 				/** \return pointer to C-style NUL terminated string. */
-				virtual const c8* c_str() const;
+				const c8* cStr() const;
 
 				//! Makes the string lower case.
-				virtual void make_lower();
+				void makeLower();
 				//! Makes the string upper case.
-				virtual void make_upper();
+				void makeUpper();
 
 				//! Compares the strings ignoring case.
 				/** \param other: Other string to compare.
 				 \return True if the strings are equal ignoring case. */
-				virtual bool equals_ignore_case(const string& other) const;
+				bool equalsIgnoreCase(const string& other) const;
 				//! Compares the strings ignoring case.
 				/** \param other: Other string to compare.
 				 \param sourcePos: where to start to compare in the string
 				 \return True if the strings are equal ignoring case. */
-				virtual bool equals_substring_ignore_case(const string& other,
+				bool equalsSubstringIgnoreCase(const string& other,
 						const u32 sourcePos = 0) const;
 
 				//! Compares the strings ignoring case.
 				/** \param other: Other string to compare.
 				 \return True if this string is smaller ignoring case. */
-				virtual bool lower_ignore_case(const string& other) const;
+				bool lowerIgnoreCase(const string& other) const;
 
 				//! compares the first n characters of the strings
 				/** \param other Other string to compare.
 				 \param n Number of characters to compare
 				 \return True if the n first characters of both strings are equal. */
-				virtual bool equalsn(const string& other, u32 n) const;
+				bool equalsn(const string& other, u32 n) const;
 				//! compares the first n characters of the strings
 				/** \param str Other string to compare.
 				 \param n Number of characters to compare
 				 \return True if the n first characters of both strings are equal. */
-				virtual bool equalsn(const c8* const str, u32 n) const;
+				bool equalsn(const c8* const str, u32 n) const;
 
 				//! Appends a string to this string
 				/** \param other: String to append. */
-				virtual void append(const string& other);
+				void append(const string& other);
 				//! Appends a string of the length l to this string.
 				/** \param other: other String to append to this string.
 				 \param length: How much characters of the other string to add to this one. */
-				virtual void append(const string& other, u32 length);
+				void append(const string& other, u32 length);
 				//! Appends a character to this string
 				/** \param character: Character to append. */
-				virtual void append(c8 character);
+				void append(c8 character);
 				//! Appends a char string to this string
 				/** \param other: Char string to append. */
-				virtual void append(const c8* const other);
+				void append(const c8* const other);
 
 				//! finds first occurrence of character in string
 				/** \param c: Character to search for.
 				 \return Position where the character has been found,
 				 or -1 if not found. */
-				virtual s32 findFirst(c8 c) const;
+				s32 findFirst(c8 c) const;
 				//! finds last occurrence of character in string
 				/** \param c: Character to search for.
 				 \param start: start to search reverse ( default = -1, on end )
 				 \return Position where the character has been found,
 				 or -1 if not found. */
-				virtual s32 findLast(c8 c, s32 start = -1) const;
+				s32 findLast(c8 c, s32 start = -1) const;
 
 				//! finds first occurrence of a character of a list in string
 				/** \param c: List of characters to find. For example if the method
@@ -157,7 +157,7 @@ namespace irrgame
 				 this should be strlen(c)
 				 \return Position where one of the characters has been found,
 				 or -1 if not found. */
-				virtual s32 findFirstChar(const c8* const c, u32 count) const;
+				s32 findFirstChar(const c8* const c, u32 count) const;
 				//! finds last occurrence of a character of a list in string
 				/** \param c: List of strings to find. For example if the method
 				 should find the last occurrence of 'a' or 'b', this parameter should be "ab".
@@ -165,7 +165,7 @@ namespace irrgame
 				 this should be strlen(c)
 				 \return Position where one of the characters has been found,
 				 or -1 if not found. */
-				virtual s32 findLastChar(const c8* const c, u32 count) const;
+				s32 findLastChar(const c8* const c, u32 count) const;
 
 				//! Finds first position of a character not in a given list.
 				/** \param c: List of characters not to find. For example if the method
@@ -174,8 +174,7 @@ namespace irrgame
 				 this should be strlen(c)
 				 \return Position where the character has been found,
 				 or -1 if not found. */
-				virtual s32 findFirstCharNotInList(const c8* const c,
-						u32 count) const;
+				s32 findFirstCharNotInList(const c8* const c, u32 count) const;
 				//! Finds last position of a character not in a given list.
 				/** \param c: List of characters not to find. For example if the method
 				 should find the first occurrence of a character not 'a' or 'b', this parameter should be "ab".
@@ -183,28 +182,26 @@ namespace irrgame
 				 this should be strlen(c)
 				 \return Position where the character has been found,
 				 or -1 if not found. */
-				virtual s32 findLastCharNotInList(const c8* const c,
-						u32 count) const;
+				s32 findLastCharNotInList(const c8* const c, u32 count) const;
 
 				//! finds next occurrence of character in string
 				/** \param c: Character to search for.
 				 \param startPos: Position in string to start searching.
 				 \return Position where the character has been found,
 				 or -1 if not found. */
-				virtual s32 findNext(c8 c, u32 startPos) const;
+				s32 findNext(c8 c, u32 startPos) const;
 
 				//! finds another string in this string
 				/** \param str: Another string
 				 \param start: Start position of the search
 				 \return Positions where the string has been found,
 				 or -1 if not found. */
-				virtual s32 find(const c8* const str,
-						const u32 start = 0) const;
+				s32 find(const c8* const str, const u32 start = 0) const;
 
 				//! Returns a substring
 				/** \param begin: Start of substring.
 				 \param length: Length of substring. */
-				virtual string subString(u32 begin, s32 length) const;
+				string subString(u32 begin, s32 length) const;
 
 				//! Appends a string to this string
 				/** \param other String to append. */
@@ -231,34 +228,34 @@ namespace irrgame
 				//! Replaces all characters of a special type with another one
 				/** \param toReplace Character to replace.
 				 \param replaceWith Character replacing the old one. */
-				virtual void replace(c8 toReplace, c8 replaceWith);
+				void replace(c8 toReplace, c8 replaceWith);
 
 				//! Removes characters from a string.
 				/** \param c: Character to remove. */
-				virtual void remove(c8 c);
+				void remove(c8 c);
 
 				//! Returns new string which trims this string.
 				/** Returns new string which not contains the specified characters (by default, Latin-1 whitespace)
 				 from the begining and the end of the string. */
-				virtual string& trim(const string& whitespace = " \t\n\r");
-
+//				string& trim(const string& whitespace = " \t\n\r");
+//
+//
+//
 				//! Erases a character from the string.
 				/** May be slow, because all elements
 				 following after the erased element have to be copied.
 				 \param index: Index of element to be erased. */
-				virtual void erase(u32 index);
+				void erase(u32 index);
 
 				//! verify the existing string.
-				virtual void validate();
+				void validate();
 
 				//! gets the last char of a string or null
-				virtual c8 lastChar() const;
+				c8 lastChar() const;
 
 				//! split string into parts.
 				/** This method will split a string at certain delimiter characters
-				 into the container passed in as reference. The type of the container
-				 has to be given as template parameter. It must provide a push_back and
-				 a size method.
+				 into the container passed in as reference.
 				 \param ret The result container
 				 \param c C-style string of delimiter characters
 				 \param count Number of delimiter characters
@@ -270,23 +267,22 @@ namespace irrgame
 				 result string. If this flag is true, the concatenation of the
 				 substrings results in the original string. Otherwise, only the
 				 characters between the delimiters are returned.
-				 \return The number of resulting substrings
 				 */
-				virtual u32 split(ICollection<string>& ret, const c8* const c,
+				void split(ICollection<string>& ret, const c8* const c,
 						u32 count = 1, bool ignoreEmptyTokens = true,
 						bool keepSeparators = false) const;
 
 			private:
 
-				//! Reallocate the array, make it bigger or smaller
-				void reallocate(u32 new_size);
+				//! Reallocate the Array, make it bigger or smaller
+				void reallocate(u32 newSize);
 
-			protected:
+			private:
 				//--- member variables
-				c8* array;
-				u32 allocated;
-				u32 used;
-				irrAllocator<c8> allocator;
+				c8* Array;
+				u32 Allocated;
+				u32 Used;
+				irrAllocator<c8> Allocator;
 				threads::irrgameMonitor* Monitor;
 		};
 
@@ -299,25 +295,28 @@ namespace irrgame
 
 		//! Default constructor
 		inline string::string() :
-				array(0), allocated(1), used(1), Monitor(0)
+				Array(0), Allocated(1), Used(1), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
 
-			array = allocator.allocate(1); // new T[1];
-			array[0] = 0x0;
+			Array = Allocator.allocate(1); // new T[1];
+			Array[0] = 0x0;
 		}
 
 		//! Copy constructor
 		inline string::string(const string& other) :
-				array(0), allocated(0), used(0), Monitor(0)
+				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
 			*this = other;
 		}
 
 		//! Constructs a string from a float
 		inline string::string(const double number) :
-				array(0), allocated(0), used(0), Monitor(0)
+				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
+
 			c8 tmpbuf[255];
 			snprintf(tmpbuf, 255, "%0.6f", number);
 			*this = tmpbuf;
@@ -325,8 +324,10 @@ namespace irrgame
 
 		//! Constructs a string from an int
 		inline string::string(s32 number) :
-				array(0), allocated(0), used(0), Monitor(0)
+				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
+
 			// store if negative and make positive
 			bool negative = false;
 
@@ -369,8 +370,10 @@ namespace irrgame
 
 		//! Constructs a string from an unsigned int
 		inline string::string(u32 number) :
-				array(0), allocated(0), used(0), Monitor(0)
+				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
+
 			// temporary buffer for 16 numbers
 			c8 tmpbuf[16] =
 			{ 0 };
@@ -397,8 +400,10 @@ namespace irrgame
 
 		//! Constructor for copying a string from a pointer with a given length
 		inline string::string(const c8* const c, u32 length) :
-				array(0), allocated(0), used(0), Monitor(0)
+				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
+
 			if (!c)
 			{
 				// correctly init the string to an empty one
@@ -406,31 +411,33 @@ namespace irrgame
 				return;
 			}
 
-			Monitor = threads::createIrrgameMonitor();
-
-			allocated = used = length + 1;
-			array = allocator.allocate(used); // new T[used];
+			Allocated = Used = length + 1;
+			Array = Allocator.allocate(Used); // new T[Used];
 
 			for (u32 l = 0; l < length; ++l)
-				array[l] = (c8) c[l];
+				Array[l] = (c8) c[l];
 
-			array[length] = 0;
+			Array[length] = 0;
 		}
 
 		//! Constructor for unicode strings
 		inline string::string(const c8* const c) :
-				array(0), allocated(0), used(0), Monitor(0)
+				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
+
 			*this = c;
 		}
 
 		//! Destructor
 		inline string::~string()
 		{
+			Monitor->enter();
+			Allocator.deallocate(Array); // delete [] Array;
+			Monitor->exit();
+
 			if (Monitor)
 				Monitor->drop();
-
-			allocator.deallocate(array); // delete [] array;
 		}
 
 		//! Assignment operator
@@ -441,7 +448,7 @@ namespace irrgame
 
 			other.Monitor->enter();
 
-			string& result = string::operator =(other.array);
+			string& result = string::operator =(other.Array);
 
 			other.Monitor->exit();
 
@@ -451,22 +458,28 @@ namespace irrgame
 		//! Assignment operator for strings, ascii and unicode
 		inline string& string::operator=(const c8* const c)
 		{
+			Monitor->enter();
+
 			if (!c)
 			{
 
-				if (!array)
+				if (!Array)
 				{
-					array = allocator.allocate(1); //new T[1];
-					allocated = 1;
+					Array = Allocator.allocate(1); //new T[1];
+					Allocated = 1;
 				}
-				used = 1;
-				array[0] = 0x0;
-				return *this;
+				Used = 1;
+				Array[0] = 0x0;
 
+				Monitor->exit();
+				return *this;
 			}
 
-			if ((void*) c == (void*) array)
+			if ((void*) c == (void*) Array)
+			{
+				Monitor->exit();
 				return *this;
+			}
 
 			u32 len = 0;
 			const c8* p = c;
@@ -477,37 +490,40 @@ namespace irrgame
 
 			// we'll keep the old string for a while, because the new
 			// string could be a part of the current string.
-			c8* oldArray = array;
+			c8* oldArray = Array;
 
-			used = len;
-			if (used > allocated)
+			Used = len;
+			if (Used > Allocated)
 			{
-				allocated = used;
-				array = allocator.allocate(used); //new T[used];
+				Allocated = Used;
+				Array = Allocator.allocate(Used); //new T[Used];
 			}
 
 			for (u32 l = 0; l < len; ++l)
-				array[l] = c[l];
+				Array[l] = c[l];
 
-			if (oldArray != array)
-				allocator.deallocate(oldArray); // delete [] oldArray;
+			if (oldArray != Array)
+				Allocator.deallocate(oldArray); // delete [] oldArray;
 
+			Monitor->exit();
 			return *this;
 		}
 
 		//! Append operator for other strings
 		inline string string::operator+(const string& other) const
 		{
-			return string::operator +(other.array);
+			return string::operator +(other.Array);
 		}
 
 		//! Append operator for strings, ascii and unicode
 		inline string string::operator+(const c8* const c) const
 		{
-			string str(*this);
-			str.append(c);
+			Monitor->enter();
+			string result(*this);
+			result.append(c);
+			Monitor->exit();
 
-			return str;
+			return result;
 		}
 
 		//! Direct access operator
@@ -516,9 +532,9 @@ namespace irrgame
 			Monitor->enter();
 
 			// bad index
-			IRR_ASSERT(index >= 0 && index<used)
+			IRR_ASSERT(index >= 0 && index < Used)
 
-			c8& result = array[index];
+			c8& result = Array[index];
 
 			Monitor->exit();
 
@@ -531,9 +547,9 @@ namespace irrgame
 			Monitor->enter();
 
 			// bad index
-			IRR_ASSERT(index >= 0 && index<used)
+			IRR_ASSERT(index >= 0 && index<Used)
 
-			const c8& result = array[index];
+			const c8& result = Array[index];
 
 			Monitor->exit();
 
@@ -546,29 +562,35 @@ namespace irrgame
 			if (this == &other)
 				return true;
 
-			return string::operator==(other.array);
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+			return string::operator==(other.Array);
 		}
 
 		//! Equality operator
 		inline bool string::operator ==(const c8* const str) const
 		{
 			if (!str)
+			{
+				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 				return false;
+			}
 
 			Monitor->enter();
 
 			u32 i;
-			for (i = 0; array[i] && str[i]; ++i)
-				if (array[i] != str[i])
+			for (i = 0; Array[i] && str[i]; ++i)
+				if (Array[i] != str[i])
 				{
 					Monitor->exit();
+					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 					return false;
 				}
 
-			bool result = !array[i] && !str[i];
+			bool result = !Array[i] && !str[i];
 
 			Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
@@ -576,36 +598,43 @@ namespace irrgame
 		inline bool string::operator <(const string& other) const
 		{
 			if (this == &other)
+			{
+				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 				return false;
+			}
 
 			Monitor->enter();
 
-			for (u32 i = 0; array[i] && other.array[i]; ++i)
+			for (u32 i = 0; Array[i] && other.Array[i]; ++i)
 			{
-				s32 diff = array[i] - other.array[i];
+				s32 diff = Array[i] - other.Array[i];
 				if (diff)
 				{
 					Monitor->exit();
+					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX
 					return diff < 0;
 				}
 			}
 
-			bool result = used < other.used;
+			bool result = Used < other.Used;
 
 			Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
 		//! Inequality operator
 		inline bool string::operator !=(const c8* const str) const
 		{
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !(*this == str);
 		}
 
 		//! Inequality operator
 		inline bool string::operator !=(const string& other) const
 		{
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !(*this == other);
 		}
 
@@ -614,9 +643,8 @@ namespace irrgame
 		 the trailing NUL. */
 		inline u32 string::size() const
 		{
-
 			Monitor->enter();
-			u32 result = used - 1;
+			u32 result = Used - 1;
 			Monitor->exit();
 
 			return result;
@@ -629,120 +657,139 @@ namespace irrgame
 
 			Monitor->enter();
 
-			result = used - 1 > 0;
+			result = Used - 1 > 0;
 
 			Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
 		//! Return True if this string have only whitespaces. Otherwise returns False.
 		bool string::blank()
 		{
+			IRR_ASSERT(false);
 			bool result = false;
 
 			Monitor->enter();
 
-			//TODO
+			//TODO implement it
 
 			Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
 		//! Returns character string
 		/** \return pointer to C-style NUL terminated string. */
-		inline const c8* string::c_str() const
+		inline const c8* string::cStr() const
 		{
 			Monitor->enter();
-			const c8* result = array;
+			const c8* result = Array;
 			Monitor->exit();
 
 			return result;
 		}
 
 		//! Makes the string lower case.
-		inline void string::make_lower()
+		inline void string::makeLower()
 		{
 			Monitor->enter();
-			for (u32 i = 0; i < used; ++i)
-				array[i] = locale_lower(array[i]);
+
+			for (u32 i = 0; i < Used; ++i)
+				Array[i] = localeLower(Array[i]);
+
 			Monitor->exit();
 		}
 
 		//! Makes the string upper case.
-		inline void string::make_upper()
+		inline void string::makeUpper()
 		{
 			Monitor->enter();
-			for (u32 i = 0; i < used; ++i)
-				array[i] = locale_upper(array[i]);
+
+			for (u32 i = 0; i < Used; ++i)
+				Array[i] = localeUpper(Array[i]);
+
 			Monitor->exit();
 		}
 
 		//! Compares the strings ignoring case.
 		/** \param other: Other string to compare.
 		 \return True if the strings are equal ignoring case. */
-		inline bool string::equals_ignore_case(const string& other) const
+		inline bool string::equalsIgnoreCase(const string& other) const
 		{
-			return equals_substring_ignore_case(other, 0);
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+			return equalsSubstringIgnoreCase(other, 0);
 		}
 
 		//! Compares the strings ignoring case.
 		/** \param other: Other string to compare.
 		 \param sourcePos: where to start to compare in the string
 		 \return True if the strings are equal ignoring case. */
-		inline bool string::equals_substring_ignore_case(const string& other,
+		inline bool string::equalsSubstringIgnoreCase(const string& other,
 				const u32 sourcePos) const
 		{
-			Monitor->enter();
-
-			IRR_ASSERT(sourcePos < used);
-
 			if (this == &other)
-			{
-				Monitor->exit();
 				return true;
-			}
+
+			Monitor->enter();
+			other.Monitor->enter();
+
+			IRR_ASSERT(sourcePos < Used);
 
 			u32 i;
-			for (i = 0; array[sourcePos + i] && other[i]; ++i)
-				if (locale_lower(array[sourcePos + i])
-						!= locale_lower(other[i]))
+			for (i = 0; Array[sourcePos + i] && other[i]; ++i)
+				if (localeLower(Array[sourcePos + i]) != localeLower(other[i]))
 				{
 					Monitor->exit();
+					other.Monitor->exit();
+					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 					return false;
 				}
 
-			bool result = array[sourcePos + i] == 0 && other[i] == 0;
+			bool result = Array[sourcePos + i] == 0 && other[i] == 0;
 
 			Monitor->exit();
+			other.Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
 		//! Compares the strings ignoring case.
-		inline bool string::lower_ignore_case(const string& other) const
+		inline bool string::lowerIgnoreCase(const string& other) const
 		{
 			if (this == &other)
+			{
+				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 				return false;
+			}
 
 			Monitor->enter();
+			other.Monitor->enter();
 
-			for (u32 i = 0; array[i] && other.array[i]; ++i)
+			for (u32 i = 0; Array[i] && other.Array[i]; ++i)
 			{
-				s32 diff = (s32) locale_lower(array[i])
-						- (s32) locale_lower(other.array[i]);
+				s32 diff = (s32) localeLower(Array[i])
+						- (s32) localeLower(other.Array[i]);
+
 				if (diff)
 				{
 					Monitor->exit();
+					other.Monitor->exit();
+
+					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 					return diff < 0;
 				}
 			}
 
-			bool result = used < other.used;
+			bool result = Used < other.Used;
 
 			Monitor->exit();
+			other.Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
@@ -752,7 +799,8 @@ namespace irrgame
 			if (this == &other)
 				return true;
 
-			return string::equalsn(other.array, n);
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+			return string::equalsn(other.Array, n);
 		}
 
 		//! compares the first n characters of the strings
@@ -760,27 +808,30 @@ namespace irrgame
 		{
 			Monitor->enter();
 
-			IRR_ASSERT(n < used);
+			IRR_ASSERT(n < Used);
 
 			if (!str)
 			{
 				Monitor->exit();
+				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 				return false;
 			}
 
 			u32 i;
-			for (i = 0; array[i] && str[i] && i < n; ++i)
-				if (array[i] != str[i])
+			for (i = 0; Array[i] && str[i] && i < n; ++i)
+				if (Array[i] != str[i])
 				{
 					Monitor->exit();
+					_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 					return false;
 				}
 
 			// if one (or both) of the strings was smaller then they
 			// are only equal if they have the same length
-			bool result = (i == n) || (array[i] == 0 && str[i] == 0);
+			bool result = (i == n) || (Array[i] == 0 && str[i] == 0);
 			Monitor->exit();
 
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
@@ -797,16 +848,16 @@ namespace irrgame
 				other.Monitor->enter();
 			Monitor->enter();
 
-			--used;
-			u32 len = other.used;
+			--Used;
+			u32 len = other.Used;
 
-			if (used + len > allocated)
-				reallocate(used + len);
+			if (Used + len > Allocated)
+				reallocate(Used + len);
 
 			for (u32 l = 0; l < len; ++l)
-				array[used + l] = other.array[l];
+				Array[Used + l] = other.Array[l];
 
-			used += len;
+			Used += len;
 
 			if (!selfAppending)
 				other.Monitor->exit();
@@ -818,13 +869,13 @@ namespace irrgame
 		{
 			Monitor->enter();
 
-			if (used + 1 > allocated)
-				reallocate(used + 1);
+			if (Used + 1 > Allocated)
+				reallocate(Used + 1);
 
-			++used;
+			++Used;
 
-			array[used - 2] = character;
-			array[used - 1] = 0;
+			Array[Used - 2] = character;
+			Array[Used - 1] = 0;
 
 			Monitor->exit();
 		}
@@ -844,16 +895,16 @@ namespace irrgame
 				++p;
 			}
 
-			if (used + len > allocated)
-				reallocate(used + len);
+			if (Used + len > Allocated)
+				reallocate(Used + len);
 
-			--used;
+			--Used;
 			++len;
 
 			for (u32 l = 0; l < len; ++l)
-				array[l + used] = *(other + l);
+				Array[l + Used] = *(other + l);
 
-			used += len;
+			Used += len;
 
 			Monitor->exit();
 		}
@@ -871,20 +922,20 @@ namespace irrgame
 				other.Monitor->enter();
 			Monitor->enter();
 
-			IRR_ASSERT((other.used-1) > length);
+			IRR_ASSERT((other.Used-1) > length);
 
-			if (used + length > allocated)
-				reallocate(used + length);
+			if (Used + length > Allocated)
+				reallocate(Used + length);
 
-			--used;
+			--Used;
 
 			for (u32 l = 0; l < length; ++l)
-				array[l + used] = other.array[l];
-			used += length;
+				Array[l + Used] = other.Array[l];
+			Used += length;
 
 			// ensure proper termination
-			array[used] = 0;
-			++used;
+			Array[Used] = 0;
+			++Used;
 
 			if (!selfAppending)
 				other.Monitor->exit();
@@ -898,8 +949,8 @@ namespace irrgame
 
 			Monitor->enter();
 
-			for (u32 i = 0; i < used; ++i)
-				if (array[i] == c)
+			for (u32 i = 0; i < Used; ++i)
+				if (Array[i] == c)
 				{
 					result = i;
 					break;
@@ -917,10 +968,10 @@ namespace irrgame
 
 			Monitor->enter();
 
-			start = core::clamp(start < 0 ? (s32) (used) - 1 : start, 0,
-					(s32) (used) - 1);
+			start = core::clamp(start < 0 ? (s32) (Used) - 1 : start, 0,
+					(s32) (Used) - 1);
 			for (s32 i = start; i >= 0; --i)
-				if (array[i] == c)
+				if (Array[i] == c)
 				{
 					result = i;
 					break;
@@ -940,9 +991,9 @@ namespace irrgame
 
 			IRR_ASSERT(c != 0);
 
-			for (u32 i = 0; i < used; ++i)
+			for (u32 i = 0; i < Used; ++i)
 				for (u32 j = 0; j < count; ++j)
-					if (array[i] == c[j])
+					if (Array[i] == c[j])
 					{
 						result = i;
 						break;
@@ -962,9 +1013,9 @@ namespace irrgame
 
 			IRR_ASSERT(c != 0);
 
-			for (s32 i = used - 1; i >= 0; --i)
+			for (s32 i = Used - 1; i >= 0; --i)
 				for (u32 j = 0; j < count; ++j)
-					if (array[i] == c[j])
+					if (Array[i] == c[j])
 					{
 						result = i;
 						break;
@@ -983,11 +1034,11 @@ namespace irrgame
 
 			Monitor->enter();
 
-			for (u32 i = 0; i < used - 1; ++i)
+			for (u32 i = 0; i < Used - 1; ++i)
 			{
 				u32 j;
 				for (j = 0; j < count; ++j)
-					if (array[i] == c[j])
+					if (Array[i] == c[j])
 						break;
 
 				if (j == count)
@@ -1010,11 +1061,11 @@ namespace irrgame
 
 			Monitor->enter();
 
-			for (s32 i = (s32) (used - 2); i >= 0; --i)
+			for (s32 i = (s32) (Used - 2); i >= 0; --i)
 			{
 				u32 j;
 				for (j = 0; j < count; ++j)
-					if (array[i] == c[j])
+					if (Array[i] == c[j])
 						break;
 
 				if (j == count)
@@ -1032,14 +1083,14 @@ namespace irrgame
 		//! finds next occurrence of character in string
 		inline s32 string::findNext(c8 c, u32 startPos) const
 		{
-			s32 result = -1;
+			s32 result = irrNotFound;
 
 			Monitor->enter();
 
-			IRR_ASSERT(startPos < used);
+			IRR_ASSERT(startPos < Used);
 
-			for (u32 i = startPos; i < used; ++i)
-				if (array[i] == c)
+			for (u32 i = startPos; i < Used; ++i)
+				if (Array[i] == c)
 				{
 					result = i;
 					break;
@@ -1053,12 +1104,12 @@ namespace irrgame
 		//! finds another string in this string
 		inline s32 string::find(const c8* const str, const u32 start) const
 		{
-			s32 result = -1;
+			s32 result = irrNotFound;
 
 			Monitor->enter();
 
 			IRR_ASSERT(str != 0);
-			IRR_ASSERT(start < used);
+			IRR_ASSERT(start < Used);
 
 			if (!(*str))
 			{
@@ -1071,17 +1122,17 @@ namespace irrgame
 			while (str[len])
 				++len;
 
-			if (len > used - 1)
+			if (len > Used - 1)
 			{
 				Monitor->exit();
 				return result;
 			}
 
-			for (u32 i = start; i < used - len; ++i)
+			for (u32 i = start; i < Used - len; ++i)
 			{
 				u32 j = 0;
 
-				while (str[j] && array[i + j] == str[j])
+				while (str[j] && Array[i + j] == str[j])
 					++j;
 
 				if (!str[j])
@@ -1105,19 +1156,19 @@ namespace irrgame
 			// if start after string
 			IRR_ASSERT(length <= 0);
 			// or no proper substring length
-			IRR_ASSERT(begin >= (used - 1));
+			IRR_ASSERT(begin >= (Used - 1));
 
 			// clamp length to maximal value
-			if ((length + begin) > size())
-				length = size() - begin;
+			if ((length + begin) > (Used - 1))
+				length = (Used - 1) - begin;
 
 			result.reallocate(length + 1);
 
 			for (s32 i = 0; i < length; ++i)
-				result.array[i] = array[i + begin];
+				result.Array[i] = Array[i + begin];
 
-			result.array[length] = 0;
-			result.used = result.allocated;
+			result.Array[length] = 0;
+			result.Used = result.Allocated;
 
 			Monitor->exit();
 			return result;
@@ -1177,9 +1228,9 @@ namespace irrgame
 		{
 			Monitor->enter();
 
-			for (u32 i = 0; i < used; ++i)
-				if (array[i] == toReplace)
-					array[i] = replaceWith;
+			for (u32 i = 0; i < Used; ++i)
+				if (Array[i] == toReplace)
+					Array[i] = replaceWith;
 
 			Monitor->exit();
 		}
@@ -1191,48 +1242,55 @@ namespace irrgame
 
 			u32 pos = 0;
 			u32 found = 0;
-			for (u32 i = 0; i < used; ++i)
+			for (u32 i = 0; i < Used; ++i)
 			{
-				if (array[i] == c)
+				if (Array[i] == c)
 				{
 					++found;
 					continue;
 				}
 
-				array[pos++] = array[i];
+				Array[pos++] = Array[i];
 			}
-			used -= found;
-			array[used] = 0;
+			Used -= found;
+			Array[Used] = 0;
 
 			Monitor->exit();
 		}
 
-		//! Returns new string which trims this string.
-		inline string& string::trim(const string& whitespace)
-		{
-			//for clear - use string::clear()
-			IRR_ASSERT(this != &whitespace);
-			//trim empty was
-			IRR_ASSERT(!empty());
-
-			whitespace.Monitor->enter();
-
-			// find start and end of the substring without the specified characters
-			const s32 begin = findFirstCharNotInList(whitespace.array,
-					whitespace.used);
-
-			if (begin == -1)
-				return (*this = "");
-
-			const s32 end = findLastCharNotInList(whitespace.array,
-					whitespace.used);
-
-			string* result = new string;
-
-			(*result) = subString(begin, (end + 1) - begin);
-
-			return *result;
-		}
+//		//! Returns new string which trims this string.
+//		inline string& string::trim(const string& whitespace)
+//		{
+//			Monitor->enter();
+//
+//			//for clear - use string::clear()
+//			IRR_ASSERT(this != &whitespace);
+//			//trim empty was
+//			IRR_ASSERT(Used - 1 > 0);
+//
+//			whitespace.Monitor->enter();
+//
+//			// find start and end of the substring without the specified characters
+//			const s32 begin = findFirstCharNotInList(whitespace.Array,
+//					whitespace.Used);
+//
+//			if (begin == irrNotFound)
+//			{
+//				Monitor->exit();
+//				return (*this = "");
+//			}
+//
+//			const s32 end = findLastCharNotInList(whitespace.Array,
+//					whitespace.Used);
+//
+//			string* result = new string;
+//
+//			(*result) = subString(begin, (end + 1) - begin);
+//
+//			Monitor->exit();
+//
+//			return *result;
+//		}
 
 		//! Erases a character from the string.
 		inline void string::erase(u32 index)
@@ -1240,12 +1298,12 @@ namespace irrgame
 			Monitor->enter();
 
 			// access violation
-			IRR_ASSERT(index >= 0 && index < used)
+			IRR_ASSERT(index >= 0 && index < Used)
 
-			for (u32 i = index + 1; i < used; ++i)
-				array[i - 1] = array[i];
+			for (u32 i = index + 1; i < Used; ++i)
+				Array[i - 1] = Array[i];
 
-			--used;
+			--Used;
 
 			Monitor->exit();
 		}
@@ -1253,54 +1311,61 @@ namespace irrgame
 		//! verify the existing string.
 		inline void string::validate()
 		{
+			Monitor->enter();
+
 			// terminate on existing null
-			for (u32 i = 0; i < allocated; ++i)
+			for (u32 i = 0; i < Allocated; ++i)
 			{
-				if (array[i] == 0)
+				if (Array[i] == 0)
 				{
-					used = i + 1;
+					Used = i + 1;
+					Monitor->exit();
 					return;
 				}
 			}
 
 			// terminate
-			if (allocated > 0)
+			if (Allocated > 0)
 			{
-				used = allocated - 1;
-				array[used] = 0;
+				Used = Allocated - 1;
+				Array[Used] = 0;
 			}
 			else
 			{
-				used = 0;
+				Used = 0;
 			}
+
+			Monitor->exit();
 		}
 
 		//! gets the last char of a string or null
 		inline c8 string::lastChar() const
 		{
-			return used > 1 ? array[used - 2] : 0;
+			Monitor->enter();
+			c8 result = Used > 1 ? Array[Used - 2] : 0;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! split string into parts.
-		inline u32 string::split(ICollection<string>& ret, const c8* const c,
+		inline void string::split(ICollection<string>& ret, const c8* const c,
 				u32 count, bool ignoreEmptyTokens, bool keepSeparators) const
 		{
-			if (!c)
-				return 0;
+			IRR_ASSERT(c != 0);
 
-			const u32 oldSize = ret.size();
 			u32 lastpos = 0;
 			bool lastWasSeparator = false;
-			for (u32 i = 0; i < used; ++i)
+			for (u32 i = 0; i < Used; ++i)
 			{
 				bool foundSeparator = false;
 				for (u32 j = 0; j < count; ++j)
 				{
-					if (array[i] == c[j])
+					if (Array[i] == c[j])
 					{
 						if ((!ignoreEmptyTokens || i - lastpos != 0)
 								&& !lastWasSeparator)
-							ret.pushBack(string(&array[lastpos], i - lastpos));
+							ret.pushBack(string(&Array[lastpos], i - lastpos));
 						foundSeparator = true;
 						lastpos = (keepSeparators ? i : i + 1);
 						break;
@@ -1308,27 +1373,27 @@ namespace irrgame
 				}
 				lastWasSeparator = foundSeparator;
 			}
-			if ((used - 1) > lastpos)
-				ret.pushBack(string(&array[lastpos], (used - 1) - lastpos));
-			return ret.size() - oldSize;
+
+			if ((Used - 1) > lastpos)
+				ret.pushBack(string(&Array[lastpos], (Used - 1) - lastpos));
 		}
 
-		//! Reallocate the array, make it bigger or smaller
-		inline void string::reallocate(u32 new_size)
+		//! Reallocate the Array, make it bigger or smaller
+		inline void string::reallocate(u32 newSize)
 		{
-			c8* old_array = array;
+			c8* oldArray = Array;
 
-			array = allocator.allocate(new_size); //new T[new_size];
-			allocated = new_size;
+			Array = Allocator.allocate(newSize); //new T[newSize];
+			Allocated = newSize;
 
-			u32 amount = used < new_size ? used : new_size;
+			u32 amount = Used < newSize ? Used : newSize;
 			for (u32 i = 0; i < amount; ++i)
-				array[i] = old_array[i];
+				Array[i] = oldArray[i];
 
-			if (allocated < used)
-				used = allocated;
+			if (Allocated < Used)
+				Used = Allocated;
 
-			allocator.deallocate(old_array); // delete [] old_array;
+			Allocator.deallocate(oldArray); // delete [] old_Array;
 		}
 	}
 // end namespace core

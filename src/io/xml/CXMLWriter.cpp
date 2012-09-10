@@ -107,7 +107,7 @@ namespace irrgame
 			// write attributes
 			u32 i = 0;
 			for (; i < names.size() && i < values.size(); ++i)
-				writeAttribute(names[i].c_str(), values[i].c_str());
+				writeAttribute(names[i].cStr(), values[i].cStr());
 
 			// write closing tag
 			if (empty)
@@ -196,7 +196,7 @@ namespace irrgame
 			}
 
 			// write new string
-			File->write(s.c_str(), s.size() * sizeof(c8));
+			File->write(s.cStr(), s.size() * sizeof(c8));
 			TextWrittenLast = true;
 		}
 

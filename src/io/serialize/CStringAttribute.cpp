@@ -29,17 +29,17 @@ namespace irrgame
 
 		s32 CStringAttribute::getInt()
 		{
-			return atoi(Value.c_str());
+			return atoi(Value.cStr());
 		}
 
 		f32 CStringAttribute::getFloat()
 		{
-			return core::fast_atof(Value.c_str());
+			return core::fast_atof(Value.cStr());
 		}
 
 		bool CStringAttribute::getBool()
 		{
-			return Value.equals_ignore_case("true");
+			return Value.equalsIgnoreCase("true");
 		}
 
 		stringc CStringAttribute::getString()
@@ -78,7 +78,7 @@ namespace irrgame
 			s32 dataSize = maxLength;
 			c8* datac8 = (c8*) (outdata);
 			s32 p = 0;
-			const c8* dataString = Value.c_str();
+			const c8* dataString = Value.cStr();
 
 			for (s32 i = 0; i < dataSize; ++i)
 				datac8[i] = 0;

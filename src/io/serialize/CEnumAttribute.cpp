@@ -41,7 +41,7 @@ namespace irrgame
 		s32 CEnumAttribute::getInt()
 		{
 			for (s32 i = 0; EnumLiterals.size(); ++i)
-				if (Value.equals_ignore_case(EnumLiterals[i]))
+				if (Value.equalsIgnoreCase(EnumLiterals[i]))
 				{
 					return i;
 				}
@@ -84,7 +84,7 @@ namespace irrgame
 
 		const c8* CEnumAttribute::getEnum()
 		{
-			return Value.c_str();
+			return Value.cStr();
 		}
 
 		E_ATTRIBUTE_TYPE CEnumAttribute::getType() const

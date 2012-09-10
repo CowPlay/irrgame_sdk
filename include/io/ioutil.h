@@ -24,11 +24,11 @@ namespace irrgame
 				return 0;
 
 			extPos += 1;
-			if (filename.equals_substring_ignore_case(ext0, extPos))
+			if (filename.equalsSubstringIgnoreCase(ext0, extPos))
 				return 1;
-			if (filename.equals_substring_ignore_case(ext1, extPos))
+			if (filename.equalsSubstringIgnoreCase(ext1, extPos))
 				return 2;
-			if (filename.equals_substring_ignore_case(ext2, extPos))
+			if (filename.equalsSubstringIgnoreCase(ext2, extPos))
 				return 3;
 			return 0;
 		}
@@ -66,7 +66,7 @@ namespace irrgame
 		inline stringc& deletePathFromFilename(stringc& filename)
 		{
 			// delete path from filename
-			const c8* s = filename.c_str();
+			const c8* s = filename.cStr();
 			const c8* p = s + filename.size();
 
 			// search for path separator or beginning

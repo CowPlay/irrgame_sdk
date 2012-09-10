@@ -16,6 +16,32 @@ namespace irrgame
 		//! An entry in a list of files, can be a folder or a file.
 		struct SFileListEntry
 		{
+
+			public:
+				//! The == operator is provided so that CFileList can slowly search the list!
+				bool operator ==(const struct SFileListEntry& other) const
+				{
+					if (IsDirectory != other.IsDirectory)
+						return false;
+
+					return FullName.equalsIgnoreCase(other.FullName);
+				}
+
+				//! Inequality operator
+				bool operator !=(const struct SFileListEntry& other) const
+				{
+					return !(*this == other);
+				}
+
+				//! The < operator is provided so that CFileList can sort and quickly search the list.
+				bool operator <(const struct SFileListEntry& other) const
+				{
+					if (IsDirectory != other.IsDirectory)
+						return IsDirectory;
+
+					return FullName.lowerIgnoreCase(other.FullName);
+				}
+			public:
 				//! The name of the file
 				/** If this is a file or folder in the virtual filesystem and the archive
 				 was created with the ignoreCase flag then the file name will be lower case. */
@@ -36,30 +62,6 @@ namespace irrgame
 
 				//! True if this is a folder, false if not.
 				bool IsDirectory;
-
-				//! The == operator is provided so that CFileList can slowly search the list!
-				bool operator ==(const struct SFileListEntry& other) const
-				{
-					if (IsDirectory != other.IsDirectory)
-						return false;
-
-					return FullName.equals_ignore_case(other.FullName);
-				}
-
-				//! Inequality operator
-				bool operator !=(const struct SFileListEntry& other) const
-				{
-					return !(*this == other);
-				}
-
-				//! The < operator is provided so that CFileList can sort and quickly search the list.
-				bool operator <(const struct SFileListEntry& other) const
-				{
-					if (IsDirectory != other.IsDirectory)
-						return IsDirectory;
-
-					return FullName.lower_ignore_case(other.FullName);
-				}
 		};
 
 		//! Provides a list of files and folders.

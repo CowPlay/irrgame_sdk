@@ -67,7 +67,7 @@ namespace irrgame
 				{
 					stringc name(p);
 					name.replace('\\', '/');
-					name.make_lower();
+					name.makeLower();
 					return name;
 				}
 

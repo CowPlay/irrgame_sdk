@@ -56,7 +56,7 @@ namespace irrgame
 		//! opens the file
 		void CWriteFile::openFile(bool append)
 		{
-			File = fopen(Filename.c_str(), append ? "ab" : "wb");
+			File = fopen(Filename.cStr(), append ? "ab" : "wb");
 
 			IRR_ASSERT(File != 0);
 

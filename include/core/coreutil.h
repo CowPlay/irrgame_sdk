@@ -18,13 +18,13 @@ namespace irrgame
 		};
 
 		static eLocaleID locale_current = IRR_LOCALE_ANSI;
-		static inline void locale_set(eLocaleID id)
+		static inline void localeSet(eLocaleID id)
 		{
 			locale_current = id;
 		}
 
 		//! Returns a character converted to lower case
-		static inline u32 locale_lower(u32 x)
+		static inline u32 localeLower(u32 x)
 		{
 			switch (locale_current)
 			{
@@ -37,7 +37,7 @@ namespace irrgame
 		}
 
 		//! Returns a character converted to upper case
-		static inline u32 locale_upper(u32 x)
+		static inline u32 localeUpper(u32 x)
 		{
 			switch (locale_current)
 			{

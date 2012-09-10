@@ -233,13 +233,13 @@ namespace irrgame
 		//! Returns name of an attribute.
 		const c8* CXMLReader::getAttributeName(int idx) const
 		{
-			return Attributes[idx].Name.c_str();
+			return Attributes[idx].Name.cStr();
 		}
 
 		//! Returns the value of an attribute.
 		const c8* CXMLReader::getAttributeValue(int idx) const
 		{
-			return Attributes[idx].Value.c_str();
+			return Attributes[idx].Value.cStr();
 		}
 
 		//! Returns the value of an attribute.
@@ -249,7 +249,7 @@ namespace irrgame
 
 			IRR_ASSERT(attr != 0);
 
-			return attr->Value.c_str();
+			return attr->Value.cStr();
 		}
 
 		//! Returns the value of an attribute
@@ -258,9 +258,9 @@ namespace irrgame
 			const SAttribute* attr = getAttributeByName(name);
 
 			if (!attr)
-				return EmptyString.c_str();
+				return EmptyString.cStr();
 
-			return attr->Value.c_str();
+			return attr->Value.cStr();
 		}
 
 		//! Returns the value of an attribute as integer.
@@ -282,8 +282,8 @@ namespace irrgame
 
 			IRR_ASSERT(attr != 0);
 
-			stringc c = attr->Value.c_str();
-			return core::fast_atof(c.c_str());
+			stringc c = attr->Value.cStr();
+			return core::fast_atof(c.cStr());
 		}
 
 		//! Returns the value of an attribute as float.
@@ -294,19 +294,19 @@ namespace irrgame
 			IRR_ASSERT(sizeof(attrvalue) > 0);
 
 			stringc c = attrvalue;
-			return core::fast_atof(c.c_str());
+			return core::fast_atof(c.cStr());
 		}
 
 		//! Returns the name of the current node.
 		const c8* CXMLReader::getNodeName() const
 		{
-			return NodeName.c_str();
+			return NodeName.cStr();
 		}
 
 		//! Returns data of the current node.
 		const c8* CXMLReader::getNodeData() const
 		{
-			return NodeName.c_str();
+			return NodeName.cStr();
 		}
 
 		//! Returns if an element is an empty element, like <foo />
@@ -607,7 +607,7 @@ namespace irrgame
 				int specialChar = -1;
 				for (int i = 0; i < (int) SpecialCharacters.size(); ++i)
 				{
-					const c8* p = &origstr.c_str()[pos] + 1;
+					const c8* p = &origstr.cStr()[pos] + 1;
 
 					if (SpecialCharacters[i].equalsn(p,
 							SpecialCharacters[i].size() - 1))

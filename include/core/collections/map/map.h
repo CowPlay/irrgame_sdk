@@ -6,6 +6,7 @@
 #define __IRR_MAP_H_INCLUDED__
 
 #include "core/math/irrMath.h"
+#include "threads/irrgameMonitor.h"
 #include "CMapIterator.h"
 #include "CParentFirstIterator.h"
 #include "CParentLastIterator.h"
@@ -76,70 +77,63 @@ namespace irrgame
 
 				//! Inserts a new node into the tree
 				/** \param keyNew: the index for this value
-				 \param v: the value to insert
-				 \return True if successful, false if it fails (already exists) */
-				virtual bool insert(const Key& keyNew, const Value& v);
-
-				//! Replaces the value if the key already exists, otherwise inserts a new element.
-				/** \param k The index for this value
-				 \param v The new value of */
-				virtual void setValue(const Key& k, const Value& v);
+				 \param v: the value to insert */
+				void insert(const Key& keyNew, const Value& v);
 
 				//! Removes a node from the tree and returns it.
 				/** The returned node must be deleted by the user
 				 \param k the key to remove
-				 \return A pointer to the node, or 0 if not found */
-				virtual Node* delink(const Key& k);
+				 \return A pointer to the node*/
+				Node* delink(const Key& k);
 
 				//! Removes a node from the tree and deletes it.
-				/** \return True if the node was found and deleted */
-				virtual bool remove(const Key& k);
+				void remove(const Key& k);
 
 				//! Clear the entire tree
-				virtual void clear();
+				void clear();
 
 				//! Is the tree empty?
 				//! \return Returns true if empty, false if not
-				virtual bool empty() const;
+				bool empty() const;
 
 				//! Search for a node with the specified key.
 				//! \param keyToFind: The key to find
 				//! \return Returns 0 if node couldn't be found.
-				virtual Node* find(const Key& keyToFind) const;
+				Node* find(const Key& keyToFind) const;
 
 				//! Gets the root element.
 				//! \return Returns a pointer to the root node, or
 				//! 0 if the tree is empty.
-				virtual Node* getRoot() const;
+				Node* getRoot() const;
 
 				//! Returns the number of nodes in the tree.
-				virtual u32 size() const;
+				u32 size() const;
 
 				//! Swap the content of this map container with the content of another map
 				/** Afterwards this object will contain the content of the other object and the other
 				 object will contain the content of this object. Iterators will afterwards be valid for
 				 the swapped object.
 				 \param other Swap content with this object	*/
-				virtual void swap(map<Key, Value>& other);
+				void swap(map<Key, Value>& other);
 
 				//------------------------------
 				// Public Iterators
 				//------------------------------
 
 				//! Returns an iterator
-				virtual Iterator getIterator();
+				Iterator getIterator();
 				//! Returns a ParentFirstIterator.
 				//! Traverses the tree from top to bottom. Typical usage is
 				//! when storing the tree structure, because when reading it
 				//! later (and inserting elements) the tree structure will
 				//! be the same.
-				virtual ParentFirstIterator getParentFirstIterator();
+				ParentFirstIterator getParentFirstIterator();
 				//! Returns a ParentLastIterator to traverse the tree from
 				//! bottom to top.
 				//! Typical usage is when deleting all elements in the tree
 				//! because you must delete the children before you delete
 				//! their parent.
-				virtual ParentLastIterator getParentLastIterator();
+				ParentLastIterator getParentLastIterator();
 
 				//------------------------------
 				// Public Operators
@@ -147,8 +141,8 @@ namespace irrgame
 
 				//! operator [] for access to elements
 				/** for example myMap["key"] */
-				virtual AccessClass operator[](const Key& k);
-			protected:
+				AccessClass operator[](const Key& k);
+			private:
 
 				//------------------------------
 				// Disabled methods
@@ -161,29 +155,34 @@ namespace irrgame
 
 			private:
 
+				//! Search for a node with the specified key.
+				//! \param keyToFind: The key to find
+				//! \return Returns 0 if node couldn't be found.
+				Node* findInternal(const Key& keyToFind) const;
+
 				//! Set node as new root.
 				/** The node will be set to black, otherwise core dumps may arise
 				 (patch provided by rogerborg).
 				 \param newRoot Node which will be the new root
 				 */
-				virtual void setRoot(Node* newRoot);
+				void setRoot(Node* newRoot);
 
 				//! Insert a node into the tree without using any fancy balancing logic.
-				/** \return false if that key already exist in the tree. */
-				virtual bool insert(Node* newNode);
+				void insert(Node* newNode);
 
 				//! Rotate left.
 				//! Pull up node's right child and let it knock node down to the left
-				virtual void rotateLeft(Node* p);
+				void rotateLeft(Node* p);
 
 				//! Rotate right.
 				//! Pull up node's left child and let it knock node down to the right
-				virtual void rotateRight(Node* p);
+				void rotateRight(Node* p);
 
-			protected:
+			private:
 
 				Node* Root; // The top node. 0 if empty.
 				u32 Size; // Number of nodes in the tree
+				threads::irrgameMonitor* Monitor;
 		};
 
 		//------------------------------
@@ -227,7 +226,7 @@ namespace irrgame
 		//! Default constructor.
 		template<class Key, class Value>
 		inline map<Key, Value>::map() :
-				Root(0), Size(0)
+				Root(0), Size(0), Monitor(0)
 		{
 		}
 
@@ -235,7 +234,10 @@ namespace irrgame
 		template<class Key, class Value>
 		inline map<Key, Value>::~map()
 		{
-			map<Key, Value>::clear();
+			clear();
+
+			if (Monitor)
+				Monitor->drop();
 		}
 
 		//! Inserts a new node into the tree
@@ -243,16 +245,12 @@ namespace irrgame
 		 \param v: the value to insert
 		 \return True if successful, false if it fails (already exists) */
 		template<class Key, class Value>
-		inline bool map<Key, Value>::insert(const Key& keyNew, const Value& v)
+		inline void map<Key, Value>::insert(const Key& keyNew, const Value& v)
 		{
 			// First insert node the "usual" way (no fancy balance logic yet)
 			Node* newNode = new Node(keyNew, v);
-			if (!map<Key, Value>::insert(newNode))
-			{
-				delete newNode;
-				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-				return false;
-			}
+
+			insert(newNode);
 
 			// Then attend a balancing party
 			while (!newNode->isRoot() && (newNode->getParent()->isRed()))
@@ -279,13 +277,12 @@ namespace irrgame
 							// and newNode is to the right
 							// case 2 - move newNode up and rotate
 							newNode = newNode->getParent();
-							map<Key, Value>::rotateLeft(newNode);
+							rotateLeft(newNode);
 						}
 						// case 3
 						newNode->getParent()->setBlack();
 						newNode->getParent()->getParent()->setRed();
-						map<Key, Value>::rotateRight(
-								newNode->getParent()->getParent());
+						rotateRight(newNode->getParent()->getParent());
 					}
 				}
 				else
@@ -310,52 +307,36 @@ namespace irrgame
 							// and newNode is to the left
 							// case 2 - move newNode up and rotate
 							newNode = newNode->getParent();
-							map<Key, Value>::rotateRight(newNode);
+							rotateRight(newNode);
 						}
 						// case 3
 						newNode->getParent()->setBlack();
 						newNode->getParent()->getParent()->setRed();
-						map<Key, Value>::rotateLeft(
-								newNode->getParent()->getParent());
+						rotateLeft(newNode->getParent()->getParent());
 					}
 
 				}
 			}
 			// Color the root black
 			Root->setBlack();
-			return true;
-		}
-
-		//! Replaces the value if the key already exists, otherwise inserts a new element.
-		/** \param k The index for this value
-		 \param v The new value of */
-		template<class Key, class Value>
-		inline void map<Key, Value>::setValue(const Key& k, const Value& v)
-		{
-			Node* p = map<Key, Value>::find(k);
-			if (p)
-				p->setValue(v);
-			else
-				map<Key, Value>::insert(k, v);
 		}
 
 		//! Removes a node from the tree and returns it.
-		/** The returned node must be deleted by the user
-		 \param k the key to remove
-		 \return A pointer to the node, or 0 if not found */
 		template<class Key, class Value>
 		inline RBTree<Key, Value>* map<Key, Value>::delink(const Key& k)
 		{
-			Node* p = map<Key, Value>::find(k);
-			if (p == 0)
-				return 0;
+			Monitor->enter();
+
+			Node* p = findInternal(k);
+
+			IRR_ASSERT(p != 0);
 
 			// Rotate p down to the left until it has no right child, will get there
 			// sooner or later.
 			while (p->getRightChild())
 			{
 				// "Pull up my right child and let it knock me down to the left"
-				map<Key, Value>::rotateLeft(p);
+				rotateLeft(p);
 			}
 			// p now has no right child but might have a left child
 			Node* left = p->getLeftChild();
@@ -371,34 +352,35 @@ namespace irrgame
 			{
 				// p has no parent => p is the root.
 				// Let the left child be the new root.
-				map<Key, Value>::setRoot(left);
+				setRoot(left);
 			}
 
 			// p is now gone from the tree in the sense that
 			// no one is pointing at it, so return it.
 
 			--Size;
+
+			Monitor->exit();
+
 			return p;
 		}
 
 		//! Removes a node from the tree and deletes it.
-		/** \return True if the node was found and deleted */
 		template<class Key, class Value>
-		inline bool map<Key, Value>::remove(const Key& k)
+		inline void map<Key, Value>::remove(const Key& k)
 		{
-			Node* p = map<Key, Value>::find(k);
-			if (p == 0)
-			{
-				_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-				return false;
-			}
+			Monitor->enter();
+
+			Node* p = findInternal(k);
+
+			IRR_ASSERT(p != 0);
 
 			// Rotate p down to the left until it has no right child, will get there
 			// sooner or later.
 			while (p->getRightChild())
 			{
 				// "Pull up my right child and let it knock me down to the left"
-				map<Key, Value>::rotateLeft(p);
+				rotateLeft(p);
 			}
 			// p now has no right child but might have a left child
 			Node* left = p->getLeftChild();
@@ -414,7 +396,7 @@ namespace irrgame
 			{
 				// p has no parent => p is the root.
 				// Let the left child be the new root.
-				map<Key, Value>::setRoot(left);
+				setRoot(left);
 			}
 
 			// p is now gone from the tree in the sense that
@@ -422,13 +404,16 @@ namespace irrgame
 			delete p;
 
 			--Size;
-			return true;
+
+			Monitor->exit();
 		}
 
 		//! Clear the entire tree
 		template<class Key, class Value>
 		inline void map<Key, Value>::clear()
 		{
+			Monitor->enter();
+
 			ParentLastIterator i(map<Key, Value>::getParentLastIterator());
 
 			while (!i.atEnd())
@@ -440,6 +425,8 @@ namespace irrgame
 			}
 			Root = 0;
 			Size = 0;
+
+			Monitor->exit();
 		}
 
 		//! Is the tree empty?
@@ -447,8 +434,12 @@ namespace irrgame
 		template<class Key, class Value>
 		inline bool map<Key, Value>::empty() const
 		{
+			Monitor->enter();
+			bool result = Root == 0;
+			Monitor->exit();
+
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return Root == 0;
+			return result;
 		}
 
 		//! Search for a node with the specified key.
@@ -458,22 +449,36 @@ namespace irrgame
 		inline RBTree<Key, Value>* map<Key, Value>::find(
 				const Key& keyToFind) const
 		{
-			Node* pNode = Root;
+			Monitor->enter();
+			Node* result = findInternal(keyToFind);
+			Monitor->exit();
 
-			while (pNode != 0)
+			return result;
+		}
+
+		//! Search for a node with the specified key.
+		//! \param keyToFind: The key to find
+		//! \return Returns 0 if node couldn't be found.
+		template<class Key, class Value>
+		inline RBTree<Key, Value>* map<Key, Value>::findInternal(
+				const Key& keyToFind) const
+		{
+			Node* result = Root;
+
+			while (result)
 			{
-				Key key(pNode->getKey());
+				Key key(result->getKey());
 
 				if (keyToFind == key)
-					return pNode;
+					break;
 				else if (keyToFind < key)
-					pNode = pNode->getLeftChild();
+					result = result->getLeftChild();
 				else
 					//keyToFind > key
-					pNode = pNode->getRightChild();
+					result = result->getRightChild();
 			}
 
-			return 0;
+			return result;
 		}
 
 		//! Gets the root element.
@@ -482,14 +487,22 @@ namespace irrgame
 		template<class Key, class Value>
 		inline RBTree<Key, Value>* map<Key, Value>::getRoot() const
 		{
-			return Root;
+			Monitor->enter();
+			Node* result = Root;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Returns the number of nodes in the tree.
 		template<class Key, class Value>
 		inline u32 map<Key, Value>::size() const
 		{
-			return Size;
+			Monitor->enter();
+			u32 result = Size;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Swap the content of this map container with the content of another map
@@ -500,8 +513,19 @@ namespace irrgame
 		template<class Key, class Value>
 		inline void map<Key, Value>::swap(map<Key, Value>& other)
 		{
+			// handle self swap
+			if (this == &other)
+				return;
+
+			Monitor->enter();
+			other.Monitor->enter();
+
+			core::swap(Monitor, other.Monitor);
 			core::swap(Root, other.Root);
 			core::swap(Size, other.Size);
+
+			other.Monitor->exit();
+			Monitor->exit();
 		}
 
 		//------------------------------
@@ -512,8 +536,11 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CMapIterator<Key, Value> map<Key, Value>::getIterator()
 		{
-			Iterator it(map<Key, Value>::getRoot());
-			return it;
+			Monitor->enter();
+			Iterator result(getRoot());
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Returns a ParentFirstIterator.
@@ -524,8 +551,11 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CParentFirstIterator<Key, Value> map<Key, Value>::getParentFirstIterator()
 		{
-			ParentFirstIterator it(map<Key, Value>::getRoot());
-			return it;
+			Monitor->enter();
+			ParentFirstIterator result(map<Key, Value>::getRoot());
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Returns a ParentLastIterator to traverse the tree from
@@ -536,7 +566,10 @@ namespace irrgame
 		template<class Key, class Value>
 		inline CParentLastIterator<Key, Value> map<Key, Value>::getParentLastIterator()
 		{
+			Monitor->enter();
 			ParentLastIterator it(map<Key, Value>::getRoot());
+			Monitor->exit();
+
 			return it;
 		}
 
@@ -545,12 +578,15 @@ namespace irrgame
 		//------------------------------
 
 		//! operator [] for access to elements
-		/** for example myMap["key"] */
 		template<class Key, class Value>
 		inline CAccessClass<Key, Value> map<Key, Value>::operator[](
 				const Key& k)
 		{
-			return AccessClass(*this, k);
+			Monitor->enter();
+			AccessClass result(*this, k);
+			Monitor->exit();
+
+			return result;
 		}
 
 		//------------------------------
@@ -558,10 +594,6 @@ namespace irrgame
 		//------------------------------
 
 		//! Set node as new root.
-		/** The node will be set to black, otherwise core dumps may arise
-		 (patch provided by rogerborg).
-		 \param newRoot Node which will be the new root
-		 */
 		template<class Key, class Value>
 		inline void map<Key, Value>::setRoot(Node* newRoot)
 		{
@@ -574,15 +606,12 @@ namespace irrgame
 		}
 
 		//! Insert a node into the tree without using any fancy balancing logic.
-		/** \return false if that key already exist in the tree. */
 		template<class Key, class Value>
-		inline bool map<Key, Value>::insert(Node* newNode)
+		inline void map<Key, Value>::insert(Node* newNode)
 		{
-			bool result = true; // Assume success
-
 			if (Root == 0)
 			{
-				map<Key, Value>::setRoot(newNode);
+				setRoot(newNode);
 				Size = 1;
 			}
 			else
@@ -593,12 +622,9 @@ namespace irrgame
 				{
 					Key key(pNode->getKey());
 
-					if (keyNew == key)
-					{
-						result = false;
-						pNode = 0;
-					}
-					else if (keyNew < key)
+					IRR_ASSERT(keyNew != key);
+
+					if (keyNew < key)
 					{
 						if (pNode->getLeftChild() == 0)
 						{
@@ -616,18 +642,12 @@ namespace irrgame
 							pNode = 0;
 						}
 						else
-						{
 							pNode = pNode->getRightChild();
-						}
 					}
 				}
 
-				if (result)
-					++Size;
+				++Size;
 			}
-
-			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return result;
 		}
 
 		//! Rotate left.
@@ -644,7 +664,7 @@ namespace irrgame
 			else if (p->isRightChild())
 				p->getParent()->setRightChild(right);
 			else
-				map<Key, Value>::setRoot(right);
+				setRoot(right);
 
 			right->setLeftChild(p);
 		}
@@ -663,7 +683,7 @@ namespace irrgame
 			else if (p->isRightChild())
 				p->getParent()->setRightChild(left);
 			else
-				map<Key, Value>::setRoot(left);
+				setRoot(left);
 
 			left->setRightChild(p);
 		}

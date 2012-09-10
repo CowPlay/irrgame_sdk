@@ -228,6 +228,7 @@ namespace irrgame
 		inline map<Key, Value>::map() :
 				Root(0), Size(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Destructor

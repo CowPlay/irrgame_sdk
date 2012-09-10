@@ -138,7 +138,8 @@ namespace irrgame
 	//@ param0 - thread id
 	bool IReferenceCounted::haveDependiesFromThread(s32 threadID) const
 	{
-		return ThreadsReferenceCounters.find(threadID) != 0;
+//		return ThreadsReferenceCounters.find(threadID) != 0;
+		return false;
 	}
 
 	//! Returns the debug name of the object.

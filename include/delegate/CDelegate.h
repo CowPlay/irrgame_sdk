@@ -60,7 +60,7 @@ class C_DELEGATE
 		void Add(IDelegate* pDelegate)
 		{
 			if (pDelegate != NULL)
-				Functions.push_back(pDelegate);
+				Functions.pushBack(pDelegate);
 		}
 
 		void Remove(IDelegate* pDelegate)

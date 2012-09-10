@@ -17,4 +17,10 @@
 #define XML_ATTR_APP_FILE				"app_file"
 #define XML_ATTR_APP_CREATOR			"app_creator"
 
+enum IRR_CONSTANTS
+{
+	//Use in collections
+	irrNotFound = -1
+};
+
 #endif /* IRRGAMECONSTANTS_H_ */

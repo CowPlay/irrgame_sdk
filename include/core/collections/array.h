@@ -2,11 +2,12 @@
 // This file is part of the "Irrlicht Engine" and the "irrXML" project.
 // For conditions of distribution and use, see copyright notice in irrlicht.h and irrXML.h
 
-#ifndef __IRR_ARRAY_H_INCLUDED__
-#define __IRR_ARRAY_H_INCLUDED__
+#ifndef _IRR_ARRAY_HINCLUDED__
+#define _IRR_ARRAY_HINCLUDED__
 
 #include "core/collections/ICollection.h"
 #include "core/base/irrAllocator.h"
+#include "threads/irrgameMonitor.h"
 #include "core/math/irrMath.h"
 #include "core/math/heapsort.h"
 #include "stdio.h"
@@ -26,121 +27,120 @@ namespace irrgame
 				array();
 
 				//! Constructs an array and allocates an initial chunk of memory.
-				/** \param start_count Amount of elements to pre-allocate. */
-				array(u32 start_count);
+				/** \param startCount Amount of elements to pre-allocate. */
+				array(u32 startCount);
 
 				//! Copy constructor
 				array(const array<T>& other);
 
 				//! Destructor.
-				/** Frees allocated memory, if set_free_when_destroyed was not set to
+				/** Frees allocated memory, if setFreeWhenDestroyed was not set to
 				 false by the user before. */
 				virtual ~array();
 
 				//! Reallocates the array, make it bigger or smaller.
-				/** \param new_size New size of array. */
-				virtual void reallocate(u32 new_size);
+				/** \param newSize New size of array. */
+				void reallocate(u32 newSize);
 
 				//! set a new allocation strategy
 				/** if the maximum size of the array is unknown, you can define how big the
 				 allocation should happen.
-				 \param newStrategy New strategy to apply to this array. */
-				virtual void setAllocStrategy(eAllocStrategy newStrategy =
+				 \param value New strategy to apply to this array. */
+				void setAllocStrategy(eAllocStrategy value =
 						ALLOC_STRATEGY_DOUBLE);
 
 				//! Adds an element at back of array.
 				/** If the array is too small to add this new element it is made bigger.
-				 \param element: Element to add at the back of the array. */
-				void push_back(const T& element);
+				 \param value: Element to add at the back of the array. */
+				void pushBack(const T& value);
 
 				//! Adds an element at the front of the array.
 				/** If the array is to small to add this new element, the array is
 				 made bigger. Please note that this is slow, because the whole array
 				 needs to be copied for this.
-				 \param element Element to add at the back of the array. */
-				void push_front(const T& element);
+				 \param value Element to add at the back of the array. */
+				void pushFront(const T& value);
 
 				//! Insert item into array at specified position.
 				/** Please use this only if you know what you are doing (possible
 				 performance loss). The preferred method of adding elements should be
-				 push_back().
-				 \param element: Element to be inserted
+				 pushBack().
+				 \param value: Element to be inserted
 				 \param index: Where position to insert the new element. */
-				virtual void insert(const T& element, u32 index = 0);
+				void insert(const T& value, u32 index = 0);
 
 				//! Clears the array and deletes all allocated memory.
-				virtual void clear();
+				void clear();
 
 				//! Sets pointer to new array, using this as new workspace.
-				/** Make sure that set_free_when_destroyed is used properly.
+				/** Make sure that setFreeWhenDestroyed is used properly.
 				 \param newPointer: Pointer to new array of elements.
 				 \param size: Size of the new array.
-				 \param _is_sorted Flag which tells whether the new array is already
+				 \param isSorted Flag which tells whether the new array is already
 				 sorted.
-				 \param _free_when_destroyed Sets whether the new memory area shall be
+				 \param freeWhenDestroyed Sets whether the new memory area shall be
 				 freed by the array upon destruction, or if this will be up to the user
 				 application. */
-				virtual void set_pointer(T* newPointer, u32 size,
-						bool _is_sorted = false, bool _free_when_destroyed =
-								true);
+				void setPointer(T* value, u32 size, bool isSorted = false,
+						bool freeWhenDestroyed = true);
 
 				//! Sets if the array should delete the memory it uses upon destruction.
-				/** Also clear and set_pointer will only delete the (original) memory
+				/** Also clear and setPointer will only delete the (original) memory
 				 area if this flag is set to true, which is also the default. The
-				 methods reallocate, set_used, push_back, push_front, insert, and erase
+				 methods reallocate, setUsed, pushBack, pushFront, insert, and erase
 				 will still try to deallocate the original memory, which might cause
 				 troubles depending on the intended use of the memory area.
-				 \param f If true, the array frees the allocated memory in its
+				 \param freeWhenDestroyed If true, the array frees the allocated memory in its
 				 destructor, otherwise not. The default is true. */
-				virtual void set_free_when_destroyed(bool f = true);
+				void setFreeWhenDestroyed(bool freeWhenDestroyed = true);
 
 				//! Sets the size of the array and allocates new elements if necessary.
 				/** Please note: This is only secure when using it with simple types,
 				 because no default constructor will be called for the added elements.
-				 \param usedNow Amount of elements now used. */
-				void set_used(u32 usedNow);
+				 \param value Amount of elements now used. */
+				void setUsed(u32 value);
 
 				//! Assignment operator
-				virtual array<T>& operator=(const array<T>& other);
+				array<T>& operator=(const array<T>& other);
 
 				//! Equality operator. Typename T must implement operator!=
-				virtual bool operator ==(const array<T>& other) const;
+				bool operator ==(const array<T>& other) const;
 
 				//! Inequality operator
-				virtual bool operator !=(const array<T>& other) const;
+				bool operator !=(const array<T>& other) const;
 
 				//! Direct access operator
-				virtual T& operator [](u32 index);
+				T& operator [](u32 index);
 
 				//! Direct const access operator
-				virtual const T& operator [](u32 index) const;
+				const T& operator [](u32 index) const;
 
 				//! Gets last element.
 				//! Can be get or set value.
 				//! Size must be greater than zero.
-				virtual T& getLast();
+				T& getLast();
 
 				//! Gets last element.
 				//! Can be get or set value.
 				//! Size must be greater than zero.
-				virtual const T& getLast() const;
+				const T& getLast() const;
 
 				//! Gets a pointer to the array.
 				/** \return Pointer to the array. */
-				virtual T* pointer();
+				T* pointer();
 
 				//! Gets a const pointer to the array.
 				/** \return Pointer to the array. */
-				virtual const T* const_pointer() const;
+				const T* constPointer() const;
 
 				//! Get number of occupied elements of the array.
 				/** \return Size of elements in the array which are actually occupied. */
-				virtual u32 size() const;
+				u32 size() const;
 
 				//! Get amount of memory allocated.
 				/** \return Amount of memory allocated. The amount of bytes
-				 allocated would be allocated_size() * sizeof(ElementTypeUsed); */
-				virtual u32 allocated_size() const;
+				 allocated would be allocatedSize() * sizeof(ElementTypeUsed); */
+				u32 allocatedSize() const;
 
 				//! Check if array is empty.
 				/** \return True if the array is empty false if not. */
@@ -149,114 +149,115 @@ namespace irrgame
 				//! Sorts the array using heapsort.
 				/** There is no additional memory waste and the algorithm performs
 				 O(n*log n) in worst case. */
-				virtual void sort();
+				void sort();
 
-				//! Performs a binary search for an element, returns -1 if not found.
-				/** The array will be sorted before the binary search if it is not
-				 already sorted. Caution is advised! Be careful not to call this on
-				 unsorted const arrays, or the slower method will be used.
-				 \param element Element to search for.
-				 \return Position of the searched element if it was found,
-				 otherwise -1 is returned. */
-				virtual s32 binary_search(const T& element);
-
-				//! Performs a binary search for an element if possible, returns -1 if not found.
-				/** This method is for const arrays and so cannot call sort(), if the array is
-				 not sorted then linear_search will be used instead. Potentially very slow!
-				 \param element Element to search for.
-				 \return Position of the searched element if it was found,
-				 otherwise -1 is returned. */
-				virtual s32 binary_search(const T& element) const;
-
-				//! Performs a binary search for an element, returns -1 if not found.
-				/** \param element: Element to search for.
-				 \param left First left index
-				 \param right Last right index.
-				 \return Position of the searched element if it was found, otherwise -1
+				//! Performs a binary search for an element.
+				//! Use only for non const arrays. For const arrays use linearSearch
+				/** \param value: Element to search for.
+				 \return Position of the searched element if it was found, otherwise irrNotFound
 				 is returned. */
-				virtual s32 binary_search(const T& element, s32 left,
-						s32 right) const;
+				s32 binarySearchFirst(const T& value);
 
-				//! Performs a binary search for an element, returns -1 if not found.
-				//! it is used for searching a multiset
+				//! Performs a binary search for an element.
+				//! Use only for non const arrays. For const arrays use linearSearch
 				/** The array will be sorted before the binary search if it is not
 				 already sorted.
-				 \param element	Element to search for.
-				 \param &last	return lastIndex of equal elements
-				 \return Position of the first searched element if it was found,
-				 otherwise -1 is returned. */
-				virtual s32 binary_search_multi(const T& element, s32 &last);
+				 \param value	Element to search for.
+				 \return lastIndex of equal elements of the searched element if it was found,
+				 otherwise irrNotFound is returned. */
+				s32 binarySearchLast(const T& value);
 
 				//! Finds an element in linear time, which is very slow.
-				/** Use binary_search for faster finding. Only works if ==operator is
+				/** Use binarySearch for faster finding. Only works if ==operator is
 				 implemented.
-				 \param element Element to search for.
-				 \return Position of the searched element if it was found, otherwise -1
+				 \param value Element to search for.
+				 \return Position of the searched element if it was found, otherwise irrNotFound
 				 is returned. */
-				virtual s32 linear_search(const T& element) const;
+				s32 linearSearch(const T& value) const;
 
 				//! Finds an element in linear time, which is very slow.
-				/** Use binary_search for faster finding. Only works if ==operator is
+				/** Use binarySearch for faster finding. Only works if ==operator is
 				 implemented.
-				 \param element: Element to search for.
-				 \return Position of the searched element if it was found, otherwise -1
+				 \param value: Element to search for.
+				 \return Position of the searched element if it was found, otherwise irrNotFound
 				 is returned. */
-				virtual s32 linear_reverse_search(const T& element) const;
+				s32 linearReverseSearch(const T& value) const;
 
 				//! Erases an element from the array.
 				/** May be slow, because all elements following after the erased
 				 element have to be copied.
 				 \param index: Index of element to be erased. */
-				virtual void erase(u32 index);
+				void erase(u32 index);
 
 				//! Erases some elements from the array.
 				/** May be slow, because all elements following after the erased
 				 element have to be copied.
 				 \param index: Index of the first element to be erased.
 				 \param count: Amount of elements to be erased. */
-				virtual void erase(u32 index, s32 count);
+				void erase(u32 index, s32 count);
 
 				//! Sets if the array is sorted
-				virtual void set_sorted(bool _is_sorted);
+				void setSorted(bool isSorted);
 
 				//! Swap the content of this array container with the content of another array
 				/** Afterwards this object will contain the content of the other object and the other
 				 object will contain the content of this object.
 				 \param other Swap content with this object	*/
-				virtual void swap(array<T>& other);
+				void swap(array<T>& other);
 
-			protected:
-				T* data;
-				u32 allocated;
-				u32 used;
-				irrAllocator<T> allocator;
-				eAllocStrategy strategy :4;
-				bool free_when_destroyed :1;
-				bool is_sorted :1;
+			private:
+
+				//! Sorts the array using heapsort.
+				//! Uses internal without lockers
+				/** There is no additional memory waste and the algorithm performs
+				 O(n*log n) in worst case. */
+				void sortInternal();
+
+				//! Reallocates the array, make it bigger or smaller.
+				//! Uses internal without lockers
+				/** \param newSize New size of array. */
+				void reallocateInternal(u32 newSize);
+
+				//! Clears the array and deletes all allocated memory.
+				//! Uses internal without lockers
+				void clearInternal();
+			private:
+				T* Data;
+				u32 Allocated;
+				u32 Used;
+				irrAllocator<T> Allocator;
+				threads::irrgameMonitor* Monitor;
+				eAllocStrategy Strategy :4;
+				bool FreeWhenDestroyed :1;
+				bool IsSorted :1;
 		};
 
 		//! Default constructor for empty array.
 		template<class T>
 		inline array<T>::array() :
-				data(0), allocated(0), used(0), strategy(ALLOC_STRATEGY_DOUBLE), free_when_destroyed(
-						true), is_sorted(true)
+				Data(0), Allocated(0), Used(0), Monitor(0), Strategy(
+						ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(true), IsSorted(
+						true)
 		{
+			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Constructs an array and allocates an initial chunk of memory.
 		template<class T>
-		inline array<T>::array(u32 start_count) :
-				data(0), allocated(0), used(0), strategy(ALLOC_STRATEGY_DOUBLE), free_when_destroyed(
-						true), is_sorted(true)
+		inline array<T>::array(u32 startCount) :
+				Data(0), Allocated(0), Used(0), Strategy(ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(
+						true), IsSorted(true), Monitor(0)
 		{
-			array<T>::reallocate(start_count);
+			Monitor = threads::createIrrgameMonitor();
+			reallocate(startCount);
 		}
 
 		//! Copy constructor
 		template<class T>
 		inline array<T>::array(const array<T>& other) :
-				data(0)
+				Data(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
 			*this = other;
 		}
 
@@ -264,174 +265,213 @@ namespace irrgame
 		template<class T>
 		inline array<T>::~array()
 		{
-			array<T>::clear();
+			clear();
+
+			if (Monitor)
+				Monitor->drop();
 		}
 
 		//! Reallocates the array, make it bigger or smaller.
-		/** \param new_size New size of array. */
 		template<class T>
-		inline void array<T>::reallocate(u32 new_size)
+		inline void array<T>::reallocate(u32 newSize)
 		{
-			T* old_data = data;
+			Monitor->enter();
+			reallocateInternal(newSize);
+			Monitor->exit();
+		}
 
-			data = allocator.allocate(new_size); //new T[new_size];
-			allocated = new_size;
+		//! Reallocates the array, make it bigger or smaller.
+		//! Uses internal without lockers
+		template<class T>
+		inline void array<T>::reallocateInternal(u32 newSize)
+		{
+			T* oldData = Data;
+
+			Data = Allocator.allocate(newSize); //new T[newSize];
+			Allocated = newSize;
 
 			// copy old data
-			s32 end = used < new_size ? used : new_size;
+			s32 end = Used < newSize ? Used : newSize;
 
 			for (s32 i = 0; i < end; ++i)
 			{
-				// data[i] = old_data[i];
-				allocator.construct(&data[i], old_data[i]);
+				// data[i] = oldData[i];
+				Allocator.construct(&Data[i], oldData[i]);
 			}
 
 			// destruct old data
-			for (u32 j = 0; j < used; ++j)
-				allocator.destruct(&old_data[j]);
+			for (u32 j = 0; j < Used; ++j)
+				Allocator.destruct(&oldData[j]);
 
-			if (allocated < used)
-				used = allocated;
+			if (Allocated < Used)
+				Used = Allocated;
 
-			allocator.deallocate(old_data); //delete [] old_data;
+			Allocator.deallocate(oldData); //delete [] oldData;
 		}
 
 		//! set a new allocation strategy
 		template<class T>
-		inline void array<T>::setAllocStrategy(eAllocStrategy newStrategy)
+		inline void array<T>::setAllocStrategy(eAllocStrategy value)
 		{
-			strategy = newStrategy;
+			Monitor->enter();
+			Strategy = value;
+			Monitor->exit();
 		}
 
 		//! Adds an element at back of array.
 		template<class T>
-		inline void array<T>::push_back(const T& element)
+		inline void array<T>::pushBack(const T& value)
 		{
-			insert(element, used);
+			insert(value, Used);
 		}
 
 		//! Adds an element at the front of the array.
 		template<class T>
-		inline void array<T>::push_front(const T& element)
+		inline void array<T>::pushFront(const T& value)
 		{
-			insert(element);
+			insert(value);
 		}
 
 		//! Insert item into array at specified position.
 		template<class T>
-		inline void array<T>::insert(const T& element, u32 index)
+		inline void array<T>::insert(const T& value, u32 index)
 		{
-			// access violation
-			IRR_ASSERT(index >= 0 && index <= used)
+			Monitor->enter();
 
-			if (used + 1 > allocated)
+			// access violation
+			IRR_ASSERT(index >= 0 && index <= Used)
+
+			if (Used + 1 > Allocated)
 			{
 				// this doesn't work if the element is in the same
 				// array. So we'll copy the element first to be sure
 				// we'll get no data corruption
-				const T e(element);
+				const T e(value);
 
 				// increase data block
 				u32 newAlloc;
-				switch (strategy)
+				switch (Strategy)
 				{
 					case ALLOC_STRATEGY_DOUBLE:
-						newAlloc = used + 1
-								+ (allocated < 500 ?
-										(allocated < 5 ? 5 : used) : used >> 2);
+						newAlloc = Used + 1
+								+ (Allocated < 500 ?
+										(Allocated < 5 ? 5 : Used) : Used >> 2);
 						break;
 					default:
 					case ALLOC_STRATEGY_SAFE:
-						newAlloc = used + 1;
+						newAlloc = Used + 1;
 						break;
 				}
-				array<T>::reallocate(newAlloc);
+
+				reallocateInternal(newAlloc);
 
 				// move array content and construct new element
 				// first move end one up
-				for (u32 i = used; i > index; --i)
+				for (u32 i = Used; i > index; --i)
 				{
-					if (i < used)
-						allocator.destruct(&data[i]);
-					allocator.construct(&data[i], data[i - 1]); // data[i] = data[i-1];
+					if (i < Used)
+						Allocator.destruct(&Data[i]);
+					Allocator.construct(&Data[i], Data[i - 1]); // data[i] = data[i-1];
 				}
 				// then add new element
-				if (used > index)
-					allocator.destruct(&data[index]);
-				allocator.construct(&data[index], e); // data[index] = e;
+				if (Used > index)
+					Allocator.destruct(&Data[index]);
+				Allocator.construct(&Data[index], e); // data[index] = e;
 			}
 			else
 			{
 				// element inserted not at end
-				if (used > index)
+				if (Used > index)
 				{
 					// create one new element at the end
-					allocator.construct(&data[used], data[used - 1]);
+					Allocator.construct(&Data[Used], Data[Used - 1]);
 
 					// move the rest of the array content
-					for (u32 i = used - 1; i > index; --i)
+					for (u32 i = Used - 1; i > index; --i)
 					{
-						data[i] = data[i - 1];
+						Data[i] = Data[i - 1];
 					}
 					// insert the new element
-					data[index] = element;
+					Data[index] = value;
 				}
 				else
 				{
 					// insert the new element to the end
-					allocator.construct(&data[index], element);
+					Allocator.construct(&Data[index], value);
 				}
 			}
 			// set to false as we don't know if we have the comparison operators
-			is_sorted = false;
-			++used;
+			IsSorted = false;
+			++Used;
+
+			Monitor->exit();
 		}
 
 		//! Clears the array and deletes all allocated memory.
 		template<class T>
 		inline void array<T>::clear()
 		{
-			if (free_when_destroyed)
-			{
-				for (u32 i = 0; i < used; ++i)
-					allocator.destruct(&data[i]);
+			Monitor->enter();
+			clearInternal();
+			Monitor->exit();
+		}
 
-				allocator.deallocate(data); // delete [] data;
+		//! Clears the array and deletes all allocated memory.
+		//! Uses internal without lockers
+		template<class T>
+		inline void array<T>::clearInternal()
+		{
+			if (FreeWhenDestroyed)
+			{
+				for (u32 i = 0; i < Used; ++i)
+					Allocator.destruct(&Data[i]);
+
+				Allocator.deallocate(Data); // delete [] data;
 			}
-			data = 0;
-			used = 0;
-			allocated = 0;
-			is_sorted = true;
+
+			Data = 0;
+			Used = 0;
+			Allocated = 0;
+			IsSorted = true;
 		}
 
 		//! Sets pointer to new array, using this as new workspace.
 		template<class T>
-		inline void array<T>::set_pointer(T* newPointer, u32 size,
-				bool _is_sorted, bool _free_when_destroyed)
+		inline void array<T>::setPointer(T* value, u32 size, bool isSorted,
+				bool freeWhenDestroyed)
 		{
-			array<T>::clear();
-			data = newPointer;
-			allocated = size;
-			used = size;
-			is_sorted = _is_sorted;
-			free_when_destroyed = _free_when_destroyed;
+			Monitor->enter();
+
+			clearInternal();
+
+			Data = value;
+			Allocated = size;
+			Used = size;
+			IsSorted = isSorted;
+			FreeWhenDestroyed = freeWhenDestroyed;
+
+			Monitor->exit();
 		}
 
 		//! Sets if the array should delete the memory it uses upon destruction.
 		template<class T>
-		inline void array<T>::set_free_when_destroyed(bool f)
+		inline void array<T>::setFreeWhenDestroyed(bool value)
 		{
-			free_when_destroyed = f;
+			Monitor->enter();
+			FreeWhenDestroyed = value;
+			Monitor->exit();
 		}
 
 		//! Sets the size of the array and allocates new elements if necessary.
 		template<class T>
-		inline void array<T>::set_used(u32 usedNow)
+		inline void array<T>::setUsed(u32 value)
 		{
-			if (allocated < usedNow)
-				array<T>::reallocate(usedNow);
+			Monitor->enter();
+			if (Allocated < value)
+				reallocateInternal(value);
 
-			used = usedNow;
+			Used = value;
+			Monitor->exit();
 		}
 
 		//! Assignment operator
@@ -442,24 +482,30 @@ namespace irrgame
 			if (this == &other)
 				return *this;
 
-			strategy = other.strategy;
+			Monitor->enter();
+			other.Monitor->enter();
 
-			if (data)
-				array<T>::clear();
+			Strategy = other.Strategy;
+
+			if (Data)
+				clearInternal();
 
 			//if (allocated < other.allocated)
-			if (other.allocated == 0)
-				data = 0;
+			if (other.Allocated == 0)
+				Data = 0;
 			else
-				data = allocator.allocate(other.allocated); // new T[other.allocated];
+				Data = Allocator.allocate(other.Allocated); // new T[other.allocated];
 
-			used = other.used;
-			free_when_destroyed = true;
-			is_sorted = other.is_sorted;
-			allocated = other.allocated;
+			Used = other.Used;
+			FreeWhenDestroyed = true;
+			IsSorted = other.IsSorted;
+			Allocated = other.Allocated;
 
-			for (u32 i = 0; i < other.used; ++i)
-				allocator.construct(&data[i], other.data[i]); // data[i] = other.data[i];
+			for (u32 i = 0; i < other.Used; ++i)
+				Allocator.construct(&Data[i], other.Data[i]); // data[i] = other.data[i];
+
+			Monitor->exit();
+			other.Monitor->exit();
 
 			return *this;
 		}
@@ -467,14 +513,33 @@ namespace irrgame
 		template<class T>
 		inline bool array<T>::operator ==(const array<T>& other) const
 		{
-			if (used != other.used)
-				return false;
+			bool result = true;
 
-			for (u32 i = 0; i < other.used; ++i)
-				if (data[i] != other.data[i])
-					return false;
+			//handle self-check equality
+			if (this == &other)
+				return result;
 
-			return true;
+			Monitor->enter();
+			other.Monitor->enter();
+
+			if (Used != other.Used)
+			{
+				result = false;
+			}
+			else
+			{
+				for (u32 i = 0; i < other.Used; ++i)
+					if (Data[i] != other.Data[i])
+					{
+						result = false;
+						break;
+					}
+			}
+
+			Monitor->exit();
+			other.Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
@@ -486,103 +551,151 @@ namespace irrgame
 		template<class T>
 		inline T& array<T>::operator [](u32 index)
 		{
-			// access violation
-			IRR_ASSERT(index >= 0 && index <= used)
+			Monitor->enter();
 
-			return data[index];
+			// access violation
+			IRR_ASSERT(index >= 0 && index <= Used)
+
+			T& result = Data[index];
+
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
 		inline const T& array<T>::operator [](u32 index) const
 		{
-			// access violation
-			IRR_ASSERT(index >= 0 && index <= used);
+			Monitor->enter();
 
-			return data[index];
+			// access violation
+			IRR_ASSERT(index >= 0 && index <= Used)
+
+			const T& result = Data[index];
+
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
 		inline T& array<T>::getLast()
 		{
-			// access violation
-			IRR_ASSERT(used > 0)
+			Monitor->enter();
 
-			return data[used - 1];
+			// access violation
+			IRR_ASSERT(Used > 0)
+
+			T& result = Data[Used - 1];
+
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
 		inline const T& array<T>::getLast() const
 		{
-			// access violation
-			IRR_ASSERT(used > 0)
+			Monitor->enter();
 
-			return data[used - 1];
+			// access violation
+			IRR_ASSERT(Used > 0)
+
+			const T& result = Data[Used - 1];
+
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
 		inline T* array<T>::pointer()
 		{
-			return data;
+			Monitor->enter();
+			T* result = Data;
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
-		inline const T* array<T>::const_pointer() const
+		inline const T* array<T>::constPointer() const
 		{
-			return data;
+			Monitor->enter();
+			const T* result = Data;
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
 		inline u32 array<T>::size() const
 		{
-			return used;
+			Monitor->enter();
+			u32 result = Used;
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
-		inline u32 array<T>::allocated_size() const
+		inline u32 array<T>::allocatedSize() const
 		{
-			return allocated;
+			Monitor->enter();
+			u32 result = Allocated;
+			Monitor->exit();
+
+			return result;
 		}
 
 		template<class T>
 		inline bool array<T>::empty() const
 		{
-			return used == 0;
+			Monitor->enter();
+			bool result = Used == 0;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Sorts the array using heapsort.
 		template<class T>
 		inline void array<T>::sort()
 		{
-			if (!is_sorted && used > 1)
-				heapsort(data, used);
-			is_sorted = true;
+			Monitor->enter();
+			sortInternal();
+			Monitor->exit();
 		}
 
-		//! Performs a binary search for an element, returns -1 if not found.
+		//! Sorts the array using heapsort.
 		template<class T>
-		inline s32 array<T>::binary_search(const T& element)
+		inline void array<T>::sortInternal()
 		{
-			array<T>::sort();
-			return array<T>::binary_search(element, 0, used - 1);
+			if (!IsSorted && Used > 1)
+				heapsort(Data, Used);
+
+			IsSorted = true;
 		}
 
-		//! Performs a binary search for an element if possible, returns -1 if not found.
+		//! Performs a binary search for an element.
+		//! Use only for non const arrays. For const arrays use linearSearch
 		template<class T>
-		inline s32 array<T>::binary_search(const T& element) const
+		inline s32 array<T>::binarySearchFirst(const T& value)
 		{
-			if (is_sorted)
-				return array<T>::binary_search(element, 0, used - 1);
-			else
-				return array<T>::linear_search(element);
-		}
+			s32 result = irrNotFound;
 
-		//! Performs a binary search for an element, returns -1 if not found.
-		template<class T>
-		inline s32 array<T>::binary_search(const T& element, s32 left,
-				s32 right) const
-		{
-			if (!used)
-				return -1;
+			Monitor->enter();
+
+			if (!Used)
+			{
+				Monitor->exit();
+				return result;
+			}
+
+			sortInternal();
+
+			s32 left = 0;
+			s32 right = Used - 1;
 
 			s32 m;
 
@@ -590,164 +703,198 @@ namespace irrgame
 			{
 				m = (left + right) >> 1;
 
-				if (element < data[m])
+				if (value < Data[m])
 					right = m - 1;
 				else
 					left = m + 1;
 
-			} while ((element < data[m] || data[m] < element) && left <= right);
+			} while ((value < Data[m] || Data[m] < value) && left <= right);
 			// this last line equals to:
-			// " while((element != array[m]) && left<=right);"
+			// " while((value != array[m]) && left<=right);"
 			// but we only want to use the '<' operator.
-			// the same in next line, it is "(element == array[m])"
+			// the same in next line, it is "(value == array[m])"
 
-			if (!(element < data[m]) && !(data[m] < element))
-				return m;
+			if (!(value < Data[m]) && !(Data[m] < value))
+				result = m;
 
-			return -1;
+			Monitor->exit();
+
+			return result;
 		}
 
+		//! Performs a binary search for an element.
+		//! Use only for non const arrays. For const arrays use linearSearch
 		template<class T>
-		inline s32 array<T>::binary_search_multi(const T& element, s32 &last)
+		inline s32 array<T>::binarySearchLast(const T& value)
 		{
-			array<T>::sort();
-			s32 index = array<T>::binary_search(element, 0, used - 1);
-			if (index < 0)
-				return index;
+			s32 result = irrNotFound;
+
+			Monitor->enter();
+
+			sortInternal();
+
+			s32 index = binarySearchFirst(value);
+
+			if (index == result)
+			{
+				Monitor->exit();
+				return result;
+			}
 
 			// The search can be somewhere in the middle of the set
 			// look linear previous and past the index
-			last = index;
+			result = index;
 
-			while (index > 0 && !(element < data[index - 1])
-					&& !(data[index - 1] < element))
+			while (index > 0 && !(value < Data[index - 1])
+					&& !(Data[index - 1] < value))
 			{
 				index -= 1;
 			}
+
 			// look linear up
-			while (last < (s32) used - 1 && !(element < data[last + 1])
-					&& !(data[last + 1] < element))
+			while (result < (s32) Used - 1 && !(value < Data[result + 1])
+					&& !(Data[result + 1] < value))
 			{
-				last += 1;
+				result += 1;
 			}
 
-			return index;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Finds an element in linear time, which is very slow.
-		/** Use binary_search for faster finding. Only works if ==operator is
-		 implemented.
-		 \param element Element to search for.
-		 \return Position of the searched element if it was found, otherwise -1
-		 is returned. */
 		template<class T>
-		inline s32 array<T>::linear_search(const T& element) const
+		inline s32 array<T>::linearSearch(const T& value) const
 		{
-			for (u32 i = 0; i < used; ++i)
-				if (element == data[i])
-					return (s32) i;
+			s32 result = irrNotFound;
 
-			return -1;
+			Monitor->enter();
+
+			for (u32 i = 0; i < Used; ++i)
+				if (value == Data[i])
+				{
+					result = (s32) i;
+					break;
+				}
+
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Finds an element in linear time, which is very slow.
-		/** Use binary_search for faster finding. Only works if ==operator is
-		 implemented.
-		 \param element: Element to search for.
-		 \return Position of the searched element if it was found, otherwise -1
-		 is returned. */
 		template<class T>
-		inline s32 array<T>::linear_reverse_search(const T& element) const
+		inline s32 array<T>::linearReverseSearch(const T& value) const
 		{
-			for (s32 i = used - 1; i >= 0; --i)
-				if (data[i] == element)
-					return i;
+			s32 result = irrNotFound;
 
-			return -1;
+			Monitor->enter();
+
+			for (s32 i = Used - 1; i >= 0; --i)
+				if (Data[i] == value)
+				{
+					result = i;
+					break;
+				}
+
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Erases an element from the array.
-		/** May be slow, because all elements following after the erased
-		 element have to be copied.
-		 \param index: Index of element to be erased. */
 		template<class T>
 		inline void array<T>::erase(u32 index)
 		{
-			// access violation
-			IRR_ASSERT(index >= 0 && index <= used)
+			Monitor->enter();
 
-			for (u32 i = index + 1; i < used; ++i)
+			// access violation
+			IRR_ASSERT(index >= 0 && index <= Used)
+
+			for (u32 i = index + 1; i < Used; ++i)
 			{
-				allocator.destruct(&data[i - 1]);
-				allocator.construct(&data[i - 1], data[i]); // data[i-1] = data[i];
+				Allocator.destruct(&Data[i - 1]);
+				Allocator.construct(&Data[i - 1], Data[i]); // data[i-1] = data[i];
 			}
 
-			allocator.destruct(&data[used - 1]);
+			Allocator.destruct(&Data[Used - 1]);
 
-			--used;
+			--Used;
+
+			Monitor->exit();
 		}
 
 		//! Erases some elements from the array.
-		/** May be slow, because all elements following after the erased
-		 element have to be copied.
-		 \param index: Index of the first element to be erased.
-		 \param count: Amount of elements to be erased. */
 		template<class T>
 		inline void array<T>::erase(u32 index, s32 count)
 		{
-			IRR_ASSERT(index >= used || count < 1);
+			Monitor->enter();
 
-			if (index + count > used)
-				count = used - index;
+			IRR_ASSERT(index >= Used || count < 1);
+
+			if (index + count > Used)
+				count = Used - index;
 
 			u32 i;
 			for (i = index; i < index + count; ++i)
-				allocator.destruct(&data[i]);
+				Allocator.destruct(&Data[i]);
 
-			for (i = index + count; i < used; ++i)
+			for (i = index + count; i < Used; ++i)
 			{
 				if (i > index + count)
-					allocator.destruct(&data[i - count]);
+					Allocator.destruct(&Data[i - count]);
 
-				allocator.construct(&data[i - count], data[i]); // data[i-count] = data[i];
+				Allocator.construct(&Data[i - count], Data[i]); // data[i-count] = data[i];
 
-				if (i >= used - count)
-					allocator.destruct(&data[i]);
+				if (i >= Used - count)
+					Allocator.destruct(&Data[i]);
 			}
 
-			used -= count;
+			Used -= count;
+
+			Monitor->exit();
 		}
 
 		//! Sets if the array is sorted
 		template<class T>
-		inline void array<T>::set_sorted(bool _is_sorted)
+		inline void array<T>::setSorted(bool isSorted)
 		{
-			is_sorted = _is_sorted;
+			Monitor->enter();
+			IsSorted = isSorted;
+			Monitor->exit();
 		}
 
 		//! Swap the content of this array container with the content of another array
-		/** Afterwards this object will contain the content of the other object and the other
-		 object will contain the content of this object.
-		 \param other Swap content with this object	*/
 		template<class T>
 		inline void array<T>::swap(array<T>& other)
 		{
+			// handle self swap
 			if (this == &other)
 				return;
 
-			core::swap(data, other.data);
-			core::swap(allocated, other.allocated);
-			core::swap(used, other.used);
-			core::swap(allocator, other.allocator);	// memory is still released by the same allocator used for allocation
-			eAllocStrategy helper_strategy(strategy);// can't use core::swap with bitfields
-			strategy = other.strategy;
-			other.strategy = helper_strategy;
-			bool helper_free_when_destroyed(free_when_destroyed);
-			free_when_destroyed = other.free_when_destroyed;
-			other.free_when_destroyed = helper_free_when_destroyed;
-			bool helper_is_sorted(is_sorted);
-			is_sorted = other.is_sorted;
-			other.is_sorted = helper_is_sorted;
+			Monitor->enter();
+			other.Monitor->enter();
+
+			core::swap(Monitor, other.Monitor);
+			core::swap(Data, other.Data);
+			core::swap(Allocated, other.Allocated);
+			core::swap(Used, other.Used);
+			core::swap(Allocator, other.Allocator);	// memory is still released by the same allocator used for allocation
+			eAllocStrategy helperStrategy(Strategy);// can't use core::swap with bitfields
+			Strategy = other.Strategy;
+			other.Strategy = helperStrategy;
+
+			bool helperFreeWhenDestroyed(FreeWhenDestroyed);
+			FreeWhenDestroyed = other.FreeWhenDestroyed;
+			other.FreeWhenDestroyed = helperFreeWhenDestroyed;
+
+			bool helperIsSorted(IsSorted);
+			IsSorted = other.IsSorted;
+			other.IsSorted = helperIsSorted;
+
+			other.Monitor->exit();
+			Monitor->exit();
 		}
 
 	} // end namespace core

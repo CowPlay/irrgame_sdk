@@ -196,11 +196,11 @@ namespace irrgame
 			// the first character is the special character,
 			// the following is the symbol string without trailing &.
 
-			SpecialCharacters.push_back("&amp;");
-			SpecialCharacters.push_back("<lt;");
-			SpecialCharacters.push_back(">gt;");
-			SpecialCharacters.push_back("\"quot;");
-			SpecialCharacters.push_back("'apos;");
+			SpecialCharacters.pushBack("&amp;");
+			SpecialCharacters.pushBack("<lt;");
+			SpecialCharacters.pushBack(">gt;");
+			SpecialCharacters.pushBack("\"quot;");
+			SpecialCharacters.pushBack("'apos;");
 
 		}
 
@@ -489,7 +489,7 @@ namespace irrgame
 								(int) (attributeValueEnd - attributeValueBegin));
 
 						attr.Value = replaceSpecialCharacters(s);
-						Attributes.push_back(attr);
+						Attributes.pushBack(attr);
 					}
 					else
 					{

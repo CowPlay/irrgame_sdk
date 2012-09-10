@@ -41,15 +41,15 @@ namespace irrgame
 			switch (qType)
 			{
 				case EAP_REALTIME:
-					this->RealtimeActions.push_back(action);
+					this->RealtimeActions.pushBack(action);
 					break;
 
 				case EAP_HIGHPRIORITY:
-					this->HighpriorityActions.push_back(action);
+					this->HighpriorityActions.pushBack(action);
 					break;
 
 				case EAP_BACKGROUND:
-					this->BackgroundActions.push_back(action);
+					this->BackgroundActions.pushBack(action);
 					break;
 			}
 		}
@@ -86,6 +86,20 @@ namespace irrgame
 		{
 			while (true)
 			{
+				if (RealtimeActions.empty())
+				{
+					irrgameThread::sleep(50);
+					continue;
+				}
+
+				core::list<delegateAction*>::Iterator it =
+						RealtimeActions.begin();
+
+				(*(*it))((void*) 0);
+
+				//remove action from list
+				RealtimeActions.erase(it);
+
 				printf("proceedRTActions\n");
 			}
 

@@ -32,7 +32,7 @@ namespace irrgame
 
 				EnumLiterals.reallocate(literalCount);
 				for (i = 0; enumerationLiterals[i]; ++i)
-					EnumLiterals.push_back(enumerationLiterals[i]);
+					EnumLiterals.pushBack(enumerationLiterals[i]);
 			}
 
 			setString(enumValue);

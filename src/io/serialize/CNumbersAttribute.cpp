@@ -16,10 +16,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.r);
-			ValueF.push_back(value.g);
-			ValueF.push_back(value.b);
-			ValueF.push_back(value.a);
+			ValueF.pushBack(value.r);
+			ValueF.pushBack(value.g);
+			ValueF.pushBack(value.b);
+			ValueF.pushBack(value.a);
 		}
 
 		//! Default constructor for color list
@@ -28,10 +28,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
-			ValueI.push_back(value.getRed());
-			ValueI.push_back(value.getGreen());
-			ValueI.push_back(value.getBlue());
-			ValueI.push_back(value.getAlpha());
+			ValueI.pushBack(value.getRed());
+			ValueI.pushBack(value.getGreen());
+			ValueI.pushBack(value.getBlue());
+			ValueI.pushBack(value.getAlpha());
 		}
 
 		//! Default constructor for vector3df list
@@ -39,9 +39,9 @@ namespace irrgame
 				ValueI(), ValueF(), Count(3), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.X);
-			ValueF.push_back(value.Y);
-			ValueF.push_back(value.Z);
+			ValueF.pushBack(value.X);
+			ValueF.pushBack(value.Y);
+			ValueF.pushBack(value.Z);
 		}
 
 		//! Default constructor for recti list
@@ -49,10 +49,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
-			ValueI.push_back(value.UpperLeftCorner.X);
-			ValueI.push_back(value.UpperLeftCorner.Y);
-			ValueI.push_back(value.LowerRightCorner.X);
-			ValueI.push_back(value.LowerRightCorner.Y);
+			ValueI.pushBack(value.UpperLeftCorner.X);
+			ValueI.pushBack(value.UpperLeftCorner.Y);
+			ValueI.pushBack(value.LowerRightCorner.X);
+			ValueI.pushBack(value.LowerRightCorner.Y);
 		}
 
 		//! Default constructor for rectf list
@@ -60,10 +60,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.UpperLeftCorner.X);
-			ValueF.push_back(value.UpperLeftCorner.Y);
-			ValueF.push_back(value.LowerRightCorner.X);
-			ValueF.push_back(value.LowerRightCorner.Y);
+			ValueF.pushBack(value.UpperLeftCorner.X);
+			ValueF.pushBack(value.UpperLeftCorner.Y);
+			ValueF.pushBack(value.LowerRightCorner.X);
+			ValueF.pushBack(value.LowerRightCorner.Y);
 		}
 
 		//! Default constructor for matrix4 list
@@ -73,7 +73,7 @@ namespace irrgame
 			Name = name;
 			for (s32 r = 0; r < 4; ++r)
 				for (s32 c = 0; c < 4; ++c)
-					ValueF.push_back(value(r, c));
+					ValueF.pushBack(value(r, c));
 		}
 
 		//! Default constructor for quaternion list
@@ -81,10 +81,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.X);
-			ValueF.push_back(value.Y);
-			ValueF.push_back(value.Z);
-			ValueF.push_back(value.W);
+			ValueF.pushBack(value.X);
+			ValueF.pushBack(value.Y);
+			ValueF.pushBack(value.Z);
+			ValueF.pushBack(value.W);
 		}
 
 		//! Default constructor for aabbox3df list
@@ -92,12 +92,12 @@ namespace irrgame
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.MinEdge.X);
-			ValueF.push_back(value.MinEdge.Y);
-			ValueF.push_back(value.MinEdge.Z);
-			ValueF.push_back(value.MaxEdge.X);
-			ValueF.push_back(value.MaxEdge.Y);
-			ValueF.push_back(value.MaxEdge.Z);
+			ValueF.pushBack(value.MinEdge.X);
+			ValueF.pushBack(value.MinEdge.Y);
+			ValueF.pushBack(value.MinEdge.Z);
+			ValueF.pushBack(value.MaxEdge.X);
+			ValueF.pushBack(value.MaxEdge.Y);
+			ValueF.pushBack(value.MaxEdge.Z);
 		}
 
 		//! Default constructor for plane3df list
@@ -105,10 +105,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.Normal.X);
-			ValueF.push_back(value.Normal.Y);
-			ValueF.push_back(value.Normal.Z);
-			ValueF.push_back(value.D);
+			ValueF.pushBack(value.Normal.X);
+			ValueF.pushBack(value.Normal.Y);
+			ValueF.pushBack(value.Normal.Z);
+			ValueF.pushBack(value.D);
 		}
 
 		//! Default constructor for triangle3df list
@@ -116,15 +116,15 @@ namespace irrgame
 				ValueI(), ValueF(), Count(9), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.pointA.X);
-			ValueF.push_back(value.pointA.Y);
-			ValueF.push_back(value.pointA.Z);
-			ValueF.push_back(value.pointB.X);
-			ValueF.push_back(value.pointB.Y);
-			ValueF.push_back(value.pointB.Z);
-			ValueF.push_back(value.pointC.X);
-			ValueF.push_back(value.pointC.Y);
-			ValueF.push_back(value.pointC.Z);
+			ValueF.pushBack(value.pointA.X);
+			ValueF.pushBack(value.pointA.Y);
+			ValueF.pushBack(value.pointA.Z);
+			ValueF.pushBack(value.pointB.X);
+			ValueF.pushBack(value.pointB.Y);
+			ValueF.pushBack(value.pointB.Z);
+			ValueF.pushBack(value.pointC.X);
+			ValueF.pushBack(value.pointC.Y);
+			ValueF.pushBack(value.pointC.Z);
 		}
 
 		//! Default constructor for vector2df list
@@ -132,8 +132,8 @@ namespace irrgame
 				ValueI(), ValueF(), Count(2), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.X);
-			ValueF.push_back(value.Y);
+			ValueF.pushBack(value.X);
+			ValueF.pushBack(value.Y);
 		}
 
 		//! Default constructor for line2di list
@@ -141,10 +141,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
-			ValueI.push_back(value.start.X);
-			ValueI.push_back(value.start.Y);
-			ValueI.push_back(value.end.X);
-			ValueI.push_back(value.end.Y);
+			ValueI.pushBack(value.start.X);
+			ValueI.pushBack(value.start.Y);
+			ValueI.pushBack(value.end.X);
+			ValueI.pushBack(value.end.Y);
 		}
 
 		//! Default constructor for line2df list
@@ -152,10 +152,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.start.X);
-			ValueF.push_back(value.start.Y);
-			ValueF.push_back(value.end.X);
-			ValueF.push_back(value.end.Y);
+			ValueF.pushBack(value.start.X);
+			ValueF.pushBack(value.start.Y);
+			ValueF.pushBack(value.end.X);
+			ValueF.pushBack(value.end.Y);
 		}
 
 		//! Default constructor for line3df list
@@ -163,12 +163,12 @@ namespace irrgame
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.start.X);
-			ValueF.push_back(value.start.Y);
-			ValueF.push_back(value.start.Z);
-			ValueF.push_back(value.end.X);
-			ValueF.push_back(value.end.Y);
-			ValueF.push_back(value.end.Z);
+			ValueF.pushBack(value.start.X);
+			ValueF.pushBack(value.start.Y);
+			ValueF.pushBack(value.start.Z);
+			ValueF.pushBack(value.end.X);
+			ValueF.pushBack(value.end.Y);
+			ValueF.pushBack(value.end.Z);
 		}
 
 		//! Default constructor for dimension2du list
@@ -176,8 +176,8 @@ namespace irrgame
 				ValueI(), ValueF(), Count(2), IsFloat(false)
 		{
 			Name = name;
-			ValueI.push_back(value.Width);
-			ValueI.push_back(value.Height);
+			ValueI.pushBack(value.Width);
+			ValueI.pushBack(value.Height);
 		}
 
 		//! Default constructor for dimension2df list
@@ -185,8 +185,8 @@ namespace irrgame
 				ValueI(), ValueF(), Count(2), IsFloat(true)
 		{
 			Name = name;
-			ValueF.push_back(value.Width);
-			ValueF.push_back(value.Height);
+			ValueF.pushBack(value.Width);
+			ValueF.pushBack(value.Height);
 		}
 
 		// getting values
@@ -499,7 +499,7 @@ namespace irrgame
 			{
 				ValueF.clear();
 				for (u32 i = 0; i < Count; ++i)
-					ValueF.push_back((f32) ValueI[i]);
+					ValueF.pushBack((f32) ValueI[i]);
 			}
 
 			return ValueF;
@@ -512,7 +512,7 @@ namespace irrgame
 			{
 				ValueI.clear();
 				for (u32 i = 0; i < Count; ++i)
-					ValueI.push_back((s32) ValueF[i]);
+					ValueI.pushBack((s32) ValueF[i]);
 			}
 
 			return ValueI;

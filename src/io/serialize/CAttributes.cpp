@@ -195,20 +195,20 @@ namespace irrgame
 					// build arrays
 
 					// name
-					arraynames.push_back(stringc("name"));
-					arrayvalues.push_back(stringc(Attributes[i]->Name.c_str()));
+					arraynames.pushBack(stringc("name"));
+					arrayvalues.pushBack(stringc(Attributes[i]->Name.c_str()));
 
 					// count
-					arraynames.push_back(stringc("count"));
-					arrayvalues.push_back(stringc((s32) arrayinput.size()));
+					arraynames.pushBack(stringc("count"));
+					arrayvalues.pushBack(stringc((s32) arrayinput.size()));
 
 					// array...
 					u32 n = 0;
 					const stringc tmpName("value");
 					for (; n < arrayinput.size(); ++n)
 					{
-						arraynames.push_back((tmpName + stringc(n)).c_str());
-						arrayvalues.push_back(arrayinput[n]);
+						arraynames.pushBack((tmpName + stringc(n)).c_str());
+						arrayvalues.pushBack(arrayinput[n]);
 					}
 
 					// write them
@@ -270,7 +270,7 @@ namespace irrgame
 				const stringc tmpName("value");
 				for (; n < count; ++n)
 				{
-					tmpArray.push_back(
+					tmpArray.pushBack(
 							reader->getAttributeValue(
 									(tmpName + stringc(n)).c_str()));
 				}
@@ -377,7 +377,7 @@ namespace irrgame
 		//! Adds an attribute as integer
 		void CAttributes::addInt(const c8* attributeName, s32 value)
 		{
-			Attributes.push_back(new CIntAttribute(attributeName, value));
+			Attributes.pushBack(new CIntAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as integer value
@@ -388,7 +388,7 @@ namespace irrgame
 			if (att)
 				att->setInt(value);
 			else
-				Attributes.push_back(new CIntAttribute(attributeName, value));
+				Attributes.pushBack(new CIntAttribute(attributeName, value));
 		}
 
 		//! Gets a attribute as integer value
@@ -426,7 +426,7 @@ namespace irrgame
 		//! Adds an attribute as float
 		void CAttributes::addFloat(const c8* attributeName, f32 value)
 		{
-			Attributes.push_back(new CFloatAttribute(attributeName, value));
+			Attributes.pushBack(new CFloatAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as float value
@@ -437,7 +437,7 @@ namespace irrgame
 			if (att)
 				att->setFloat(value);
 			else
-				Attributes.push_back(new CFloatAttribute(attributeName, value));
+				Attributes.pushBack(new CFloatAttribute(attributeName, value));
 		}
 
 		//! Gets a attribute as integer value
@@ -475,7 +475,7 @@ namespace irrgame
 		//! Adds an attribute as string
 		void CAttributes::addString(const c8* attributeName, const c8* value)
 		{
-			Attributes.push_back(new CStringAttribute(attributeName, value));
+			Attributes.pushBack(new CStringAttribute(attributeName, value));
 		}
 
 		//! Sets a string attribute.
@@ -497,7 +497,7 @@ namespace irrgame
 					return;
 				}
 
-			Attributes.push_back(new CStringAttribute(attributeName, value));
+			Attributes.pushBack(new CStringAttribute(attributeName, value));
 
 		}
 
@@ -552,7 +552,7 @@ namespace irrgame
 		void CAttributes::addBinary(const c8* attributeName, void* data,
 				s32 dataSizeInBytes)
 		{
-			Attributes.push_back(
+			Attributes.pushBack(
 					new CBinaryAttribute(attributeName, data, dataSizeInBytes));
 		}
 
@@ -565,7 +565,7 @@ namespace irrgame
 			if (att)
 				att->setBinary(data, dataSizeInBytes);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CBinaryAttribute(attributeName, data,
 								dataSizeInBytes));
 		}
@@ -613,7 +613,7 @@ namespace irrgame
 		void CAttributes::addArray(const c8* attributeName,
 				const arraystr& value)
 		{
-			Attributes.push_back(
+			Attributes.pushBack(
 					new CStringArrayAttribute(attributeName, value));
 		}
 
@@ -626,7 +626,7 @@ namespace irrgame
 			if (att)
 				att->setArray(value);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CStringArrayAttribute(attributeName, value));
 		}
 
@@ -661,7 +661,7 @@ namespace irrgame
 		//! Adds an attribute as bool
 		void CAttributes::addBool(const c8* attributeName, bool value)
 		{
-			Attributes.push_back(new CBoolAttribute(attributeName, value));
+			Attributes.pushBack(new CBoolAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as boolean value
@@ -672,7 +672,7 @@ namespace irrgame
 			if (att)
 				att->setBool(value);
 			else
-				Attributes.push_back(new CBoolAttribute(attributeName, value));
+				Attributes.pushBack(new CBoolAttribute(attributeName, value));
 		}
 
 		//! Sets an attribute as boolean value
@@ -716,7 +716,7 @@ namespace irrgame
 		void CAttributes::addEnum(const c8* attributeName, const c8* enumValue,
 				const c8* const * enumerationLiterals)
 		{
-			Attributes.push_back(
+			Attributes.pushBack(
 					new CEnumAttribute(attributeName, enumValue,
 							enumerationLiterals));
 		}
@@ -738,7 +738,7 @@ namespace irrgame
 			if (att)
 				att->setEnum(enumValue, enumerationLiterals);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CEnumAttribute(attributeName, enumValue,
 								enumerationLiterals));
 		}
@@ -844,7 +844,7 @@ namespace irrgame
 		//! Adds an attribute as color
 		void CAttributes::addColor(const c8* attributeName, video::SColor value)
 		{
-			Attributes.push_back(new CColorAttribute(attributeName, value));
+			Attributes.pushBack(new CColorAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as color
@@ -856,7 +856,7 @@ namespace irrgame
 			if (att)
 				att->setColor(value);
 			else
-				Attributes.push_back(new CColorAttribute(attributeName, value));
+				Attributes.pushBack(new CColorAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as color
@@ -894,7 +894,7 @@ namespace irrgame
 		void CAttributes::addColorf(const c8* attributeName,
 				video::SColorf value)
 		{
-			Attributes.push_back(new CColorfAttribute(attributeName, value));
+			Attributes.pushBack(new CColorfAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as floating point color
@@ -906,7 +906,7 @@ namespace irrgame
 			if (att)
 				att->setColor(value);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CColorfAttribute(attributeName, value));
 		}
 
@@ -945,7 +945,7 @@ namespace irrgame
 		//! Adds an attribute as 3d vector
 		void CAttributes::addVector2d(const c8* attributeName, vector2df value)
 		{
-			Attributes.push_back(new CVector2DAttribute(attributeName, value));
+			Attributes.pushBack(new CVector2DAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as vector
@@ -962,7 +962,7 @@ namespace irrgame
 			if (att)
 				att->setVector2d(value);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CVector2DAttribute(attributeName, value));
 		}
 
@@ -994,7 +994,7 @@ namespace irrgame
 		//! Adds an attribute as 3d vector
 		void CAttributes::addVector3d(const c8* attributeName, vector3df value)
 		{
-			Attributes.push_back(new CVector3DAttribute(attributeName, value));
+			Attributes.pushBack(new CVector3DAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as vector
@@ -1011,7 +1011,7 @@ namespace irrgame
 			if (att)
 				att->setVector3d(value);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CVector3DAttribute(attributeName, value));
 		}
 
@@ -1043,7 +1043,7 @@ namespace irrgame
 		//! Adds an attribute as rectangle
 		void CAttributes::addRect(const c8* attributeName, recti value)
 		{
-			Attributes.push_back(new CRectAttribute(attributeName, value));
+			Attributes.pushBack(new CRectAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as rectangle
@@ -1054,7 +1054,7 @@ namespace irrgame
 			if (att)
 				att->setRect(value);
 			else
-				Attributes.push_back(new CRectAttribute(attributeName, value));
+				Attributes.pushBack(new CRectAttribute(attributeName, value));
 		}
 
 		//! Sets a attribute as rectangle
@@ -1092,7 +1092,7 @@ namespace irrgame
 		void CAttributes::addDimension2d(const c8* attributeName,
 				dimension2df value)
 		{
-			Attributes.push_back(
+			Attributes.pushBack(
 					new CDimension2dAttribute(attributeName, value));
 		}
 
@@ -1105,7 +1105,7 @@ namespace irrgame
 			if (att)
 				att->setDimension2d(value);
 			else
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CDimension2dAttribute(attributeName, value));
 		}
 
@@ -1144,7 +1144,7 @@ namespace irrgame
 		//! Adds an attribute as matrix
 		void CAttributes::addMatrix(const c8* attributeName, const matrix4& v)
 		{
-			Attributes.push_back(new CMatrixAttribute(attributeName, v));
+			Attributes.pushBack(new CMatrixAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as matrix
@@ -1155,7 +1155,7 @@ namespace irrgame
 			if (att)
 				att->setMatrix(v);
 			else
-				Attributes.push_back(new CMatrixAttribute(attributeName, v));
+				Attributes.pushBack(new CMatrixAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as matrix
@@ -1190,7 +1190,7 @@ namespace irrgame
 		void CAttributes::addQuaternion(const c8* attributeName,
 				core::quaternion v)
 		{
-			Attributes.push_back(new CQuaternionAttribute(attributeName, v));
+			Attributes.pushBack(new CQuaternionAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as quaternion
@@ -1203,7 +1203,7 @@ namespace irrgame
 				att->setQuaternion(v);
 			else
 
-				Attributes.push_back(
+				Attributes.pushBack(
 						new CQuaternionAttribute(attributeName, v));
 		}
 
@@ -1240,7 +1240,7 @@ namespace irrgame
 		//! Adds an attribute as axis aligned bounding box
 		void CAttributes::addBox3d(const c8* attributeName, aabbox3df v)
 		{
-			Attributes.push_back(new CBBoxAttribute(attributeName, v));
+			Attributes.pushBack(new CBBoxAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as axis aligned bounding box
@@ -1251,7 +1251,7 @@ namespace irrgame
 			if (att)
 				att->setBBox(v);
 			else
-				Attributes.push_back(new CBBoxAttribute(attributeName, v));
+				Attributes.pushBack(new CBBoxAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as axis aligned bounding box
@@ -1285,7 +1285,7 @@ namespace irrgame
 		//! Adds an attribute as 3d plane
 		void CAttributes::addPlane3d(const c8* attributeName, plane3df v)
 		{
-			Attributes.push_back(new CPlaneAttribute(attributeName, v));
+			Attributes.pushBack(new CPlaneAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as 3d plane
@@ -1297,7 +1297,7 @@ namespace irrgame
 				att->setPlane(v);
 			else
 
-				Attributes.push_back(new CPlaneAttribute(attributeName, v));
+				Attributes.pushBack(new CPlaneAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as 3d plane
@@ -1331,7 +1331,7 @@ namespace irrgame
 		//! Adds an attribute as 3d triangle
 		void CAttributes::addTriangle3d(const c8* attributeName, triangle3df v)
 		{
-			Attributes.push_back(new CTriangleAttribute(attributeName, v));
+			Attributes.pushBack(new CTriangleAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as 3d triangle
@@ -1342,7 +1342,7 @@ namespace irrgame
 			if (att)
 				att->setTriangle(v);
 			else
-				Attributes.push_back(new CTriangleAttribute(attributeName, v));
+				Attributes.pushBack(new CTriangleAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as 3d triangle
@@ -1377,7 +1377,7 @@ namespace irrgame
 		//! Adds an attribute as a 2d line
 		void CAttributes::addLine2d(const c8* attributeName, line2df v)
 		{
-			Attributes.push_back(new CLine2dAttribute(attributeName, v));
+			Attributes.pushBack(new CLine2dAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as a 2d line
@@ -1388,7 +1388,7 @@ namespace irrgame
 			if (att)
 				att->setLine2d(v);
 			else
-				Attributes.push_back(new CLine2dAttribute(attributeName, v));
+				Attributes.pushBack(new CLine2dAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as a 2d line
@@ -1422,7 +1422,7 @@ namespace irrgame
 		//! Adds an attribute as a 3d line
 		void CAttributes::addLine3d(const c8* attributeName, line3df v)
 		{
-			Attributes.push_back(new CLine3dAttribute(attributeName, v));
+			Attributes.pushBack(new CLine3dAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as a 3d line
@@ -1433,7 +1433,7 @@ namespace irrgame
 			if (att)
 				att->setLine3d(v);
 			else
-				Attributes.push_back(new CLine3dAttribute(attributeName, v));
+				Attributes.pushBack(new CLine3dAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as a 3d line

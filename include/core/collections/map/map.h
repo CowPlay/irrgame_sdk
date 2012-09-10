@@ -83,7 +83,7 @@ namespace irrgame
 				//! Replaces the value if the key already exists, otherwise inserts a new element.
 				/** \param k The index for this value
 				 \param v The new value of */
-				virtual void set(const Key& k, const Value& v);
+				virtual void setValue(const Key& k, const Value& v);
 
 				//! Removes a node from the tree and returns it.
 				/** The returned node must be deleted by the user
@@ -330,7 +330,7 @@ namespace irrgame
 		/** \param k The index for this value
 		 \param v The new value of */
 		template<class Key, class Value>
-		inline void map<Key, Value>::set(const Key& k, const Value& v)
+		inline void map<Key, Value>::setValue(const Key& k, const Value& v)
 		{
 			Node* p = map<Key, Value>::find(k);
 			if (p)

@@ -86,7 +86,7 @@ namespace irrgame
 
 			//os::Printer::log(Path.c_str(), entry.FullName);
 
-			Files.push_back(entry);
+			Files.pushBack(entry);
 
 			return Files.size() - 1;
 		}
@@ -114,8 +114,8 @@ namespace irrgame
 		}
 
 		//! Searches for a file or folder within the list, returns the index
-		s32 CFileList::findFile(const stringc& filename,
-				bool isDirectory = false) const
+		s32 CFileList::findFile(const stringc& filename, bool isDirectory =
+				false) const
 		{
 			SFileListEntry entry;
 			entry.FullName = filename;
@@ -138,7 +138,7 @@ namespace irrgame
 			if (IgnorePaths)
 				io::deletePathFromFilename(entry.FullName);
 
-			return Files.binary_search(entry);
+			return Files.linearReverseSearch(entry);
 		}
 
 		//! Returns the base path of the file list

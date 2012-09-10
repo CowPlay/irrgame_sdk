@@ -7,6 +7,7 @@
 
 #include "core/collections/ICollection.h"
 #include "core/base/irrAllocator.h"
+#include "threads/irrgameMonitor.h"
 #include "SKListNode.h"
 #include "iterators.h"
 
@@ -34,101 +35,107 @@ namespace irrgame
 				virtual ~list();
 
 				//! Assignment operator
-				virtual void operator=(const list<T>& other);
+				void operator=(const list<T>& other);
 
 				//! Returns amount of elements in list.
 				/** \return Amount of elements in the list. */
-				virtual u32 size() const;
+				u32 size() const;
 
 				//! Clears the list, deletes all elements in the list.
 				/** All existing iterators of this list will be invalid. */
-				virtual void clear();
+				void clear();
 
 				//! Checks for empty list.
 				/** \return True if the list is empty and false if not. */
-				virtual bool empty() const;
+				bool empty() const;
 
 				//! Adds an element at the end of the list.
 				/** \param element Element to add to the list. */
-				virtual void push_back(const T& element);
+				void pushBack(const T& element);
 
 				//! Adds an element at the begin of the list.
 				/** \param element: Element to add to the list. */
-				virtual void push_front(const T& element);
+				void pushFront(const T& element);
 
 				//! Inserts an element after an element.
 				/** \param it Iterator pointing to element after which the new element
 				 should be inserted.
 				 \param element The new element to be inserted into the list.
 				 */
-				virtual void insert_after(const Iterator& it, const T& element);
+				void insertAfter(const Iterator& it, const T& element);
 
 				//! Inserts an element before an element.
 				/** \param it Iterator pointing to element before which the new element
 				 should be inserted.
 				 \param element The new element to be inserted into the list.
 				 */
-				virtual void insert_before(const Iterator& it,
-						const T& element);
+				void insertBefore(const Iterator& it, const T& element);
 
 				//! Erases an element.
 				/** \param it Iterator pointing to the element which shall be erased.
 				 \return Iterator pointing to next element. */
-				virtual Iterator erase(Iterator& it);
+				Iterator erase(Iterator& it);
 
 				//! Swap the content of this list container with the content of another list
 				/** Afterwards this object will contain the content of the other object and the other
 				 object will contain the content of this object. Iterators will afterwards be valid for
 				 the swapped object.
 				 \param other Swap content with this object	*/
-				virtual void swap(list<T>& other);
+				void swap(list<T>& other);
 
 				//! Gets first node.
 				/** \return A list iterator pointing to the beginning of the list. */
-				virtual Iterator begin();
+				Iterator begin();
 
 				//! Gets end node.
 				/** \return List iterator pointing to null. */
-				virtual Iterator end();
+				Iterator end();
 
 				//! Gets last element.
 				/** \return List iterator pointing to the last element of the list. */
-				virtual Iterator getLast();
+				Iterator getLast();
 
 				//! Gets first node.
 				/** \return A const list iterator pointing to the beginning of the list. */
-				virtual ConstIterator begin() const;
+				ConstIterator begin() const;
 
 				//! Gets end node.
 				/** \return Const list iterator pointing to null. */
-				virtual ConstIterator end() const;
+				ConstIterator end() const;
 
 				//! Gets last element.
 				/** \return Const list iterator pointing to the last element of the list. */
 				virtual ConstIterator getLast() const;
 
-			protected:
+			private:
+				//! Clears the list, deletes all elements in the list.
+				//! Uses internal without lockers
+				/** All existing iterators of this list will be invalid. */
+				void clearInternal();
+
+			private:
 
 				SKListNode<T>* First;
 				SKListNode<T>* Last;
 				u32 Size;
-				irrAllocator<SKListNode<T> > allocator;
+				irrAllocator<SKListNode<T> > Allocator;
+				threads::irrgameMonitor* Monitor;
 		};
-
-		//!--------- List realization
 
 		//! Default constructor for empty list.
 		template<class T>
 		inline list<T>::list() :
-				First(0), Last(0), Size(0)
+				First(0), Last(0), Size(0), Monitor(0)
 		{
+			Monitor = irrgame::threads::createIrrgameMonitor();
 		}
 
 		//! Copy constructor.
 		template<class T>
 		inline list<T>::list(const list<T>& other) :
-				First(0), Last(0), Size(0)
+				First(0), Last(0), Size(0), Monitor(0)
 		{
+			Monitor = threads::createIrrgameMonitor();
 			*this = other;
 		}
 
@@ -136,7 +143,10 @@ namespace irrgame
 		template<class T>
 		inline list<T>::~list()
 		{
-			list<T>::clear();
+			clear();
+
+			if (Monitor)
+				Monitor->drop();
 		}
 
 		//! Assignment operator
@@ -146,32 +156,51 @@ namespace irrgame
 			if (&other == this)
 				return;
 
-			list<T>::clear();
+			Monitor->enter();
+
+			clearInternal();
 
 			SKListNode<T>* node = other.First;
 			while (node)
 			{
-				list<T>::push_back(node->Element);
+				pushBack(node->Element);
 				node = node->Next;
 			}
+
+			Monitor->exit();
 		}
 
 		//! Returns amount of elements in list.
 		template<class T>
 		inline u32 list<T>::size() const
 		{
-			return Size;
+			Monitor->enter();
+
+			u32 result = Size;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Clears the list, deletes all elements in the list.
 		template<class T>
 		inline void list<T>::clear()
 		{
+			Monitor->enter();
+			clearInternal();
+			Monitor->exit();
+		}
+
+		//! Clears the list, deletes all elements in the list.
+		//! Uses internal without lockers
+		template<class T>
+		inline void list<T>::clearInternal()
+		{
 			while (First)
 			{
 				SKListNode<T>* next = First->Next;
-				allocator.destruct(First);
-				allocator.deallocate(First);
+				Allocator.destruct(First);
+				Allocator.deallocate(First);
 				First = next;
 			}
 
@@ -184,15 +213,21 @@ namespace irrgame
 		template<class T>
 		inline bool list<T>::empty() const
 		{
-			return (First == 0);
+			Monitor->enter();
+			bool result = First == 0;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Adds an element at the end of the list.
 		template<class T>
-		inline void list<T>::push_back(const T& element)
+		inline void list<T>::pushBack(const T& element)
 		{
-			SKListNode<T>* node = allocator.allocate(1);
-			allocator.construct(node, element);
+			Monitor->enter();
+
+			SKListNode<T>* node = Allocator.allocate(1);
+			Allocator.construct(node, element);
 
 			++Size;
 
@@ -205,14 +240,18 @@ namespace irrgame
 				Last->Next = node;
 
 			Last = node;
+
+			Monitor->exit();
 		}
 
 		//! Adds an element at the begin of the list.
 		template<class T>
-		inline void list<T>::push_front(const T& element)
+		inline void list<T>::pushFront(const T& element)
 		{
-			SKListNode<T>* node = allocator.allocate(1);
-			allocator.construct(node, element);
+			Monitor->enter();
+
+			SKListNode<T>* node = Allocator.allocate(1);
+			Allocator.construct(node, element);
 
 			++Size;
 
@@ -227,15 +266,21 @@ namespace irrgame
 				First->Prev = node;
 				First = node;
 			}
+
+			Monitor->exit();
 		}
 
 		//! Inserts an element after an element.
 		template<class T>
-		inline void list<T>::insert_after(const CIterator<T>& it,
+		inline void list<T>::insertAfter(const CIterator<T>& it,
 				const T& element)
 		{
-			SKListNode<T>* node = allocator.allocate(1);
-			allocator.construct(node, element);
+			IRR_ASSERT(it != Iterator(0));
+
+			Monitor->enter();
+
+			SKListNode<T>* node = Allocator.allocate(1);
+			Allocator.construct(node, element);
 
 			node->Next = it.Current->Next;
 
@@ -248,15 +293,21 @@ namespace irrgame
 
 			if (it.Current == Last)
 				Last = node;
+
+			Monitor->exit();
 		}
 
 		//! Inserts an element before an element.
 		template<class T>
-		inline void list<T>::insert_before(const CIterator<T>& it,
+		inline void list<T>::insertBefore(const CIterator<T>& it,
 				const T& element)
 		{
-			SKListNode<T>* node = allocator.allocate(1);
-			allocator.construct(node, element);
+			IRR_ASSERT(it != Iterator(0));
+
+			Monitor->enter();
+
+			SKListNode<T>* node = Allocator.allocate(1);
+			Allocator.construct(node, element);
 
 			node->Prev = it.Current->Prev;
 
@@ -269,17 +320,24 @@ namespace irrgame
 
 			if (it.Current == First)
 				First = node;
+
+			Monitor->exit();
 		}
 
 		//! Erases an element.
 		template<class T>
 		inline CIterator<T> list<T>::erase(CIterator<T>& it)
 		{
+			IRR_ASSERT(it != Iterator(0));
+
 			// suggest changing this to a const Iterator& and
 			// working around line: it.Current = 0 (possibly with a mutable, or just let it be garbage?)
 
-			CIterator<T> returnIterator(it);
-			++returnIterator;
+			Iterator result(it);
+
+			Monitor->enter();
+
+			++result;
 
 			if (it.Current == First)
 				First = it.Current->Next;
@@ -291,64 +349,92 @@ namespace irrgame
 			else
 				it.Current->Next->Prev = it.Current->Prev;
 
-			allocator.destruct(it.Current);
-			allocator.deallocate(it.Current);
+			Allocator.destruct(it.Current);
+			Allocator.deallocate(it.Current);
 			it.Current = 0;
 			--Size;
 
-			return returnIterator;
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Swap the content of this list container with the content of another list
 		template<class T>
 		inline void list<T>::swap(list<T>& other)
 		{
+			// handle self swap
+			if (this == &other)
+				return;
+
+			Monitor->enter();
+			other.Monitor->enter();
+
 			core::swap(First, other.First);
 			core::swap(Last, other.Last);
 			core::swap(Size, other.Size);
-			core::swap(allocator, other.allocator);	// memory is still released by the same allocator used for allocation
+			core::swap(Allocator, other.Allocator);	// memory is still released by the same Allocator used for allocation
+
+			other.Monitor->exit();
+			Monitor->exit();
 		}
 
 		//! Gets first node.
 		template<class T>
 		inline CIterator<T> list<T>::begin()
 		{
-			return CIterator<T>(First);
+			Monitor->enter();
+			Iterator result(First);
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Gets end node.
 		template<class T>
 		inline CIterator<T> list<T>::end()
 		{
-			return CIterator<T>(0);
+			return Iterator(0);
 		}
 
 		//! Gets last element.
 		template<class T>
 		inline CIterator<T> list<T>::getLast()
 		{
-			return CIterator<T>(Last);
+			Monitor->enter();
+			Iterator result(Last);
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Gets first node.
 		template<class T>
 		inline CConstIterator<T> list<T>::begin() const
 		{
-			return CConstIterator<T>(First);
+			Monitor->enter();
+			ConstIterator result(First);
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Gets end node.
 		template<class T>
 		inline CConstIterator<T> list<T>::end() const
 		{
-			return CConstIterator<T>(0);
+			return ConstIterator(0);
 		}
 
 		//! Gets last element.
 		template<class T>
 		inline CConstIterator<T> list<T>::getLast() const
 		{
-			return CConstIterator<T>(Last);
+			Monitor->enter();
+			ConstIterator result(Last);
+			Monitor->exit();
+
+			return result;
 		}
 
 	}	// end namespace core

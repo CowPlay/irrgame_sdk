@@ -24,8 +24,7 @@
 //{
 //	class ISceneManager;
 //
-//	//! Typedef for list of scene nodes
-//	typedef core::list<ISceneNode*> ISceneNodeList;
+
 //	//! Typedef for list of scene node animators
 //	typedef core::list<ISceneNodeAnimator*> ISceneNodeAnimatorList;
 //
@@ -33,14 +32,6 @@
 //	//@param1 - animator instance
 //	typedef C_DELEGATE<bool, ISceneNode*> delegateSNodePositionChange;
 //
-//	//! Scene node interface.
-//	/** A scene node is a node in the hierarchical scene graph. Every scene
-//	node may have children, which are also scene nodes. Children move
-//	relative to their parent's position. If the parent of a node is not
-//	visible, its children won't be visible either. In this way, it is for
-//	example easily possible to attach a light to a moving car, or to place
-//	a walking character on a moving platform on a moving ship.
-//	*/
 //	class ISceneNode : virtual public io::IAttributeExchangingObject
 //	{
 //	public:
@@ -67,8 +58,7 @@
 //		//! Destructor
 //		virtual ~ISceneNode()
 //		{
-//			// delete all children
-//			removeAll();
+//
 //
 //			// delete all animators
 //			ISceneNodeAnimatorList::Iterator ait = Animators.begin();
@@ -281,74 +271,18 @@
 //		}
 //
 //
-//		//! Adds a child to this scene node.
-//		/** If the scene node already has a parent it is first removed
-//		from the other parent.
-//		\param child A pointer to the new child. */
-//		virtual void addChild(ISceneNode* child)
-//		{
-//			if (child && (child != this))
-//			{
-//				// Change scene manager?
-//				if (SceneManager != child->SceneManager)
-//					child->setSceneManager(SceneManager);
-//
-//				child->grab();
-//				child->remove(); // remove from old parent
-//				Children.push_back(child);
-//				child->Parent = this;
-//			}
-//		}
+//virtual void addChild(ISceneNode* child)
+//{
+//	// Change scene manager?
+//					if (SceneManager != child->SceneManager)
+//						child->setSceneManager(SceneManager);
+//}
 //
 //
-//		//! Removes a child from this scene node.
-//		/** If found in the children list, the child pointer is also
-//		dropped and might be deleted if no other grab exists.
-//		\param child A pointer to the child which shall be removed.
-//		\return True if the child was removed, and false if not,
-//		e.g. because it couldn't be found in the children list. */
-//		virtual bool removeChild(ISceneNode* child)
-//		{
-//			ISceneNodeList::Iterator it = Children.begin();
-//			for (; it != Children.end(); ++it)
-//				if ((*it) == child)
-//				{
-//					(*it)->Parent = 0;
-//					(*it)->drop();
-//					Children.erase(it);
-//					return true;
-//				}
-//
-//			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-//			return false;
-//		}
 //
 //
-//		//! Removes all children of this scene node
-//		/** The scene nodes found in the children list are also dropped
-//		and might be deleted if no other grab exists on them.
-//		*/
-//		virtual void removeAll()
-//		{
-//			ISceneNodeList::Iterator it = Children.begin();
-//			for (; it != Children.end(); ++it)
-//			{
-//				(*it)->Parent = 0;
-//				(*it)->drop();
-//			}
 //
-//			Children.clear();
-//		}
-//
-//
-//		//! Removes this scene node from the scene
-//		/** If no other grab exists for this node, it will be deleted.
-//		*/
-//		virtual void remove()
-//		{
-//			if (Parent)
-//				Parent->removeChild(this);
-//		}
+
 //
 //
 //		//! Adds an animator which should animate this node.
@@ -591,31 +525,6 @@
 //			return IsDebugObject;
 //		}
 //
-//
-//		//! Returns a const reference to the list of all children.
-//		/** \return The list of all children of this node. */
-//		const core::list<ISceneNode*>& getChildren() const
-//		{
-//			return Children;
-//		}
-//
-//
-//		//! Changes the parent of the scene node.
-//		/** \param newParent The new parent to be used. */
-//		virtual void setParent(ISceneNode* newParent)
-//		{
-//			grab();
-//			remove();
-//
-//			Parent = newParent;
-//
-//			if (Parent)
-//				Parent->addChild(this);
-//
-//			drop();
-//		}
-//
-//
 //		//! Returns the triangle selector attached to this scene node.
 //		/** The Selector can be used by the engine for doing collision
 //		detection. You can create a TriangleSelector with
@@ -823,12 +732,6 @@
 //
 //		//! Relative scale of the scene node.
 //		core::vector3df RelativeScale;
-//
-//		//! Pointer to the parent
-//		ISceneNode* Parent;
-//
-//		//! List of all children of this node
-//		core::list<ISceneNode*> Children;
 //
 //		//! List of all animator nodes
 //		core::list<ISceneNodeAnimator*> Animators;

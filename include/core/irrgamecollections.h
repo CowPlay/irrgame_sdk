@@ -13,13 +13,13 @@
 #include "core/collections/list/list.h"
 #include "core/collections/map/map.h"
 #include "core/collections/string.h"
+#include "scene/ISceneNode.h"
 
 //! array typedefs
 typedef irrgame::core::array<s32> arrayi;
 typedef irrgame::core::array<u32> arrayu;
 typedef irrgame::core::array<f32> arrayf;
 typedef irrgame::core::array<irrgame::core::string> arraystr;
-
 
 //! list typedefs
 typedef irrgame::core::list<s32> listi;

@@ -8,6 +8,8 @@
 #ifndef ISCENENODE_H_
 #define ISCENENODE_H_
 
+#include "core/collections/ILeafNode.h"
+
 namespace irrgame
 {
 	namespace scene
@@ -20,7 +22,7 @@ namespace irrgame
 		 example easily possible to attach a light to a moving car, or to place
 		 a walking character on a moving platform on a moving ship.
 		 */
-		class ISceneNode
+		class ISceneNode: public core::ILeafNode<ISceneNode>
 		{
 			public:
 

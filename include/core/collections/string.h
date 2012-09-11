@@ -739,8 +739,8 @@ namespace irrgame
 			IRR_ASSERT(sourcePos < Used);
 
 			u32 i;
-			for (i = 0; Array[sourcePos + i] && other[i]; ++i)
-				if (localeLower(Array[sourcePos + i]) != localeLower(other[i]))
+			for (i = 0; Array[sourcePos + i] && other.Array[i]; ++i)
+				if (localeLower(Array[sourcePos + i]) != localeLower(other.Array[i]))
 				{
 					Monitor->exit();
 					other.Monitor->exit();
@@ -748,7 +748,7 @@ namespace irrgame
 					return false;
 				}
 
-			bool result = Array[sourcePos + i] == 0 && other[i] == 0;
+			bool result = Array[sourcePos + i] == 0 && other.Array[i] == 0;
 
 			Monitor->exit();
 			other.Monitor->exit();

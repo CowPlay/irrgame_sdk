@@ -415,7 +415,7 @@ namespace irrgame
 		{
 			Monitor->enter();
 
-			ParentLastIterator i(map<Key, Value>::getParentLastIterator());
+			ParentLastIterator i(Root);
 
 			while (!i.atEnd())
 			{
@@ -538,7 +538,7 @@ namespace irrgame
 		inline CMapIterator<Key, Value> map<Key, Value>::getIterator()
 		{
 			Monitor->enter();
-			Iterator result(getRoot());
+			Iterator result(Root);
 			Monitor->exit();
 
 			return result;
@@ -553,7 +553,7 @@ namespace irrgame
 		inline CParentFirstIterator<Key, Value> map<Key, Value>::getParentFirstIterator()
 		{
 			Monitor->enter();
-			ParentFirstIterator result(map<Key, Value>::getRoot());
+			ParentFirstIterator result(Root);
 			Monitor->exit();
 
 			return result;
@@ -568,7 +568,7 @@ namespace irrgame
 		inline CParentLastIterator<Key, Value> map<Key, Value>::getParentLastIterator()
 		{
 			Monitor->enter();
-			ParentLastIterator it(map<Key, Value>::getRoot());
+			ParentLastIterator it(Root);
 			Monitor->exit();
 
 			return it;

@@ -898,7 +898,7 @@ namespace irrgame
 		}
 
 	} // end namespace core
-} // end namespace irr
+} // end namespace irrgame
 
 #endif
 

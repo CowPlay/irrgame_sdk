@@ -33,6 +33,8 @@ namespace irrgame
 
 			virtual io::IPlayerConfigReader* getConfigReader() = 0;
 
+//			virtual io::IFileSystem* getFileSystem() = 0;
+
 			//			virtual void run(irrgameApp* application) = 0;
 
 			//get application

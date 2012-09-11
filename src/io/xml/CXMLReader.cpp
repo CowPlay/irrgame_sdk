@@ -155,8 +155,9 @@ namespace irrgame
 		}
 
 		//! returns if a format is little endian
-		inline bool CXMLReader::isLittleEndian(ETEXT_FORMAT f)
+		bool CXMLReader::isLittleEndian(ETEXT_FORMAT f)
 		{
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return f == ETF_ASCII || f == ETF_UTF8 || f == ETF_UTF16_LE
 					|| f == ETF_UTF32_LE;
 		}
@@ -565,8 +566,7 @@ namespace irrgame
 			}
 
 			if (cDataEnd)
-				NodeName = stringc(cDataBegin,
-						(int) (cDataEnd - cDataBegin));
+				NodeName = stringc(cDataBegin, (int) (cDataEnd - cDataBegin));
 			else
 				NodeName = "";
 
@@ -589,8 +589,7 @@ namespace irrgame
 		}
 
 		// replaces xml special characters in a string and creates a new one
-		stringc CXMLReader::replaceSpecialCharacters(
-				stringc& origstr)
+		stringc CXMLReader::replaceSpecialCharacters(stringc& origstr)
 		{
 			int pos = origstr.findFirst('&');
 			int oldPos = 0;

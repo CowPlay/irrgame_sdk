@@ -657,7 +657,7 @@ namespace irrgame
 
 			Monitor->enter();
 
-			result = Used - 1 > 0;
+			result = Used - 1 == 0;
 
 			Monitor->exit();
 

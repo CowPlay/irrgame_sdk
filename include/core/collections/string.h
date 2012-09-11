@@ -651,7 +651,7 @@ namespace irrgame
 		}
 
 		//! Return True if this string is empty. Otherwise return False.
-		bool string::empty()
+		inline bool string::empty()
 		{
 			bool result = false;
 
@@ -666,7 +666,7 @@ namespace irrgame
 		}
 
 		//! Return True if this string have only whitespaces. Otherwise returns False.
-		bool string::blank()
+		inline bool string::blank()
 		{
 			IRR_ASSERT(false);
 			bool result = false;

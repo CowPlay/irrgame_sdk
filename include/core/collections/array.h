@@ -245,8 +245,8 @@ namespace irrgame
 		//! Constructs an array and allocates an initial chunk of memory.
 		template<class T>
 		inline array<T>::array(u32 startCount) :
-				Data(0), Allocated(0), Used(0), Strategy(ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(
-						true), IsSorted(true), Monitor(0)
+		Data(0), Allocated(0), Used(0), Monitor(0), Strategy(ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(
+				true), IsSorted(true)
 		{
 			Monitor = threads::createIrrgameMonitor();
 			reallocate(startCount);

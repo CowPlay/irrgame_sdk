@@ -26,6 +26,9 @@ namespace irrgame
 		{
 			public:
 
+				//! Renders the node.
+				virtual void render() = 0;
+
 			protected:
 
 		};

@@ -630,7 +630,7 @@ namespace irrgame
 
 				// find next &
 				oldPos = pos;
-				pos = origstr.findNext('&', pos);
+				pos = origstr.findFirst('&', pos);
 			}
 
 			if (oldPos < (int) origstr.size() - 1)

@@ -95,7 +95,7 @@ namespace irrgame
 			s32 pos = 0;
 			bool lastWasRealDir = false;
 
-			while ((pos = directory.findNext('/', lastpos)) >= 0)
+			while ((pos = directory.findFirst('/', lastpos)) >= 0)
 			{
 				subdir = directory.subString(lastpos, pos - lastpos + 1);
 

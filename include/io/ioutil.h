@@ -15,9 +15,8 @@ namespace irrgame
 
 		// ----------- some basic quite often used string functions -----------------
 		//! search if a filename has a proper extension
-		inline s32 isFileExtension(const stringc& filename,
-				const stringc& ext0, const stringc& ext1,
-				const stringc& ext2)
+		inline s32 isFileExtension(const stringc& filename, const stringc& ext0,
+				const stringc& ext1, const stringc& ext2)
 		{
 			s32 extPos = filename.findLast('.');
 			if (extPos < 0)
@@ -82,8 +81,7 @@ namespace irrgame
 		}
 
 		//! trim paths
-		inline stringc& deletePathFromPath(stringc& filename,
-				s32 pathCount)
+		inline stringc& deletePathFromPath(stringc& filename, s32 pathCount)
 		{
 			// delete path from filename
 			s32 i = filename.size();
@@ -111,8 +109,7 @@ namespace irrgame
 
 		//! looks if file is in the same directory of path. returns offset of directory.
 		//! 0 means in same directory. 1 means file is direct child of path
-		inline s32 isInSameDirectory(const stringc& path,
-				const stringc& file)
+		inline s32 isInSameDirectory(const stringc& path, const stringc& file)
 		{
 			s32 subA = 0;
 			s32 subB = 0;
@@ -122,14 +119,14 @@ namespace irrgame
 				return -1;
 
 			pos = 0;
-			while ((pos = path.findNext('/', pos)) >= 0)
+			while ((pos = path.findFirst('/', pos)) >= 0)
 			{
 				subA += 1;
 				pos += 1;
 			}
 
 			pos = 0;
-			while ((pos = file.findNext('/', pos)) >= 0)
+			while ((pos = file.findFirst('/', pos)) >= 0)
 			{
 				subB += 1;
 				pos += 1;

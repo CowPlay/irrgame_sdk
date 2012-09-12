@@ -99,14 +99,10 @@ namespace irrgame
 
 				//! Compares the strings ignoring case.
 				/** \param other: Other string to compare.
-				 \return True if the strings are equal ignoring case. */
-				bool equalsIgnoreCase(const string& other) const;
-				//! Compares the strings ignoring case.
-				/** \param other: Other string to compare.
 				 \param sourcePos: where to start to compare in the string
 				 \return True if the strings are equal ignoring case. */
-				bool equalsSubstringIgnoreCase(const string& other,
-						const u32 sourcePos = 0) const;
+				bool equalsIgnoreCase(const string& other, const u32 sourcePos =
+						0) const;
 
 				//! Compares the strings ignoring case.
 				/** \param other: Other string to compare.
@@ -138,58 +134,18 @@ namespace irrgame
 				/** \param other: Char string to append. */
 				void append(const c8* const other);
 
-				//! finds first occurrence of character in string
-				/** \param c: Character to search for.
-				 \return Position where the character has been found,
-				 or -1 if not found. */
-				s32 findFirst(c8 c) const;
-				//! finds last occurrence of character in string
-				/** \param c: Character to search for.
-				 \param start: start to search reverse ( default = -1, on end )
-				 \return Position where the character has been found,
-				 or -1 if not found. */
-				s32 findLast(c8 c, s32 start = -1) const;
-
-				//! finds first occurrence of a character of a list in string
-				/** \param c: List of characters to find. For example if the method
-				 should find the first occurrence of 'a' or 'b', this parameter should be "ab".
-				 \param count: Amount of characters in the list. Usually,
-				 this should be strlen(c)
-				 \return Position where one of the characters has been found,
-				 or -1 if not found. */
-				s32 findFirstChar(const c8* const c, u32 count) const;
-				//! finds last occurrence of a character of a list in string
-				/** \param c: List of strings to find. For example if the method
-				 should find the last occurrence of 'a' or 'b', this parameter should be "ab".
-				 \param count: Amount of characters in the list. Usually,
-				 this should be strlen(c)
-				 \return Position where one of the characters has been found,
-				 or -1 if not found. */
-				s32 findLastChar(const c8* const c, u32 count) const;
-
-				//! Finds first position of a character not in a given list.
-				/** \param c: List of characters not to find. For example if the method
-				 should find the first occurrence of a character not 'a' or 'b', this parameter should be "ab".
-				 \param count: Amount of characters in the list. Usually,
-				 this should be strlen(c)
-				 \return Position where the character has been found,
-				 or -1 if not found. */
-				s32 findFirstCharNotInList(const c8* const c, u32 count) const;
-				//! Finds last position of a character not in a given list.
-				/** \param c: List of characters not to find. For example if the method
-				 should find the first occurrence of a character not 'a' or 'b', this parameter should be "ab".
-				 \param count: Amount of characters in the list. Usually,
-				 this should be strlen(c)
-				 \return Position where the character has been found,
-				 or -1 if not found. */
-				s32 findLastCharNotInList(const c8* const c, u32 count) const;
-
 				//! finds next occurrence of character in string
 				/** \param c: Character to search for.
 				 \param startPos: Position in string to start searching.
 				 \return Position where the character has been found,
-				 or -1 if not found. */
-				s32 findNext(c8 c, u32 startPos) const;
+				 or irrNotFound if not found. */
+				s32 findFirst(c8 c, u32 startPos = 0) const;
+
+				//! finds last occurrence of character in string
+				/** \param c: Character to search for.
+				 \return Position where the character has been found,
+				 or irrNotFound if not found. */
+				s32 findLast(c8 c) const;
 
 				//! finds another string in this string
 				/** \param str: Another string
@@ -201,7 +157,7 @@ namespace irrgame
 				//! Returns a substring
 				/** \param begin: Start of substring.
 				 \param length: Length of substring. */
-				string subString(u32 begin, s32 length) const;
+				string subString(u32 begin, u32 length) const;
 
 				//! Appends a string to this string
 				/** \param other String to append. */
@@ -715,19 +671,7 @@ namespace irrgame
 		}
 
 		//! Compares the strings ignoring case.
-		/** \param other: Other string to compare.
-		 \return True if the strings are equal ignoring case. */
-		inline bool string::equalsIgnoreCase(const string& other) const
-		{
-			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return equalsSubstringIgnoreCase(other, 0);
-		}
-
-		//! Compares the strings ignoring case.
-		/** \param other: Other string to compare.
-		 \param sourcePos: where to start to compare in the string
-		 \return True if the strings are equal ignoring case. */
-		inline bool string::equalsSubstringIgnoreCase(const string& other,
+		inline bool string::equalsIgnoreCase(const string& other,
 				const u32 sourcePos) const
 		{
 			if (this == &other)
@@ -740,7 +684,8 @@ namespace irrgame
 
 			u32 i;
 			for (i = 0; Array[sourcePos + i] && other.Array[i]; ++i)
-				if (localeLower(Array[sourcePos + i]) != localeLower(other.Array[i]))
+				if (localeLower(Array[sourcePos + i])
+						!= localeLower(other.Array[i]))
 				{
 					Monitor->exit();
 					other.Monitor->exit();
@@ -942,14 +887,16 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! finds first occurrence of character in string
-		inline s32 string::findFirst(c8 c) const
+		//! finds next occurrence of character in string
+		inline s32 string::findFirst(c8 c, u32 startPos) const
 		{
-			s32 result = -1;
+			s32 result = irrNotFound;
 
 			Monitor->enter();
 
-			for (u32 i = 0; i < Used; ++i)
+			IRR_ASSERT(startPos < Used);
+
+			for (u32 i = startPos; i < Used; ++i)
 				if (Array[i] == c)
 				{
 					result = i;
@@ -962,134 +909,13 @@ namespace irrgame
 		}
 
 		//! finds last occurrence of character in string
-		inline s32 string::findLast(c8 c, s32 start) const
-		{
-			s32 result = -1;
-
-			Monitor->enter();
-
-			start = core::clamp(start < 0 ? (s32) (Used) - 1 : start, 0,
-					(s32) (Used) - 1);
-			for (s32 i = start; i >= 0; --i)
-				if (Array[i] == c)
-				{
-					result = i;
-					break;
-				}
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! finds first occurrence of a character of a list in string
-		inline s32 string::findFirstChar(const c8* const c, u32 count) const
-		{
-			s32 result = -1;
-
-			Monitor->enter();
-
-			IRR_ASSERT(c != 0);
-
-			for (u32 i = 0; i < Used; ++i)
-				for (u32 j = 0; j < count; ++j)
-					if (Array[i] == c[j])
-					{
-						result = i;
-						break;
-					}
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! finds last occurrence of a character of a list in string
-		inline s32 string::findLastChar(const c8* const c, u32 count) const
-		{
-			s32 result = -1;
-
-			Monitor->enter();
-
-			IRR_ASSERT(c != 0);
-
-			for (s32 i = Used - 1; i >= 0; --i)
-				for (u32 j = 0; j < count; ++j)
-					if (Array[i] == c[j])
-					{
-						result = i;
-						break;
-					}
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Finds first position of a character not in a given list.
-		inline s32 string::findFirstCharNotInList(const c8* const c,
-				u32 count) const
-		{
-			s32 result = -1;
-
-			Monitor->enter();
-
-			for (u32 i = 0; i < Used - 1; ++i)
-			{
-				u32 j;
-				for (j = 0; j < count; ++j)
-					if (Array[i] == c[j])
-						break;
-
-				if (j == count)
-				{
-					result = i;
-					break;
-				}
-			}
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Finds last position of a character not in a given list.
-		inline s32 string::findLastCharNotInList(const c8* const c,
-				u32 count) const
-		{
-			s32 result = -1;
-
-			Monitor->enter();
-
-			for (s32 i = (s32) (Used - 2); i >= 0; --i)
-			{
-				u32 j;
-				for (j = 0; j < count; ++j)
-					if (Array[i] == c[j])
-						break;
-
-				if (j == count)
-				{
-					result = i;
-					break;
-				}
-			}
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! finds next occurrence of character in string
-		inline s32 string::findNext(c8 c, u32 startPos) const
+		inline s32 string::findLast(c8 c) const
 		{
 			s32 result = irrNotFound;
 
 			Monitor->enter();
 
-			IRR_ASSERT(startPos < Used);
-
-			for (u32 i = startPos; i < Used; ++i)
+			for (u32 i = Used - 1; i >= 0; --i)
 				if (Array[i] == c)
 				{
 					result = i;
@@ -1147,15 +973,15 @@ namespace irrgame
 		}
 
 		//! Returns a substring
-		inline string string::subString(u32 begin, s32 length) const
+		inline string string::subString(u32 begin, u32 length) const
 		{
 			string result;
 
 			Monitor->enter();
 
-			// if start after string
-			IRR_ASSERT(length <= 0);
-			// or no proper substring length
+			// no proper substring length
+			IRR_ASSERT(length > 0);
+			// or if start after string
 			IRR_ASSERT(begin >= (Used - 1));
 
 			// clamp length to maximal value
@@ -1164,7 +990,7 @@ namespace irrgame
 
 			result.reallocate(length + 1);
 
-			for (s32 i = 0; i < length; ++i)
+			for (u32 i = 0; i < length; ++i)
 				result.Array[i] = Array[i + begin];
 
 			result.Array[length] = 0;

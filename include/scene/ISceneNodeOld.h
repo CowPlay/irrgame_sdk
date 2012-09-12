@@ -137,8 +137,6 @@
 //		}
 //
 //
-//		//! Renders the node.
-//		virtual void render() = 0;
 //
 //
 //		//! Returns the name of the node.

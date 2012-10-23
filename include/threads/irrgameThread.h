@@ -27,7 +27,7 @@ namespace irrgame
 		};
 
 		//! use this delegate for run some func in individual thread
-		typedef C_DELEGATE<int, void*> delegateThreadCallback;
+		typedef CDelegate<int, void*> delegateThreadCallback;
 
 		//! Interface providing acces to system thread
 		//! TODO: provide acces to change priority

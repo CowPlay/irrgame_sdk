@@ -2,55 +2,76 @@
 #define __C_METHOD_DELEGATE_H_INCLUDED__
 #include "IDelegate.h"
 
-
-template<class TObj, class TRet TEMPLATE_PARAMS>
-class C_METHOD_DELEGATE : public I_DELEGATE<TRet TEMPLATE_ARGS>
+namespace irrgame
 {
-	public:
-
-	typedef TRet (TObj::*PMethod)(PARAMS);
-
-	C_METHOD_DELEGATE(TObj* pObj, PMethod pMethod)
+	template<class TObj, class TRet, class TP1>
+	class CMethodDelegate: public IDelegate<TRet, TP1>
 	{
-		m_pObj = pObj;
-		m_pMethod = pMethod;
+		public:
+
+			typedef TRet (TObj::*PMethod)(TP1 p1);
+
+			//! Default constructor
+			CMethodDelegate(TObj* pObj, PMethod pMethod);
+
+			//! Destructor
+			virtual ~CMethodDelegate();
+
+			virtual TRet Invoke(TP1 p1);
+
+			virtual bool Compare(IDelegate<TRet, TP1>* pDelegate);
+
+		private:
+			//! Pointer to instance
+			TObj *Obj;
+			//! pointer to instance method
+			PMethod Method;
+	};
+
+	//! Default constructor
+	template<class TObj, class TRet, class TP1>
+	CMethodDelegate<TObj, TRet, TP1>::CMethodDelegate(TObj* obj, PMethod method) :
+			Obj(obj), Method(method)
+	{
 	}
 
-	virtual ~C_METHOD_DELEGATE()
+	//! Destructor
+	template<class TObj, class TRet, class TP1>
+	CMethodDelegate<TObj, TRet, TP1>::~CMethodDelegate()
 	{
 	}
 
-	virtual TRet Invoke(PARAMS)
+	template<class TObj, class TRet, class TP1>
+	TRet CMethodDelegate<TObj, TRet, TP1>::Invoke(TP1 p1)
 	{
-		return (m_pObj->*m_pMethod)(ARGS);
+		return (Obj->*Method)(p1);
 	}
 
-	virtual bool Compare(I_DELEGATE<TRet TEMPLATE_ARGS>* pDelegate)
+	template<class TObj, class TRet, class TP1>
+	bool CMethodDelegate<TObj, TRet, TP1>::Compare(
+			IDelegate<TRet, TP1>* pDelegate)
 	{
-		C_METHOD_DELEGATE<TObj, TRet TEMPLATE_ARGS>* pMethodDel =
-		dynamic_cast<C_METHOD_DELEGATE<TObj, TRet TEMPLATE_ARGS>*>(pDelegate);
-		if
-		(
-				pMethodDel == NULL ||
-				pMethodDel->m_pObj != m_pObj ||
-				pMethodDel->m_pMethod != m_pMethod
-		)
+		bool result = true;
+
+		CMethodDelegate<TObj, TRet, TP1> *pMethodDel =
+				dynamic_cast<CMethodDelegate<TObj, TRet, TP1>*>(pDelegate);
+
+		if (pMethodDel == NULL || pMethodDel->Obj != Obj
+				|| pMethodDel->Method != Method)
 		{
-			return false;
+			result = false;
 		}
 
-		return true;
+		return result;
 	}
 
-	private:
-	TObj *m_pObj;
-	PMethod m_pMethod;
-};
-
-//!Creator
-template <class TObj, class TRet TEMPLATE_PARAMS>
-I_DELEGATE<TRet TEMPLATE_ARGS>* NewDelegate(TObj* pObj, TRet (TObj::*pMethod)(PARAMS))
-{
-	return new C_METHOD_DELEGATE<TObj, TRet TEMPLATE_ARGS> (pObj, pMethod);
+	//!Creator
+	template<class TObj, class TRet, class TP1>
+	IDelegate<TRet, TP1>* NewDelegate(TObj* pObj, TRet (TObj::*pMethod)(TP1 p1))
+	{
+		return new CMethodDelegate<TObj, TRet, TP1>(pObj, pMethod);
+	}
 }
+// namespace irrgame
+
 #endif

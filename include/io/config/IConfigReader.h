@@ -9,6 +9,7 @@
 #define ICONFIGREADER_H_
 
 #include "core/irrgamebase.h"
+#include "core/engine/IReferenceCounted.h"
 
 namespace irrgame
 {
@@ -21,6 +22,7 @@ namespace irrgame
 				//! Destructor
 				virtual ~IConfigReader()
 				{
+
 				}
 
 				virtual void read(const c8* file) = 0;

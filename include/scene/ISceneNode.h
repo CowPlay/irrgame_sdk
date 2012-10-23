@@ -8,7 +8,8 @@
 #ifndef ISCENENODE_H_
 #define ISCENENODE_H_
 
-#include "core/collections/ILeafNode.h"
+#include "core/irrgamecollections.h"
+#include "events/IEventReceiver.h"
 
 namespace irrgame
 {
@@ -23,18 +24,24 @@ namespace irrgame
 		 a walking character on a moving platform on a moving ship.
 		 */
 		class ISceneNode: public core::ILeafNode<ISceneNode>
+//		,public actions::IActionReceiver
 		{
 			public:
+				//! Default constructor
+				ISceneNode(ISceneNode* parent);
+
+				//! Destructor
+				virtual ~ISceneNode();
 
 				//! Renders the node.
 				virtual void render() = 0;
 
+				//! Update absolute transformation by data from game object(logic).
+				virtual void updateAbsoluteTransformation() = 0;
+
 			protected:
-
 		};
-
 	}
-
 }
 
 #endif /* ISCENENODE_H_ */

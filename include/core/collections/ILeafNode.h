@@ -8,17 +8,14 @@
 #ifndef ILEAFNODE_H_
 #define ILEAFNODE_H_
 
-#include "core/base/IReferenceCounted.h"
 #include "core/collections/list/list.h"
+#include "core/engine/IReferenceCounted.h"
 
 namespace irrgame
 {
 	namespace core
 	{
-		template<class T>
-		class ILeafNode;
-
-		//! LeafNode interface
+		//! Base class for object which may have children and parent. T must be derived by ILeafNode.
 		/** A leaf node is a node in the some hierarchical graph. Every leaf
 		 node may have children, which are also leaf nodes. */
 		template<class T>
@@ -28,6 +25,9 @@ namespace irrgame
 				typedef ILeafNode<T> LeafNode;
 
 			public:
+				//! Default constructor
+				ILeafNode(T* parent);
+
 				//! Destructor
 				virtual ~ILeafNode();
 
@@ -35,13 +35,13 @@ namespace irrgame
 				/** If the leaf node already has a parent it is first removed
 				 from the other parent.
 				 \param child A pointer to the new child. */
-				virtual void addChild(LeafNode* child);
+				virtual void addChild(T* child);
 
 				//! Removes a child from this leaf node.
 				/** If found in the children list, the child pointer is also
 				 dropped and might be deleted if no other grab exists.
 				 \param child A pointer to the child which shall be removed. */
-				virtual void removeChild(LeafNode* child);
+				virtual void removeChild(T* child);
 
 				//! Removes all children of this scene node
 				/** The scene nodes found in the children list are also dropped
@@ -54,20 +54,37 @@ namespace irrgame
 
 				//! Returns a const reference to the list of all children.
 				/** \return The list of all children of this node. */
-				const list<LeafNode*>& getChildren() const;
+				const list<T*> getChildren() const;
 
 				//! Changes the parent of the scene node.
 				/** \param newParent The new parent to be used. */
-				virtual void setParent(LeafNode* value);
+				virtual void setParent(T* value);
 
 			protected:
 
 				//! Pointer to the parent
-				LeafNode* Parent;
+				T* Parent;
 
 				//! List of all children of this node
-				list<LeafNode*> Children;
+				list<T*> Children;
+
+//			private:
+//				//! Internal field. Please do not use.
+//				ILeafNode* LeafParent;
+//
+//				//! Internal field. Please do not use.
+//				list<ILeafNode*> LeafChildren;
+
 		};
+
+		//! Default constructor
+		template<class T>
+		inline ILeafNode<T>::ILeafNode(T* parent) :
+				Parent(parent)
+		{
+			if (Parent)
+				Parent->addChild(static_cast<T*>(this));
+		}
 
 		//! Destructor
 		template<class T>
@@ -79,22 +96,27 @@ namespace irrgame
 
 		//! Adds a child to this scene node.
 		template<class T>
-		inline void ILeafNode<T>::addChild(LeafNode* child)
+		inline void ILeafNode<T>::addChild(T* child)
 		{
-			if (child && (child != this))
-			{
-				child->grab();
-				child->remove(); // remove from old parent
-				Children.push_back(child);
-				child->Parent = this;
-			}
+			IRR_ASSERT(child != 0);
+			IRR_ASSERT(child != this);
+
+			//TODO: check type
+
+			child->grab();
+			child->remove(); // remove from old parent
+			Children.pushBack(child);
+			child->Parent = static_cast<T*>(this);
 		}
 
 		//! Removes a child from this scene node.
 		template<class T>
-		inline void ILeafNode<T>::removeChild(LeafNode* child)
+		inline void ILeafNode<T>::removeChild(T* child)
 		{
-			CIterator<LeafNode*> it = Children.begin();
+			IRR_ASSERT(child != 0);
+			IRR_ASSERT(child != this);
+
+			CIterator<T*> it = Children.begin();
 
 			for (; it != Children.end(); ++it)
 				if ((*it) == child)
@@ -109,7 +131,7 @@ namespace irrgame
 		template<class T>
 		inline void ILeafNode<T>::removeAll()
 		{
-			CIterator<LeafNode*> it = Children.begin();
+			CIterator<T*> it = Children.begin();
 
 			for (; it != Children.end(); ++it)
 			{
@@ -125,27 +147,30 @@ namespace irrgame
 		inline void ILeafNode<T>::remove()
 		{
 			if (Parent)
-				Parent->removeChild(this);
+				Parent->removeChild(static_cast<T*>(this));
 		}
 
 		//! Returns a const reference to the list of all children.
 		template<class T>
-		inline const list<ILeafNode<T>*>& ILeafNode<T>::getChildren() const
+		inline const list<T*> ILeafNode<T>::getChildren() const
 		{
 			return Children;
 		}
 
 		//! Changes the parent of the scene node.
 		template<class T>
-		inline void ILeafNode<T>::setParent(LeafNode* value)
+		inline void ILeafNode<T>::setParent(T* value)
 		{
+			IRR_ASSERT(value != 0);
+			IRR_ASSERT(value != this);
+
 			grab();
 			remove();
 
 			Parent = value;
 
 			if (Parent)
-				Parent->addChild(this);
+				Parent->addChild(static_cast<T*>(this));
 
 			drop();
 		}

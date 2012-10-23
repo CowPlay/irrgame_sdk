@@ -5,7 +5,7 @@
 #ifndef __IRR_DIMENSION2D_H_INCLUDED__
 #define __IRR_DIMENSION2D_H_INCLUDED__
 
-#include "core/base/irrgameTypes.h"
+#include "core/irrgamebase.h"
 #include "core/math/irrMath.h" // for irr::core::equals()
 namespace irrgame
 {

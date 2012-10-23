@@ -5,8 +5,7 @@
 #ifndef __I_IREFERENCE_COUNTED_H_INCLUDED__
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
-#include "core/base/irrgameTypes.h"
-//#include "core/collections/map/map.h"
+#include "core/base/baseTypes.h"
 namespace irrgame
 {
 
@@ -124,6 +123,9 @@ namespace irrgame
 			//! Otherwise return False.
 			//@ param0 - thread id
 			bool haveDependiesFromThread(s32 threadID) const;
+
+			//! Get object type
+//			virtual void getType() = 0;
 
 		protected:
 

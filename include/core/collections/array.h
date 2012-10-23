@@ -873,8 +873,8 @@ namespace irrgame
 			if (this == &other)
 				return;
 
-			Monitor->enter();
 			other.Monitor->enter();
+			Monitor->enter();
 
 			core::swap(Monitor, other.Monitor);
 			core::swap(Data, other.Data);
@@ -893,8 +893,8 @@ namespace irrgame
 			IsSorted = other.IsSorted;
 			other.IsSorted = helperIsSorted;
 
-			other.Monitor->exit();
 			Monitor->exit();
+			other.Monitor->exit();
 		}
 
 	} // end namespace core

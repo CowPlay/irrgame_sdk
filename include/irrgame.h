@@ -11,8 +11,23 @@
 #include "irrgameApp.h"
 #include "irrgamePlayer.h"
 
-//actions
-#include "actions/IActionScheduler.h"
+//events
+#include "events/EEventTypes.h"
+#include "events/IEvent.h"
+#include "events/IEventReceiver.h"
+
+//engine events
+#include "events/engine/IEventScheduler.h"
+#include "events/engine/IEngineEvent.h"
+
+//user events
+#include "events/user/ECursorStates.h"
+#include "events/user/EUserEventTypes.h"
+#include "events/user/EUserKeyStates.h"
+#include "events/user/EUserKeys.h"
+#include "events/user/IUserEvent.h"
+#include "events/user/IUserEventHandler.h"
+#include "events/user/SCursorInfo.h"
 
 //core
 #include "core/irrgamebase.h"

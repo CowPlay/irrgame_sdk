@@ -8,12 +8,14 @@
 #ifndef COLLECTIONS_H_
 #define COLLECTIONS_H_
 
-#include "core/base/irrgameTypes.h"
+//! Interfaces
+#include "core/collections/ICollection.h"
+#include "core/collections/ILeafNode.h"
+
 #include "core/collections/array.h"
 #include "core/collections/list/list.h"
 #include "core/collections/map/map.h"
 #include "core/collections/string.h"
-#include "scene/ISceneNode.h"
 
 //! array typedefs
 typedef irrgame::core::array<s32> arrayi;

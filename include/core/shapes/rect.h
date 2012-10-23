@@ -5,9 +5,8 @@
 #ifndef __IRR_RECT_H_INCLUDED__
 #define __IRR_RECT_H_INCLUDED__
 
-#include "core/base/irrgameTypes.h"
-#include "core/shapes/dimension2d.h"
-
+#include "core/irrgamebase.h"
+#include "core/shapes/vector2d.h"
 namespace irrgame
 {
 	namespace core

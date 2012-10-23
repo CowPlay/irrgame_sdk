@@ -6,8 +6,6 @@
  *  Created on: Aug 7, 2012
  *      Author: gregorytkach
  */
-#include "irrgamesdkCompileConfig.h"
-#ifdef _IRRGAME_MACOSX_
 
 #include "io/IFileSystem.h"
 #include "io/serialize/IAttributes.h"
@@ -143,9 +141,8 @@ namespace irrgame
 		}
 
 		//! Creates an IReadFile interface for reading files inside files
-		IReadFile* IFileSystem::createLimitReadFile(
-				const stringc& fileName, IReadFile* alreadyOpenedFile,
-				long pos, long areaSize)
+		IReadFile* IFileSystem::createLimitReadFile(const stringc& fileName,
+				IReadFile* alreadyOpenedFile, long pos, long areaSize)
 		{
 			return io::createLimitReadFile(fileName, alreadyOpenedFile, pos,
 					areaSize);
@@ -174,5 +171,4 @@ namespace irrgame
 
 	}
 }
-#endif
 

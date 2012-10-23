@@ -28,27 +28,27 @@ namespace irrgame
 			public:
 				//! Default constructor (null vector)
 				vector2d() :
-						X(0), Y(0)
+						_X(0), _Y(0)
 				{
 				}
 				//! Constructor with two different values
 				vector2d(T nx, T ny) :
-						X(nx), Y(ny)
+						_X(nx), _Y(ny)
 				{
 				}
 				//! Constructor with the same value for both members
 				explicit vector2d(T n) :
-						X(n), Y(n)
+						_X(n), _Y(n)
 				{
 				}
 				//! Copy constructor
 				vector2d(const vector2d<T>& other) :
-						X(other.X), Y(other.Y)
+						_X(other._X), _Y(other._Y)
 				{
 				}
 
 				vector2d(const dimension2d<T>& other) :
-						X(other.Width), Y(other.Height)
+						_X(other.Width), _Y(other.Height)
 				{
 				}
 
@@ -56,157 +56,159 @@ namespace irrgame
 
 				vector2d<T> operator-() const
 				{
-					return vector2d<T>(-X, -Y);
+					return vector2d<T>(-_X, -_Y);
 				}
 
 				vector2d<T>& operator=(const vector2d<T>& other)
 				{
-					X = other.X;
-					Y = other.Y;
+					_X = other._X;
+					_Y = other._Y;
 					return *this;
 				}
 
 				vector2d<T>& operator=(const dimension2d<T>& other)
 				{
-					X = other.Width;
-					Y = other.Height;
+					_X = other.Width;
+					_Y = other.Height;
 					return *this;
 				}
 
 				vector2d<T> operator+(const vector2d<T>& other) const
 				{
-					return vector2d<T>(X + other.X, Y + other.Y);
+					return vector2d<T>(_X + other._X, _Y + other._Y);
 				}
 				vector2d<T> operator+(const dimension2d<T>& other) const
 				{
-					return vector2d<T>(X + other.Width, Y + other.Height);
+					return vector2d<T>(_X + other.Width, _Y + other.Height);
 				}
 				vector2d<T>& operator+=(const vector2d<T>& other)
 				{
-					X += other.X;
-					Y += other.Y;
+					_X += other._X;
+					_Y += other._Y;
 					return *this;
 				}
 				vector2d<T> operator+(const T v) const
 				{
-					return vector2d<T>(X + v, Y + v);
+					return vector2d<T>(_X + v, _Y + v);
 				}
 				vector2d<T>& operator+=(const T v)
 				{
-					X += v;
-					Y += v;
+					_X += v;
+					_Y += v;
 					return *this;
 				}
 				vector2d<T>& operator+=(const dimension2d<T>& other)
 				{
-					X += other.Width;
-					Y += other.Height;
+					_X += other.Width;
+					_Y += other.Height;
 					return *this;
 				}
 
 				vector2d<T> operator-(const vector2d<T>& other) const
 				{
-					return vector2d<T>(X - other.X, Y - other.Y);
+					return vector2d<T>(_X - other._X, _Y - other._Y);
 				}
 				vector2d<T> operator-(const dimension2d<T>& other) const
 				{
-					return vector2d<T>(X - other.Width, Y - other.Height);
+					return vector2d<T>(_X - other.Width, _Y - other.Height);
 				}
 				vector2d<T>& operator-=(const vector2d<T>& other)
 				{
-					X -= other.X;
-					Y -= other.Y;
+					_X -= other._X;
+					_Y -= other._Y;
 					return *this;
 				}
 				vector2d<T> operator-(const T v) const
 				{
-					return vector2d<T>(X - v, Y - v);
+					return vector2d<T>(_X - v, _Y - v);
 				}
 				vector2d<T>& operator-=(const T v)
 				{
-					X -= v;
-					Y -= v;
+					_X -= v;
+					_Y -= v;
 					return *this;
 				}
 				vector2d<T>& operator-=(const dimension2d<T>& other)
 				{
-					X -= other.Width;
-					Y -= other.Height;
+					_X -= other.Width;
+					_Y -= other.Height;
 					return *this;
 				}
 
 				vector2d<T> operator*(const vector2d<T>& other) const
 				{
-					return vector2d<T>(X * other.X, Y * other.Y);
+					return vector2d<T>(_X * other._X, _Y * other._Y);
 				}
 				vector2d<T>& operator*=(const vector2d<T>& other)
 				{
-					X *= other.X;
-					Y *= other.Y;
+					_X *= other._X;
+					_Y *= other._Y;
 					return *this;
 				}
 				vector2d<T> operator*(const T v) const
 				{
-					return vector2d<T>(X * v, Y * v);
+					return vector2d<T>(_X * v, _Y * v);
 				}
 				vector2d<T>& operator*=(const T v)
 				{
-					X *= v;
-					Y *= v;
+					_X *= v;
+					_Y *= v;
 					return *this;
 				}
 
 				vector2d<T> operator/(const vector2d<T>& other) const
 				{
-					return vector2d<T>(X / other.X, Y / other.Y);
+					return vector2d<T>(_X / other._X, _Y / other._Y);
 				}
 				vector2d<T>& operator/=(const vector2d<T>& other)
 				{
-					X /= other.X;
-					Y /= other.Y;
+					_X /= other._X;
+					_Y /= other._Y;
 					return *this;
 				}
 				vector2d<T> operator/(const T v) const
 				{
-					return vector2d<T>(X / v, Y / v);
+					return vector2d<T>(_X / v, _Y / v);
 				}
 				vector2d<T>& operator/=(const T v)
 				{
-					X /= v;
-					Y /= v;
+					_X /= v;
+					_Y /= v;
 					return *this;
 				}
 
-				//! sort in order X, Y. Equality with rounding tolerance.
+				//! sort in order _X, _Y. Equality with rounding tolerance.
 				bool operator<=(const vector2d<T>&other) const
 				{
-					return (X < other.X || core::equals(X, other.X))
-							|| (core::equals(X, other.X)
-									&& (Y < other.Y || core::equals(Y, other.Y)));
+					return (_X < other._X || core::equals(_X, other._X))
+							|| (core::equals(_X, other._X)
+									&& (_Y < other._Y
+											|| core::equals(_Y, other._Y)));
 				}
 
-				//! sort in order X, Y. Equality with rounding tolerance.
+				//! sort in order _X, _Y. Equality with rounding tolerance.
 				bool operator>=(const vector2d<T>&other) const
 				{
-					return (X > other.X || core::equals(X, other.X))
-							|| (core::equals(X, other.X)
-									&& (Y > other.Y || core::equals(Y, other.Y)));
+					return (_X > other._X || core::equals(_X, other._X))
+							|| (core::equals(_X, other._X)
+									&& (_Y > other._Y
+											|| core::equals(_Y, other._Y)));
 				}
 
-				//! sort in order X, Y. Difference must be above rounding tolerance.
+				//! sort in order _X, _Y. Difference must be above rounding tolerance.
 				bool operator<(const vector2d<T>&other) const
 				{
-					return (X < other.X && !core::equals(X, other.X))
-							|| (core::equals(X, other.X) && Y < other.Y
-									&& !core::equals(Y, other.Y));
+					return (_X < other._X && !core::equals(_X, other._X))
+							|| (core::equals(_X, other._X) && _Y < other._Y
+									&& !core::equals(_Y, other._Y));
 				}
 
-				//! sort in order X, Y. Difference must be above rounding tolerance.
+				//! sort in order _X, _Y. Difference must be above rounding tolerance.
 				bool operator>(const vector2d<T>&other) const
 				{
-					return (X > other.X && !core::equals(X, other.X))
-							|| (core::equals(X, other.X) && Y > other.Y
-									&& !core::equals(Y, other.Y));
+					return (_X > other._X && !core::equals(_X, other._X))
+							|| (core::equals(_X, other._X) && _Y > other._Y
+									&& !core::equals(_Y, other._Y));
 				}
 
 				bool operator==(const vector2d<T>& other) const
@@ -226,19 +228,20 @@ namespace irrgame
 				 \return True if the two vector are (almost) equal, else false. */
 				bool equals(const vector2d<T>& other) const
 				{
-					return core::equals(X, other.X) && core::equals(Y, other.Y);
+					return core::equals(_X, other._X)
+							&& core::equals(_Y, other._Y);
 				}
 
 				vector2d<T>& set(T nx, T ny)
 				{
-					X = nx;
-					Y = ny;
+					_X = nx;
+					_Y = ny;
 					return *this;
 				}
 				vector2d<T>& set(const vector2d<T>& p)
 				{
-					X = p.X;
-					Y = p.Y;
+					_X = p._X;
+					_Y = p._Y;
 					return *this;
 				}
 
@@ -246,7 +249,7 @@ namespace irrgame
 				/** \return The length of the vector. */
 				T getLength() const
 				{
-					return core::squareroot(X * X + Y * Y);
+					return core::squareroot(_X * _X + _Y * _Y);
 				}
 
 				//! Get the squared length of this vector
@@ -254,7 +257,7 @@ namespace irrgame
 				 \return The squared length of the vector. */
 				T getLengthSQ() const
 				{
-					return X * X + Y * Y;
+					return _X * _X + _Y * _Y;
 				}
 
 				//! Get the dot product of this vector with another.
@@ -262,7 +265,7 @@ namespace irrgame
 				 \return The dot product of the two vectors. */
 				T dotProduct(const vector2d<T>& other) const
 				{
-					return X * other.X + Y * other.Y;
+					return _X * other._X + _Y * other._Y;
 				}
 
 				//! Gets distance from another point.
@@ -271,7 +274,7 @@ namespace irrgame
 				 \return Distance from other point. */
 				T getDistanceFrom(const vector2d<T>& other) const
 				{
-					return vector2d<T>(X - other.X, Y - other.Y).getLength();
+					return vector2d<T>(_X - other._X, _Y - other._Y).getLength();
 				}
 
 				//! Returns squared distance from another point.
@@ -280,7 +283,7 @@ namespace irrgame
 				 \return Squared distance from other point. */
 				T getDistanceFromSQ(const vector2d<T>& other) const
 				{
-					return vector2d<T>(X - other.X, Y - other.Y).getLengthSQ();
+					return vector2d<T>(_X - other._X, _Y - other._Y).getLengthSQ();
 				}
 
 				//! rotates the point anticlockwise around a center by an amount of degrees.
@@ -294,13 +297,13 @@ namespace irrgame
 					const f32 cs = cos(degrees);
 					const f32 sn = sin(degrees);
 
-					X -= center.X;
-					Y -= center.Y;
+					_X -= center._X;
+					_Y -= center._Y;
 
-					set((T) (X * cs - Y * sn), (T) (X * sn + Y * cs));
+					set((T) (_X * cs - _Y * sn), (T) (_X * sn + _Y * cs));
 
-					X += center.X;
-					Y += center.Y;
+					_X += center._X;
+					_Y += center._Y;
 					return *this;
 				}
 
@@ -309,12 +312,12 @@ namespace irrgame
 				 \return Reference to this vector, after normalization. */
 				vector2d<T>& normalize()
 				{
-					f32 length = (f32) (X * X + Y * Y);
+					f32 length = (f32) (_X * _X + _Y * _Y);
 					if (core::equals(length, 0.f))
 						return *this;
 					length = core::reciprocal_squareroot(length);
-					X = (T) (X * length);
-					Y = (T) (Y * length);
+					_X = (T) (_X * length);
+					_Y = (T) (_Y * length);
 					return *this;
 				}
 
@@ -324,20 +327,20 @@ namespace irrgame
 				 \return Returns a value between 0 and 360. */
 				f32 getAngleTrig() const
 				{
-					if (Y == 0)
-						return X < 0 ? 180 : 0;
-					else if (X == 0)
-						return Y < 0 ? 270 : 90;
+					if (_Y == 0)
+						return _X < 0 ? 180 : 0;
+					else if (_X == 0)
+						return _Y < 0 ? 270 : 90;
 
-					if (Y > 0)
-						if (X > 0)
-							return atan(Y / X) * RADTODEG;
+					if (_Y > 0)
+						if (_X > 0)
+							return atan(_Y / _X) * RADTODEG;
 						else
-							return 180.0 - atan(Y / -X) * RADTODEG;
-					else if (X > 0)
-						return 360.0 - atan(-Y / X) * RADTODEG;
+							return 180.0 - atan(_Y / -_X) * RADTODEG;
+					else if (_X > 0)
+						return 360.0 - atan(-_Y / _X) * RADTODEG;
 					else
-						return 180.0 + atan(-Y / -X) * RADTODEG;
+						return 180.0 + atan(-_Y / -_X) * RADTODEG;
 				}
 
 				//! Calculates the angle of this vector in degrees in the counter trigonometric sense.
@@ -345,23 +348,23 @@ namespace irrgame
 				 \return Returns a value between 0 and 360. */
 				inline f32 getAngle() const
 				{
-					if (Y == 0) // corrected thanks to a suggestion by Jox
-						return X < 0 ? 180 : 0;
-					else if (X == 0)
-						return Y < 0 ? 90 : 270;
+					if (_Y == 0) // corrected thanks to a suggestion by Jox
+						return _X < 0 ? 180 : 0;
+					else if (_X == 0)
+						return _Y < 0 ? 90 : 270;
 
 					// don't use getLength here to avoid precision loss with s32 vectors
-					f32 tmp = Y / sqrt((f32) (X * X + Y * Y));
+					f32 tmp = _Y / sqrt((f32) (_X * _X + _Y * _Y));
 					tmp = atan(core::squareroot(1 - tmp * tmp) / tmp)
 							* RADTODEG;
 
-					if (X > 0 && Y > 0)
+					if (_X > 0 && _Y > 0)
 						return tmp + 270;
-					else if (X > 0 && Y < 0)
+					else if (_X > 0 && _Y < 0)
 						return tmp + 90;
-					else if (X < 0 && Y < 0)
+					else if (_X < 0 && _Y < 0)
 						return 90 - tmp;
-					else if (X < 0 && Y > 0)
+					else if (_X < 0 && _Y > 0)
 						return 270 - tmp;
 
 					return tmp;
@@ -372,15 +375,15 @@ namespace irrgame
 				 \return Returns a value between 0 and 90. */
 				inline f32 getAngleWith(const vector2d<T>& b) const
 				{
-					f32 tmp = X * b.X + Y * b.Y;
+					f32 tmp = _X * b._X + _Y * b._Y;
 
 					if (tmp == 0.0)
 						return 90.0;
 
 					tmp = tmp
 							/ core::squareroot(
-									(f32) ((X * X + Y * Y)
-											* (b.X * b.X + b.Y * b.Y)));
+									(f32) ((_X * _X + _Y * _Y)
+											* (b._X * b._X + b._Y * b._Y)));
 					if (tmp < 0.0)
 						tmp = -tmp;
 
@@ -395,15 +398,15 @@ namespace irrgame
 				bool isBetweenPoints(const vector2d<T>& begin,
 						const vector2d<T>& end) const
 				{
-					if (begin.X != end.X)
+					if (begin._X != end._X)
 					{
-						return ((begin.X <= X && X <= end.X)
-								|| (begin.X >= X && X >= end.X));
+						return ((begin._X <= _X && _X <= end._X)
+								|| (begin._X >= _X && _X >= end._X));
 					}
 					else
 					{
-						return ((begin.Y <= Y && Y <= end.Y)
-								|| (begin.Y >= Y && Y >= end.Y));
+						return ((begin._Y <= _Y && _Y <= end._Y)
+								|| (begin._Y >= _Y && _Y >= end._Y));
 					}
 				}
 
@@ -416,8 +419,8 @@ namespace irrgame
 						f32 d) const
 				{
 					f32 inv = 1.0f - d;
-					return vector2d<T>((T) (other.X * inv + X * d),
-							(T) (other.Y * inv + Y * d));
+					return vector2d<T>((T) (other._X * inv + _X * d),
+							(T) (other._Y * inv + _Y * d));
 				}
 
 				//! Creates a quadratically interpolated vector between this and two other vectors.
@@ -436,8 +439,8 @@ namespace irrgame
 					const f32 mul2 = d * d;
 
 					return vector2d<T>(
-							(T) (X * mul0 + v2.X * mul1 + v3.X * mul2),
-							(T) (Y * mul0 + v2.Y * mul1 + v3.Y * mul2));
+							(T) (_X * mul0 + v2._X * mul1 + v3._X * mul2),
+							(T) (_Y * mul0 + v2._Y * mul1 + v3._Y * mul2));
 				}
 
 				//! Sets this vector to the linearly interpolated vector between a and b.
@@ -449,16 +452,41 @@ namespace irrgame
 				vector2d<T>& interpolate(const vector2d<T>& a,
 						const vector2d<T>& b, f32 d)
 				{
-					X = (T) ((f32) b.X + ((a.X - b.X) * d));
-					Y = (T) ((f32) b.Y + ((a.Y - b.Y) * d));
+					_X = (T) ((f32) b._X + ((a._X - b._X) * d));
+					_Y = (T) ((f32) b._Y + ((a._Y - b._Y) * d));
 					return *this;
 				}
 
-				//! X coordinate of vector.
-				T X;
+				//! Getter\setter for _X coordinate of the vector
+				T& X()
+				{
+					return _X;
+				}
 
-				//! Y coordinate of vector.
-				T Y;
+				//! Getter\setter for _Y coordinate of the vector
+				T& Y()
+				{
+					return _Y;
+				}
+
+				//! Getter for _X coordinate of the const vector
+				const T X() const
+				{
+					return _X;
+				}
+
+				//! Getter for _Y coordinate of the const vector
+				const T Y() const
+				{
+					return _Y;
+				}
+			private:
+
+				//! _X coordinate of vector.
+				T _X;
+
+				//! _Y coordinate of vector.
+				T _Y;
 		};
 
 		template<class S, class T>
@@ -470,14 +498,14 @@ namespace irrgame
 		// These methods are declared in dimension2d, but need definitions of vector2d
 		template<class T>
 		dimension2d<T>::dimension2d(const vector2d<T>& other) :
-				Width(other.X), Height(other.Y)
+				Width(other._X), Height(other._Y)
 		{
 		}
 
 		template<class T>
 		bool dimension2d<T>::operator==(const vector2d<T>& other) const
 		{
-			return Width == other.X && Height == other.Y;
+			return Width == other._X && Height == other._Y;
 		}
 
 	} // end namespace core

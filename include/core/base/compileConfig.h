@@ -1,82 +1,16 @@
 /*
- * irrgameTypes.h
+ * compileConfig.h
  *
- *  Created on: Jul 23, 2012
+ *  Created on: Sep 14, 2012
  *      Author: gregorytkach
  */
 
-// Copyright (C) 2002-2009 Nikolaus Gebhardt
-// This file is part of the "Irrlicht Engine".
-// For conditions of distribution and use, see copyright notice in irrlicht.h
-#ifndef IRRGAMETYPES_H_
-#define IRRGAMETYPES_H_
+#ifndef COMPILECONFIG_H_
+#define COMPILECONFIG_H_
 
-//! 8 bit unsigned variable.
-/** This is a typedef for unsigned char, it ensures portability of the engine. */
-#ifdef _MSC_VER
-typedef unsigned __int8 u8;
-#else
-typedef unsigned char u8;
-#endif
-
-//! 8 bit signed variable.
-/** This is a typedef for signed char, it ensures portability of the engine. */
-#ifdef _MSC_VER
-typedef __int8 s8;
-#else
-typedef signed char s8;
-#endif
-
-//! 8 bit character variable.
-/** This is a typedef for char, it ensures portability of the engine. */
-typedef char c8;
-
-//! 16 bit unsigned variable.
-/** This is a typedef for unsigned short, it ensures portability of the engine. */
-#ifdef _MSC_VER
-typedef unsigned __int16 u16;
-#else
-typedef unsigned short u16;
-#endif
-
-//! 16 bit signed variable.
-/** This is a typedef for signed short, it ensures portability of the engine. */
-#ifdef _MSC_VER
-typedef __int16 s16;
-#else
-typedef signed short s16;
-#endif
-
-//! 32 bit unsigned variable.
-/** This is a typedef for unsigned int, it ensures portability of the engine. */
-#ifdef _MSC_VER
-typedef unsigned __int32 u32;
-#else
-typedef unsigned int u32;
-#endif
-
-//! 32 bit signed variable.
-/** This is a typedef for signed int, it ensures portability of the engine. */
-#ifdef _MSC_VER
-typedef __int32 s32;
-#else
-typedef signed int s32;
-#endif
-
-//! 32 bit floating point variable.
-/** This is a typedef for float, it ensures portability of the engine. */
-typedef float f32;
-
-//! Type name for character type used by the file system.
-/** Should the wide character version of the FileSystem be used it is a
- 16 bit character variable. Used for unicode Filesystem and unicode strings.
- Else it is a 8 bit character variable. Used for ansi Filesystem and non-unicode
- strings
- */
-//TODO: replace to c8
-//typedef char fschar_t;
-//} // end namespace irr
-//! define a break macro for debugging.
+// --------------------------------------------
+//
+//! define a assert macro for debugging.
 #if defined(DEBUG)
 #if defined(_IRR_WINDOWS_API_) && defined(_MSC_VER) && !defined (_WIN32_WCE)
 #if defined(WIN64) || defined(_WIN64) // using portable common solution for x64 configuration
@@ -93,6 +27,7 @@ typedef float f32;
 #define IRR_ASSERT( _CONDITION_ )
 #endif
 
+//! Provide deprecate attribute
 //! Defines a deprecated macro which generates a warning at compile time
 /** The usage is simple
  For typedef:		typedef _IRR_DEPRECATED_ int test1;
@@ -109,6 +44,40 @@ typedef float f32;
 #else
 #define _IRR_DEPRECATED_
 #endif
+
+//! creates four CC codes used in Irrlicht for simple ids
+/** some compilers can create those by directly writing the
+ code like 'code', but some generate warnings so we use this macro here */
+#define MAKE_IRR_ID(c0, c1, c2, c3) \
+		((u32)(u8)(c0) | ((u32)(u8)(c1) << 8) | \
+		((u32)(u8)(c2) << 16) | ((u32)(u8)(c3) << 24 ))
+
+// --------------------------------------------
+//! MacOS X
+
+//TODO:detect MacOS X
+#if defined(__APPLE__) || defined(MACOSX)
+#ifndef MACOSX	//legacy support
+#define MACOSX
+#endif
+
+#define _IRRGAME_MACOSX_
+#endif
+
+//! io
+#define LINEBREAK "\r"
+
+//! threads
+#define PRIORITY_LOW	-20
+#define PRIORITY_NORMAL	0
+#define PRIORITY_HIGH	20
+
+
+
+// --------------------------------------------
+//! Windows
+
+//#define LINEBREAK "\r\n"
 
 //! Defines a small statement to work around a microsoft compiler bug.
 /** The microsoft compiler 7.0 - 7.1 has a bug:
@@ -145,11 +114,4 @@ typedef float f32;
 //#define _CRT_NONSTDC_NO_DEPRECATE 1
 #endif
 
-//! creates four CC codes used in Irrlicht for simple ids
-/** some compilers can create those by directly writing the
- code like 'code', but some generate warnings so we use this macro here */
-#define MAKE_IRR_ID(c0, c1, c2, c3) \
-		((u32)(u8)(c0) | ((u32)(u8)(c1) << 8) | \
-		((u32)(u8)(c2) << 16) | ((u32)(u8)(c3) << 24 ))
-
-#endif /* IRRGAMETYPES_H_ */
+#endif /* COMPILECONFIG_H_ */

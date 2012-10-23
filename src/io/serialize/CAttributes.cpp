@@ -27,7 +27,6 @@
 #include "io/serialize/CVector3DAttribute.h"
 #include "io/serialize/CQuaternionAttribute.h"
 
-#include "irrgameConstants.h"
 namespace irrgame
 {
 	namespace io

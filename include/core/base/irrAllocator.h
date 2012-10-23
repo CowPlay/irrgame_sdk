@@ -5,7 +5,7 @@
 #ifndef __IRR_ALLOCATOR_H_INCLUDED__
 #define __IRR_ALLOCATOR_H_INCLUDED__
 
-#include "core/base/irrgameTypes.h"
+#include "core/base/baseTypes.h"
 #include <new>
 // necessary for older compilers
 #include <memory.h>
@@ -14,11 +14,6 @@ namespace irrgame
 {
 	namespace core
 	{
-#ifdef DEBUG_CLIENTBLOCK
-#undef DEBUG_CLIENTBLOCK
-#define DEBUG_CLIENTBLOCK new
-#endif
-
 		//! Very simple allocator implementation, containers using it can be used across dll boundaries
 		template<typename T>
 		class irrAllocator
@@ -100,11 +95,6 @@ namespace irrgame
 					ptr->~T();
 				}
 		};
-
-#ifdef DEBUG_CLIENTBLOCK
-#undef DEBUG_CLIENTBLOCK
-#define DEBUG_CLIENTBLOCK new( _CLIENT_BLOCK, __FILE__, __LINE__)
-#endif
 
 		//! defines an allocation strategy
 		enum eAllocStrategy

@@ -71,7 +71,7 @@ namespace irrgame
 			{
 				entry.IsDirectory = true;
 				entry.Name[entry.Name.size() - 1] = 0;
-				entry.Name.validate();
+//				entry.Name.validate();
 			}
 
 			if (IgnoreCase)
@@ -129,7 +129,7 @@ namespace irrgame
 			{
 				entry.IsDirectory = true;
 				entry.Name[entry.Name.size() - 1] = 0;
-				entry.Name.validate();
+//				entry.Name.validate();
 			}
 
 			if (IgnoreCase)

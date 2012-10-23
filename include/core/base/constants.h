@@ -1,12 +1,12 @@
 /*
- * irrgameConstants.h
+ * constants.h
  *
- *  Created on: Aug 21, 2012
+ *  Created on: Sep 14, 2012
  *      Author: gregorytkach
  */
 
-#ifndef IRRGAMECONSTANTS_H_
-#define IRRGAMECONSTANTS_H_
+#ifndef CONSTANTS_H_
+#define CONSTANTS_H_
 
 //! Player config
 
@@ -17,10 +17,11 @@
 #define XML_ATTR_APP_FILE				"app_file"
 #define XML_ATTR_APP_CREATOR			"app_creator"
 
+//TODO: make constants like static fields
 enum IRR_CONSTANTS
 {
 	//Use in collections
 	irrNotFound = -1
 };
 
-#endif /* IRRGAMECONSTANTS_H_ */
+#endif /* CONSTANTS_H_ */

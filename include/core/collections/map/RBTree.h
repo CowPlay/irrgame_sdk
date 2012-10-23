@@ -7,7 +7,7 @@
 
 #ifndef RBTREE_H_
 #define RBTREE_H_
-#include "core/base/irrgameTypes.h"
+
 namespace irrgame
 {
 	namespace core

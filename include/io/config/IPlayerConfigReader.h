@@ -10,6 +10,8 @@
 
 #include "io/config/IConfigReader.h"
 #include "core/irrgamecollections.h"
+#include "core/irrgameshapes.h"
+
 namespace irrgame
 {
 	class irrgamePlayer;
@@ -25,6 +27,8 @@ namespace irrgame
 				stringc AppFile;
 				stringc AppCreator;
 
+				//! Block <video>
+				dimension2du ScreenSize;
 		};
 
 		class IPlayerConfigReader: public IConfigReader

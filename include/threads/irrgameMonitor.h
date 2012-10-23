@@ -8,7 +8,8 @@
 #ifndef IRRGAMEMONITOR_H_
 #define IRRGAMEMONITOR_H_
 
-#include "core/irrgamebase.h"
+#include "core/engine/IReferenceCounted.h"
+
 namespace irrgame
 {
 	namespace threads

@@ -7,7 +7,6 @@
 
 #include "CPlayerConfigReader.h"
 #include "io/serialize/IAttributes.h"
-#include "irrgameConstants.h"
 
 namespace irrgame
 {

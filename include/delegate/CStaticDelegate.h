@@ -2,49 +2,70 @@
 #define __C_STATIC_DELEGATE_H_INCLUDED__
 
 #include "string.h"
-
-template<class TRet TEMPLATE_PARAMS>
-class C_STATIC_DELEGATE : public I_DELEGATE<TRet TEMPLATE_ARGS>
+namespace irrgame
 {
-	public:
-
-	typedef TRet (*PFunc)(PARAMS);
-
-	C_STATIC_DELEGATE(PFunc pFunc)
+	template<class TRet, class TP1>
+	class CStaticDelegate: public IDelegate<TRet, TP1>
 	{
-		m_pFunc = pFunc;
+		public:
+			typedef TRet (*PFunc)(TP1 p1);
+
+		public:
+			//! Default construcotr
+			CStaticDelegate(PFunc pFunc);
+
+			//! Destructor
+			virtual ~CStaticDelegate();
+
+			virtual TRet Invoke(TP1 p1);
+
+			virtual bool Compare(IDelegate<TRet, TP1>* pDelegate);
+
+		private:
+			//! Pointer to static function
+			PFunc Func;
+	};
+
+	//! Default construcotr
+	template<class TRet, class TP1>
+	CStaticDelegate<TRet, TP1>::CStaticDelegate(PFunc func) :
+			Func(func)
+	{
 	}
 
-	virtual ~C_STATIC_DELEGATE()
+	//! Destructor
+	template<class TRet, class TP1>
+	CStaticDelegate<TRet, TP1>::~CStaticDelegate()
 	{
 	}
 
-	virtual TRet Invoke(PARAMS)
+	template<class TRet, class TP1>
+	TRet CStaticDelegate<TRet, TP1>::Invoke(TP1 p1)
 	{
-		return m_pFunc(ARGS);
+		return Func(p1);
 	}
 
-	virtual bool Compare(I_DELEGATE<TRet TEMPLATE_ARGS>* pDelegate)
+	template<class TRet, class TP1>
+	bool CStaticDelegate<TRet, TP1>::Compare(IDelegate<TRet, TP1>* pDelegate)
 	{
-		C_STATIC_DELEGATE<TRet TEMPLATE_ARGS>* pStaticDel =
-		dynamic_cast<C_STATIC_DELEGATE<TRet TEMPLATE_ARGS>*>(pDelegate);
+		bool result = true;
 
-		if(pStaticDel == NULL || pStaticDel->m_pFunc != m_pFunc)
-		return false;
+		CStaticDelegate<TRet, TP1>* pStaticDel = dynamic_cast<CStaticDelegate<
+				TRet, TP1>*>(pDelegate);
 
-		return true;
+		if (pStaticDel == NULL || pStaticDel->Func != Func)
+			result = false;
+
+		return result;
 	}
 
-	private:
-	//! Pointer to static function
-	PFunc m_pFunc;
-};
-
-//!Creator
-template<class TRet TEMPLATE_PARAMS>
-I_DELEGATE<TRet TEMPLATE_ARGS>* NewDelegate(TRet (*pFunc)(PARAMS))
-{
-	return new C_STATIC_DELEGATE<TRet TEMPLATE_ARGS>(pFunc);
+	//!Creator
+	template<class TRet, class TP1>
+	IDelegate<TRet, TP1>* NewDelegate(TRet (*pFunc)(TP1 p1))
+	{
+		return new CStaticDelegate<TRet, TP1>(pFunc);
+	}
 }
+// namespace irrgame
 
 #endif

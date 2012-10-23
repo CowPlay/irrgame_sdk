@@ -5,8 +5,7 @@
 #ifndef __IRR_MATH_H_INCLUDED__
 #define __IRR_MATH_H_INCLUDED__
 
-#include "irrgamesdkCompileConfig.h"
-#include "core/base/irrgameTypes.h"
+#include "core/irrgamebase.h"
 
 #include <math.h>
 #include <float.h>
@@ -321,24 +320,6 @@ namespace irrgame
 			return floorf(x + 0.5f);
 		}
 
-		REALINLINE void clearFPUException()
-		{
-
-			//TODO: review
-//#ifdef IRRLICHT_FAST_MATH
-//			return;
-//#ifdef feclearexcept
-//			feclearexcept(FE_ALL_EXCEPT);
-//#elif defined(_MSC_VER)
-//			__asm fnclex;
-//#elif defined(__GNUC__) && defined(__x86__)
-//			__asm__ __volatile__ ("fclex \n\t");
-//#else
-//#  warn clearFPUException not supported.
-//#endif
-//#endif
-		}
-
 		// calculate: sqrt ( x )
 		REALINLINE f32 squareroot(const f32 f)
 		{
@@ -400,15 +381,15 @@ namespace irrgame
 			__asm addss xmm0, xmm0// xmm0 = 2 * rcpss(f)
 			__asm subss xmm0, xmm1// xmm0 = 2 * rcpss(f)
 								  //        - f * rcpss(f) * rcpss(f)
-			__asm movss rec, xmm0 // return xmm0
+			__asm movss rec, xmm0// return xmm0
 			return rec;
 
-								  //! i do not divide through 0.. (fpu expection)
-								  // instead set f to a high value to get a return value near zero..
-								  // -1000000000000.f.. is use minus to stay negative..
-								  // must test's here (plane.normal dot anything ) checks on <= 0.f
-								  //u32 x = (-(AIR(f) != 0 ) >> 31 ) & ( IR(f) ^ 0xd368d4a5 ) ^ 0xd368d4a5;
-								  //return 1.f / FR ( x );
+			//! i do not divide through 0.. (fpu expection)
+			// instead set f to a high value to get a return value near zero..
+			// -1000000000000.f.. is use minus to stay negative..
+			// must test's here (plane.normal dot anything ) checks on <= 0.f
+			//u32 x = (-(AIR(f) != 0 ) >> 31 ) & ( IR(f) ^ 0xd368d4a5 ) ^ 0xd368d4a5;
+			//return 1.f / FR ( x );
 
 #else // no fast math
 			return 1.f / f;
@@ -432,7 +413,7 @@ namespace irrgame
 			__asm addss xmm0, xmm0// xmm0 = 2 * rcpss(f)
 			__asm subss xmm0, xmm1// xmm0 = 2 * rcpss(f)
 								  //        - f * rcpss(f) * rcpss(f)
-			__asm movss rec, xmm0 // return xmm0
+			__asm movss rec, xmm0// return xmm0
 			return rec;
 
 			/*

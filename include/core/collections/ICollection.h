@@ -8,8 +8,8 @@
 #ifndef ICOLLECTION_H_
 #define ICOLLECTION_H_
 
-#include "core/base/irrgameTypes.h"
-#include "irrgameConstants.h"
+#include "core/base/baseTypes.h"
+
 namespace irrgame
 {
 	namespace core

@@ -7,7 +7,7 @@
 
 #ifndef IBYTESWAP_H_
 #define IBYTESWAP_H_
-#include "core/base/irrgameTypes.h"
+#include "core/irrgamebase.h"
 
 namespace irrgame
 {

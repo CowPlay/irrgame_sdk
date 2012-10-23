@@ -9,6 +9,8 @@
 #define IRRGAMEAPPLICATION_H_
 
 #include "core/irrgamebase.h"
+
+#include "core/engine/IReferenceCounted.h"
 namespace irrgame
 {
 	class irrgamePlayer;
@@ -17,13 +19,13 @@ namespace irrgame
 	{
 
 		public:
+			//! Default constructor
+			//			irrgameApp(irrgamePlayer* player);
+
 			//! Destructor
 			virtual ~irrgameApp()
 			{
 			}
-
-			//! Default constructor
-//			irrgameApp(irrgamePlayer* player);
 
 			virtual void run() = 0;
 

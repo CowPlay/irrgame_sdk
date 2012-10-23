@@ -5,7 +5,7 @@
 #ifndef __IRR_LINE_3D_H_INCLUDED__
 #define __IRR_LINE_3D_H_INCLUDED__
 
-#include "core/base/irrgameTypes.h"
+#include "core/irrgamebase.h"
 #include "core/shapes/vector3d.h"
 
 namespace irrgame

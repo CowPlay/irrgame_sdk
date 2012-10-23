@@ -5,8 +5,7 @@
 #ifndef __IRR_STRING_H_INCLUDED__
 #define __IRR_STRING_H_INCLUDED__
 
-#include "core/base/irrAllocator.h"
-#include "core/math/irrMath.h"
+
 #include "core/collections/ICollection.h"
 #include "core/coreutil.h"
 #include "threads/irrgameMonitor.h"
@@ -85,8 +84,8 @@ namespace irrgame
 				//! Return True if this string is empty. Otherwise return False.
 				bool empty();
 
-				//! Return True if this string have only whitespaces. Otherwise returns False.
-				bool blank();
+//				//! Return True if this string have only whitespaces. Otherwise returns False.
+//				bool blank();
 
 				//! Returns character string
 				/** \return pointer to C-style NUL terminated string. */
@@ -181,7 +180,7 @@ namespace irrgame
 				/** \param i Number to append. */
 				string& operator +=(const f32 i);
 
-				//! Replaces all characters of a special type with another one
+				//! Replaces all characters of a specify type with another one
 				/** \param toReplace Character to replace.
 				 \param replaceWith Character replacing the old one. */
 				void replace(c8 toReplace, c8 replaceWith);
@@ -202,9 +201,6 @@ namespace irrgame
 				 following after the erased element have to be copied.
 				 \param index: Index of element to be erased. */
 				void erase(u32 index);
-
-				//! verify the existing string.
-				void validate();
 
 				//! gets the last char of a string or null
 				c8 lastChar() const;
@@ -399,6 +395,7 @@ namespace irrgame
 		//! Assignment operator
 		inline string& string::operator=(const string& other)
 		{
+			//handle self-assignment
 			if (this == &other)
 				return *this;
 
@@ -468,7 +465,12 @@ namespace irrgame
 		//! Append operator for other strings
 		inline string string::operator+(const string& other) const
 		{
-			return string::operator +(other.Array);
+			Monitor->enter();
+			string result(*this);
+			result.append(other);
+			Monitor->exit();
+
+			return result;
 		}
 
 		//! Append operator for strings, ascii and unicode
@@ -621,21 +623,21 @@ namespace irrgame
 			return result;
 		}
 
-		//! Return True if this string have only whitespaces. Otherwise returns False.
-		inline bool string::blank()
-		{
-			IRR_ASSERT(false);
-			bool result = false;
-
-			Monitor->enter();
-
-			//TODO implement it
-
-			Monitor->exit();
-
-			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return result;
-		}
+//		//! Return True if this string have only whitespaces. Otherwise returns False.
+//		inline bool string::blank()
+//		{
+//			IRR_ASSERT(false);
+//			bool result = false;
+//
+//			Monitor->enter();
+//
+//			//TODO implement it
+//
+//			Monitor->exit();
+//
+//			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+//			return result;
+//		}
 
 		//! Returns character string
 		/** \return pointer to C-style NUL terminated string. */
@@ -915,7 +917,7 @@ namespace irrgame
 
 			Monitor->enter();
 
-			for (u32 i = Used - 1; i >= 0; --i)
+			for (u32 i = Used - 1; i > 0; --i)
 				if (Array[i] == c)
 				{
 					result = i;
@@ -1130,36 +1132,6 @@ namespace irrgame
 				Array[i - 1] = Array[i];
 
 			--Used;
-
-			Monitor->exit();
-		}
-
-		//! verify the existing string.
-		inline void string::validate()
-		{
-			Monitor->enter();
-
-			// terminate on existing null
-			for (u32 i = 0; i < Allocated; ++i)
-			{
-				if (Array[i] == 0)
-				{
-					Used = i + 1;
-					Monitor->exit();
-					return;
-				}
-			}
-
-			// terminate
-			if (Allocated > 0)
-			{
-				Used = Allocated - 1;
-				Array[Used] = 0;
-			}
-			else
-			{
-				Used = 0;
-			}
 
 			Monitor->exit();
 		}

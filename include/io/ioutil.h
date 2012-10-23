@@ -23,11 +23,11 @@ namespace irrgame
 				return 0;
 
 			extPos += 1;
-			if (filename.equalsSubstringIgnoreCase(ext0, extPos))
+			if (filename.equalsIgnoreCase(ext0, extPos))
 				return 1;
-			if (filename.equalsSubstringIgnoreCase(ext1, extPos))
+			if (filename.equalsIgnoreCase(ext1, extPos))
 				return 2;
-			if (filename.equalsSubstringIgnoreCase(ext2, extPos))
+			if (filename.equalsIgnoreCase(ext2, extPos))
 				return 3;
 			return 0;
 		}
@@ -100,7 +100,7 @@ namespace irrgame
 			if (i > 0)
 			{
 				filename[i + 1] = 0;
-				filename.validate();
+//				filename.validate();
 			}
 			else
 				filename = "";

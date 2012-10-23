@@ -1,7 +1,3 @@
-//// Copyright (C) 2002-2009 Nikolaus Gebhardt
-//// This file is part of the "Irrlicht Engine".
-//// For conditions of distribution and use, see copyright notice in irrlicht.h
-//
 //#ifndef __I_SCENE_NODE_H_INCLUDED__
 //#define __I_SCENE_NODE_H_INCLUDED__
 //
@@ -41,7 +37,7 @@
 //				const core::vector3df& position = core::vector3df(0,0,0),
 //				const core::vector3df& rotation = core::vector3df(0,0,0),
 //				const core::vector3df& scale = core::vector3df(1.0f, 1.0f, 1.0f))
-//			: RelativeTranslation(position), RelativeRotation(rotation), RelativeScale(scale),
+//			:
 //				Parent(0), SceneManager(mgr), TriangleSelector(0), ID(id),
 //				AutomaticCullingState(EAC_BOX), DebugDataVisible(EDS_OFF),
 //				IsVisible(true), IsDebugObject(false)
@@ -183,35 +179,6 @@
 //			return box;
 //		}
 //
-//
-//		//! Get the absolute transformation of the node. Is recalculated every OnAnimate()-call.
-//		//! \return The absolute transformation matrix.
-//		virtual const core::matrix4& getAbsoluteTransformation() const
-//		{
-//			return AbsoluteTransformation;
-//		}
-//
-//
-//		//! Returns the relative transformation of the scene node.
-//		/** The relative transformation is stored internally as 3
-//		vectors: translation, rotation and scale. To get the relative
-//		transformation matrix, it is calculated from these values.
-//		\return The relative transformation matrix. */
-//		virtual core::matrix4 getRelativeTransformation() const
-//		{
-//			core::matrix4 mat;
-//			mat.setRotationDegrees(RelativeRotation);
-//			mat.setTranslation(RelativeTranslation);
-//
-//			if (RelativeScale != core::vector3df(1.f,1.f,1.f))
-//			{
-//				core::matrix4 smat;
-//				smat.setScale(RelativeScale);
-//				mat *= smat;
-//			}
-//
-//			return mat;
-//		}
 //
 //
 //		//! Returns whether the node should be visible (if all of its parents are visible).
@@ -390,81 +357,7 @@
 //			for (u32 i=0; i<getMaterialCount(); ++i)
 //				getMaterial(i).MaterialType = newType;
 //		}
-//
-//
-//		//! Gets the scale of the scene node relative to its parent.
-//		/** This is the scale of this node relative to its parent.
-//		If you want the absolute scale, use
-//		getAbsoluteTransformation().getScale()
-//		\return The scale of the scene node. */
-//		virtual const core::vector3df& getScale() const
-//		{
-//			return RelativeScale;
-//		}
-//
-//
-//		//! Sets the relative scale of the scene node.
-//		/** \param scale New scale of the node, relative to its parent. */
-//		virtual void setScale(const core::vector3df& scale)
-//		{
-//			RelativeScale = scale;
-//		}
-//
-//
-//		//! Gets the rotation of the node relative to its parent.
-//		/** Note that this is the relative rotation of the node.
-//		If you want the absolute rotation, use
-//		getAbsoluteTransformation().getRotation()
-//		\return Current relative rotation of the scene node. */
-//		virtual const core::vector3df& getRotation() const
-//		{
-//			return RelativeRotation;
-//		}
-//
-//
-//		//! Sets the rotation of the node relative to its parent.
-//		/** This only modifies the relative rotation of the node.
-//		\param rotation New rotation of the node in degrees. */
-//		virtual void setRotation(const core::vector3df& rotation)
-//		{
-//			RelativeRotation = rotation;
-//		}
-//
-//
-//		//! Gets the position of the node relative to its parent.
-//		/** Note that the position is relative to the parent. If you want
-//		the position in world coordinates, use getAbsolutePosition() instead.
-//		\return The current position of the node relative to the parent. */
-//		virtual const core::vector3df& getPosition() const
-//		{
-//			return RelativeTranslation;
-//		}
-//
-//
-//		//! Sets the position of the node relative to its parent.
-//		/** Note that the position is relative to the parent.
-//		\param newpos New relative position of the scene node. */
-//		virtual void setPosition(const core::vector3df& newpos)
-//		{
-//			RelativeTranslation = newpos;
-//
-//			if(!OnPositionChange->IsNull())
-//			{
-//				(*OnPositionChange)(this);
-//			}
-//		}
-//
-//
-//		//! Gets the absolute position of the node in world coordinates.
-//		/** If you want the position of the node relative to its parent,
-//		use getPosition() instead.
-//		\return The current absolute position of the scene node. */
-//		virtual core::vector3df getAbsolutePosition() const
-//		{
-//			return AbsoluteTransformation.getTranslation();
-//		}
-//
-//
+
 //		//! Enables or disables automatic culling based on the bounding box.
 //		/** Automatic culling is enabled by default. Note that not
 //		all SceneNodes support culling and that some nodes always cull
@@ -562,19 +455,7 @@
 //		}
 //
 //
-//		//! Updates the absolute position based on the relative and the parents position
-//		/** Note: This does not recursively update the parents absolute positions, so if you have a deeper
-//			hierarchy you might want to update the parents first.*/
-//		virtual void updateAbsolutePosition()
-//		{
-//			if (Parent)
-//			{
-//				AbsoluteTransformation =
-//					Parent->getAbsoluteTransformation() * getRelativeTransformation();
-//			}
-//			else
-//				AbsoluteTransformation = getRelativeTransformation();
-//		}
+//
 //
 //
 //		//! Returns the parent of this scene node
@@ -722,14 +603,7 @@
 //		//! Absolute transformation of the node.
 //		core::matrix4 AbsoluteTransformation;
 //
-//		//! Relative translation of the scene node.
-//		core::vector3df RelativeTranslation;
 //
-//		//! Relative rotation of the scene node.
-//		core::vector3df RelativeRotation;
-//
-//		//! Relative scale of the scene node.
-//		core::vector3df RelativeScale;
 //
 //		//! List of all animator nodes
 //		core::list<ISceneNodeAnimator*> Animators;

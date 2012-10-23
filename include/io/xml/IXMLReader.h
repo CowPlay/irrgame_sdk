@@ -6,6 +6,8 @@
 #define IRRXMLREADER_H_
 #include "EXmlNodeTypes.h"
 #include "core/irrgamebase.h"
+#include "core/engine/IReferenceCounted.h"
+
 namespace irrgame
 {
 	namespace io
@@ -41,7 +43,6 @@ namespace irrgame
 			//! UTF-32 format, little endian
 			ETF_UTF32_LE
 		};
-
 
 		//! Interface providing easy read access to a XML file.
 		// Output format can UTF8 or ASCII

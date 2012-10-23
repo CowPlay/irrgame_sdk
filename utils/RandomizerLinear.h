@@ -8,13 +8,12 @@
 #ifndef RANDOMIZERLINEAR_H_
 #define RANDOMIZERLINEAR_H_
 
-#include "./core/irrgameTypes.h"
+#include "core/base/irrgameTypes.h"
 
 namespace irrgame
 {
 	namespace utils
 	{
-
 		// our Randomizer is not really os specific, so we
 		// code one for all, which should work on every platform the same,
 		// which is desireable.
@@ -25,7 +24,7 @@ namespace irrgame
 				static s32 rand();
 
 				//! resets the randomizer
-				void reset();
+				static void reset();
 
 			protected:
 				static s32 seed;

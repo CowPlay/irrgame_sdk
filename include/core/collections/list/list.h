@@ -7,6 +7,7 @@
 
 #include "core/collections/ICollection.h"
 #include "core/base/irrAllocator.h"
+#include "core/math/irrMath.h"
 #include "threads/irrgameMonitor.h"
 #include "SKListNode.h"
 #include "iterators.h"
@@ -368,16 +369,16 @@ namespace irrgame
 			if (this == &other)
 				return;
 
-			Monitor->enter();
 			other.Monitor->enter();
+			Monitor->enter();
 
 			core::swap(First, other.First);
 			core::swap(Last, other.Last);
 			core::swap(Size, other.Size);
 			core::swap(Allocator, other.Allocator);	// memory is still released by the same Allocator used for allocation
 
-			other.Monitor->exit();
 			Monitor->exit();
+			other.Monitor->exit();
 		}
 
 		//! Gets first node.

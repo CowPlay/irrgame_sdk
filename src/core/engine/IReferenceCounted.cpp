@@ -127,7 +127,6 @@ namespace irrgame
 	}
 
 	//! Get the reference count.
-	/** \return Current value of the reference counter. */
 	s32 IReferenceCounted::getReferenceCount() const
 	{
 		return ReferenceCounter;
@@ -143,18 +142,12 @@ namespace irrgame
 	}
 
 	//! Returns the debug name of the object.
-	/** The Debugname may only be set and changed by the object
-	 itself. This method should only be used in Debug mode.
-	 \return Returns a string, previously set by setDebugName(); */
 	const c8* IReferenceCounted::getDebugName() const
 	{
 		return DebugName;
 	}
 
 	//! Sets the debug name of the object.
-	/** The Debugname may only be set and changed by the object
-	 itself. This method should only be used in Debug mode.
-	 \param newName: New debug name to set. */
 	void IReferenceCounted::setDebugName(const c8* newName)
 	{
 		DebugName = newName;

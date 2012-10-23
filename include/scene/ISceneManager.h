@@ -8,20 +8,34 @@
 #ifndef ISCENEMANAGER_H_
 #define ISCENEMANAGER_H_
 
+#include "core/engine/IReferenceCounted.h"
+
 namespace irrgame
 {
-
 	namespace scene
 	{
+
+		class ISceneNode;
+
 		//! Scene manager interface.
-		/**
+		/*
 		 */
-		class ISceneManager
+		class ISceneManager : public IReferenceCounted
 		{
 			public:
 
-			private:
+				//! Destructor
+				virtual ~ISceneManager()
+				{
+				}
+
+				//! Returns root node on the scene
+				virtual ISceneNode* getRoot() = 0;
 		};
+
+		//! SceneManager creator
+		ISceneManager* createSceneManager();
+
 	}  // namespace scene
 
 }  // namespace irrgame

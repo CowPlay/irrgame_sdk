@@ -10,6 +10,7 @@
 #include "CMapIterator.h"
 #include "CParentFirstIterator.h"
 #include "CParentLastIterator.h"
+
 namespace irrgame
 {
 	namespace core
@@ -518,15 +519,15 @@ namespace irrgame
 			if (this == &other)
 				return;
 
-			Monitor->enter();
 			other.Monitor->enter();
+			Monitor->enter();
 
 			core::swap(Monitor, other.Monitor);
 			core::swap(Root, other.Root);
 			core::swap(Size, other.Size);
 
-			other.Monitor->exit();
 			Monitor->exit();
+			other.Monitor->exit();
 		}
 
 		//------------------------------

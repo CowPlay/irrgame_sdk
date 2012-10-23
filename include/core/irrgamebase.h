@@ -8,8 +8,10 @@
 #ifndef IRRGAMEBASE_H_
 #define IRRGAMEBASE_H_
 
-#include "core/base/IReferenceCounted.h"
+#include "core/base/baseTypes.h"
+#include "core/base/compileConfig.h"
+#include "core/base/constants.h"
 #include "core/base/irrAllocator.h"
-#include "core/base/irrgameTypes.h"
+#include "core/base/sdkTypes.h"
 
 #endif /* IRRGAMEBASE_H_ */

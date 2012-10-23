@@ -4,7 +4,6 @@
 
 #include "CXMLWriter.h"
 #include "core/irrgamecollections.h"
-#include "irrgamesdkCompileConfig.h"
 
 namespace irrgame
 {
@@ -88,8 +87,7 @@ namespace irrgame
 
 		//! Writes an xml element with any number of attributes
 		void CXMLWriter::writeElement(const c8* name, bool empty,
-				core::array<stringc> &names,
-				core::array<stringc> &values)
+				core::array<stringc> &names, core::array<stringc> &values)
 		{
 			IRR_ASSERT(sizeof(name) > 0);
 

@@ -36,7 +36,7 @@ namespace irrgame
 			public:
 
 				//! Causes the operating system to sleep current thread.
-				//! Platform dependies
+				//! Platform dependent
 				//@ param0 - time in ms.
 				static void sleep(s32 time);
 
@@ -51,15 +51,15 @@ namespace irrgame
 				}
 
 				//! Causes the operating system to start thread, and optionally supplies an object containing data to be used by the method the thread executes
-				//! Platform dependies
+				//! Platform dependent
 				virtual void start() = 0;
 
 				//! Blocks the calling thread until a thread terminates.
-				//! Platform dependies
+				//! Platform dependent
 				virtual void join() = 0;
 
 				//! Causes the operating system to kill thread
-				//! Platform dependies
+				//! Platform dependent
 //				virtual void kill() = 0;
 
 				//! Gets thread name

@@ -61,12 +61,12 @@ namespace irrgame
 			protected:
 
 				//Platform dependent
-				virtual void initKeyMap();
-
-				virtual void initKeyStates();
+				virtual void initKeyMap() = 0;
 
 				//Platform dependent
-				virtual void initCursorsInfo();
+				virtual void initCursorsInfo() = 0;
+
+				virtual void initKeyStates();
 
 			protected:
 

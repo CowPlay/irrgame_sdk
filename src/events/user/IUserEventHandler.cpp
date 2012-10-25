@@ -179,9 +179,6 @@ namespace irrgame
 		IUserEventHandler::IUserEventHandler() :
 				IsRunning(false)
 		{
-			initKeyMap();
-			initKeyStates();
-			initCursorsInfo();
 		}
 
 		//! Destructor
@@ -200,7 +197,7 @@ namespace irrgame
 		//Platform dependent
 		void IUserEventHandler::initKeyMap()
 		{
-			IRR_ASSERT(false);
+//			IRR_ASSERT(false);
 		}
 
 		//Platform dependent

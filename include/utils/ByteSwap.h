@@ -13,7 +13,7 @@ namespace irrgame
 {
 	namespace utils
 	{
-		//! Platform dependies
+		//! Platform dependent
 		class ByteSwap
 		{
 			public:

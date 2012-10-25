@@ -59,9 +59,9 @@ namespace irrgame
 				void pushFront(const T& element);
 
 				//! Inserts an element after an element.
-				/** \param it Iterator pointing to element after which the new element
-				 should be inserted.
-				 \param element The new element to be inserted into the list.
+				/* \param it Iterator pointing to element after which the new element
+				 * should be inserted.
+				 * \param element The new element to be inserted into the list.
 				 */
 				void insertAfter(const Iterator& it, const T& element);
 
@@ -71,6 +71,10 @@ namespace irrgame
 				 \param element The new element to be inserted into the list.
 				 */
 				void insertBefore(const Iterator& it, const T& element);
+
+				//! Remove an element from list.
+				/** \param element: Element to remove from the list. */
+				void remove(const T& element);
 
 				//! Erases an element.
 				/** \param it Iterator pointing to the element which shall be erased.
@@ -287,14 +291,18 @@ namespace irrgame
 			node->Next = it.Current->Next;
 
 			if (it.Current->Next)
+			{
 				it.Current->Next->Prev = node;
+			}
 
 			node->Prev = it.Current;
 			it.Current->Next = node;
 			++Size;
 
 			if (it.Current == Last)
+			{
 				Last = node;
+			}
 
 			Monitor->exit();
 		}
@@ -314,14 +322,44 @@ namespace irrgame
 			node->Prev = it.Current->Prev;
 
 			if (it.Current->Prev)
+			{
 				it.Current->Prev->Next = node;
+			}
 
 			node->Next = it.Current;
 			it.Current->Prev = node;
 			++Size;
 
 			if (it.Current == First)
+			{
 				First = node;
+			}
+
+			Monitor->exit();
+		}
+
+		//! Remove an element from list.
+		template<class T>
+		inline void list<T>::remove(const T& element)
+		{
+			Monitor->enter();
+
+			SKListNode<T>* node = First;
+			while (node)
+			{
+				if (node->Element == element)
+				{
+					node->Prev->Next = node->Next;
+					--Size;
+
+					Allocator.destruct(node);
+					Allocator.deallocate(node);
+
+					break;
+				}
+
+				node = node->Next;
+			}
 
 			Monitor->exit();
 		}

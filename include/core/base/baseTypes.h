@@ -9,7 +9,6 @@
 #define BASETYPES_H_
 
 #include "compileConfig.h"
-#include "constants.h"
 
 //! 8 bit unsigned variable.
 /** This is a typedef for unsigned char, it ensures portability of the engine. */

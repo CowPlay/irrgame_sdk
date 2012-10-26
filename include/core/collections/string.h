@@ -892,7 +892,7 @@ namespace irrgame
 		//! finds next occurrence of character in string
 		inline s32 string::findFirst(c8 c, u32 startPos) const
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 
@@ -913,7 +913,7 @@ namespace irrgame
 		//! finds last occurrence of character in string
 		inline s32 string::findLast(c8 c) const
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 
@@ -932,7 +932,7 @@ namespace irrgame
 		//! finds another string in this string
 		inline s32 string::find(const c8* const str, const u32 start) const
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 

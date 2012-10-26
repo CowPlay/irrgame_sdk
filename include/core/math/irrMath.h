@@ -242,6 +242,7 @@ namespace irrgame
 			tmp.u = x;
 			return tmp.f;
 		}
+
 		inline f32 FR(s32 x)
 		{
 			inttofloat tmp;

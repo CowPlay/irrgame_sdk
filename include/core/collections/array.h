@@ -682,7 +682,7 @@ namespace irrgame
 		template<class T>
 		inline s32 array<T>::binarySearchFirst(const T& value)
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 
@@ -727,7 +727,7 @@ namespace irrgame
 		template<class T>
 		inline s32 array<T>::binarySearchLast(const T& value)
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 
@@ -767,7 +767,7 @@ namespace irrgame
 		template<class T>
 		inline s32 array<T>::linearSearch(const T& value) const
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 
@@ -787,7 +787,7 @@ namespace irrgame
 		template<class T>
 		inline s32 array<T>::linearReverseSearch(const T& value) const
 		{
-			s32 result = irrNotFound;
+			s32 result = IrrNotFound;
 
 			Monitor->enter();
 

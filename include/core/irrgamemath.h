@@ -16,7 +16,8 @@
 
 //! Typedef for matrix
 typedef irrgame::core::CMatrix4<f32> matrix4;
+
 //! global const identity matrix
-extern const matrix4 IdentityMatrix;
+static const matrix4 IdentityMatrix;
 
 #endif /* IRRGAMEMATH_H_ */

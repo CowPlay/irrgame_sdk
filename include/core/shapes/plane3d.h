@@ -13,6 +13,8 @@ namespace irrgame
 	namespace core
 	{
 
+		//TODO: REFACTOR IT!
+
 		//! Enumeration for intersection relations of 3d objects
 		enum EIntersectionRelation3D
 		{

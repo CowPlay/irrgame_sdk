@@ -11,7 +11,7 @@ namespace irrgame
 	{
 
 		//! enumeration for querying features of the video driver.
-		enum E_VIDEO_DRIVER_FEATURE
+		enum EVideoDriverFeatures
 		{
 			//! Is driver able to render to a surface?
 			EVDF_RENDER_TO_TARGET = 0,

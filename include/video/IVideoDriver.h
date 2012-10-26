@@ -46,7 +46,7 @@ namespace irrgame
 				 rectangle of the area to be presented. Set to null to present
 				 everything. Note: not implemented in all devices.
 				 */
-				virtual void beginScene(SColor color = SColor(255, 0, 0, 0),
+				virtual void beginScene(SColor color = SColor(255, 100, 101, 140),
 						bool backBuffer = true, bool zBuffer = true,
 						recti* sourceRect = 0) = 0;
 

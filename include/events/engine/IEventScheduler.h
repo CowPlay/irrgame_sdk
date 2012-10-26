@@ -34,7 +34,7 @@ namespace irrgame
 		//! Event sheduler which manage engine events.
 		//! Represents a simple scheduler which have 3 threads with different priorities.
 		//! Напрямую разраб не должен обращаться к шедулеру. Все ивенты должны закидывать сюда манагеры.
-		class IEventScheduler: public IReferenceCounted
+		class IEventScheduler
 		{
 			public:
 				//! Singleton realization

@@ -17,7 +17,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CDimension2dAttribute::getType() const
+		EAttributeType CDimension2dAttribute::getType() const
 		{
 			return EAT_DIMENSION2D;
 		}

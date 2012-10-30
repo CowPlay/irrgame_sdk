@@ -7,38 +7,13 @@
 
 #include "IReadFile.h"
 #include "IFileList.h"
+#include "EFileArchiveType.h"
 
 namespace irrgame
 {
 
 	namespace io
 	{
-
-		//! TODO: move to individual file
-		//! Contains the different types of archives
-		enum E_FILE_ARCHIVE_TYPE
-		{
-			//! A PKZIP archive
-			EFAT_ZIP = MAKE_IRR_ID('Z','I','P', 0),
-
-			//! A gzip archive
-			EFAT_GZIP = MAKE_IRR_ID('g','z','i','p'),
-
-			//! A virtual directory
-			EFAT_FOLDER = MAKE_IRR_ID('f','l','d','r'),
-
-			//! An ID Software PAK archive
-			EFAT_PAK = MAKE_IRR_ID('P','A','K', 0),
-
-			//! A Nebula Device archive
-			EFAT_NPK = MAKE_IRR_ID('N','P','K', 0),
-
-			//! A Tape ARchive
-			EFAT_TAR = MAKE_IRR_ID('T','A','R', 0),
-
-			//! The type of this archive is unknown
-			EFAT_UNKNOWN = MAKE_IRR_ID('u','n','k','n')
-		};
 
 		//! The FileArchive manages archives and provides access to files inside them.
 		class IFileArchive: public virtual IReferenceCounted
@@ -51,7 +26,7 @@ namespace irrgame
 				 \return Returns A pointer to the created file on success,
 				 or 0 on failure. */
 				virtual IReadFile* createAndOpenFile(
-						const stringc& filename) = 0;
+						const core::stringc& filename) = 0;
 
 				//! Opens a file based on its position in the file list.
 				/** Creates and returns
@@ -76,7 +51,7 @@ namespace irrgame
 				 avoid single access patterns to this place, and hence allow some more
 				 obscurity.
 				 */
-				stringc Password;
+				core::stringc Password;
 		};
 	} // end namespace io
 } // end namespace irr

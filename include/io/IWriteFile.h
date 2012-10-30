@@ -5,9 +5,8 @@
 #ifndef __I_WRITE_FILE_H_INCLUDED__
 #define __I_WRITE_FILE_H_INCLUDED__
 
-#include "core/irrgamebase.h"
-#include "core/irrgamecollections.h"
 #include "SPath.h"
+#include "core/engine/IReferenceCounted.h"
 
 namespace irrgame
 {
@@ -39,15 +38,15 @@ namespace irrgame
 
 				//! Get name of file.
 				/** \return File name as zero terminated character string. */
-				virtual const stringc& getFileName() const = 0;
+				virtual const core::stringc& getFileName() const = 0;
 		};
 
 		//! Internal function, please do not use.
-		IWriteFile* createWriteFile(const stringc& fileName, bool append);
+		IWriteFile* createWriteFile(const core::stringc& fileName, bool append);
 
 		//! Internal function, please do not use.
 		IWriteFile* createMemoryWriteFile(void* memory, long size,
-				const stringc& fileName, bool deleteMemoryWhenDropped);
+				const core::stringc& fileName, bool deleteMemoryWhenDropped);
 
 	} // end namespace io
 } // end namespace irr

@@ -6,6 +6,8 @@
  */
 #include "CFloatAttribute.h"
 #include "core/irrgamemath.h"
+#include "core/collections/irrstring.h"
+
 namespace irrgame
 {
 	namespace io
@@ -33,9 +35,9 @@ namespace irrgame
 			return (Value != 0);
 		}
 
-		stringc CFloatAttribute::getString()
+		core::stringc CFloatAttribute::getString()
 		{
-			return stringc(Value);
+			return core::stringc(Value);
 		}
 
 		void CFloatAttribute::setInt(s32 intValue)
@@ -53,7 +55,7 @@ namespace irrgame
 			Value = core::fast_atof(text);
 		}
 
-		E_ATTRIBUTE_TYPE CFloatAttribute::getType() const
+		EAttributeType CFloatAttribute::getType() const
 		{
 			return EAT_FLOAT;
 		}

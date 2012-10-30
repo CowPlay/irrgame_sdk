@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include "io/IReadFile.h"
-#include "core/irrgamecollections.h"
 
 namespace irrgame
 {
@@ -22,7 +21,7 @@ namespace irrgame
 		{
 			public:
 
-				CReadFile(const stringc& fileName);
+				CReadFile(const core::stringc& fileName);
 
 				virtual ~CReadFile();
 
@@ -42,7 +41,7 @@ namespace irrgame
 				virtual long getPos() const;
 
 				//! returns name of file
-				virtual const stringc& getFileName() const;
+				virtual const core::stringc& getFileName() const;
 
 			private:
 
@@ -52,7 +51,7 @@ namespace irrgame
 			private:
 				FILE* File;
 				long FileSize;
-				stringc Filename;
+				core::stringc Filename;
 		};
 
 	} // end namespace io

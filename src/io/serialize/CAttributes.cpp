@@ -77,7 +77,7 @@ namespace irrgame
 		}
 
 		//! Returns the type of an attribute
-		E_ATTRIBUTE_TYPE CAttributes::getAttributeType(const c8* attributeName)
+		EAttributeType CAttributes::getAttributeType(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -88,7 +88,7 @@ namespace irrgame
 
 		//! Returns attribute type by index.
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		E_ATTRIBUTE_TYPE CAttributes::getAttributeType(s32 index)
+		EAttributeType CAttributes::getAttributeType(s32 index)
 		{
 			return Attributes[index]->getType();
 		}
@@ -136,7 +136,7 @@ namespace irrgame
 
 			clear();
 
-			stringc elementName = XML_TAG_ATTRIBUTES;
+			core::stringc elementName = XML_TAG_ATTRIBUTES;
 
 			if (nonDefaultElementName)
 				elementName = nonDefaultElementName;
@@ -175,7 +175,7 @@ namespace irrgame
 			if (writeXMLHeader)
 				writer->writeXMLHeader();
 
-			stringc elementName = XML_TAG_ATTRIBUTES;
+			core::stringc elementName = XML_TAG_ATTRIBUTES;
 
 			if (nonDefaultElementName)
 				elementName = nonDefaultElementName;
@@ -194,19 +194,19 @@ namespace irrgame
 					// build arrays
 
 					// name
-					arraynames.pushBack(stringc("name"));
-					arrayvalues.pushBack(stringc(Attributes[i]->Name.cStr()));
+					arraynames.pushBack(core::stringc("name"));
+					arrayvalues.pushBack(core::stringc(Attributes[i]->Name.cStr()));
 
 					// count
-					arraynames.pushBack(stringc("count"));
-					arrayvalues.pushBack(stringc((s32) arrayinput.size()));
+					arraynames.pushBack(core::stringc("count"));
+					arrayvalues.pushBack(core::stringc((s32) arrayinput.size()));
 
 					// array...
 					u32 n = 0;
-					const stringc tmpName("value");
+					const core::stringc tmpName("value");
 					for (; n < arrayinput.size(); ++n)
 					{
-						arraynames.pushBack((tmpName + stringc(n)).cStr());
+						arraynames.pushBack((tmpName + core::stringc(n)).cStr());
 						arrayvalues.pushBack(arrayinput[n]);
 					}
 
@@ -218,7 +218,7 @@ namespace irrgame
 				{
 					writer->writeElement(Attributes[i]->getTypeString(), true,
 							"name",
-							stringc(Attributes[i]->Name.cStr()).cStr(),
+							core::stringc(Attributes[i]->Name.cStr()).cStr(),
 							"value", Attributes[i]->getString().cStr());
 				}
 
@@ -233,8 +233,8 @@ namespace irrgame
 		{
 			IRR_ASSERT(reader != 0);
 
-			stringc element = reader->getNodeName();
-			stringc name = reader->getAttributeValue("name");
+			core::stringc element = reader->getNodeName();
+			core::stringc name = reader->getAttributeValue("name");
 
 			if (element == "int")
 			{
@@ -266,12 +266,12 @@ namespace irrgame
 
 				s32 count = reader->getAttributeValueAsInt("count");
 				s32 n = 0;
-				const stringc tmpName("value");
+				const core::stringc tmpName("value");
 				for (; n < count; ++n)
 				{
 					tmpArray.pushBack(
 							reader->getAttributeValue(
-									(tmpName + stringc(n)).cStr()));
+									(tmpName + core::stringc(n)).cStr()));
 				}
 				addArray(name.cStr(), tmpArray);
 			}
@@ -325,7 +325,7 @@ namespace irrgame
 			}
 			else if (element == "matrix")
 			{
-				addMatrix(name.cStr(), matrix4());
+				addMatrix(name.cStr(), matrix4f());
 				Attributes.getLast()->setString(
 						reader->getAttributeValue("value"));
 			}
@@ -511,7 +511,7 @@ namespace irrgame
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setStringAttribute()
 		//! or 0 if attribute is not set.
-		stringc CAttributes::getAttributeAsString(const c8* attributeName)
+		core::stringc CAttributes::getAttributeAsString(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -529,14 +529,14 @@ namespace irrgame
 
 			IRR_ASSERT(att != 0);
 
-			stringc str = att->getString();
+			core::stringc str = att->getString();
 
 			strcpy(out, str.cStr());
 		}
 
 		//! Returns string attribute value by index.
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		stringc CAttributes::getAttributeAsString(s32 index)
+		core::stringc CAttributes::getAttributeAsString(s32 index)
 		{
 			return Attributes[index]->getString();
 		}
@@ -1141,14 +1141,14 @@ namespace irrgame
 		 */
 
 		//! Adds an attribute as matrix
-		void CAttributes::addMatrix(const c8* attributeName, const matrix4& v)
+		void CAttributes::addMatrix(const c8* attributeName, const matrix4f& v)
 		{
 			Attributes.pushBack(new CMatrixAttribute(attributeName, v));
 		}
 
 		//! Sets an attribute as matrix
 		void CAttributes::setAttribute(const c8* attributeName,
-				const matrix4& v)
+				const matrix4f& v)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 			if (att)
@@ -1158,13 +1158,13 @@ namespace irrgame
 		}
 
 		//! Sets an attribute as matrix
-		void CAttributes::setAttribute(s32 index, const matrix4& v)
+		void CAttributes::setAttribute(s32 index, const matrix4f& v)
 		{
 			Attributes[index]->setMatrix(v);
 		}
 
 		//! Gets an attribute as a matrix4
-		matrix4 CAttributes::getAttributeAsMatrix(const c8* attributeName)
+		matrix4f CAttributes::getAttributeAsMatrix(const c8* attributeName)
 		{
 			IAttribute* att = getAttributeByName(attributeName);
 
@@ -1174,7 +1174,7 @@ namespace irrgame
 		}
 
 		//! Gets an attribute as matrix
-		matrix4 CAttributes::getAttributeAsMatrix(s32 index)
+		matrix4f CAttributes::getAttributeAsMatrix(s32 index)
 		{
 			return Attributes[index]->getMatrix();
 		}

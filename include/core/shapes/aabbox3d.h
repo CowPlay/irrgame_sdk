@@ -17,6 +17,7 @@ namespace irrgame
 		//! Axis aligned bounding box in 3d dimensional space.
 		/** Has some useful methods used with occlusion culling or clipping.
 		 */
+		//TODO: refactor
 		template<class T>
 		class aabbox3d
 		{
@@ -381,6 +382,10 @@ namespace irrgame
 		};
 	} // end namespace core
 } // end namespace irr
+
+//! Typedefs for aabbox3d
+typedef irrgame::core::aabbox3d<f32> aabbox3df;
+typedef irrgame::core::aabbox3d<s32> aabbox3di;
 
 #endif
 

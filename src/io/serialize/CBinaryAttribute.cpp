@@ -18,7 +18,7 @@ namespace irrgame
 
 		}
 
-		E_ATTRIBUTE_TYPE CBinaryAttribute::getType() const
+		EAttributeType CBinaryAttribute::getType() const
 		{
 			return EAT_BINARY;
 		}

@@ -12,12 +12,12 @@ namespace irrgame
 	namespace io
 	{
 
-		CMatrixAttribute::CMatrixAttribute(const c8* name, matrix4 value) :
+		CMatrixAttribute::CMatrixAttribute(const c8* name, matrix4f value) :
 				CNumbersAttribute(name, value)
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CMatrixAttribute::getType() const
+		EAttributeType CMatrixAttribute::getType() const
 		{
 			return EAT_MATRIX;
 		}

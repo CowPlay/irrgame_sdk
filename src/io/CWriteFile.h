@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include "io/IWriteFile.h"
-#include "core/irrgamecollections.h"
 
 namespace irrgame
 {
@@ -26,7 +25,7 @@ namespace irrgame
 				//! @param fileName;
 				//! @param append. If set True - if you want open already exists file and write to the end of file set True.
 				//!	If you want open a file with the same name and its content is erased and the file is treated as a new empty file - set False.
-				CWriteFile(const stringc& fileName, bool append);
+				CWriteFile(const core::stringc& fileName, bool append);
 
 				//! Destructor
 				virtual ~CWriteFile();
@@ -41,7 +40,7 @@ namespace irrgame
 				virtual long getPos() const;
 
 				//! Returns name of file.
-				virtual const stringc& getFileName() const;
+				virtual const core::stringc& getFileName() const;
 
 				//! returns if file is open
 				bool isOpen() const;
@@ -54,7 +53,7 @@ namespace irrgame
 			private:
 				FILE* File;
 				long FileSize;
-				stringc Filename;
+				core::stringc Filename;
 
 		};
 

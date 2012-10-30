@@ -6,6 +6,8 @@
  */
 
 #include "CIntAttribute.h"
+#include "core/collections/irrstring.h"
+
 namespace irrgame
 {
 	namespace io
@@ -33,9 +35,9 @@ namespace irrgame
 			return (Value != 0);
 		}
 
-		stringc CIntAttribute::getString()
+		core::stringc CIntAttribute::getString()
 		{
-			return stringc(Value);
+			return core::stringc(Value);
 		}
 
 		void CIntAttribute::setInt(s32 intValue)
@@ -53,7 +55,7 @@ namespace irrgame
 			Value = atoi(text);
 		}
 
-		E_ATTRIBUTE_TYPE CIntAttribute::getType() const
+		EAttributeType CIntAttribute::getType() const
 		{
 			return EAT_INT;
 		}

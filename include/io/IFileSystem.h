@@ -49,7 +49,7 @@ namespace irrgame
 				 IXMLReader is returned. After use, the reader
 				 has to be deleted using its IXMLReader::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				IXMLReader* createXMLReader(const stringc& filename);
+				IXMLReader* createXMLReader(const core::stringc& filename);
 
 				//! Creates a XML Reader from a file which returns all parsed strings as ASCII/UTF-8 characters (char*).
 				/** See IXMLReader for more information on how to use the parser.
@@ -64,7 +64,7 @@ namespace irrgame
 				 IXMLWriter is returned. After use, the reader
 				 has to be deleted using its IXMLWriter::drop() method.
 				 See IReferenceCounted::drop() for more information. */
-				IXMLWriter* createXMLWriter(const stringc& filename);
+				IXMLWriter* createXMLWriter(const core::stringc& filename);
 
 				//! Creates a XML Writer from a file.
 				/** \return 0, if file could not be opened, otherwise a pointer to the created
@@ -77,18 +77,18 @@ namespace irrgame
 				//! Platform dependies
 				/** \param filename Possibly relative file or directory name to query.
 				 \result Absolute filename which points to the same file. */
-				stringc getAbsolutePath(const stringc& filename);
+				core::stringc getAbsolutePath(const core::stringc& filename);
 
 				//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-				stringc& flattenFilename(stringc& directory,
-						const stringc& root = "/");
+				core::stringc& flattenFilename(core::stringc& directory,
+						const core::stringc& root = "/");
 
 				//! Opens a file for read access. File should be exists.
 				/** \param filename: Name of file to open.
 				 \return Returns a pointer to the created file interface.
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information. */
-				IReadFile* createReadFile(const stringc& filename);
+				IReadFile* createReadFile(const core::stringc& filename);
 
 				//! Creates an IReadFile interface for accessing memory like a file.
 				/** This allows you to use a pointer to memory where an IReadFile is requested.
@@ -102,8 +102,8 @@ namespace irrgame
 				 See IReferenceCounted::drop() for more information.
 				 */
 				IReadFile* createMemoryReadFile(void* memory, s32 len,
-						const stringc& fileName, bool deleteMemoryWhenDropped =
-								false);
+						const core::stringc& fileName,
+						bool deleteMemoryWhenDropped = false);
 
 				//! Creates an IReadFile interface for accessing files inside files.
 				/** This is useful e.g. for archives.
@@ -115,7 +115,7 @@ namespace irrgame
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information.
 				 */
-				IReadFile* createLimitReadFile(const stringc& fileName,
+				IReadFile* createLimitReadFile(const core::stringc& fileName,
 						IReadFile* alreadyOpenedFile, long pos, long areaSize);
 
 				//! Creates an IWriteFile interface for accessing memory like a file.
@@ -131,8 +131,8 @@ namespace irrgame
 				 See IReferenceCounted::drop() for more information.
 				 */
 				IWriteFile* createMemoryWriteFile(void* memory, s32 len,
-						const stringc& fileName, bool deleteMemoryWhenDropped =
-								false);
+						const core::stringc& fileName,
+						bool deleteMemoryWhenDropped = false);
 
 				//! Opens a file for write access.
 				/** \param filename: Name of file to open.
@@ -141,25 +141,25 @@ namespace irrgame
 				 \return Returns a pointer to the created file interface
 				 The returned pointer should be dropped when no longer needed.
 				 See IReferenceCounted::drop() for more information. */
-				IWriteFile* createWriteFile(const stringc& filename,
+				IWriteFile* createWriteFile(const core::stringc& filename,
 						bool append = false);
 
 				//! Get the current working directory.
 				/** \return Current working directory as a string. */
 				//! Platform dependies
-				const stringc& getWorkingDirectory();
+				const core::stringc& getWorkingDirectory();
 
 				//! Changes the current working directory.
 				/** \param newDirectory: A string specifying the new working directory.
 				 The string is operating system dependent. Under Windows it has
 				 the form "<drive>:\<directory>\<sudirectory>\<..>". An example would be: "C:\Windows\"
 				 \return True if successful, otherwise false. */
-				bool changeWorkingDirectoryTo(const stringc& value);
+				bool changeWorkingDirectoryTo(const core::stringc& value);
 
 				//! Determines if a file exists and could be opened.
 				/** \param filename is the string identifying the file which should be tested for existence.
 				 \return Returns true if file exists, and false if it does not exist or an error occured. */
-				bool existFile(const stringc& filename);
+				bool existFile(const core::stringc& filename);
 
 				//! Creates a list of files and directories in the current working directory and returns it.
 				/** \return a Pointer to the created IFileList is returned. After the list has been used
@@ -180,7 +180,7 @@ namespace irrgame
 				EFileSystemType FileSystemType;
 
 				//! WorkingDirectory for Native and Virtual filesystems
-				stringc WorkingDirectory[2];
+				core::stringc WorkingDirectory[2];
 
 				//				//! currently attached ArchiveLoaders
 				//				array<IArchiveLoader*> ArchiveLoader;
@@ -210,7 +210,7 @@ namespace irrgame
 //				virtual bool addFileArchive(const path& filename,
 //						bool ignoreCase = true, bool ignorePaths = true,
 //						E_FILE_ARCHIVE_TYPE archiveType = EFAT_UNKNOWN,
-//						const core::stringc& password = "") =0;
+//						const core::core::string& password = "") =0;
 //
 //				//! Adds an external archive loader to the engine.
 //				/** Use this function to add support for new archive types to the
@@ -327,7 +327,7 @@ namespace irrgame
 //				 it has to be deleted using its IFileList::drop() method.
 //				 See IReferenceCounted::drop() for more information. */
 				//! TODO: remove if not need
-//				virtual IFileList* createEmptyFileList(const core::stringc& path,
+//				virtual IFileList* createEmptyFileList(const core::core::string& path,
 //						bool ignoreCase, bool ignorePaths) =0;
 //
 //				//! Set the active type of file system.

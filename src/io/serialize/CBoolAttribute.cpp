@@ -33,9 +33,9 @@ namespace irrgame
 			return BoolValue;
 		}
 
-		stringc CBoolAttribute::getString()
+		core::stringc CBoolAttribute::getString()
 		{
-			return stringc(BoolValue ? "true" : "false");
+			return core::stringc(BoolValue ? "true" : "false");
 		}
 
 		void CBoolAttribute::setInt(s32 intValue)
@@ -58,7 +58,7 @@ namespace irrgame
 			BoolValue = strcmp(string, "true") == 0;
 		}
 
-		E_ATTRIBUTE_TYPE CBoolAttribute::getType() const
+		EAttributeType CBoolAttribute::getType() const
 		{
 			return EAT_BOOL;
 		}

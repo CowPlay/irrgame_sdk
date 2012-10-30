@@ -16,7 +16,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CPlaneAttribute::getType() const
+		EAttributeType CPlaneAttribute::getType() const
 		{
 			return EAT_PLANE;
 		}

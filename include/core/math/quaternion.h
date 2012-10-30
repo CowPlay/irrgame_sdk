@@ -5,8 +5,9 @@
 #ifndef __IRR_QUATERNION_H_INCLUDED__
 #define __IRR_QUATERNION_H_INCLUDED__
 
-#include "core/irrgamebase.h"
+#include "core/base/baseTypes.h"
 #include "core/math/matrix4.h"
+
 namespace irrgame
 {
 	namespace core
@@ -20,16 +21,10 @@ namespace irrgame
 			public:
 
 				//! Default Constructor
-				quaternion() :
-						X(0.0f), Y(0.0f), Z(0.0f), W(1.0f)
-				{
-				}
+				quaternion();
 
 				//! Constructor
-				quaternion(f32 x, f32 y, f32 z, f32 w) :
-						X(x), Y(y), Z(z), W(w)
-				{
-				}
+				quaternion(f32 x, f32 y, f32 z, f32 w);
 
 				//! Constructor which converts euler angles (radians) to a quaternion
 				quaternion(f32 x, f32 y, f32 z);
@@ -38,7 +33,7 @@ namespace irrgame
 				quaternion(const vector3d<f32>& vec);
 
 				//! Constructor which converts a matrix to a quaternion
-				quaternion(const CMatrix4<f32>& mat);
+				quaternion(const matrix4f& mat);
 
 				//! Equalilty operator
 				bool operator==(const quaternion& other) const;
@@ -50,7 +45,7 @@ namespace irrgame
 				inline quaternion& operator=(const quaternion& other);
 
 				//! Matrix assignment operator
-				inline quaternion& operator=(const CMatrix4<f32>& other);
+				inline quaternion& operator=(const matrix4f& other);
 
 				//! Add operator
 				quaternion operator+(const quaternion& other) const;
@@ -89,10 +84,10 @@ namespace irrgame
 				inline quaternion& normalize();
 
 				//! Creates a matrix from this quaternion
-				CMatrix4<f32> getMatrix() const;
+				matrix4f getMatrix() const;
 
 				//! Creates a matrix from this quaternion
-				void getMatrix(CMatrix4<f32> &dest,
+				void getMatrix(matrix4f &dest,
 						const vector3d<f32> &translation) const;
 
 				/*!
@@ -112,12 +107,12 @@ namespace irrgame
 				 lookat *= m3;
 
 				 */
-				void getMatrixCenter(CMatrix4<f32> &dest,
+				void getMatrixCenter(matrix4f &dest,
 						const vector3d<f32> &center,
 						const vector3d<f32> &translation) const;
 
 				//! Creates a matrix from this quaternion
-				inline void getMatrix_transposed(CMatrix4<f32> &dest) const;
+				inline void getMatrix_transposed(matrix4f &dest) const;
 
 				//! Inverts this quaternion
 				quaternion& makeInverse();
@@ -155,6 +150,18 @@ namespace irrgame
 				f32 W; // real part
 		};
 
+		//! Default Constructor
+		inline quaternion::quaternion() :
+				X(0.0f), Y(0.0f), Z(0.0f), W(1.0f)
+		{
+		}
+
+		//! Constructor
+		inline quaternion::quaternion(f32 x, f32 y, f32 z, f32 w) :
+				X(x), Y(y), Z(z), W(w)
+		{
+		}
+
 		// Constructor which converts euler angles to a quaternion
 		inline quaternion::quaternion(f32 x, f32 y, f32 z)
 		{
@@ -168,7 +175,7 @@ namespace irrgame
 		}
 
 		// Constructor which converts a matrix to a quaternion
-		inline quaternion::quaternion(const CMatrix4<f32>& mat)
+		inline quaternion::quaternion(const matrix4f& mat)
 		{
 			(*this) = mat;
 		}
@@ -197,7 +204,7 @@ namespace irrgame
 		}
 
 		// matrix assignment operator
-		inline quaternion& quaternion::operator=(const CMatrix4<f32>& m)
+		inline quaternion& quaternion::operator=(const matrix4f& m)
 		{
 			const f32 diag = m(0, 0) + m(1, 1) + m(2, 2) + 1;
 
@@ -303,9 +310,9 @@ namespace irrgame
 		}
 
 		// Creates a matrix from this quaternion
-		inline CMatrix4<f32> quaternion::getMatrix() const
+		inline matrix4f quaternion::getMatrix() const
 		{
-			CMatrix4<f32> m;
+			matrix4f m;
 			getMatrix_transposed(m);
 			return m;
 		}
@@ -313,7 +320,7 @@ namespace irrgame
 		/*!
 		 Creates a matrix from this quaternion
 		 */
-		inline void quaternion::getMatrix(CMatrix4<f32> &dest,
+		inline void quaternion::getMatrix(matrix4f &dest,
 				const vector3d<f32> &center) const
 		{
 			f32 * m = dest.pointer();
@@ -354,7 +361,7 @@ namespace irrgame
 		 m2.setInverseTranslation ( center );
 		 lookat *= m2;
 		 */
-		inline void quaternion::getMatrixCenter(CMatrix4<f32> &dest,
+		inline void quaternion::getMatrixCenter(matrix4f &dest,
 				const vector3d<f32> &center,
 				const vector3d<f32> &translation) const
 		{
@@ -379,7 +386,7 @@ namespace irrgame
 		}
 
 		// Creates a matrix from this quaternion
-		inline void quaternion::getMatrix_transposed(CMatrix4<f32> &dest) const
+		inline void quaternion::getMatrix_transposed(matrix4f &dest) const
 		{
 			dest[0] = 1.0f - 2.0f * Y * Y - 2.0f * Z * Z;
 			dest[4] = 2.0f * X * Y + 2.0f * Z * W;

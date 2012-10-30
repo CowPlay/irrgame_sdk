@@ -40,7 +40,7 @@ namespace irrgame
 			setInt((s32) floatValue);
 		}
 
-		E_ATTRIBUTE_TYPE CColorfAttribute::getType() const
+		EAttributeType CColorfAttribute::getType() const
 		{
 			return EAT_COLORF;
 		}

@@ -511,5 +511,9 @@ namespace irrgame
 	} // end namespace core
 } // end namespace irr
 
+//! Typedefs for vector2d
+typedef irrgame::core::vector2d<f32> vector2df;
+typedef irrgame::core::vector2d<s32> vector2di;
+
 #endif
 

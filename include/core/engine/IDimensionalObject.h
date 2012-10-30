@@ -53,10 +53,10 @@ namespace irrgame
 			protected:
 
 				//! Absolute position, rotation of the game object.
-				matrix4 AbsoluteTransformation;
+				matrix4f AbsoluteTransformation;
 
 				//! Relative position, rotation of the game object.
-				matrix4 RelativeTransformation;
+				matrix4f RelativeTransformation;
 		};
 	}  // namespace core
 

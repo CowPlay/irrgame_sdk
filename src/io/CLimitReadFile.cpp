@@ -3,7 +3,6 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CLimitReadFile.h"
-#include "core/irrgamecollections.h"
 
 namespace irrgame
 {
@@ -11,9 +10,9 @@ namespace irrgame
 	{
 
 		CLimitReadFile::CLimitReadFile(IReadFile* alreadyOpenedFile, long pos,
-				long areaSize, const stringc& name) :
-				Filename(name), AreaStart(pos), AreaEnd(AreaStart + areaSize), Pos(0), File(
-						alreadyOpenedFile)
+				long areaSize, const core::stringc& name) :
+				Filename(name), AreaStart(pos), AreaEnd(AreaStart + areaSize), Pos(
+						0), File(alreadyOpenedFile)
 		{
 			IRR_ASSERT(alreadyOpenedFile != 0);
 			IRR_ASSERT((AreaStart + AreaEnd) < alreadyOpenedFile->getSize());
@@ -68,12 +67,12 @@ namespace irrgame
 		}
 
 		//! returns name of file
-		const stringc& CLimitReadFile::getFileName() const
+		const core::stringc& CLimitReadFile::getFileName() const
 		{
 			return Filename;
 		}
 
-		IReadFile* createLimitReadFile(const stringc& fileName,
+		IReadFile* createLimitReadFile(const core::stringc& fileName,
 				IReadFile* alreadyOpenedFile, long pos, long areaSize)
 		{
 			return new CLimitReadFile(alreadyOpenedFile, pos, areaSize,

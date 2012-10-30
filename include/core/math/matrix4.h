@@ -5,7 +5,7 @@
 #ifndef __IRR_MATRIX_H_INCLUDED__
 #define __IRR_MATRIX_H_INCLUDED__
 
-#include "core/collections/string.h"
+#include "core/collections/irrstring.h"
 #include "core/math/irrMath.h"
 #include "core/shapes/aabbox3d.h"
 #include "core/shapes/plane3d.h"
@@ -45,8 +45,16 @@ namespace irrgame
 		//! 4x4 matrix. Mostly used as transformation matrix for 3d calculations.
 		/** The matrix is a D3D style matrix, row major with translations in the 4th row. */
 		template<class T>
-		class CMatrix4
+		class matrix4
 		{
+				/*
+				 * Static methods
+				 */
+			public:
+
+				//! Returns global const identity matrix
+				static matrix4<T>& getIdentityMatrix();
+
 			public:
 
 				//! Constructor Flags
@@ -63,11 +71,11 @@ namespace irrgame
 			public:
 				//! Default constructor
 				/** \param constructor Choose the initialization style */
-				CMatrix4(eConstructor constructor = EM4CONST_IDENTITY);
+				matrix4(eConstructor constructor = EM4CONST_IDENTITY);
 				//! Copy constructor
 				/** \param other Other matrix to copy from
 				 \param constructor Choose the initialization style */
-				CMatrix4(const CMatrix4<T>& other, eConstructor constructor =
+				matrix4(const matrix4<T>& other, eConstructor constructor =
 						EM4CONST_COPY);
 
 				//! Simple operator for directly accessing every element of the matrix.
@@ -83,10 +91,10 @@ namespace irrgame
 				const T& operator[](u32 index) const;
 
 				//! Sets this matrix equal to the other matrix.
-				inline CMatrix4<T>& operator=(const CMatrix4<T> &other);
+				inline matrix4<T>& operator=(const matrix4<T> &other);
 
 				//! Sets all elements of this matrix to the value.
-				inline CMatrix4<T>& operator=(const T& scalar);
+				inline matrix4<T>& operator=(const T& scalar);
 
 				//! Returns pointer to internal array
 				const T* pointer() const;
@@ -94,47 +102,47 @@ namespace irrgame
 				T* pointer();
 
 				//! Returns true if other matrix is equal to this matrix.
-				bool operator==(const CMatrix4<T> &other) const;
+				bool operator==(const matrix4<T> &other) const;
 
 				//! Returns true if other matrix is not equal to this matrix.
-				bool operator!=(const CMatrix4<T> &other) const;
+				bool operator!=(const matrix4<T> &other) const;
 
 				//! Add another matrix.
-				CMatrix4<T> operator+(const CMatrix4<T>& other) const;
+				matrix4<T> operator+(const matrix4<T>& other) const;
 
 				//! Add another matrix.
-				CMatrix4<T>& operator+=(const CMatrix4<T>& other);
+				matrix4<T>& operator+=(const matrix4<T>& other);
 
 				//! Subtract another matrix.
-				CMatrix4<T> operator-(const CMatrix4<T>& other) const;
+				matrix4<T> operator-(const matrix4<T>& other) const;
 
 				//! Subtract another matrix.
-				CMatrix4<T>& operator-=(const CMatrix4<T>& other);
+				matrix4<T>& operator-=(const matrix4<T>& other);
 
 				//! set this matrix to the product of two matrices
-				inline CMatrix4<T>& setbyproduct(const CMatrix4<T>& other_a,
-						const CMatrix4<T>& other_b);
+				inline matrix4<T>& setbyproduct(const matrix4<T>& other_a,
+						const matrix4<T>& other_b);
 
 				//! Set this matrix to the product of two matrices
 				/** no optimization used,
 				 use it if you know you never have a identity matrix */
-				CMatrix4<T>& setbyproduct_nocheck(const CMatrix4<T>& other_a,
-						const CMatrix4<T>& other_b);
+				matrix4<T>& setbyproduct_nocheck(const matrix4<T>& other_a,
+						const matrix4<T>& other_b);
 
 				//! Multiply by another matrix.
-				CMatrix4<T> operator*(const CMatrix4<T>& other) const;
+				matrix4<T> operator*(const matrix4<T>& other) const;
 
 				//! Multiply by another matrix.
-				CMatrix4<T>& operator*=(const CMatrix4<T>& other);
+				matrix4<T>& operator*=(const matrix4<T>& other);
 
 				//! Multiply by scalar.
-				CMatrix4<T> operator*(const T& scalar) const;
+				matrix4<T> operator*(const T& scalar) const;
 
 				//! Multiply by scalar.
-				CMatrix4<T>& operator*=(const T& scalar);
+				matrix4<T>& operator*=(const T& scalar);
 
 				//! Set matrix to identity.
-				inline CMatrix4<T>& makeIdentity();
+				inline matrix4<T>& makeIdentity();
 
 				//! Returns true if the matrix is the identity matrix
 				inline bool isIdentity() const;
@@ -146,21 +154,21 @@ namespace irrgame
 				bool isIdentity_integer_base() const;
 
 				//! Set the translation of the current matrix. Will erase any previous values.
-				CMatrix4<T>& setTranslation(const vector3d<T>& translation);
+				matrix4<T>& setTranslation(const vector3d<T>& translation);
 
 				//! Gets the current translation
 				vector3d<T> getTranslation() const;
 
 				//! Set the inverse translation of the current matrix. Will erase any previous values.
-				CMatrix4<T>& setInverseTranslation(
+				matrix4<T>& setInverseTranslation(
 						const vector3d<T>& translation);
 
 				//! Make a rotation matrix from Euler angles. The 4th row and column are unmodified.
-				inline CMatrix4<T>& setRotationRadians(
+				inline matrix4<T>& setRotationRadians(
 						const vector3d<T>& rotation);
 
 				//! Make a rotation matrix from Euler angles. The 4th row and column are unmodified.
-				CMatrix4<T>& setRotationDegrees(const vector3d<T>& rotation);
+				matrix4<T>& setRotationDegrees(const vector3d<T>& rotation);
 
 				//! Returns the rotation, as set by setRotation().
 				/** This code was orginally written by by Chev. */
@@ -168,19 +176,19 @@ namespace irrgame
 
 				//! Make an inverted rotation matrix from Euler angles.
 				/** The 4th row and column are unmodified. */
-				inline CMatrix4<T>& setInverseRotationRadians(
+				inline matrix4<T>& setInverseRotationRadians(
 						const vector3d<T>& rotation);
 
 				//! Make an inverted rotation matrix from Euler angles.
 				/** The 4th row and column are unmodified. */
-				CMatrix4<T>& setInverseRotationDegrees(
+				matrix4<T>& setInverseRotationDegrees(
 						const vector3d<T>& rotation);
 
 				//! Set Scale
-				CMatrix4<T>& setScale(const vector3d<T>& scale);
+				matrix4<T>& setScale(const vector3d<T>& scale);
 
 				//! Set Scale
-				CMatrix4<T>& setScale(const T scale);
+				matrix4<T>& setScale(const T scale);
 
 				//! Get Scale
 				core::vector3d<T> getScale() const;
@@ -240,49 +248,49 @@ namespace irrgame
 
 				//! Inverts a primitive matrix which only contains a translation and a rotation
 				/** \param out: where result matrix is written to. */
-				bool getInversePrimitive(CMatrix4<T>& out) const;
+				bool getInversePrimitive(matrix4<T>& out) const;
 
 				//! Gets the inversed matrix of this one
 				/** \param out: where result matrix is written to.
 				 \return Returns false if there is no inverse matrix. */
-				bool getInverse(CMatrix4<T>& out) const;
+				bool getInverse(matrix4<T>& out) const;
 
 				//! Builds a right-handed perspective projection matrix based on a field of view
-				CMatrix4<T>& buildProjectionMatrixPerspectiveFovRH(
+				matrix4<T>& buildProjectionMatrixPerspectiveFovRH(
 						f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear,
 						f32 zFar);
 
 				//! Builds a left-handed perspective projection matrix based on a field of view
-				CMatrix4<T>& buildProjectionMatrixPerspectiveFovLH(
+				matrix4<T>& buildProjectionMatrixPerspectiveFovLH(
 						f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear,
 						f32 zFar);
 
 				//! Builds a right-handed perspective projection matrix.
-				CMatrix4<T>& buildProjectionMatrixPerspectiveRH(
+				matrix4<T>& buildProjectionMatrixPerspectiveRH(
 						f32 widthOfViewVolume, f32 heightOfViewVolume,
 						f32 zNear, f32 zFar);
 
 				//! Builds a left-handed perspective projection matrix.
-				CMatrix4<T>& buildProjectionMatrixPerspectiveLH(
+				matrix4<T>& buildProjectionMatrixPerspectiveLH(
 						f32 widthOfViewVolume, f32 heightOfViewVolume,
 						f32 zNear, f32 zFar);
 
 				//! Builds a left-handed orthogonal projection matrix.
-				CMatrix4<T>& buildProjectionMatrixOrthoLH(f32 widthOfViewVolume,
+				matrix4<T>& buildProjectionMatrixOrthoLH(f32 widthOfViewVolume,
 						f32 heightOfViewVolume, f32 zNear, f32 zFar);
 
 				//! Builds a right-handed orthogonal projection matrix.
-				CMatrix4<T>& buildProjectionMatrixOrthoRH(f32 widthOfViewVolume,
+				matrix4<T>& buildProjectionMatrixOrthoRH(f32 widthOfViewVolume,
 						f32 heightOfViewVolume, f32 zNear, f32 zFar);
 
 				//! Builds a left-handed look-at matrix.
-				CMatrix4<T>& buildCameraLookAtMatrixLH(
+				matrix4<T>& buildCameraLookAtMatrixLH(
 						const vector3d<f32>& position,
 						const vector3d<f32>& target,
 						const vector3d<f32>& upVector);
 
 				//! Builds a right-handed look-at matrix.
-				CMatrix4<T>& buildCameraLookAtMatrixRH(
+				matrix4<T>& buildCameraLookAtMatrixRH(
 						const vector3d<f32>& position,
 						const vector3d<f32>& target,
 						const vector3d<f32>& upVector);
@@ -292,30 +300,30 @@ namespace irrgame
 				 \param plane: plane into which the geometry if flattened into
 				 \param point: value between 0 and 1, describing the light source.
 				 If this is 1, it is a point light, if it is 0, it is a directional light. */
-				CMatrix4<T>& buildShadowMatrix(const vector3d<f32>& light,
+				matrix4<T>& buildShadowMatrix(const vector3d<f32>& light,
 						plane3d<f32> plane, f32 point = 1.0f);
 
 				//! Builds a matrix which transforms a normalized Device Coordinate to Device Coordinates.
 				/** Used to scale <-1,-1><1,1> to viewport, for example from von <-1,-1> <1,1> to the viewport <0,0><0,640> */
-				CMatrix4<T>& buildNDCToDCMatrix(const rect<s32>& area,
+				matrix4<T>& buildNDCToDCMatrix(const rect<s32>& area,
 						f32 zScale);
 
 				//! Creates a new matrix as interpolated matrix from two other ones.
 				/** \param b: other matrix to interpolate with
 				 \param time: Must be a value between 0 and 1. */
-				CMatrix4<T> interpolate(const CMatrix4<T>& b, f32 time) const;
+				matrix4<T> interpolate(const matrix4<T>& b, f32 time) const;
 
 				//! Gets transposed matrix
-				CMatrix4<T> getTransposed() const;
+				matrix4<T> getTransposed() const;
 
 				//! Gets transposed matrix
-				inline void getTransposed(CMatrix4<T>& dest) const;
+				inline void getTransposed(matrix4<T>& dest) const;
 
 				//! Builds a matrix that rotates from one vector to another
 				/** \param from: vector to rotate from
 				 \param to: vector to rotate to
 				 */
-				CMatrix4<T>& buildRotateFromTo(const vector3d<f32>& from,
+				matrix4<T>& buildRotateFromTo(const vector3d<f32>& from,
 						const vector3d<f32>& to);
 
 				//! Builds a combined matrix which translates to a center before rotation and translates from origin afterwards
@@ -342,7 +350,7 @@ namespace irrgame
 				 rotate about center, scale, and transform.
 				 */
 				//! Set to a texture transformation matrix with the given parameters.
-				CMatrix4<T>& buildTextureTransform(f32 rotateRad,
+				matrix4<T>& buildTextureTransform(f32 rotateRad,
 						const vector2d<f32> &rotatecenter,
 						const vector2d<f32> &translate,
 						const vector2d<f32> &scale);
@@ -352,38 +360,38 @@ namespace irrgame
 				 Doesn't clear other elements than those affected
 				 \param radAngle Angle in radians
 				 \return Altered matrix */
-				CMatrix4<T>& setTextureRotationCenter(f32 radAngle);
+				matrix4<T>& setTextureRotationCenter(f32 radAngle);
 
 				//! Set texture transformation translation
 				/** Doesn't clear other elements than those affected.
 				 \param x Offset on x axis
 				 \param y Offset on y axis
 				 \return Altered matrix */
-				CMatrix4<T>& setTextureTranslate(f32 x, f32 y);
+				matrix4<T>& setTextureTranslate(f32 x, f32 y);
 
 				//! Set texture transformation translation, using a transposed representation
 				/** Doesn't clear other elements than those affected.
 				 \param x Offset on x axis
 				 \param y Offset on y axis
 				 \return Altered matrix */
-				CMatrix4<T>& setTextureTranslateTransposed(f32 x, f32 y);
+				matrix4<T>& setTextureTranslateTransposed(f32 x, f32 y);
 
 				//! Set texture transformation scale
 				/** Doesn't clear other elements than those affected.
 				 \param sx Scale factor on x axis
 				 \param sy Scale factor on y axis
 				 \return Altered matrix. */
-				CMatrix4<T>& setTextureScale(f32 sx, f32 sy);
+				matrix4<T>& setTextureScale(f32 sx, f32 sy);
 
 				//! Set texture transformation scale, and recenter at (0.5,0.5)
 				/** Doesn't clear other elements than those affected.
 				 \param sx Scale factor on x axis
 				 \param sy Scale factor on y axis
 				 \return Altered matrix. */
-				CMatrix4<T>& setTextureScaleCenter(f32 sx, f32 sy);
+				matrix4<T>& setTextureScaleCenter(f32 sx, f32 sy);
 
 				//! Sets all matrix data members at once
-				CMatrix4<T>& setM(const T* data);
+				matrix4<T>& setM(const T* data);
 
 				//! Sets if the matrix is definitely identity matrix
 				void setDefinitelyIdentityMatrix(
@@ -393,7 +401,7 @@ namespace irrgame
 				bool getDefinitelyIdentityMatrix() const;
 
 				//! Compare two matrices using the equal method
-				bool equals(const CMatrix4<T>& other, const T tolerance =
+				bool equals(const matrix4<T>& other, const T tolerance =
 						(T) ROUNDING_ERROR_f32) const;
 
 			private:
@@ -410,9 +418,17 @@ namespace irrgame
 
 		};
 
+		//! Returns global const identity matrix
+		template<class T>
+		matrix4<T>& matrix4<T>::getIdentityMatrix()
+		{
+			static matrix4<T> instance;
+			return instance;
+		}
+
 		// Default constructor
 		template<class T>
-		inline CMatrix4<T>::CMatrix4(eConstructor constructor)
+		inline matrix4<T>::matrix4(eConstructor constructor)
 #if defined ( USE_MATRIX_TEST )
 		: definitelyIdentityMatrix(BIT_UNTESTED)
 #endif
@@ -435,7 +451,7 @@ namespace irrgame
 
 		// Copy constructor
 		template<class T>
-		inline CMatrix4<T>::CMatrix4(const CMatrix4<T>& other,
+		inline matrix4<T>::matrix4(const matrix4<T>& other,
 				eConstructor constructor)
 #if defined ( USE_MATRIX_TEST )
 		: definitelyIdentityMatrix(BIT_UNTESTED)
@@ -472,7 +488,7 @@ namespace irrgame
 
 		//! Simple operator for directly accessing every element of the matrix.
 		template<class T>
-		inline T& CMatrix4<T>::operator()(const s32 row, const s32 col)
+		inline T& matrix4<T>::operator()(const s32 row, const s32 col)
 		{
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix=false;
@@ -482,7 +498,7 @@ namespace irrgame
 
 		//! Simple operator for directly accessing every element of the matrix.
 		template<class T>
-		inline const T& CMatrix4<T>::operator()(const s32 row,
+		inline const T& matrix4<T>::operator()(const s32 row,
 				const s32 col) const
 		{
 			return M[row * 4 + col];
@@ -490,7 +506,7 @@ namespace irrgame
 
 		//! Simple operator for linearly accessing every element of the matrix.
 		template<class T>
-		inline T& CMatrix4<T>::operator[](u32 index)
+		inline T& matrix4<T>::operator[](u32 index)
 		{
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix=false;
@@ -500,17 +516,16 @@ namespace irrgame
 
 		//! Simple operator for linearly accessing every element of the matrix.
 		template<class T>
-		inline const T& CMatrix4<T>::operator[](u32 index) const
+		inline const T& matrix4<T>::operator[](u32 index) const
 		{
 			return M[index];
 		}
 
 		//! Add another matrix.
 		template<class T>
-		inline CMatrix4<T> CMatrix4<T>::operator+(
-				const CMatrix4<T>& other) const
+		inline matrix4<T> matrix4<T>::operator+(const matrix4<T>& other) const
 		{
-			CMatrix4<T> temp(EM4CONST_NOTHING);
+			matrix4<T> temp(EM4CONST_NOTHING);
 
 			temp[0] = M[0] + other[0];
 			temp[1] = M[1] + other[1];
@@ -534,7 +549,7 @@ namespace irrgame
 
 		//! Add another matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::operator+=(const CMatrix4<T>& other)
+		inline matrix4<T>& matrix4<T>::operator+=(const matrix4<T>& other)
 		{
 			M[0] += other[0];
 			M[1] += other[1];
@@ -558,10 +573,9 @@ namespace irrgame
 
 		//! Subtract another matrix.
 		template<class T>
-		inline CMatrix4<T> CMatrix4<T>::operator-(
-				const CMatrix4<T>& other) const
+		inline matrix4<T> matrix4<T>::operator-(const matrix4<T>& other) const
 		{
-			CMatrix4<T> temp(EM4CONST_NOTHING);
+			matrix4<T> temp(EM4CONST_NOTHING);
 
 			temp[0] = M[0] - other[0];
 			temp[1] = M[1] - other[1];
@@ -585,7 +599,7 @@ namespace irrgame
 
 		//! Subtract another matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::operator-=(const CMatrix4<T>& other)
+		inline matrix4<T>& matrix4<T>::operator-=(const matrix4<T>& other)
 		{
 			M[0] -= other[0];
 			M[1] -= other[1];
@@ -609,9 +623,9 @@ namespace irrgame
 
 		//! Multiply by scalar.
 		template<class T>
-		inline CMatrix4<T> CMatrix4<T>::operator*(const T& scalar) const
+		inline matrix4<T> matrix4<T>::operator*(const T& scalar) const
 		{
-			CMatrix4<T> temp(EM4CONST_NOTHING);
+			matrix4<T> temp(EM4CONST_NOTHING);
 
 			temp[0] = M[0] * scalar;
 			temp[1] = M[1] * scalar;
@@ -635,7 +649,7 @@ namespace irrgame
 
 		//! Multiply by scalar.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::operator*=(const T& scalar)
+		inline matrix4<T>& matrix4<T>::operator*=(const T& scalar)
 		{
 			M[0] *= scalar;
 			M[1] *= scalar;
@@ -659,7 +673,7 @@ namespace irrgame
 
 		//! Multiply by another matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::operator*=(const CMatrix4<T>& other)
+		inline matrix4<T>& matrix4<T>::operator*=(const matrix4<T>& other)
 		{
 #if defined ( USE_MATRIX_TEST )
 			// do checks on your own in order to avoid copy creation
@@ -677,7 +691,7 @@ namespace irrgame
 			}
 			return *this;
 #else
-			CMatrix4<T> temp(*this);
+			matrix4<T> temp(*this);
 			return setbyproduct_nocheck(temp, other);
 #endif
 		}
@@ -686,8 +700,8 @@ namespace irrgame
 		// set this matrix to the product of two other matrices
 		// goal is to reduce stack use and copy
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setbyproduct_nocheck(
-				const CMatrix4<T>& other_a, const CMatrix4<T>& other_b)
+		inline matrix4<T>& matrix4<T>::setbyproduct_nocheck(
+				const matrix4<T>& other_a, const matrix4<T>& other_b)
 		{
 			const T *m1 = other_a.M;
 			const T *m2 = other_b.M;
@@ -737,8 +751,8 @@ namespace irrgame
 		// set this matrix to the product of two other matrices
 		// goal is to reduce stack use and copy
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setbyproduct(
-				const CMatrix4<T>& other_a, const CMatrix4<T>& other_b)
+		inline matrix4<T>& matrix4<T>::setbyproduct(const matrix4<T>& other_a,
+				const matrix4<T>& other_b)
 		{
 #if defined ( USE_MATRIX_TEST )
 			if ( other_a.isIdentity () )
@@ -755,7 +769,7 @@ namespace irrgame
 
 		//! multiply by another matrix
 		template<class T>
-		inline CMatrix4<T> CMatrix4<T>::operator*(const CMatrix4<T>& m2) const
+		inline matrix4<T> matrix4<T>::operator*(const matrix4<T>& m2) const
 		{
 #if defined ( USE_MATRIX_TEST )
 			// Testing purpose..
@@ -765,7 +779,7 @@ namespace irrgame
 			return *this;
 #endif
 
-			CMatrix4<T> m3(EM4CONST_NOTHING);
+			matrix4<T> m3(EM4CONST_NOTHING);
 
 			const T *m1 = M;
 
@@ -808,13 +822,13 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline vector3d<T> CMatrix4<T>::getTranslation() const
+		inline vector3d<T> matrix4<T>::getTranslation() const
 		{
 			return vector3d<T>(M[12], M[13], M[14]);
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setTranslation(
+		inline matrix4<T>& matrix4<T>::setTranslation(
 				const vector3d<T>& translation)
 		{
 			M[12] = translation.X();
@@ -827,7 +841,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setInverseTranslation(
+		inline matrix4<T>& matrix4<T>::setInverseTranslation(
 				const vector3d<T>& translation)
 		{
 			M[12] = -translation.X();
@@ -840,7 +854,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setScale(const vector3d<T>& scale)
+		inline matrix4<T>& matrix4<T>::setScale(const vector3d<T>& scale)
 		{
 			M[0] = scale.X();
 			M[5] = scale.Y();
@@ -853,7 +867,7 @@ namespace irrgame
 
 		//! Set Scale
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setScale(const T scale)
+		inline matrix4<T>& matrix4<T>::setScale(const T scale)
 		{
 			return setScale(core::vector3d<T>(scale, scale, scale));
 		}
@@ -867,7 +881,7 @@ namespace irrgame
 		 FIXME - return the original values.
 		 */
 		template<class T>
-		inline vector3d<T> CMatrix4<T>::getScale() const
+		inline vector3d<T> matrix4<T>::getScale() const
 		{
 			// See http://www.robertblum.com/articles/2005/02/14/decomposing-matrices
 
@@ -884,21 +898,21 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setRotationDegrees(
+		inline matrix4<T>& matrix4<T>::setRotationDegrees(
 				const vector3d<T>& rotation)
 		{
 			return setRotationRadians(rotation * core::DEGTORAD);
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setInverseRotationDegrees(
+		inline matrix4<T>& matrix4<T>::setInverseRotationDegrees(
 				const vector3d<T>& rotation)
 		{
 			return setInverseRotationRadians(rotation * core::DEGTORAD);
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setRotationRadians(
+		inline matrix4<T>& matrix4<T>::setRotationRadians(
 				const vector3d<T>& rotation)
 		{
 			const f32 cr = cos(rotation.X());
@@ -933,9 +947,9 @@ namespace irrgame
 		 the *same* Euler angles as those set by setRotationDegrees(), but the rotation will
 		 be equivalent, i.e. will have the same result when used to rotate a vector or node. */
 		template<class T>
-		inline core::vector3d<T> CMatrix4<T>::getRotationDegrees() const
+		inline core::vector3d<T> matrix4<T>::getRotationDegrees() const
 		{
-			const CMatrix4<T> &mat = *this;
+			const matrix4<T> &mat = *this;
 			const core::vector3d<T> scale = getScale();
 			const vector3d<f32> invScale(core::reciprocal(scale.X()),
 					core::reciprocal(scale.Y()), core::reciprocal(scale.Z()));
@@ -978,7 +992,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setInverseRotationRadians(
+		inline matrix4<T>& matrix4<T>::setInverseRotationRadians(
 				const vector3d<T>& rotation)
 		{
 			f32 cr = cos(rotation.X());
@@ -1011,7 +1025,7 @@ namespace irrgame
 		/*!
 		 */
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::makeIdentity()
+		inline matrix4<T>& matrix4<T>::makeIdentity()
 		{
 			memset(M, 0, 16 * sizeof(T));
 			M[0] = M[5] = M[10] = M[15] = (T) 1;
@@ -1026,7 +1040,7 @@ namespace irrgame
 		 solve floating range problems..
 		 */
 		template<class T>
-		inline bool CMatrix4<T>::isIdentity() const
+		inline bool matrix4<T>::isIdentity() const
 		{
 #if defined ( USE_MATRIX_TEST )
 			if (definitelyIdentityMatrix)
@@ -1050,7 +1064,7 @@ namespace irrgame
 
 		/* Check orthogonality of matrix. */
 		template<class T>
-		inline bool CMatrix4<T>::isOrthogonal() const
+		inline bool matrix4<T>::isOrthogonal() const
 		{
 			T dp = M[0] * M[4] + M[1] * M[5] + M[2] * M[6] + M[3] * M[7];
 			if (!iszero(dp))
@@ -1078,7 +1092,7 @@ namespace irrgame
 		 but it needs the floats in memory..
 		 */
 		template<class T>
-		inline bool CMatrix4<T>::isIdentity_integer_base() const
+		inline bool matrix4<T>::isIdentity_integer_base() const
 		{
 #if defined ( USE_MATRIX_TEST )
 			if (definitelyIdentityMatrix)
@@ -1127,7 +1141,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::rotateVect(vector3d<f32>& vect) const
+		inline void matrix4<T>::rotateVect(vector3d<f32>& vect) const
 		{
 			vector3d<f32> tmp = vect;
 			vect.X() = tmp.X() * M[0] + tmp.Y() * M[4] + tmp.Z() * M[8];
@@ -1137,7 +1151,7 @@ namespace irrgame
 
 		//! An alternate transform vector method, writing into a second vector
 		template<class T>
-		inline void CMatrix4<T>::rotateVect(vector3d<f32>& out,
+		inline void matrix4<T>::rotateVect(vector3d<f32>& out,
 				const vector3d<f32>& in) const
 		{
 			out.X() = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8];
@@ -1147,7 +1161,7 @@ namespace irrgame
 
 		//! An alternate transform vector method, writing into an array of 3 floats
 		template<class T>
-		inline void CMatrix4<T>::rotateVect(T *out,
+		inline void matrix4<T>::rotateVect(T *out,
 				const vector3d<f32>& in) const
 		{
 			out[0] = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8];
@@ -1156,7 +1170,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::inverseRotateVect(vector3d<f32>& vect) const
+		inline void matrix4<T>::inverseRotateVect(vector3d<f32>& vect) const
 		{
 			vector3d<f32> tmp = vect;
 			vect.X() = tmp.X() * M[0] + tmp.Y() * M[1] + tmp.Z() * M[2];
@@ -1165,7 +1179,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::transformVect(vector3d<f32>& vect) const
+		inline void matrix4<T>::transformVect(vector3d<f32>& vect) const
 		{
 			f32 vector[3];
 
@@ -1182,7 +1196,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::transformVect(vector3d<f32>& out,
+		inline void matrix4<T>::transformVect(vector3d<f32>& out,
 				const vector3d<f32>& in) const
 		{
 			out.X() = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8] + M[12];
@@ -1191,7 +1205,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::transformVect(T *out,
+		inline void matrix4<T>::transformVect(T *out,
 				const vector3d<f32> &in) const
 		{
 			out[0] = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8] + M[12];
@@ -1202,14 +1216,14 @@ namespace irrgame
 
 		//! Transforms a plane by this matrix
 		template<class T>
-		inline void CMatrix4<T>::transformPlane(core::plane3d<f32> &plane) const
+		inline void matrix4<T>::transformPlane(core::plane3d<f32> &plane) const
 		{
 			vector3d<f32> member;
 			// Transform the plane member point, i.e. rotate, translate and scale it.
 			transformVect(member, plane.getMemberPoint());
 
 			// Transform the normal by the transposed inverse of the matrix
-			CMatrix4<T> transposedInverse(*this, EM4CONST_INVERSE_TRANSPOSED);
+			matrix4<T> transposedInverse(*this, EM4CONST_INVERSE_TRANSPOSED);
 			vector3d<f32> normal = plane.Normal;
 			transposedInverse.transformVect(normal);
 
@@ -1218,7 +1232,7 @@ namespace irrgame
 
 		//! Transforms a plane by this matrix
 		template<class T>
-		inline void CMatrix4<T>::transformPlane(const core::plane3d<f32> &in,
+		inline void matrix4<T>::transformPlane(const core::plane3d<f32> &in,
 				core::plane3d<f32> &out) const
 		{
 			out = in;
@@ -1227,7 +1241,7 @@ namespace irrgame
 
 		//! Transforms a axis aligned bounding box
 		template<class T>
-		inline void CMatrix4<T>::transformBox(core::aabbox3d<f32>& box) const
+		inline void matrix4<T>::transformBox(core::aabbox3d<f32>& box) const
 		{
 #if defined ( USE_MATRIX_TEST )
 			if (isIdentity())
@@ -1241,7 +1255,7 @@ namespace irrgame
 
 		//! Transforms a axis aligned bounding box more accurately than transformBox()
 		template<class T>
-		inline void CMatrix4<T>::transformBoxEx(core::aabbox3d<f32>& box) const
+		inline void matrix4<T>::transformBoxEx(core::aabbox3d<f32>& box) const
 		{
 #if defined ( USE_MATRIX_TEST )
 			if (isIdentity())
@@ -1260,7 +1274,7 @@ namespace irrgame
 			Bmin[1] = Bmax[1] = M[13];
 			Bmin[2] = Bmax[2] = M[14];
 
-			const CMatrix4<T> &m = *this;
+			const matrix4<T> &m = *this;
 
 			for (u32 i = 0; i < 3; ++i)
 			{
@@ -1293,7 +1307,7 @@ namespace irrgame
 
 		//! Multiplies this matrix by a 1x4 matrix
 		template<class T>
-		inline void CMatrix4<T>::multiplyWith1x4Matrix(T* matrix) const
+		inline void matrix4<T>::multiplyWith1x4Matrix(T* matrix) const
 		{
 			/*
 			 0  1  2  3
@@ -1319,7 +1333,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::inverseTranslateVect(vector3d<f32>& vect) const
+		inline void matrix4<T>::inverseTranslateVect(vector3d<f32>& vect) const
 		{
 			vect.X() = vect.X() - M[12];
 			vect.Y() = vect.Y() - M[13];
@@ -1327,7 +1341,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline void CMatrix4<T>::translateVect(vector3d<f32>& vect) const
+		inline void matrix4<T>::translateVect(vector3d<f32>& vect) const
 		{
 			vect.X() = vect.X() + M[12];
 			vect.Y() = vect.Y() + M[13];
@@ -1335,7 +1349,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline bool CMatrix4<T>::getInverse(CMatrix4<T>& out) const
+		inline bool matrix4<T>::getInverse(matrix4<T>& out) const
 		{
 			/// Calculates the inverse of this Matrix
 			/// The inverse is calculated using Cramers rule.
@@ -1348,7 +1362,7 @@ namespace irrgame
 				return true;
 			}
 #endif
-			const CMatrix4<T> &m = *this;
+			const matrix4<T> &m = *this;
 
 			f32 d = (m(0, 0) * m(1, 1) - m(0, 1) * m(1, 0))
 					* (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2))
@@ -1522,7 +1536,7 @@ namespace irrgame
 		//! Inverts a primitive matrix which only contains a translation and a rotation
 		//! \param out: where result matrix is written to.
 		template<class T>
-		inline bool CMatrix4<T>::getInversePrimitive(CMatrix4<T>& out) const
+		inline bool matrix4<T>::getInversePrimitive(matrix4<T>& out) const
 		{
 			out.M[0] = M[0];
 			out.M[1] = M[4];
@@ -1553,13 +1567,13 @@ namespace irrgame
 		/*!
 		 */
 		template<class T>
-		inline bool CMatrix4<T>::makeInverse()
+		inline bool matrix4<T>::makeInverse()
 		{
 #if defined ( USE_MATRIX_TEST )
 			if (definitelyIdentityMatrix)
 			return true;
 #endif
-			CMatrix4<T> temp(EM4CONST_NOTHING);
+			matrix4<T> temp(EM4CONST_NOTHING);
 
 			if (getInverse(temp))
 			{
@@ -1571,7 +1585,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::operator=(const CMatrix4<T> &other)
+		inline matrix4<T>& matrix4<T>::operator=(const matrix4<T> &other)
 		{
 			if (this == &other)
 				return *this;
@@ -1583,7 +1597,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::operator=(const T& scalar)
+		inline matrix4<T>& matrix4<T>::operator=(const T& scalar)
 		{
 			for (s32 i = 0; i < 16; ++i)
 				M[i] = scalar;
@@ -1596,13 +1610,13 @@ namespace irrgame
 
 		//! Returns pointer to internal array
 		template<class T>
-		inline const T* CMatrix4<T>::pointer() const
+		inline const T* matrix4<T>::pointer() const
 		{
 			return M;
 		}
 
 		template<class T>
-		inline T* CMatrix4<T>::pointer()
+		inline T* matrix4<T>::pointer()
 		{
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix=false;
@@ -1611,7 +1625,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline bool CMatrix4<T>::operator==(const CMatrix4<T> &other) const
+		inline bool matrix4<T>::operator==(const matrix4<T> &other) const
 		{
 #if defined ( USE_MATRIX_TEST )
 			if (definitelyIdentityMatrix && other.definitelyIdentityMatrix)
@@ -1625,14 +1639,14 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline bool CMatrix4<T>::operator!=(const CMatrix4<T> &other) const
+		inline bool matrix4<T>::operator!=(const matrix4<T> &other) const
 		{
 			return !(*this == other);
 		}
 
 		// Builds a right-handed perspective projection matrix based on a field of view
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveFovRH(
+		inline matrix4<T>& matrix4<T>::buildProjectionMatrixPerspectiveFovRH(
 				f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear, f32 zFar)
 		{
 			const f32 h = reciprocal(tan(fieldOfViewRadians * 0.5));
@@ -1675,7 +1689,7 @@ namespace irrgame
 
 		// Builds a left-handed perspective projection matrix based on a field of view
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveFovLH(
+		inline matrix4<T>& matrix4<T>::buildProjectionMatrixPerspectiveFovLH(
 				f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear, f32 zFar)
 		{
 			const f32 h = reciprocal(tan(fieldOfViewRadians * 0.5));
@@ -1714,7 +1728,7 @@ namespace irrgame
 
 		// Builds a left-handed orthogonal projection matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixOrthoLH(
+		inline matrix4<T>& matrix4<T>::buildProjectionMatrixOrthoLH(
 				f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear,
 				f32 zFar)
 		{
@@ -1752,7 +1766,7 @@ namespace irrgame
 
 		// Builds a right-handed orthogonal projection matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixOrthoRH(
+		inline matrix4<T>& matrix4<T>::buildProjectionMatrixOrthoRH(
 				f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear,
 				f32 zFar)
 		{
@@ -1790,7 +1804,7 @@ namespace irrgame
 
 		// Builds a right-handed perspective projection matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveRH(
+		inline matrix4<T>& matrix4<T>::buildProjectionMatrixPerspectiveRH(
 				f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear,
 				f32 zFar)
 		{
@@ -1829,7 +1843,7 @@ namespace irrgame
 
 		// Builds a left-handed perspective projection matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveLH(
+		inline matrix4<T>& matrix4<T>::buildProjectionMatrixPerspectiveLH(
 				f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear,
 				f32 zFar)
 		{
@@ -1867,7 +1881,7 @@ namespace irrgame
 
 		// Builds a matrix that flattens geometry into a plane.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildShadowMatrix(
+		inline matrix4<T>& matrix4<T>::buildShadowMatrix(
 				const vector3d<f32>& light, plane3d<f32> plane, f32 point)
 		{
 			plane.Normal.normalize();
@@ -1900,7 +1914,7 @@ namespace irrgame
 
 		// Builds a left-handed look-at matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildCameraLookAtMatrixLH(
+		inline matrix4<T>& matrix4<T>::buildCameraLookAtMatrixLH(
 				const vector3d<f32>& position, const vector3d<f32>& target,
 				const vector3d<f32>& upVector)
 		{
@@ -1939,7 +1953,7 @@ namespace irrgame
 
 		// Builds a right-handed look-at matrix.
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildCameraLookAtMatrixRH(
+		inline matrix4<T>& matrix4<T>::buildCameraLookAtMatrixRH(
 				const vector3d<f32>& position, const vector3d<f32>& target,
 				const vector3d<f32>& upVector)
 		{
@@ -1978,10 +1992,10 @@ namespace irrgame
 
 		// creates a new matrix as interpolated matrix from this and the passed one.
 		template<class T>
-		inline CMatrix4<T> CMatrix4<T>::interpolate(const core::CMatrix4<T>& b,
+		inline matrix4<T> matrix4<T>::interpolate(const core::matrix4<T>& b,
 				f32 time) const
 		{
-			CMatrix4<T> mat(EM4CONST_NOTHING);
+			matrix4<T> mat(EM4CONST_NOTHING);
 
 			for (u32 i = 0; i < 16; i += 4)
 			{
@@ -1995,16 +2009,16 @@ namespace irrgame
 
 		// returns transposed matrix
 		template<class T>
-		inline CMatrix4<T> CMatrix4<T>::getTransposed() const
+		inline matrix4<T> matrix4<T>::getTransposed() const
 		{
-			CMatrix4<T> t(EM4CONST_NOTHING);
+			matrix4<T> t(EM4CONST_NOTHING);
 			getTransposed(t);
 			return t;
 		}
 
 		// returns transposed matrix
 		template<class T>
-		inline void CMatrix4<T>::getTransposed(CMatrix4<T>& o) const
+		inline void matrix4<T>::getTransposed(matrix4<T>& o) const
 		{
 			o[0] = M[0];
 			o[1] = M[4];
@@ -2032,7 +2046,7 @@ namespace irrgame
 
 		// used to scale <-1,-1><1,1> to viewport
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildNDCToDCMatrix(
+		inline matrix4<T>& matrix4<T>::buildNDCToDCMatrix(
 				const core::rect<s32>& viewport, f32 zScale)
 		{
 			const f32 scaleX = (viewport.getWidth() - 0.75f) * 0.5f;
@@ -2059,7 +2073,7 @@ namespace irrgame
 		 http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix/index.htm
 		 */
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildRotateFromTo(
+		inline matrix4<T>& matrix4<T>::buildRotateFromTo(
 				const vector3d<f32>& from, const vector3d<f32>& to)
 		{
 			// unit vectors
@@ -2116,7 +2130,7 @@ namespace irrgame
 		 \param from: source vector to rotate from
 		 */
 		template<class T>
-		inline void CMatrix4<T>::buildAxisAlignedBillboard(
+		inline void matrix4<T>::buildAxisAlignedBillboard(
 				const vector3d<f32>& camPos, const vector3d<f32>& center,
 				const vector3d<f32>& translation, const vector3d<f32>& axis,
 				const vector3d<f32>& from)
@@ -2170,7 +2184,7 @@ namespace irrgame
 
 		//! Builds a combined matrix which translate to a center before rotation and translate afterwards
 		template<class T>
-		inline void CMatrix4<T>::setRotationCenter(const vector3d<f32>& center,
+		inline void matrix4<T>::setRotationCenter(const vector3d<f32>& center,
 				const vector3d<f32>& translation)
 		{
 			M[12] = -M[0] * center.X() - M[4] * center.Y() - M[8] * center.Z()
@@ -2197,7 +2211,7 @@ namespace irrgame
 		 */
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::buildTextureTransform(f32 rotateRad,
+		inline matrix4<T>& matrix4<T>::buildTextureTransform(f32 rotateRad,
 				const vector2d<f32> &rotatecenter,
 				const vector2d<f32> &translate, const vector2d<f32> &scale)
 		{
@@ -2233,7 +2247,7 @@ namespace irrgame
 
 		// rotate about z axis, center ( 0.5, 0.5 )
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setTextureRotationCenter(f32 rotateRad)
+		inline matrix4<T>& matrix4<T>::setTextureRotationCenter(f32 rotateRad)
 		{
 			const f32 c = cosf(rotateRad);
 			const f32 s = sinf(rotateRad);
@@ -2253,7 +2267,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setTextureTranslate(f32 x, f32 y)
+		inline matrix4<T>& matrix4<T>::setTextureTranslate(f32 x, f32 y)
 		{
 			M[8] = (T) x;
 			M[9] = (T) y;
@@ -2265,7 +2279,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setTextureTranslateTransposed(f32 x,
+		inline matrix4<T>& matrix4<T>::setTextureTranslateTransposed(f32 x,
 				f32 y)
 		{
 			M[2] = (T) x;
@@ -2278,7 +2292,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setTextureScale(f32 sx, f32 sy)
+		inline matrix4<T>& matrix4<T>::setTextureScale(f32 sx, f32 sy)
 		{
 			M[0] = (T) sx;
 			M[5] = (T) sy;
@@ -2289,7 +2303,7 @@ namespace irrgame
 		}
 
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setTextureScaleCenter(f32 sx, f32 sy)
+		inline matrix4<T>& matrix4<T>::setTextureScaleCenter(f32 sx, f32 sy)
 		{
 			M[0] = (T) sx;
 			M[5] = (T) sy;
@@ -2304,7 +2318,7 @@ namespace irrgame
 
 		// sets all matrix data members at once
 		template<class T>
-		inline CMatrix4<T>& CMatrix4<T>::setM(const T* data)
+		inline matrix4<T>& matrix4<T>::setM(const T* data)
 		{
 			memcpy(M, data, 16 * sizeof(T));
 
@@ -2316,7 +2330,7 @@ namespace irrgame
 
 		// sets if the matrix is definitely identity matrix
 		template<class T>
-		inline void CMatrix4<T>::setDefinitelyIdentityMatrix(
+		inline void matrix4<T>::setDefinitelyIdentityMatrix(
 				bool isDefinitelyIdentityMatrix)
 		{
 #if defined ( USE_MATRIX_TEST )
@@ -2326,7 +2340,7 @@ namespace irrgame
 
 		// gets if the matrix is definitely identity matrix
 		template<class T>
-		inline bool CMatrix4<T>::getDefinitelyIdentityMatrix() const
+		inline bool matrix4<T>::getDefinitelyIdentityMatrix() const
 		{
 #if defined ( USE_MATRIX_TEST )
 			return definitelyIdentityMatrix;
@@ -2337,7 +2351,7 @@ namespace irrgame
 
 		//! Compare two matrices using the equal method
 		template<class T>
-		inline bool CMatrix4<T>::equals(const core::CMatrix4<T>& other,
+		inline bool matrix4<T>::equals(const core::matrix4<T>& other,
 				const T tolerance) const
 		{
 #if defined ( USE_MATRIX_TEST )
@@ -2353,12 +2367,15 @@ namespace irrgame
 
 		// Multiply by scalar.
 		template<class T>
-		inline CMatrix4<T> operator*(const T scalar, const CMatrix4<T>& mat)
+		inline matrix4<T> operator*(const T scalar, const matrix4<T>& mat)
 		{
 			return mat * scalar;
 		}
 	} // end namespace core
-} // end namespace irr
+} // end namespace irrgame
+
+//! Typedef for matrix
+typedef irrgame::core::matrix4<f32> matrix4f;
 
 #endif
 

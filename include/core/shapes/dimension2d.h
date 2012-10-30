@@ -211,8 +211,17 @@ namespace irrgame
 				//! Height of the dimension.
 				T Height;
 		};
+
 	} // end namespace core
 } // end namespace irr
+
+//! Typedefs for dimension2d
+typedef irrgame::core::dimension2d<u32> dimension2du;
+
+/** There are few cases where negative dimensions make sense. Please consider using
+ dimension2du instead. */
+typedef irrgame::core::dimension2d<s32> dimension2di;
+typedef irrgame::core::dimension2d<f32> dimension2df;
 
 #endif
 

@@ -22,8 +22,8 @@ namespace irrgame
 				struct SAttribute
 				{
 					public:
-						stringc Name;
-						stringc Value;
+						core::stringc Name;
+						core::stringc Value;
 					public:
 						//! Equality operator
 						bool operator ==(const SAttribute& other) const
@@ -133,7 +133,7 @@ namespace irrgame
 				const SAttribute* getAttributeByName(const c8* name) const;
 
 				// replaces xml special characters in a string and creates a new one
-				stringc replaceSpecialCharacters(stringc& origstr);
+				core::stringc replaceSpecialCharacters(core::stringc& origstr);
 
 				//! converts the text file into the desired format.
 				//! \param source: begin of the text (without byte order mark)
@@ -165,8 +165,8 @@ namespace irrgame
 				EXML_NODE_TYPE CurrentNodeType; // type of the currently parsed node
 				// source format of the xml file
 
-				stringc NodeName; // name of the node currently in
-				stringc EmptyString; // empty string to be returned by getSafe() methods
+				core::stringc NodeName; // name of the node currently in
+				core::stringc EmptyString; // empty string to be returned by getSafe() methods
 
 				bool IsEmptyElement; // is the currently parsed node empty?
 

@@ -5,8 +5,8 @@
 #ifndef __I_XML_WRITER_H_INCLUDED__
 #define __I_XML_WRITER_H_INCLUDED__
 
-#include "core/irrgamebase.h"
-#include "core/irrgamecollections.h"
+#include "core/engine/IReferenceCounted.h"
+#include "core/collections/array.h"
 
 namespace irrgame
 {

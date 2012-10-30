@@ -67,7 +67,7 @@ namespace irrgame
 		}
 
 		//! Default constructor for matrix4 list
-		CNumbersAttribute::CNumbersAttribute(const c8* name, matrix4 value) :
+		CNumbersAttribute::CNumbersAttribute(const c8* name, matrix4f value) :
 				ValueI(), ValueF(), Count(16), IsFloat(true)
 		{
 			Name = name;
@@ -222,9 +222,9 @@ namespace irrgame
 			return ret;
 		}
 
-		stringc CNumbersAttribute::getString()
+		core::stringc CNumbersAttribute::getString()
 		{
-			stringc outstr;
+			core::stringc outstr;
 
 			for (u32 i = 0; i < Count; ++i)
 			{
@@ -330,23 +330,36 @@ namespace irrgame
 			return r;
 		}
 
-		matrix4 CNumbersAttribute::getMatrix()
+		matrix4f CNumbersAttribute::getMatrix()
 		{
-			matrix4 ret;
+			matrix4f ret;
 			if (IsFloat)
 			{
 				for (u32 r = 0; r < 4; ++r)
+				{
 					for (u32 c = 0; c < 4; ++c)
+					{
 						if (Count > c + r * 4)
+						{
 							ret(r, c) = ValueF[c + r * 4];
+						}
+					}
+				}
 			}
 			else
 			{
 				for (u32 r = 0; r < 4; ++r)
+				{
 					for (u32 c = 0; c < 4; ++c)
+					{
 						if (Count > c + r * 4)
+						{
 							ret(r, c) = (f32) ValueI[c + r * 4];
+						}
+					}
+				}
 			}
+
 			return ret;
 		}
 
@@ -711,7 +724,7 @@ namespace irrgame
 			}
 		}
 
-		void CNumbersAttribute::setMatrix(matrix4 value)
+		void CNumbersAttribute::setMatrix(matrix4f value)
 		{
 			reset();
 			if (IsFloat)
@@ -979,7 +992,7 @@ namespace irrgame
 			return IsFloat;
 		}
 
-		E_ATTRIBUTE_TYPE CNumbersAttribute::getType() const
+		EAttributeType CNumbersAttribute::getType() const
 		{
 			if (IsFloat)
 				return EAT_FLOATARRAY;

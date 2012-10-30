@@ -7,7 +7,10 @@
 
 #ifndef CCOLORATTRIBUTE_H_
 #define CCOLORATTRIBUTE_H_
+
 #include "io/serialize/CNumbersAttribute.h"
+#include "core/collections/irrstring.h"
+
 namespace irrgame
 {
 	namespace io
@@ -31,11 +34,11 @@ namespace irrgame
 
 				virtual void setFloat(f32 floatValue);
 
-				virtual stringc getString();
+				virtual core::stringc getString();
 
 				virtual void setString(const c8* text);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual const c8* getTypeString() const;
 

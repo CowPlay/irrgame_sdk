@@ -18,14 +18,14 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CVector3DAttribute::getType() const
+		EAttributeType CVector3DAttribute::getType() const
 		{
 			return EAT_VECTOR3D;
 		}
 
-		matrix4 CVector3DAttribute::getMatrix()
+		matrix4f CVector3DAttribute::getMatrix()
 		{
-			matrix4 ret;
+			matrix4f ret;
 			ret.makeIdentity();
 			ret.setTranslation(vector3df(ValueF[0], ValueF[1], ValueF[2]));
 			return ret;

@@ -18,7 +18,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CVector2DAttribute::getType() const
+		EAttributeType CVector2DAttribute::getType() const
 		{
 			return EAT_VECTOR2D;
 		}

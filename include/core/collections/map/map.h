@@ -694,4 +694,7 @@ namespace irrgame
 // end namespace core
 }// end namespace irr
 
+//! map typedefs
+typedef irrgame::core::map<s32, s32> DictIntInt;
+
 #endif // __IRR_MAP_H_INCLUDED__

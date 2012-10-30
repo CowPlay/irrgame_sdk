@@ -5,7 +5,7 @@
 #ifndef __IRR_PATH_H_INCLUDED__
 #define __IRR_PATH_H_INCLUDED__
 
-#include "core/irrgamecollections.h"
+#include "core/collections/irrstring.h"
 
 namespace irrgame
 {
@@ -23,7 +23,7 @@ namespace irrgame
 				}
 
 				//! Constructor
-				SPath(const stringc& p) :
+				SPath(const core::stringc& p) :
 						Path(p), InternalName(PathToName(p))
 				{
 				}
@@ -35,45 +35,44 @@ namespace irrgame
 				}
 
 				//! Set the path.
-				void setPath(const stringc& p)
+				void setPath(const core::stringc& p)
 				{
 					Path = p;
 					InternalName = PathToName(p);
 				}
 
 				//! Get the path.
-				const stringc& getPath() const
+				const core::stringc& getPath() const
 				{
 					return Path;
 				}
-				;
 
 				//! Get the name which is used to identify the file.
 				//! This string is similar to the names and filenames used before Irrlicht 1.7
-				const stringc& getInternalName() const
+				const core::stringc& getInternalName() const
 				{
 					return InternalName;
 				}
 
 				//! Implicit cast to io::path
-				operator stringc() const
+				operator core::stringc() const
 				{
-					return stringc(getPath());
+					return core::stringc(getPath());
 				}
 
 			protected:
 				// convert the given path string to a name string.
-				stringc PathToName(const stringc& p) const
+				core::stringc PathToName(const core::stringc& p) const
 				{
-					stringc name(p);
+					core::stringc name(p);
 					name.replace('\\', '/');
 					name.makeLower();
 					return name;
 				}
 
 			private:
-				stringc Path;
-				stringc InternalName;
+				core::stringc Path;
+				core::stringc InternalName;
 		};
 
 	} // io

@@ -7,7 +7,9 @@
 
 #ifndef CENUMATTRIBUTE_H_
 #define CENUMATTRIBUTE_H_
+
 #include "io/serialize/IAttribute.h"
+#include "core/collections/irrstring.h"
 
 namespace irrgame
 {
@@ -31,7 +33,7 @@ namespace irrgame
 
 				virtual bool getBool();
 
-				virtual stringc getString();
+				virtual core::stringc getString();
 
 				virtual void setInt(s32 intValue);
 
@@ -41,12 +43,12 @@ namespace irrgame
 
 				virtual const c8* getEnum();
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual const c8* getTypeString() const;
 
 			public:
-				stringc Value;
+				core::stringc Value;
 				arraystr EnumLiterals;
 		};
 	}

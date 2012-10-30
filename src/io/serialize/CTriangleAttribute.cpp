@@ -18,7 +18,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CTriangleAttribute::getType() const
+		EAttributeType CTriangleAttribute::getType() const
 		{
 			return EAT_TRIANGLE3D;
 		}

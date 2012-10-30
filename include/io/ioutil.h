@@ -15,8 +15,8 @@ namespace irrgame
 
 		// ----------- some basic quite often used string functions -----------------
 		//! search if a filename has a proper extension
-		inline s32 isFileExtension(const stringc& filename, const stringc& ext0,
-				const stringc& ext1, const stringc& ext2)
+		inline s32 isFileExtension(const core::stringc& filename, const core::stringc& ext0,
+				const core::stringc& ext1, const core::stringc& ext2)
 		{
 			s32 extPos = filename.findLast('.');
 			if (extPos < 0)
@@ -33,16 +33,16 @@ namespace irrgame
 		}
 
 		//! search if a filename has a proper extension
-		inline bool hasFileExtension(const stringc& filename,
-				const stringc& ext0, const stringc& ext1 = "",
-				const stringc& ext2 = "")
+		inline bool hasFileExtension(const core::stringc& filename,
+				const core::stringc& ext0, const core::stringc& ext1 = "",
+				const core::stringc& ext2 = "")
 		{
 			return isFileExtension(filename, ext0, ext1, ext2) > 0;
 		}
 
 		//! cut the filename extension from a source file path and store it in a dest file path
-		inline stringc& cutFilenameExtension(stringc &dest,
-				const stringc &source)
+		inline core::stringc& cutFilenameExtension(core::stringc &dest,
+				const core::stringc &source)
 		{
 			s32 endPos = source.findLast('.');
 			dest = source.subString(0, endPos < 0 ? source.size() : endPos);
@@ -50,8 +50,8 @@ namespace irrgame
 		}
 
 		//! get the filename extension from a file path
-		inline stringc& getFileNameExtension(stringc &dest,
-				const stringc &source)
+		inline core::stringc& getFileNameExtension(core::stringc &dest,
+				const core::stringc &source)
 		{
 			s32 endPos = source.findLast('.');
 			if (endPos < 0)
@@ -62,7 +62,7 @@ namespace irrgame
 		}
 
 		//! delete path from filename
-		inline stringc& deletePathFromFilename(stringc& filename)
+		inline core::stringc& deletePathFromFilename(core::stringc& filename)
 		{
 			// delete path from filename
 			const c8* s = filename.cStr();
@@ -81,7 +81,7 @@ namespace irrgame
 		}
 
 		//! trim paths
-		inline stringc& deletePathFromPath(stringc& filename, s32 pathCount)
+		inline core::stringc& deletePathFromPath(core::stringc& filename, s32 pathCount)
 		{
 			// delete path from filename
 			s32 i = filename.size();
@@ -109,7 +109,7 @@ namespace irrgame
 
 		//! looks if file is in the same directory of path. returns offset of directory.
 		//! 0 means in same directory. 1 means file is direct child of path
-		inline s32 isInSameDirectory(const stringc& path, const stringc& file)
+		inline s32 isInSameDirectory(const core::stringc& path, const core::stringc& file)
 		{
 			s32 subA = 0;
 			s32 subB = 0;
@@ -138,7 +138,7 @@ namespace irrgame
 		//! returns the directory part of a filename, i.e. all until the first
 		//! slash or backslash, excluding it. If no directory path is prefixed, a '.'
 		//! is returned.
-		inline stringc getFileDir(const stringc& filename)
+		inline core::stringc getFileDir(const core::stringc& filename)
 		{
 			// find last forward or backslash
 			s32 lastSlash = filename.findLast('/');

@@ -26,7 +26,7 @@ namespace irrgame
 
 				virtual bool getBool();
 
-				virtual stringc getString();
+				virtual core::stringc getString();
 
 				virtual void setInt(s32 intValue);
 
@@ -34,7 +34,7 @@ namespace irrgame
 
 				virtual void setString(const c8* text);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual const c8* getTypeString() const;
 

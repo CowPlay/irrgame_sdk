@@ -331,8 +331,13 @@ namespace irrgame
 				//! End point of the line.
 				vector2d<T> end;
 		};
+
 	} // end namespace core
 } // end namespace irr
+
+//! Typedefs for line2d
+typedef irrgame::core::line2d<f32> line2df;
+typedef irrgame::core::line2d<s32> line2di;
 
 #endif
 

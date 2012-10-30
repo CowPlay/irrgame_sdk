@@ -25,7 +25,7 @@ namespace irrgame
 		}
 
 		//! Gets thread name
-		stringc irrgameThread::getName()
+		core::stringc irrgameThread::getName()
 		{
 			return Name;
 		}

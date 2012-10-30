@@ -10,9 +10,9 @@
 
 #include "core/irrgamemath.h"
 #include "video/EColorFormat.h"
-#include "video/materials/EBlendFactor.h"
-#include "video/materials/EModulateFunc.h"
-#include "video/materials/EAlphaSource.h"
+#include "video/material/EBlendFactor.h"
+#include "video/material/EModulateFunc.h"
+#include "video/material/EAlphaSource.h"
 
 namespace irrgame
 {
@@ -429,7 +429,6 @@ namespace irrgame
 					return false;
 			}
 		}
-
 	}
 }
 

@@ -185,8 +185,13 @@ namespace irrgame
 				//! End point of line
 				vector3d<T> end;
 		};
+
 	} // end namespace core
 } // end namespace irr
+
+//! Typedefs for line3d
+typedef irrgame::core::line3d<f32> line3df;
+typedef irrgame::core::line3d<s32> line3di;
 
 #endif
 

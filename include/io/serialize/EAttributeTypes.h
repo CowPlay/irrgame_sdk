@@ -11,7 +11,7 @@ namespace irrgame
 	{
 
 		//! Types of attributes available for IAttributes
-		enum E_ATTRIBUTE_TYPE
+		enum EAttributeType
 		{
 			// integer attribute
 			EAT_INT = 0,

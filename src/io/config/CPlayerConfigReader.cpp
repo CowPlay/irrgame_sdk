@@ -39,7 +39,7 @@ namespace irrgame
 				{
 					case EXNT_ELEMENT:
 					{
-						stringc nodeName = XMLReader->getNodeName();
+						core::stringc nodeName = XMLReader->getNodeName();
 
 						if (nodeName == XML_TAG_APPLICATION)
 							parseApplication(XMLReader);
@@ -48,7 +48,7 @@ namespace irrgame
 					}
 					case EXNT_ELEMENT_END:
 					{
-						stringc nodeName = XMLReader->getNodeName();
+						core::stringc nodeName = XMLReader->getNodeName();
 
 						if (nodeName == XML_TAG_CONFIG)
 						{
@@ -83,7 +83,7 @@ namespace irrgame
 				{
 					case EXNT_ELEMENT:
 					{
-						stringc nodeName = xml->getNodeName();
+						core::stringc nodeName = xml->getNodeName();
 
 						if (nodeName == XML_TAG_ATTRIBUTES)
 						{
@@ -107,7 +107,7 @@ namespace irrgame
 					}
 					case EXNT_ELEMENT_END:
 					{
-						stringc nodeName = xml->getNodeName();
+						core::stringc nodeName = xml->getNodeName();
 
 						if (nodeName == XML_TAG_APPLICATION)
 						{

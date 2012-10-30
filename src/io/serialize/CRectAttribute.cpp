@@ -16,7 +16,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CRectAttribute::getType() const
+		EAttributeType CRectAttribute::getType() const
 		{
 			return EAT_RECT;
 		}

@@ -7,6 +7,7 @@
 
 #ifndef CNUMBERSATTRIBUTE_H_
 #define CNUMBERSATTRIBUTE_H_
+
 #include "io/serialize/IAttribute.h"
 
 namespace irrgame
@@ -38,7 +39,7 @@ namespace irrgame
 				CNumbersAttribute(const c8* name, rectf value);
 
 				//! Default constructor for matrix list
-				CNumbersAttribute(const c8* name, matrix4 value);
+				CNumbersAttribute(const c8* name, matrix4f value);
 
 				CNumbersAttribute(const c8* name, core::quaternion value);
 
@@ -67,7 +68,7 @@ namespace irrgame
 
 				virtual bool getBool();
 
-				virtual stringc getString();
+				virtual core::stringc getString();
 
 				virtual vector2df getVector2d();
 
@@ -79,7 +80,7 @@ namespace irrgame
 
 				virtual recti getRect();
 
-				virtual matrix4 getMatrix();
+				virtual matrix4f getMatrix();
 
 				virtual core::quaternion getQuaternion();
 
@@ -118,7 +119,7 @@ namespace irrgame
 
 				virtual void setRect(recti value);
 
-				virtual void setMatrix(matrix4 value);
+				virtual void setMatrix(matrix4f value);
 
 				virtual void setQuaternion(core::quaternion value);
 
@@ -146,7 +147,7 @@ namespace irrgame
 				//! is it a float list?
 				virtual bool isFloat();
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual const c8* getTypeString() const;
 

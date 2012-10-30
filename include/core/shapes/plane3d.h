@@ -262,8 +262,13 @@ namespace irrgame
 				//! Distance from origin.
 				T D;
 		};
+
 	} // end namespace core
 } // end namespace irr
+
+//! Typedefs for plane3d
+typedef irrgame::core::plane3d<f32> plane3df;
+typedef irrgame::core::plane3d<s32> plane3di;
 
 #endif
 

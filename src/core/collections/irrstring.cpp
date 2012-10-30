@@ -1,13 +1,15 @@
-// Copyright (C) 2002-2009 Nikolaus Gebhardt
-// This file is part of the "Irrlicht Engine" and the "irrXML" project.
-// For conditions of distribution and use, see copyright notice in irrlicht.h and irrXML.h
+/*
+ * string.cpp
+ *
+ *  Created on: Oct 30, 2012
+ *      Author: gregorytkach
+ */
 
-#ifndef __IRR_STRING_H_INCLUDED__
-#define __IRR_STRING_H_INCLUDED__
-
-
-#include "core/collections/ICollection.h"
+#include "core/collections/irrstring.h"
 #include "core/coreutil.h"
+
+#include "core/base/constants.h"
+
 #include "threads/irrgameMonitor.h"
 
 #include <stdio.h>
@@ -18,235 +20,15 @@ namespace irrgame
 {
 	namespace core
 	{
-		//! Very simple unicode threadsafe string class with some useful features.
-		/** so you can assign Unicode to this string*/
-		class string
-		{
-			public:
-				//! Returns empty string
-				static const string& getEmpty(void);
-
-			public:
-
-				//! Default constructor
-				string();
-				//! Copy constructor
-				string(const string& other);
-
-				//! Constructs a string from a float
-				explicit string(const double number);
-				//! Constructs a string from an int
-				explicit string(s32 number);
-				//! Constructs a string from an unsigned int
-				explicit string(u32 number);
-
-				//! Constructor for copying a string from a pointer with a given length
-				string(const c8* const c, u32 length);
-				//! Constructor for unicode and ascii strings
-				string(const c8* const c);
-
-				//! Destructor
-				virtual ~string();
-
-				//! Assignment operator
-				string& operator=(const string& other);
-				//! Assignment operator for strings, ascii and unicode
-				string& operator=(const c8* const c);
-
-				//! Append operator for other strings
-				string operator+(const string& other) const;
-				//! Append operator for strings, ascii and unicode
-				string operator+(const c8* const c) const;
-
-				//! Direct access operator
-				c8& operator [](const u32 index);
-				//! Direct access operator
-				const c8& operator [](const u32 index) const;
-
-				//! Equality operator
-				bool operator ==(const string& other) const;
-				//! Equality operator
-				bool operator ==(const c8* const str) const;
-
-				//! Is smaller comparator
-				bool operator <(const string& other) const;
-
-				//! Inequality operator
-				bool operator !=(const c8* const str) const;
-				//! Inequality operator
-				bool operator !=(const string& other) const;
-
-				//! Returns length of the string's content
-				/** \return Length of the string's content in characters, excluding
-				 the trailing NUL. */
-				u32 size() const;
-
-				//! Return True if this string is empty. Otherwise return False.
-				bool empty();
-
-//				//! Return True if this string have only whitespaces. Otherwise returns False.
-//				bool blank();
-
-				//! Returns character string
-				/** \return pointer to C-style NUL terminated string. */
-				const c8* cStr() const;
-
-				//! Makes the string lower case.
-				void makeLower();
-				//! Makes the string upper case.
-				void makeUpper();
-
-				//! Compares the strings ignoring case.
-				/** \param other: Other string to compare.
-				 \param sourcePos: where to start to compare in the string
-				 \return True if the strings are equal ignoring case. */
-				bool equalsIgnoreCase(const string& other, const u32 sourcePos =
-						0) const;
-
-				//! Compares the strings ignoring case.
-				/** \param other: Other string to compare.
-				 \return True if this string is smaller ignoring case. */
-				bool lowerIgnoreCase(const string& other) const;
-
-				//! compares the first n characters of the strings
-				/** \param other Other string to compare.
-				 \param n Number of characters to compare
-				 \return True if the n first characters of both strings are equal. */
-				bool equalsn(const string& other, u32 n) const;
-				//! compares the first n characters of the strings
-				/** \param str Other string to compare.
-				 \param n Number of characters to compare
-				 \return True if the n first characters of both strings are equal. */
-				bool equalsn(const c8* const str, u32 n) const;
-
-				//! Appends a string to this string
-				/** \param other: String to append. */
-				void append(const string& other);
-				//! Appends a string of the length l to this string.
-				/** \param other: other String to append to this string.
-				 \param length: How much characters of the other string to add to this one. */
-				void append(const string& other, u32 length);
-				//! Appends a character to this string
-				/** \param character: Character to append. */
-				void append(c8 character);
-				//! Appends a char string to this string
-				/** \param other: Char string to append. */
-				void append(const c8* const other);
-
-				//! finds next occurrence of character in string
-				/** \param c: Character to search for.
-				 \param startPos: Position in string to start searching.
-				 \return Position where the character has been found,
-				 or irrNotFound if not found. */
-				s32 findFirst(c8 c, u32 startPos = 0) const;
-
-				//! finds last occurrence of character in string
-				/** \param c: Character to search for.
-				 \return Position where the character has been found,
-				 or irrNotFound if not found. */
-				s32 findLast(c8 c) const;
-
-				//! finds another string in this string
-				/** \param str: Another string
-				 \param start: Start position of the search
-				 \return Positions where the string has been found,
-				 or -1 if not found. */
-				s32 find(const c8* const str, const u32 start = 0) const;
-
-				//! Returns a substring
-				/** \param begin: Start of substring.
-				 \param length: Length of substring. */
-				string subString(u32 begin, u32 length) const;
-
-				//! Appends a string to this string
-				/** \param other String to append. */
-				string& operator +=(const string& other);
-				//! Appends a character to this string
-				/** \param c Character to append. */
-				string& operator +=(c8 c);
-				//! Appends a char string to this string
-				/** \param c Char string to append. */
-				string& operator +=(const c8* const c);
-				//! Appends a string representation of a number to this string
-				/** \param i Number to append. */
-				string& operator +=(const s32 i);
-				//! Appends a string representation of a number to this string
-				/** \param i Number to append. */
-				string& operator +=(const u32 i);
-				//! Appends a string representation of a number to this string
-				/** \param i Number to append. */
-				string& operator +=(const double i);
-				//! Appends a string representation of a number to this string
-				/** \param i Number to append. */
-				string& operator +=(const f32 i);
-
-				//! Replaces all characters of a specify type with another one
-				/** \param toReplace Character to replace.
-				 \param replaceWith Character replacing the old one. */
-				void replace(c8 toReplace, c8 replaceWith);
-
-				//! Removes characters from a string.
-				/** \param c: Character to remove. */
-				void remove(c8 c);
-
-				//! Returns new string which trims this string.
-				/** Returns new string which not contains the specified characters (by default, Latin-1 whitespace)
-				 from the begining and the end of the string. */
-//				string& trim(const string& whitespace = " \t\n\r");
-//
-//
-//
-				//! Erases a character from the string.
-				/** May be slow, because all elements
-				 following after the erased element have to be copied.
-				 \param index: Index of element to be erased. */
-				void erase(u32 index);
-
-				//! gets the last char of a string or null
-				c8 lastChar() const;
-
-				//! split string into parts.
-				/** This method will split a string at certain delimiter characters
-				 into the container passed in as reference.
-				 \param ret The result container
-				 \param c C-style string of delimiter characters
-				 \param count Number of delimiter characters
-				 \param ignoreEmptyTokens Flag to avoid empty substrings in the result
-				 container. If two delimiters occur without a character in between, an
-				 empty substring would be placed in the result. If this flag is set,
-				 only non-empty strings are stored.
-				 \param keepSeparators Flag which allows to add the separator to the
-				 result string. If this flag is true, the concatenation of the
-				 substrings results in the original string. Otherwise, only the
-				 characters between the delimiters are returned.
-				 */
-				void split(ICollection<string>& ret, const c8* const c,
-						u32 count = 1, bool ignoreEmptyTokens = true,
-						bool keepSeparators = false) const;
-
-			private:
-
-				//! Reallocate the Array, make it bigger or smaller
-				void reallocate(u32 newSize);
-
-			private:
-				//--- member variables
-				c8* Array;
-				u32 Allocated;
-				u32 Used;
-				irrAllocator<c8> Allocator;
-				threads::irrgameMonitor* Monitor;
-		};
-
 		//! Returns empty string
-		inline const string& string::getEmpty(void)
+		inline const stringc& stringc::getEmpty(void)
 		{
-			static const string empty;
+			static const stringc empty;
 			return empty;
 		}
 
 		//! Default constructor
-		inline string::string() :
+		inline stringc::stringc() :
 				Array(0), Allocated(1), Used(1), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -256,7 +38,7 @@ namespace irrgame
 		}
 
 		//! Copy constructor
-		inline string::string(const string& other) :
+		inline stringc::stringc(const stringc& other) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -264,7 +46,7 @@ namespace irrgame
 		}
 
 		//! Constructs a string from a float
-		inline string::string(const double number) :
+		inline stringc::stringc(const double number) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -275,7 +57,7 @@ namespace irrgame
 		}
 
 		//! Constructs a string from an int
-		inline string::string(s32 number) :
+		inline stringc::stringc(s32 number) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -321,7 +103,7 @@ namespace irrgame
 		}
 
 		//! Constructs a string from an unsigned int
-		inline string::string(u32 number) :
+		inline stringc::stringc(u32 number) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -351,7 +133,7 @@ namespace irrgame
 		}
 
 		//! Constructor for copying a string from a pointer with a given length
-		inline string::string(const c8* const c, u32 length) :
+		inline stringc::stringc(const c8* const c, u32 length) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -373,7 +155,7 @@ namespace irrgame
 		}
 
 		//! Constructor for unicode strings
-		inline string::string(const c8* const c) :
+		inline stringc::stringc(const c8* const c) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -382,7 +164,7 @@ namespace irrgame
 		}
 
 		//! Destructor
-		inline string::~string()
+		inline stringc::~stringc()
 		{
 			Monitor->enter();
 			Allocator.deallocate(Array); // delete [] Array;
@@ -393,7 +175,7 @@ namespace irrgame
 		}
 
 		//! Assignment operator
-		inline string& string::operator=(const string& other)
+		inline stringc& stringc::operator=(const stringc& other)
 		{
 			//handle self-assignment
 			if (this == &other)
@@ -401,7 +183,7 @@ namespace irrgame
 
 			other.Monitor->enter();
 
-			string& result = string::operator =(other.Array);
+			stringc& result = stringc::operator =(other.Array);
 
 			other.Monitor->exit();
 
@@ -409,7 +191,7 @@ namespace irrgame
 		}
 
 		//! Assignment operator for strings, ascii and unicode
-		inline string& string::operator=(const c8* const c)
+		inline stringc& stringc::operator=(const c8* const c)
 		{
 			Monitor->enter();
 
@@ -463,10 +245,10 @@ namespace irrgame
 		}
 
 		//! Append operator for other strings
-		inline string string::operator+(const string& other) const
+		inline stringc stringc::operator+(const stringc& other) const
 		{
 			Monitor->enter();
-			string result(*this);
+			stringc result(*this);
 			result.append(other);
 			Monitor->exit();
 
@@ -474,10 +256,10 @@ namespace irrgame
 		}
 
 		//! Append operator for strings, ascii and unicode
-		inline string string::operator+(const c8* const c) const
+		inline stringc stringc::operator+(const c8* const c) const
 		{
 			Monitor->enter();
-			string result(*this);
+			stringc result(*this);
 			result.append(c);
 			Monitor->exit();
 
@@ -485,7 +267,7 @@ namespace irrgame
 		}
 
 		//! Direct access operator
-		inline c8& string::operator [](const u32 index)
+		inline c8& stringc::operator [](const u32 index)
 		{
 			Monitor->enter();
 
@@ -500,12 +282,12 @@ namespace irrgame
 		}
 
 		//! Direct access operator
-		inline const c8& string::operator [](const u32 index) const
+		inline const c8& stringc::operator [](const u32 index) const
 		{
 			Monitor->enter();
 
 			// bad index
-			IRR_ASSERT(index >= 0 && index<Used)
+			IRR_ASSERT(index >= 0 && index < Used)
 
 			const c8& result = Array[index];
 
@@ -515,17 +297,17 @@ namespace irrgame
 		}
 
 		//! Equality operator
-		inline bool string::operator ==(const string& other) const
+		inline bool stringc::operator ==(const stringc& other) const
 		{
 			if (this == &other)
 				return true;
 
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return string::operator==(other.Array);
+			return stringc::operator==(other.Array);
 		}
 
 		//! Equality operator
-		inline bool string::operator ==(const c8* const str) const
+		inline bool stringc::operator ==(const c8* const str) const
 		{
 			if (!str)
 			{
@@ -553,7 +335,7 @@ namespace irrgame
 		}
 
 		//! Is smaller comparator
-		inline bool string::operator <(const string& other) const
+		inline bool stringc::operator <(const stringc& other) const
 		{
 			if (this == &other)
 			{
@@ -583,14 +365,14 @@ namespace irrgame
 		}
 
 		//! Inequality operator
-		inline bool string::operator !=(const c8* const str) const
+		inline bool stringc::operator !=(const c8* const str) const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !(*this == str);
 		}
 
 		//! Inequality operator
-		inline bool string::operator !=(const string& other) const
+		inline bool stringc::operator !=(const stringc& other) const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !(*this == other);
@@ -599,7 +381,7 @@ namespace irrgame
 		//! Returns length of the string's content
 		/** \return Length of the string's content in characters, excluding
 		 the trailing NUL. */
-		inline u32 string::size() const
+		inline u32 stringc::size() const
 		{
 			Monitor->enter();
 			u32 result = Used - 1;
@@ -609,7 +391,7 @@ namespace irrgame
 		}
 
 		//! Return True if this string is empty. Otherwise return False.
-		inline bool string::empty()
+		inline bool stringc::empty()
 		{
 			bool result = false;
 
@@ -623,25 +405,25 @@ namespace irrgame
 			return result;
 		}
 
-//		//! Return True if this string have only whitespaces. Otherwise returns False.
-//		inline bool string::blank()
-//		{
-//			IRR_ASSERT(false);
-//			bool result = false;
-//
-//			Monitor->enter();
-//
-//			//TODO implement it
-//
-//			Monitor->exit();
-//
-//			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-//			return result;
-//		}
+		//		//! Return True if this string have only whitespaces. Otherwise returns False.
+		//		inline bool string::blank()
+		//		{
+		//			IRR_ASSERT(false);
+		//			bool result = false;
+		//
+		//			Monitor->enter();
+		//
+		//			//TODO implement it
+		//
+		//			Monitor->exit();
+		//
+		//			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+		//			return result;
+		//		}
 
 		//! Returns character string
 		/** \return pointer to C-style NUL terminated string. */
-		inline const c8* string::cStr() const
+		inline const c8* stringc::cStr() const
 		{
 			Monitor->enter();
 			const c8* result = Array;
@@ -651,7 +433,7 @@ namespace irrgame
 		}
 
 		//! Makes the string lower case.
-		inline void string::makeLower()
+		inline void stringc::makeLower()
 		{
 			Monitor->enter();
 
@@ -662,7 +444,7 @@ namespace irrgame
 		}
 
 		//! Makes the string upper case.
-		inline void string::makeUpper()
+		inline void stringc::makeUpper()
 		{
 			Monitor->enter();
 
@@ -673,7 +455,7 @@ namespace irrgame
 		}
 
 		//! Compares the strings ignoring case.
-		inline bool string::equalsIgnoreCase(const string& other,
+		inline bool stringc::equalsIgnoreCase(const stringc& other,
 				const u32 sourcePos) const
 		{
 			if (this == &other)
@@ -705,7 +487,7 @@ namespace irrgame
 		}
 
 		//! Compares the strings ignoring case.
-		inline bool string::lowerIgnoreCase(const string& other) const
+		inline bool stringc::lowerIgnoreCase(const stringc& other) const
 		{
 			if (this == &other)
 			{
@@ -741,17 +523,17 @@ namespace irrgame
 		}
 
 		//! compares the first n characters of the strings
-		inline bool string::equalsn(const string& other, u32 n) const
+		inline bool stringc::equalsn(const stringc& other, u32 n) const
 		{
 			if (this == &other)
 				return true;
 
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return string::equalsn(other.Array, n);
+			return stringc::equalsn(other.Array, n);
 		}
 
 		//! compares the first n characters of the strings
-		inline bool string::equalsn(const c8* const str, u32 n) const
+		inline bool stringc::equalsn(const c8* const str, u32 n) const
 		{
 			Monitor->enter();
 
@@ -783,7 +565,7 @@ namespace irrgame
 		}
 
 		//! Appends a string to this string
-		inline void string::append(const string& other)
+		inline void stringc::append(const stringc& other)
 		{
 			bool selfAppending = false;
 
@@ -812,7 +594,7 @@ namespace irrgame
 		}
 
 		//! Appends a character to this string
-		inline void string::append(c8 character)
+		inline void stringc::append(c8 character)
 		{
 			Monitor->enter();
 
@@ -828,7 +610,7 @@ namespace irrgame
 		}
 
 		//! Appends a char string to this string
-		inline void string::append(const c8* const other)
+		inline void stringc::append(const c8* const other)
 		{
 			Monitor->enter();
 
@@ -857,7 +639,7 @@ namespace irrgame
 		}
 
 		//! Appends a string of the length l to this string.
-		inline void string::append(const string& other, u32 length)
+		inline void stringc::append(const stringc& other, u32 length)
 		{
 			bool selfAppending = false;
 
@@ -869,7 +651,7 @@ namespace irrgame
 				other.Monitor->enter();
 			Monitor->enter();
 
-			IRR_ASSERT((other.Used-1) > length);
+			IRR_ASSERT((other.Used - 1) > length);
 
 			if (Used + length > Allocated)
 				reallocate(Used + length);
@@ -890,7 +672,7 @@ namespace irrgame
 		}
 
 		//! finds next occurrence of character in string
-		inline s32 string::findFirst(c8 c, u32 startPos) const
+		inline s32 stringc::findFirst(c8 c, u32 startPos) const
 		{
 			s32 result = IrrNotFound;
 
@@ -911,7 +693,7 @@ namespace irrgame
 		}
 
 		//! finds last occurrence of character in string
-		inline s32 string::findLast(c8 c) const
+		inline s32 stringc::findLast(c8 c) const
 		{
 			s32 result = IrrNotFound;
 
@@ -930,7 +712,7 @@ namespace irrgame
 		}
 
 		//! finds another string in this string
-		inline s32 string::find(const c8* const str, const u32 start) const
+		inline s32 stringc::find(const c8* const str, const u32 start) const
 		{
 			s32 result = IrrNotFound;
 
@@ -975,9 +757,9 @@ namespace irrgame
 		}
 
 		//! Returns a substring
-		inline string string::subString(u32 begin, u32 length) const
+		inline stringc stringc::subString(u32 begin, u32 length) const
 		{
-			string result;
+			stringc result;
 
 			Monitor->enter();
 
@@ -1003,56 +785,56 @@ namespace irrgame
 		}
 
 		//! Appends a string to this string
-		inline string& string::operator +=(const string& other)
+		inline stringc& stringc::operator +=(const stringc& other)
 		{
 			append(other);
 			return *this;
 		}
 
 		//! Appends a character to this string
-		inline string& string::operator +=(c8 c)
+		inline stringc& stringc::operator +=(c8 c)
 		{
 			append(c);
 			return *this;
 		}
 
 		//! Appends a char string to this string
-		inline string& string::operator +=(const c8* const c)
+		inline stringc& stringc::operator +=(const c8* const c)
 		{
 			append(c);
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline string& string::operator +=(const s32 i)
+		inline stringc& stringc::operator +=(const s32 i)
 		{
-			append(string(i));
+			append(stringc(i));
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline string& string::operator +=(const u32 i)
+		inline stringc& stringc::operator +=(const u32 i)
 		{
-			append(string(i));
+			append(stringc(i));
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline string& string::operator +=(const double i)
+		inline stringc& stringc::operator +=(const double i)
 		{
-			append(string(i));
+			append(stringc(i));
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline string& string::operator +=(const f32 i)
+		inline stringc& stringc::operator +=(const f32 i)
 		{
-			append(string(i));
+			append(stringc(i));
 			return *this;
 		}
 
 		//! Replaces all characters of a special type with another one
-		inline void string::replace(c8 toReplace, c8 replaceWith)
+		inline void stringc::replace(c8 toReplace, c8 replaceWith)
 		{
 			Monitor->enter();
 
@@ -1064,7 +846,7 @@ namespace irrgame
 		}
 
 		//! Removes characters from a string.
-		inline void string::remove(c8 c)
+		inline void stringc::remove(c8 c)
 		{
 			Monitor->enter();
 
@@ -1086,42 +868,42 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-//		//! Returns new string which trims this string.
-//		inline string& string::trim(const string& whitespace)
-//		{
-//			Monitor->enter();
-//
-//			//for clear - use string::clear()
-//			IRR_ASSERT(this != &whitespace);
-//			//trim empty was
-//			IRR_ASSERT(Used - 1 > 0);
-//
-//			whitespace.Monitor->enter();
-//
-//			// find start and end of the substring without the specified characters
-//			const s32 begin = findFirstCharNotInList(whitespace.Array,
-//					whitespace.Used);
-//
-//			if (begin == irrNotFound)
-//			{
-//				Monitor->exit();
-//				return (*this = "");
-//			}
-//
-//			const s32 end = findLastCharNotInList(whitespace.Array,
-//					whitespace.Used);
-//
-//			string* result = new string;
-//
-//			(*result) = subString(begin, (end + 1) - begin);
-//
-//			Monitor->exit();
-//
-//			return *result;
-//		}
+		//		//! Returns new string which trims this string.
+		//		inline string& string::trim(const string& whitespace)
+		//		{
+		//			Monitor->enter();
+		//
+		//			//for clear - use string::clear()
+		//			IRR_ASSERT(this != &whitespace);
+		//			//trim empty was
+		//			IRR_ASSERT(Used - 1 > 0);
+		//
+		//			whitespace.Monitor->enter();
+		//
+		//			// find start and end of the substring without the specified characters
+		//			const s32 begin = findFirstCharNotInList(whitespace.Array,
+		//					whitespace.Used);
+		//
+		//			if (begin == irrNotFound)
+		//			{
+		//				Monitor->exit();
+		//				return (*this = "");
+		//			}
+		//
+		//			const s32 end = findLastCharNotInList(whitespace.Array,
+		//					whitespace.Used);
+		//
+		//			string* result = new string;
+		//
+		//			(*result) = subString(begin, (end + 1) - begin);
+		//
+		//			Monitor->exit();
+		//
+		//			return *result;
+		//		}
 
 		//! Erases a character from the string.
-		inline void string::erase(u32 index)
+		inline void stringc::erase(u32 index)
 		{
 			Monitor->enter();
 
@@ -1137,7 +919,7 @@ namespace irrgame
 		}
 
 		//! gets the last char of a string or null
-		inline c8 string::lastChar() const
+		inline c8 stringc::lastChar() const
 		{
 			Monitor->enter();
 			c8 result = Used > 1 ? Array[Used - 2] : 0;
@@ -1147,7 +929,7 @@ namespace irrgame
 		}
 
 		//! split string into parts.
-		inline void string::split(ICollection<string>& ret, const c8* const c,
+		inline void stringc::split(ICollection<stringc>& ret, const c8* const c,
 				u32 count, bool ignoreEmptyTokens, bool keepSeparators) const
 		{
 			IRR_ASSERT(c != 0);
@@ -1163,7 +945,7 @@ namespace irrgame
 					{
 						if ((!ignoreEmptyTokens || i - lastpos != 0)
 								&& !lastWasSeparator)
-							ret.pushBack(string(&Array[lastpos], i - lastpos));
+							ret.pushBack(stringc(&Array[lastpos], i - lastpos));
 						foundSeparator = true;
 						lastpos = (keepSeparators ? i : i + 1);
 						break;
@@ -1173,11 +955,11 @@ namespace irrgame
 			}
 
 			if ((Used - 1) > lastpos)
-				ret.pushBack(string(&Array[lastpos], (Used - 1) - lastpos));
+				ret.pushBack(stringc(&Array[lastpos], (Used - 1) - lastpos));
 		}
 
 		//! Reallocate the Array, make it bigger or smaller
-		inline void string::reallocate(u32 newSize)
+		inline void stringc::reallocate(u32 newSize)
 		{
 			c8* oldArray = Array;
 
@@ -1193,9 +975,6 @@ namespace irrgame
 
 			Allocator.deallocate(oldArray); // delete [] old_Array;
 		}
-	}
-// end namespace core
-}// end namespace irr
-
-#endif
+	}  // namespace core
+}  // namespace irrgame
 

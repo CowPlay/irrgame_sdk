@@ -3,9 +3,9 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "video/CColorConverter.h"
-#include "video/SColor.h"
+#include "video/color.h"
 #include "utils/ByteSwap.h"
-
+#include "video/videoutils.h"
 #include "core/irrgamecollections.h"
 
 namespace irrgame

@@ -14,10 +14,6 @@
 #include "core/math/matrix4.h"
 #include "core/math/quaternion.h"
 
-//! Typedef for matrix
-typedef irrgame::core::CMatrix4<f32> matrix4;
 
-//! global const identity matrix
-static const matrix4 IdentityMatrix;
 
 #endif /* IRRGAMEMATH_H_ */

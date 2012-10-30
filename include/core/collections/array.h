@@ -15,6 +15,8 @@ namespace irrgame
 {
 	namespace core
 	{
+		class stringc;
+
 		//! Self reallocating template array (like stl vector) with additional features.
 		/** Some features are: Heap sorting, binary search methods, easier debugging.
 		 */
@@ -245,8 +247,9 @@ namespace irrgame
 		//! Constructs an array and allocates an initial chunk of memory.
 		template<class T>
 		inline array<T>::array(u32 startCount) :
-		Data(0), Allocated(0), Used(0), Monitor(0), Strategy(ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(
-				true), IsSorted(true)
+				Data(0), Allocated(0), Used(0), Monitor(0), Strategy(
+						ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(true), IsSorted(
+						true)
 		{
 			Monitor = threads::createIrrgameMonitor();
 			reallocate(startCount);
@@ -896,9 +899,14 @@ namespace irrgame
 			Monitor->exit();
 			other.Monitor->exit();
 		}
-
 	} // end namespace core
 } // end namespace irrgame
+
+//! array typedefs
+typedef irrgame::core::array<s32> arrayi;
+typedef irrgame::core::array<u32> arrayu;
+typedef irrgame::core::array<f32> arrayf;
+typedef irrgame::core::array<irrgame::core::stringc> arraystr;
 
 #endif
 

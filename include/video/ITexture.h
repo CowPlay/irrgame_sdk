@@ -84,7 +84,7 @@ namespace irrgame
 			public:
 
 				//! Default constructor
-				ITexture(const stringc& path) :
+				ITexture(const core::stringc& path) :
 						Path(path)
 				{
 				}
@@ -182,7 +182,7 @@ namespace irrgame
 //		return ETCF_OPTIMIZED_FOR_SPEED;
 //	}
 //
-				stringc Path;
+				core::stringc Path;
 		};
 
 	} // end namespace video

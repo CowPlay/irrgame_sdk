@@ -7,8 +7,8 @@
 
 #ifndef CVECTOR3DATTRIBUTE_H_
 #define CVECTOR3DATTRIBUTE_H_
+
 #include "io/serialize/CNumbersAttribute.h"
-#include "io/serialize/EAttributeTypes.h"
 
 namespace irrgame
 {
@@ -22,9 +22,9 @@ namespace irrgame
 				//! Default constructor
 				CVector3DAttribute(const c8* name, vector3df value);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
-				virtual matrix4 getMatrix();
+				virtual matrix4f getMatrix();
 
 				virtual const c8* getTypeString() const;
 

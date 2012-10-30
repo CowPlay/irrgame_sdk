@@ -6,7 +6,7 @@
 #define __C_LIMIT_READ_FILE_H_INCLUDED__
 
 #include "io/IReadFile.h"
-#include "core/irrgamecollections.h"
+//#include ""
 
 namespace irrgame
 {
@@ -26,7 +26,7 @@ namespace irrgame
 			public:
 
 				CLimitReadFile(IReadFile* alreadyOpenedFile, long pos,
-						long areaSize, const stringc& name);
+						long areaSize, const core::stringc& name);
 
 				virtual ~CLimitReadFile();
 
@@ -45,11 +45,11 @@ namespace irrgame
 				virtual long getPos() const;
 
 				//! returns name of file
-				virtual const stringc& getFileName() const;
+				virtual const core::stringc& getFileName() const;
 
 			private:
 
-				stringc Filename;
+				core::stringc Filename;
 				long AreaStart;
 				long AreaEnd;
 				long Pos;

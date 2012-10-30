@@ -16,7 +16,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CLine3dAttribute::getType() const
+		EAttributeType CLine3dAttribute::getType() const
 		{
 			return EAT_LINE3D;
 		}

@@ -5,11 +5,23 @@
 #ifndef __I_ATTRIBUTE_H_INCLUDED__
 #define __I_ATTRIBUTE_H_INCLUDED__
 
-#include "core/irrgamebase.h"
-#include "core/irrgamecollections.h"
-#include "core/irrgameshapes.h"
+#include "core/engine/IReferenceCounted.h"
 
-#include "video/SColor.h"
+#include "core/collections/irrstring.h"
+#include "core/collections/array.h"
+
+#include "core/shapes/vector2d.h"
+#include "core/shapes/vector3d.h"
+#include "core/shapes/rect.h"
+#include "core/shapes/triangle3d.h"
+#include "core/shapes/line2d.h"
+#include "core/shapes/line3d.h"
+
+#include "core/math/matrix4.h"
+#include "core/math/quaternion.h"
+
+#include "video/color/SColor.h"
+#include "video/color/SColorf.h"
 
 #include "io/serialize/EAttributeTypes.h"
 
@@ -28,7 +40,7 @@ namespace irrgame
 				{
 				}
 
-				virtual E_ATTRIBUTE_TYPE getType() const = 0;
+				virtual EAttributeType getType() const = 0;
 
 				virtual const c8* getTypeString() const = 0;
 
@@ -56,9 +68,9 @@ namespace irrgame
 					return false;
 				}
 
-				virtual stringc getString()
+				virtual core::stringc getString()
 				{
-					return stringc();
+					return core::stringc();
 				}
 
 				virtual void getBinary(void* outdata, s32 maxLength)
@@ -74,6 +86,7 @@ namespace irrgame
 				{
 					return video::SColorf(1.0f, 1.0f, 1.0f, 1.0f);
 				}
+
 				virtual video::SColor getColor()
 				{
 					return video::SColor(255, 255, 255, 255);
@@ -99,9 +112,9 @@ namespace irrgame
 					return recti();
 				}
 
-				virtual matrix4 getMatrix()
+				virtual matrix4f getMatrix()
 				{
-					return matrix4();
+					return matrix4f();
 				}
 
 				virtual core::quaternion getQuaternion()
@@ -194,7 +207,7 @@ namespace irrgame
 				{
 				}
 
-				virtual void setMatrix(matrix4 v)
+				virtual void setMatrix(matrix4f v)
 				{
 				}
 
@@ -228,7 +241,7 @@ namespace irrgame
 
 			public:
 
-				stringc Name;
+				core::stringc Name;
 
 		};
 

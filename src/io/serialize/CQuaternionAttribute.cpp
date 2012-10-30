@@ -18,12 +18,12 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CQuaternionAttribute::getType() const
+		EAttributeType CQuaternionAttribute::getType() const
 		{
 			return EAT_QUATERNION;
 		}
 
-		matrix4 CQuaternionAttribute::getMatrix()
+		matrix4f CQuaternionAttribute::getMatrix()
 		{
 			return getQuaternion().getMatrix();
 		}

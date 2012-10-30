@@ -22,7 +22,7 @@ namespace irrgame
 				//! Default constructor
 				CTriangleAttribute(const c8* name, triangle3df value);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual plane3df getPlane();
 

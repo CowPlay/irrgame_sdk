@@ -7,7 +7,9 @@
 
 #ifndef CMATRIXATTRIBUTE_H_
 #define CMATRIXATTRIBUTE_H_
+
 #include "io/serialize/CNumbersAttribute.h"
+
 namespace irrgame
 {
 	namespace io
@@ -17,9 +19,9 @@ namespace irrgame
 		{
 			public:
 
-				CMatrixAttribute(const c8* name, matrix4 value);
+				CMatrixAttribute(const c8* name, matrix4f value);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual core::quaternion getQuaternion();
 

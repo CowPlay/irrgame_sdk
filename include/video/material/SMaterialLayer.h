@@ -6,8 +6,8 @@
 #define __S_MATERIAL_LAYER_H_INCLUDED__
 
 #include "ETextureClamp.h"
+#include "core/math/matrix4.h"
 
-#include "core/irrgamemath.h"
 #include "core/base/irrAllocator.h"
 
 namespace irrgame
@@ -16,6 +16,7 @@ namespace irrgame
 	{
 		class ITexture;
 
+		//TODO:refactor
 		//! Struct for holding material parameters which exist per texture layer
 		class SMaterialLayer
 		{
@@ -89,30 +90,30 @@ namespace irrgame
 
 				//! Gets the texture transformation matrix
 				/** \return Texture matrix of this layer. */
-				matrix4& getTextureMatrix()
+				matrix4f& getTextureMatrix()
 				{
 					if (!TextureMatrix)
 					{
 						TextureMatrix = MatrixAllocator.allocate(1);
 						MatrixAllocator.construct(TextureMatrix,
-								IdentityMatrix);
+								matrix4f::getIdentityMatrix());
 					}
 					return *TextureMatrix;
 				}
 
 				//! Gets the immutable texture transformation matrix
 				/** \return Texture matrix of this layer. */
-				const matrix4& getTextureMatrix() const
+				const matrix4f& getTextureMatrix() const
 				{
 					if (TextureMatrix)
 						return *TextureMatrix;
 					else
-						return IdentityMatrix;
+						return matrix4f::getIdentityMatrix();
 				}
 
 				//! Sets the texture transformation matrix to mat
 				/** \param mat New texture matrix for this layer. */
-				void setTextureMatrix(const matrix4& mat)
+				void setTextureMatrix(const matrix4f& mat)
 				{
 					if (!TextureMatrix)
 					{
@@ -188,12 +189,12 @@ namespace irrgame
 				//TODO: remove this
 				friend class SMaterial;
 
-				core::irrAllocator<matrix4> MatrixAllocator;
+				core::irrAllocator<matrix4f> MatrixAllocator;
 
 				//! Texture Matrix
 				/** Do not access this element directly as the internal
 				 ressource management has to cope with Null pointers etc. */
-				matrix4* TextureMatrix;
+				matrix4f* TextureMatrix;
 		};
 
 	} // end namespace video

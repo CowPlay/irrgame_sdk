@@ -6,7 +6,7 @@
 #define __C_FILE_LIST_H_INCLUDED__
 
 #include "io/IFileList.h"
-#include "core/irrgamecollections.h"
+#include "core/collections/array.h"
 
 namespace irrgame
 {
@@ -22,7 +22,7 @@ namespace irrgame
 
 				//! Constructor
 				/** \param path The path of this file archive */
-				CFileList(const stringc& path, bool ignoreCase,
+				CFileList(const core::stringc& path, bool ignoreCase,
 						bool ignorePaths);
 
 				//! Destructor
@@ -33,7 +33,7 @@ namespace irrgame
 				 \param isDirectory True if this is a directory rather than a file.
 				 \param size The size of the file in bytes.
 				 \param id The ID of the file in the archive which owns it */
-				virtual u32 addItem(const stringc& fullPath, u32 size,
+				virtual u32 addItem(const core::stringc& fullPath, u32 size,
 						bool isDirectory, u32 id = 0);
 
 				//! Sorts the file list. You should call this after adding any items to the file list
@@ -43,10 +43,10 @@ namespace irrgame
 				virtual u32 getFileCount() const;
 
 				//! Gets the name of a file in the list, based on an index.
-				virtual const stringc& getFileName(u32 index) const;
+				virtual const core::stringc& getFileName(u32 index) const;
 
 				//! Gets the full name of a file in the list, path included, based on an index.
-				virtual const stringc& getFullFileName(u32 index) const;
+				virtual const core::stringc& getFullFileName(u32 index) const;
 
 				//! Returns the ID of a file in the file list, based on an index.
 				virtual u32 getID(u32 index) const;
@@ -58,11 +58,11 @@ namespace irrgame
 				virtual u32 getFileSize(u32 index) const;
 
 				//! Searches for a file or folder within the list, returns the index
-				virtual s32 findFile(const stringc& filename,
+				virtual s32 findFile(const core::stringc& filename,
 						bool isFolder) const;
 
 				//! Returns the base path of the file list
-				virtual const stringc& getPath() const;
+				virtual const core::stringc& getPath() const;
 
 			protected:
 
@@ -73,7 +73,7 @@ namespace irrgame
 				bool IgnoreCase;
 
 				//! Path to the file list
-				stringc Path;
+				core::stringc Path;
 
 				//! List of files
 				core::array<SFileListEntry> Files;

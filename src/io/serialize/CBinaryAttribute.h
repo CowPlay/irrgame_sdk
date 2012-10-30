@@ -23,7 +23,7 @@ namespace irrgame
 				CBinaryAttribute(const c8* name, void* binaryData,
 						s32 lenghtInBytes);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual const c8* getTypeString() const;
 

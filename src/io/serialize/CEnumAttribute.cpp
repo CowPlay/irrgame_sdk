@@ -59,7 +59,7 @@ namespace irrgame
 			return (getInt() != 0); // does not make a lot of sense, I know
 		}
 
-		stringc CEnumAttribute::getString()
+		core::stringc CEnumAttribute::getString()
 		{
 			return Value;
 		}
@@ -87,7 +87,7 @@ namespace irrgame
 			return Value.cStr();
 		}
 
-		E_ATTRIBUTE_TYPE CEnumAttribute::getType() const
+		EAttributeType CEnumAttribute::getType() const
 		{
 			return EAT_ENUM;
 		}

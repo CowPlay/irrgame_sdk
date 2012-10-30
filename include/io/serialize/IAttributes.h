@@ -5,24 +5,21 @@
 #ifndef __I_ATTRIBUTES_H_INCLUDED__
 #define __I_ATTRIBUTES_H_INCLUDED__
 
-#include "core/irrgamebase.h"
-#include "core/irrgamecollections.h"
-#include "core/irrgameshapes.h"
-//#include "core/IReferenceCounted.h"
-//#include "core/irrString.h"
-//#include "core/irrArray.h"
-//#include "core/line2d.h"
-//#include "core/line3d.h"
-//#include "core/matrix4.h"
-//#include "core/plane3d.h"
-//#include "core/triangle3d.h"
-//#include "core/vector2d.h"
-//#include "core/vector3d.h"
-//#include "core/quaternion.h"
-//#include "core/dimension2d.h"
-//#include "core/rect.h"
+#include "video/color/SColor.h"
+#include "video/color/SColorHSL.h"
+#include "video/color/SColorf.h"
 
-#include "video/SColor.h"
+#include "core/shapes/aabbox3d.h"
+#include "core/shapes/line2d.h"
+#include "core/shapes/line3d.h"
+#include "core/shapes/plane3d.h"
+#include "core/shapes/vector2d.h"
+#include "core/shapes/vector3d.h"
+#include "core/shapes/triangle3d.h"
+#include "core/shapes/rect.h"
+
+#include "core/math/matrix4.h"
+#include "core/math/quaternion.h"
 
 #include "io/xml/IXMLReader.h"
 #include "io/xml/IXMLWriter.h"
@@ -54,12 +51,12 @@ namespace irrgame
 
 				//! Returns the type of an attribute
 				//! \param attributeName: Name for the attribute
-				virtual E_ATTRIBUTE_TYPE getAttributeType(
+				virtual EAttributeType getAttributeType(
 						const c8* attributeName) = 0;
 
 				//! Returns attribute type by index.
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual E_ATTRIBUTE_TYPE getAttributeType(s32 index) = 0;
+				virtual EAttributeType getAttributeType(s32 index) = 0;
 
 				//! Returns the type string of the attribute
 				//! \param attributeName: String for the attribute type
@@ -167,7 +164,7 @@ namespace irrgame
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
 				//! or 0 if attribute is not set.
-				virtual stringc getAttributeAsString(
+				virtual core::stringc getAttributeAsString(
 						const c8* attributeName) = 0;
 
 				//! Gets an attribute as string.
@@ -178,7 +175,7 @@ namespace irrgame
 
 				//! Returns attribute value as string by index.
 				//! \param index Index value, must be between 0 and getAttributeCount()-1.
-				virtual stringc getAttributeAsString(s32 index) = 0;
+				virtual core::stringc getAttributeAsString(s32 index) = 0;
 
 				/*
 
@@ -502,25 +499,24 @@ namespace irrgame
 
 				//! Adds an attribute as matrix
 				virtual void addMatrix(const c8* attributeName,
-						const matrix4& v) = 0;
+						const matrix4f& v) = 0;
 
 				//! Sets an attribute as matrix
 				virtual void setAttribute(const c8* attributeName,
-						const matrix4& v) = 0;
+						const matrix4f& v) = 0;
 
 				//! Gets an attribute as a matrix4
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual matrix4 getAttributeAsMatrix(
+				virtual matrix4f getAttributeAsMatrix(
 						const c8* attributeName) = 0;
 
 				//! Gets an attribute as matrix
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual matrix4 getAttributeAsMatrix(s32 index) = 0;
+				virtual matrix4f getAttributeAsMatrix(s32 index) = 0;
 
 				//! Sets an attribute as matrix
-				virtual void setAttribute(s32 index,
-						const matrix4& v) = 0;
+				virtual void setAttribute(s32 index, const matrix4f& v) = 0;
 
 				/*
 
@@ -557,8 +553,7 @@ namespace irrgame
 				 */
 
 				//! Adds an attribute as axis aligned bounding box
-				virtual void addBox3d(const c8* attributeName,
-						aabbox3df v) = 0;
+				virtual void addBox3d(const c8* attributeName, aabbox3df v) = 0;
 
 				//! Sets an attribute as axis aligned bounding box
 				virtual void setAttribute(const c8* attributeName,

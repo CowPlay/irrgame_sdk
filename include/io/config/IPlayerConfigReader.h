@@ -9,8 +9,8 @@
 #define IPLAYERCONFIGREADER_H_
 
 #include "io/config/IConfigReader.h"
-#include "core/irrgamecollections.h"
-#include "core/irrgameshapes.h"
+#include "core/collections/irrstring.h"
+#include "core/shapes/dimension2d.h"
 
 namespace irrgame
 {
@@ -24,8 +24,8 @@ namespace irrgame
 		{
 			public:
 				//! Block <application>
-				stringc AppFile;
-				stringc AppCreator;
+				core::stringc AppFile;
+				core::stringc AppCreator;
 
 				//! Block <video>
 				dimension2du ScreenSize;

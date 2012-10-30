@@ -63,7 +63,7 @@ namespace irrgame
 //				virtual void kill() = 0;
 
 				//! Gets thread name
-				virtual stringc getName();
+				virtual core::stringc getName();
 
 				//! Gets thread callback
 				virtual delegateThreadCallback* getCallback();
@@ -73,7 +73,7 @@ namespace irrgame
 
 			protected:
 				//! Thread name
-				stringc Name;
+				core::stringc Name;
 				//! Function which will be started
 				delegateThreadCallback* Callback;
 				//! Callback input args
@@ -84,7 +84,7 @@ namespace irrgame
 		//! irrgameThread creator. Internal function. Please do not use.
 		irrgameThread* createIrrgameThread(delegateThreadCallback* callback,
 				void* callbackArg = NULL, EThreadPriority prior = ETP_NORMAL,
-				stringc name = "");
+				core::stringc name = "");
 	}
 }
 

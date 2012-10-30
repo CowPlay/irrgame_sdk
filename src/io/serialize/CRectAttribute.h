@@ -20,7 +20,7 @@ namespace irrgame
 				//! Default constructor
 				CRectAttribute(const c8* name, recti value);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
 				virtual const c8* getTypeString() const;
 

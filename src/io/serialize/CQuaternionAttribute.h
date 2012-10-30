@@ -9,6 +9,7 @@
 #define CQUATERNIONATTRIBUTE_H_
 
 #include "CNumbersAttribute.h"
+
 namespace irrgame
 {
 	namespace io
@@ -20,9 +21,9 @@ namespace irrgame
 
 				CQuaternionAttribute(const c8* name, core::quaternion value);
 
-				virtual E_ATTRIBUTE_TYPE getType() const;
+				virtual EAttributeType getType() const;
 
-				virtual matrix4 getMatrix();
+				virtual matrix4f getMatrix();
 
 				virtual const c8* getTypeString() const;
 

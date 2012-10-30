@@ -284,5 +284,9 @@ namespace irrgame
 	} // end namespace core
 } // end namespace irr
 
+//! Typedefs for rect
+typedef irrgame::core::rect<f32> rectf;
+typedef irrgame::core::rect<s32> recti;
+
 #endif
 

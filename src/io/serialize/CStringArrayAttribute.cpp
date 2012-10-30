@@ -28,7 +28,7 @@ namespace irrgame
 			Value = value;
 		}
 
-		E_ATTRIBUTE_TYPE CStringArrayAttribute::getType() const
+		EAttributeType CStringArrayAttribute::getType() const
 		{
 			return EAT_STRINGARRAY;
 		}

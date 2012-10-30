@@ -17,7 +17,7 @@ namespace irrgame
 		{
 		}
 
-		E_ATTRIBUTE_TYPE CBBoxAttribute::getType() const
+		EAttributeType CBBoxAttribute::getType() const
 		{
 			return EAT_BBOX;
 		}

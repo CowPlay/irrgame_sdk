@@ -10,10 +10,8 @@
 
 namespace irrgame
 {
-
 	namespace video
 	{
-
 		//! enumeration for geometry transformation states
 		enum ETransformationState
 		{

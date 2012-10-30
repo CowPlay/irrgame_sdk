@@ -9,6 +9,7 @@
 
 #include "io/IFileSystem.h"
 #include "io/serialize/IAttributes.h"
+
 namespace irrgame
 {
 	namespace io
@@ -33,7 +34,7 @@ namespace irrgame
 		 IXMLReader is returned. After use, the reader
 		 has to be deleted using its IXMLReader::drop() method.
 		 See IReferenceCounted::drop() for more information. */
-		IXMLReader* IFileSystem::createXMLReader(const stringc& filename)
+		IXMLReader* IFileSystem::createXMLReader(const core::stringc& filename)
 		{
 			// Create the file using an absolute path so that it matches
 			// the scheme used by CNullDriver::getTexture().
@@ -60,7 +61,7 @@ namespace irrgame
 		}
 
 		//! Creates a XML Writer from a file.
-		IXMLWriter* IFileSystem::createXMLWriter(const stringc& filename)
+		IXMLWriter* IFileSystem::createXMLWriter(const core::stringc& filename)
 		{
 			IWriteFile* file = createWriteFile(filename);
 
@@ -79,15 +80,15 @@ namespace irrgame
 		}
 
 		//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-		stringc& IFileSystem::flattenFilename(stringc& directory,
-				const stringc& root)
+		core::stringc& IFileSystem::flattenFilename(core::stringc& directory,
+				const core::stringc& root)
 		{
 			directory.replace('\\', '/');
 			if (directory.lastChar() != '/')
 				directory.append('/');
 
-			stringc dir;
-			stringc subdir;
+			core::stringc dir;
+			core::stringc subdir;
 
 			s32 lastpos = 0;
 			s32 pos = 0;
@@ -127,21 +128,21 @@ namespace irrgame
 		}
 
 		//! opens a file for read access
-		IReadFile* IFileSystem::createReadFile(const stringc& filename)
+		IReadFile* IFileSystem::createReadFile(const core::stringc& filename)
 		{
 			return io::createReadFile(filename);
 		}
 
 		//! Creates an IReadFile interface for treating memory like a file.
 		IReadFile* IFileSystem::createMemoryReadFile(void* memory, s32 len,
-				const stringc& fileName, bool deleteMemoryWhenDropped)
+				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			return io::createMemoryReadFile(memory, len, fileName,
 					deleteMemoryWhenDropped);
 		}
 
 		//! Creates an IReadFile interface for reading files inside files
-		IReadFile* IFileSystem::createLimitReadFile(const stringc& fileName,
+		IReadFile* IFileSystem::createLimitReadFile(const core::stringc& fileName,
 				IReadFile* alreadyOpenedFile, long pos, long areaSize)
 		{
 			return io::createLimitReadFile(fileName, alreadyOpenedFile, pos,
@@ -150,14 +151,14 @@ namespace irrgame
 
 		//! Creates an IReadFile interface for treating memory like a file.
 		IWriteFile* IFileSystem::createMemoryWriteFile(void* memory, s32 len,
-				const stringc& fileName, bool deleteMemoryWhenDropped)
+				const core::stringc& fileName, bool deleteMemoryWhenDropped)
 		{
 			return io::createMemoryWriteFile(memory, len, fileName,
 					deleteMemoryWhenDropped);
 		}
 
 		//! Opens a file for write access.
-		IWriteFile* IFileSystem::createWriteFile(const stringc& filename,
+		IWriteFile* IFileSystem::createWriteFile(const core::stringc& filename,
 				bool append)
 		{
 			return io::createWriteFile(filename, append);

@@ -258,8 +258,13 @@ namespace irrgame
 					return (cp1.dotProduct(cp2) >= 0.0f);
 				}
 		};
+
 	} // end namespace core
 } // end namespace irr
+
+//! Typedefs for triangle3d
+typedef irrgame::core::triangle3d<f32> triangle3df;
+typedef irrgame::core::triangle3d<s32> triangle3di;
 
 #endif
 

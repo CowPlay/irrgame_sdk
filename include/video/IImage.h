@@ -12,10 +12,12 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#include "core/irrgamebase.h"
 #include "video/EColorFormat.h"
-#include "core/irrgameshapes.h"
-#include "video/SColor.h"
+#include "core/engine/IReferenceCounted.h"
+#include "core/shapes/dimension2d.h"
+#include "core/shapes/vector2d.h"
+#include "core/shapes/rect.h"
+#include "video/color/SColor.h"
 
 namespace irrgame
 {

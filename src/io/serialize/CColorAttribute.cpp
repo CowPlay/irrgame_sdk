@@ -48,13 +48,13 @@ namespace irrgame
 			setInt((s32) floatValue);
 		}
 
-		stringc CColorAttribute::getString()
+		core::stringc CColorAttribute::getString()
 		{
 			c8 tmp[10];
 			const video::SColor c = getColor();
 			sprintf(tmp, "%02x%02x%02x%02x", c.getAlpha(), c.getRed(),
 					c.getGreen(), c.getBlue());
-			return stringc(tmp);
+			return core::stringc(tmp);
 		}
 
 		void CColorAttribute::setString(const c8* text)
@@ -68,7 +68,7 @@ namespace irrgame
 				setColor(c);
 		}
 
-		E_ATTRIBUTE_TYPE CColorAttribute::getType() const
+		EAttributeType CColorAttribute::getType() const
 		{
 			return EAT_COLOR;
 		}

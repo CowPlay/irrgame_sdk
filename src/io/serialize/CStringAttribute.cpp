@@ -42,19 +42,19 @@ namespace irrgame
 			return Value.equalsIgnoreCase("true");
 		}
 
-		stringc CStringAttribute::getString()
+		core::stringc CStringAttribute::getString()
 		{
 			return Value;
 		}
 
 		void CStringAttribute::setInt(s32 intValue)
 		{
-			Value = stringc(intValue);
+			Value = core::stringc(intValue);
 		}
 
 		void CStringAttribute::setFloat(f32 floatValue)
 		{
-			Value = stringc(floatValue);
+			Value = core::stringc(floatValue);
 
 		}
 
@@ -63,7 +63,7 @@ namespace irrgame
 			Value = text;
 		}
 
-		E_ATTRIBUTE_TYPE CStringAttribute::getType() const
+		EAttributeType CStringAttribute::getType() const
 		{
 			return EAT_STRING;
 		}

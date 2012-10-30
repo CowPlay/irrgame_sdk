@@ -36,12 +36,12 @@ namespace irrgame
 
 				//! Returns the type of an attribute
 				//! \param attributeName: Name for the attribute
-				virtual E_ATTRIBUTE_TYPE getAttributeType(
+				virtual EAttributeType getAttributeType(
 						const c8* attributeName);
 
 				//! Returns attribute type by index.
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual E_ATTRIBUTE_TYPE getAttributeType(s32 index);
+				virtual EAttributeType getAttributeType(s32 index);
 
 				//! Returns the type string of the attribute
 				//! \param attributeName: String for the attribute type
@@ -141,7 +141,7 @@ namespace irrgame
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
 				//! or 0 if attribute is not set.
-				virtual stringc getAttributeAsString(
+				virtual core::stringc getAttributeAsString(
 						const c8* attributeName);
 
 				//! Gets an attribute as string.
@@ -152,7 +152,7 @@ namespace irrgame
 
 				//! Returns attribute value as string by index.
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual stringc getAttributeAsString(s32 index);
+				virtual core::stringc getAttributeAsString(s32 index);
 
 				/*
 
@@ -465,23 +465,23 @@ namespace irrgame
 
 				//! Adds an attribute as matrix
 				virtual void addMatrix(const c8* attributeName,
-						const matrix4& v);
+						const matrix4f& v);
 
 				//! Sets an attribute as matrix
 				virtual void setAttribute(const c8* attributeName,
-						const matrix4& v);
+						const matrix4f& v);
 
 				//! Gets an attribute as a matrix4
 				//! \param attributeName: Name of the attribute to get.
 				//! \return Returns value of the attribute previously set by setAttribute()
-				virtual matrix4 getAttributeAsMatrix(const c8* attributeName);
+				virtual matrix4f getAttributeAsMatrix(const c8* attributeName);
 
 				//! Gets an attribute as matrix
 				//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-				virtual matrix4 getAttributeAsMatrix(s32 index);
+				virtual matrix4f getAttributeAsMatrix(s32 index);
 
 				//! Sets an attribute as matrix
-				virtual void setAttribute(s32 index, const matrix4& v);
+				virtual void setAttribute(s32 index, const matrix4f& v);
 
 				/*
 

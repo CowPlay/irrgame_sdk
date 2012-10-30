@@ -1250,5 +1250,9 @@ namespace irrgame
 	}// end namespace core
 } // end namespace irr
 
+//! Typedefs for vector3d
+typedef irrgame::core::vector3d<f32> vector3df;
+typedef irrgame::core::vector3d<s32> vector3di;
+
 #endif
 

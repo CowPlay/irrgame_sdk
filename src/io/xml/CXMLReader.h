@@ -9,7 +9,11 @@
 #define CXMLREADER_H_
 
 #include "io/xml/IXMLReader.h"
-#include "core/irrgamecollections.h"
+#include "io/xml/ETextFormat.h"
+#include "core/collections/array.h"
+#include "core/collections/stringc.h"
+#include "SAttribute.h"
+
 namespace irrgame
 {
 	namespace io
@@ -17,40 +21,6 @@ namespace irrgame
 		//! Implementation of IXMLReader
 		class CXMLReader: public IXMLReader
 		{
-			private:
-				// structure for storing attribute-name pairs
-				struct SAttribute
-				{
-					public:
-						core::stringc Name;
-						core::stringc Value;
-					public:
-						//! Equality operator
-						bool operator ==(const SAttribute& other) const
-						{
-							return this->Name == other.Name;
-						}
-
-						//! Inequality operator
-						bool operator !=(const SAttribute& other) const
-						{
-							return !(*this == other);
-						}
-
-						//! Is smaller comparator. Copmared only attributes lengths.
-						bool operator <(const SAttribute& other) const
-						{
-							return (this->Name < other.Name
-									&& this->Value < other.Value);
-						}
-
-						//! Is bigger comparator. Copmared only attributes lengths.
-						bool operator >(const SAttribute& other) const
-						{
-							return !(*this < other);
-						}
-				};
-
 			public:
 
 				//! Default constructor
@@ -141,12 +111,12 @@ namespace irrgame
 				//! stored or deleted based on the nesessary conversion.
 				//! \param sizeWithoutHeader: Text size in characters without header
 				template<class src_char_type>
-				void convertTextData(ETEXT_FORMAT srcFormat,
+				void convertTextData(ETextFormat srcFormat,
 						src_char_type* source, c8* pointerToStore,
 						int sizeWithoutHeader);
 
 				//! Returns True if format is little endian. Otherwise - return False.
-				bool isLittleEndian(ETEXT_FORMAT f);
+				bool isLittleEndian(ETextFormat f);
 
 				//! converts whole text buffer to little endian
 				template<class src_char_type>

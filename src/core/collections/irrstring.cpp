@@ -5,10 +5,8 @@
  *      Author: gregorytkach
  */
 
-#include "core/collections/irrstring.h"
-#include "core/coreutil.h"
-
-#include "core/base/constants.h"
+#include "core/collections/stringc.h"
+#include "core/utils/coreutils.h"
 
 #include "threads/irrgameMonitor.h"
 
@@ -21,14 +19,14 @@ namespace irrgame
 	namespace core
 	{
 		//! Returns empty string
-		inline const stringc& stringc::getEmpty(void)
+		const stringc& stringc::getEmpty(void)
 		{
 			static const stringc empty;
 			return empty;
 		}
 
 		//! Default constructor
-		inline stringc::stringc() :
+		stringc::stringc() :
 				Array(0), Allocated(1), Used(1), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -38,7 +36,7 @@ namespace irrgame
 		}
 
 		//! Copy constructor
-		inline stringc::stringc(const stringc& other) :
+		stringc::stringc(const stringc& other) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -46,7 +44,7 @@ namespace irrgame
 		}
 
 		//! Constructs a string from a float
-		inline stringc::stringc(const double number) :
+		stringc::stringc(const double number) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -57,7 +55,7 @@ namespace irrgame
 		}
 
 		//! Constructs a string from an int
-		inline stringc::stringc(s32 number) :
+		stringc::stringc(s32 number) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -103,7 +101,7 @@ namespace irrgame
 		}
 
 		//! Constructs a string from an unsigned int
-		inline stringc::stringc(u32 number) :
+		stringc::stringc(u32 number) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -133,7 +131,7 @@ namespace irrgame
 		}
 
 		//! Constructor for copying a string from a pointer with a given length
-		inline stringc::stringc(const c8* const c, u32 length) :
+		stringc::stringc(const c8* const c, u32 length) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -155,7 +153,7 @@ namespace irrgame
 		}
 
 		//! Constructor for unicode strings
-		inline stringc::stringc(const c8* const c) :
+		stringc::stringc(const c8* const c) :
 				Array(0), Allocated(0), Used(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
@@ -164,7 +162,7 @@ namespace irrgame
 		}
 
 		//! Destructor
-		inline stringc::~stringc()
+		stringc::~stringc()
 		{
 			Monitor->enter();
 			Allocator.deallocate(Array); // delete [] Array;
@@ -175,7 +173,7 @@ namespace irrgame
 		}
 
 		//! Assignment operator
-		inline stringc& stringc::operator=(const stringc& other)
+		stringc& stringc::operator=(const stringc& other)
 		{
 			//handle self-assignment
 			if (this == &other)
@@ -191,7 +189,7 @@ namespace irrgame
 		}
 
 		//! Assignment operator for strings, ascii and unicode
-		inline stringc& stringc::operator=(const c8* const c)
+		stringc& stringc::operator=(const c8* const c)
 		{
 			Monitor->enter();
 
@@ -245,7 +243,7 @@ namespace irrgame
 		}
 
 		//! Append operator for other strings
-		inline stringc stringc::operator+(const stringc& other) const
+		stringc stringc::operator+(const stringc& other) const
 		{
 			Monitor->enter();
 			stringc result(*this);
@@ -256,7 +254,7 @@ namespace irrgame
 		}
 
 		//! Append operator for strings, ascii and unicode
-		inline stringc stringc::operator+(const c8* const c) const
+		stringc stringc::operator+(const c8* const c) const
 		{
 			Monitor->enter();
 			stringc result(*this);
@@ -267,7 +265,7 @@ namespace irrgame
 		}
 
 		//! Direct access operator
-		inline c8& stringc::operator [](const u32 index)
+		c8& stringc::operator [](const u32 index)
 		{
 			Monitor->enter();
 
@@ -282,7 +280,7 @@ namespace irrgame
 		}
 
 		//! Direct access operator
-		inline const c8& stringc::operator [](const u32 index) const
+		const c8& stringc::operator [](const u32 index) const
 		{
 			Monitor->enter();
 
@@ -297,7 +295,7 @@ namespace irrgame
 		}
 
 		//! Equality operator
-		inline bool stringc::operator ==(const stringc& other) const
+		bool stringc::operator ==(const stringc& other) const
 		{
 			if (this == &other)
 				return true;
@@ -307,7 +305,7 @@ namespace irrgame
 		}
 
 		//! Equality operator
-		inline bool stringc::operator ==(const c8* const str) const
+		bool stringc::operator ==(const c8* const str) const
 		{
 			if (!str)
 			{
@@ -335,7 +333,7 @@ namespace irrgame
 		}
 
 		//! Is smaller comparator
-		inline bool stringc::operator <(const stringc& other) const
+		bool stringc::operator <(const stringc& other) const
 		{
 			if (this == &other)
 			{
@@ -365,14 +363,14 @@ namespace irrgame
 		}
 
 		//! Inequality operator
-		inline bool stringc::operator !=(const c8* const str) const
+		bool stringc::operator !=(const c8* const str) const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !(*this == str);
 		}
 
 		//! Inequality operator
-		inline bool stringc::operator !=(const stringc& other) const
+		bool stringc::operator !=(const stringc& other) const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !(*this == other);
@@ -381,7 +379,7 @@ namespace irrgame
 		//! Returns length of the string's content
 		/** \return Length of the string's content in characters, excluding
 		 the trailing NUL. */
-		inline u32 stringc::size() const
+		u32 stringc::size() const
 		{
 			Monitor->enter();
 			u32 result = Used - 1;
@@ -391,7 +389,7 @@ namespace irrgame
 		}
 
 		//! Return True if this string is empty. Otherwise return False.
-		inline bool stringc::empty()
+		bool stringc::empty()
 		{
 			bool result = false;
 
@@ -405,25 +403,9 @@ namespace irrgame
 			return result;
 		}
 
-		//		//! Return True if this string have only whitespaces. Otherwise returns False.
-		//		inline bool string::blank()
-		//		{
-		//			IRR_ASSERT(false);
-		//			bool result = false;
-		//
-		//			Monitor->enter();
-		//
-		//			//TODO implement it
-		//
-		//			Monitor->exit();
-		//
-		//			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-		//			return result;
-		//		}
-
 		//! Returns character string
 		/** \return pointer to C-style NUL terminated string. */
-		inline const c8* stringc::cStr() const
+		const c8* stringc::cStr() const
 		{
 			Monitor->enter();
 			const c8* result = Array;
@@ -433,29 +415,29 @@ namespace irrgame
 		}
 
 		//! Makes the string lower case.
-		inline void stringc::makeLower()
+		void stringc::makeLower()
 		{
 			Monitor->enter();
 
 			for (u32 i = 0; i < Used; ++i)
-				Array[i] = localeLower(Array[i]);
+				Array[i] = SharedCoreUtils::getInstance().localeLower(Array[i]);
 
 			Monitor->exit();
 		}
 
 		//! Makes the string upper case.
-		inline void stringc::makeUpper()
+		void stringc::makeUpper()
 		{
 			Monitor->enter();
 
 			for (u32 i = 0; i < Used; ++i)
-				Array[i] = localeUpper(Array[i]);
+				Array[i] = SharedCoreUtils::getInstance().localeUpper(Array[i]);
 
 			Monitor->exit();
 		}
 
 		//! Compares the strings ignoring case.
-		inline bool stringc::equalsIgnoreCase(const stringc& other,
+		bool stringc::equalsIgnoreCase(const stringc& other,
 				const u32 sourcePos) const
 		{
 			if (this == &other)
@@ -468,8 +450,10 @@ namespace irrgame
 
 			u32 i;
 			for (i = 0; Array[sourcePos + i] && other.Array[i]; ++i)
-				if (localeLower(Array[sourcePos + i])
-						!= localeLower(other.Array[i]))
+				if (SharedCoreUtils::getInstance().localeLower(
+						Array[sourcePos + i])
+						!= SharedCoreUtils::getInstance().localeLower(
+								other.Array[i]))
 				{
 					Monitor->exit();
 					other.Monitor->exit();
@@ -487,7 +471,7 @@ namespace irrgame
 		}
 
 		//! Compares the strings ignoring case.
-		inline bool stringc::lowerIgnoreCase(const stringc& other) const
+		bool stringc::lowerIgnoreCase(const stringc& other) const
 		{
 			if (this == &other)
 			{
@@ -500,8 +484,10 @@ namespace irrgame
 
 			for (u32 i = 0; Array[i] && other.Array[i]; ++i)
 			{
-				s32 diff = (s32) localeLower(Array[i])
-						- (s32) localeLower(other.Array[i]);
+				s32 diff = (s32) SharedCoreUtils::getInstance().localeLower(
+						Array[i])
+						- (s32) SharedCoreUtils::getInstance().localeLower(
+								other.Array[i]);
 
 				if (diff)
 				{
@@ -523,7 +509,7 @@ namespace irrgame
 		}
 
 		//! compares the first n characters of the strings
-		inline bool stringc::equalsn(const stringc& other, u32 n) const
+		bool stringc::equalsn(const stringc& other, u32 n) const
 		{
 			if (this == &other)
 				return true;
@@ -533,7 +519,7 @@ namespace irrgame
 		}
 
 		//! compares the first n characters of the strings
-		inline bool stringc::equalsn(const c8* const str, u32 n) const
+		bool stringc::equalsn(const c8* const str, u32 n) const
 		{
 			Monitor->enter();
 
@@ -565,7 +551,7 @@ namespace irrgame
 		}
 
 		//! Appends a string to this string
-		inline void stringc::append(const stringc& other)
+		void stringc::append(const stringc& other)
 		{
 			bool selfAppending = false;
 
@@ -594,7 +580,7 @@ namespace irrgame
 		}
 
 		//! Appends a character to this string
-		inline void stringc::append(c8 character)
+		void stringc::append(c8 character)
 		{
 			Monitor->enter();
 
@@ -610,7 +596,7 @@ namespace irrgame
 		}
 
 		//! Appends a char string to this string
-		inline void stringc::append(const c8* const other)
+		void stringc::append(const c8* const other)
 		{
 			Monitor->enter();
 
@@ -639,7 +625,7 @@ namespace irrgame
 		}
 
 		//! Appends a string of the length l to this string.
-		inline void stringc::append(const stringc& other, u32 length)
+		void stringc::append(const stringc& other, u32 length)
 		{
 			bool selfAppending = false;
 
@@ -672,7 +658,7 @@ namespace irrgame
 		}
 
 		//! finds next occurrence of character in string
-		inline s32 stringc::findFirst(c8 c, u32 startPos) const
+		s32 stringc::findFirst(c8 c, u32 startPos) const
 		{
 			s32 result = IrrNotFound;
 
@@ -693,7 +679,7 @@ namespace irrgame
 		}
 
 		//! finds last occurrence of character in string
-		inline s32 stringc::findLast(c8 c) const
+		s32 stringc::findLast(c8 c) const
 		{
 			s32 result = IrrNotFound;
 
@@ -712,7 +698,7 @@ namespace irrgame
 		}
 
 		//! finds another string in this string
-		inline s32 stringc::find(const c8* const str, const u32 start) const
+		s32 stringc::find(const c8* const str, const u32 start) const
 		{
 			s32 result = IrrNotFound;
 
@@ -757,7 +743,7 @@ namespace irrgame
 		}
 
 		//! Returns a substring
-		inline stringc stringc::subString(u32 begin, u32 length) const
+		stringc stringc::subString(u32 begin, u32 length) const
 		{
 			stringc result;
 
@@ -765,8 +751,9 @@ namespace irrgame
 
 			// no proper substring length
 			IRR_ASSERT(length > 0);
+
 			// or if start after string
-			IRR_ASSERT(begin >= (Used - 1));
+			IRR_ASSERT(begin < (Used - 1));
 
 			// clamp length to maximal value
 			if ((length + begin) > (Used - 1))
@@ -785,56 +772,56 @@ namespace irrgame
 		}
 
 		//! Appends a string to this string
-		inline stringc& stringc::operator +=(const stringc& other)
+		stringc& stringc::operator +=(const stringc& other)
 		{
 			append(other);
 			return *this;
 		}
 
 		//! Appends a character to this string
-		inline stringc& stringc::operator +=(c8 c)
+		stringc& stringc::operator +=(c8 c)
 		{
 			append(c);
 			return *this;
 		}
 
 		//! Appends a char string to this string
-		inline stringc& stringc::operator +=(const c8* const c)
+		stringc& stringc::operator +=(const c8* const c)
 		{
 			append(c);
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline stringc& stringc::operator +=(const s32 i)
+		stringc& stringc::operator +=(const s32 i)
 		{
 			append(stringc(i));
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline stringc& stringc::operator +=(const u32 i)
+		stringc& stringc::operator +=(const u32 i)
 		{
 			append(stringc(i));
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline stringc& stringc::operator +=(const double i)
+		stringc& stringc::operator +=(const double i)
 		{
 			append(stringc(i));
 			return *this;
 		}
 
 		//! Appends a string representation of a number to this string
-		inline stringc& stringc::operator +=(const f32 i)
+		stringc& stringc::operator +=(const f32 i)
 		{
 			append(stringc(i));
 			return *this;
 		}
 
 		//! Replaces all characters of a special type with another one
-		inline void stringc::replace(c8 toReplace, c8 replaceWith)
+		void stringc::replace(c8 toReplace, c8 replaceWith)
 		{
 			Monitor->enter();
 
@@ -846,7 +833,7 @@ namespace irrgame
 		}
 
 		//! Removes characters from a string.
-		inline void stringc::remove(c8 c)
+		void stringc::remove(c8 c)
 		{
 			Monitor->enter();
 
@@ -869,7 +856,7 @@ namespace irrgame
 		}
 
 		//		//! Returns new string which trims this string.
-		//		inline string& string::trim(const string& whitespace)
+		//		 string& string::trim(const string& whitespace)
 		//		{
 		//			Monitor->enter();
 		//
@@ -903,7 +890,7 @@ namespace irrgame
 		//		}
 
 		//! Erases a character from the string.
-		inline void stringc::erase(u32 index)
+		void stringc::erase(u32 index)
 		{
 			Monitor->enter();
 
@@ -919,7 +906,7 @@ namespace irrgame
 		}
 
 		//! gets the last char of a string or null
-		inline c8 stringc::lastChar() const
+		c8 stringc::lastChar() const
 		{
 			Monitor->enter();
 			c8 result = Used > 1 ? Array[Used - 2] : 0;
@@ -929,7 +916,7 @@ namespace irrgame
 		}
 
 		//! split string into parts.
-		inline void stringc::split(ICollection<stringc>& ret, const c8* const c,
+		void stringc::split(ICollection<stringc>& ret, const c8* const c,
 				u32 count, bool ignoreEmptyTokens, bool keepSeparators) const
 		{
 			IRR_ASSERT(c != 0);
@@ -959,7 +946,7 @@ namespace irrgame
 		}
 
 		//! Reallocate the Array, make it bigger or smaller
-		inline void stringc::reallocate(u32 newSize)
+		void stringc::reallocate(u32 newSize)
 		{
 			c8* oldArray = Array;
 
@@ -975,6 +962,7 @@ namespace irrgame
 
 			Allocator.deallocate(oldArray); // delete [] old_Array;
 		}
-	}  // namespace core
+
+	} // namespace core
 }  // namespace irrgame
 

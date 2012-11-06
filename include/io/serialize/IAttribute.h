@@ -7,7 +7,7 @@
 
 #include "core/engine/IReferenceCounted.h"
 
-#include "core/collections/irrstring.h"
+#include "core/collections/stringc.h"
 #include "core/collections/array.h"
 
 #include "core/shapes/vector2d.h"
@@ -244,7 +244,6 @@ namespace irrgame
 				core::stringc Name;
 
 		};
-
 	} // end namespace io
 } // end namespace irrgame
 

@@ -7,13 +7,15 @@
 
 #ifndef IBYTESWAP_H_
 #define IBYTESWAP_H_
-#include "core/irrgamebase.h"
+
+#include "compileConfig.h"
 
 namespace irrgame
 {
 	namespace utils
 	{
 		//! Platform dependent
+		//TODO: make it singleton
 		class ByteSwap
 		{
 			public:

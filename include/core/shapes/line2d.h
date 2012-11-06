@@ -5,7 +5,6 @@
 #ifndef __IRR_LINE_2D_H_INCLUDED__
 #define __IRR_LINE_2D_H_INCLUDED__
 
-#include "core/irrgamebase.h"
 #include "core/shapes/vector2d.h"
 
 namespace irrgame
@@ -150,11 +149,14 @@ namespace irrgame
 							* (start.Y - l.start.Y)
 							- (end.Y - start.Y) * (start.X - l.start.X));
 
-					if (equals(commonDenominator, 0.f))
+					if (SharedMath::getInstance().equals(commonDenominator,
+							0.f))
 					{
 						// The lines are either coincident or parallel
 						// if both numerators are 0, the lines are coincident
-						if (equals(numeratorA, 0.f) && equals(numeratorB, 0.f))
+						if (SharedMath::getInstance().equals(numeratorA, 0.f)
+								&& SharedMath::getInstance().equals(numeratorB,
+										0.f))
 						{
 							// Try and find a common endpoint
 							if (l.start == start || l.end == start)

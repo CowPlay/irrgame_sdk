@@ -7,6 +7,7 @@
 
 #ifndef SKLISTNODE_H_
 #define SKLISTNODE_H_
+
 namespace irrgame
 {
 	namespace core
@@ -36,6 +37,6 @@ namespace irrgame
 		}
 
 	}	// end namespace core
-}	// end namespace irr
+}	// end namespace irrgame
 
 #endif /* SKLISTNODE_H_ */

@@ -5,7 +5,6 @@
 #ifndef IRRXMLREADER_H_
 #define IRRXMLREADER_H_
 #include "EXmlNodeTypes.h"
-#include "core/irrgamebase.h"
 #include "core/engine/IReferenceCounted.h"
 
 namespace irrgame
@@ -22,27 +21,6 @@ namespace irrgame
 		//! defines the utf-32 type.
 		typedef unsigned long char32;
 
-		//! Enumeration of all supported source text file formats
-		enum ETEXT_FORMAT
-		{
-			//! ASCII, file without byte order mark, or not a text file
-			ETF_ASCII,
-
-			//! UTF-8 format
-			ETF_UTF8,
-
-			//! UTF-16 format, big endian
-			ETF_UTF16_BE,
-
-			//! UTF-16 format, little endian
-			ETF_UTF16_LE,
-
-			//! UTF-32 format, big endian
-			ETF_UTF32_BE,
-
-			//! UTF-32 format, little endian
-			ETF_UTF32_LE
-		};
 
 		//! Interface providing easy read access to a XML file.
 		// Output format can UTF8 or ASCII

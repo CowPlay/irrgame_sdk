@@ -5,17 +5,22 @@
 #ifndef __IRR_LIST_H_INCLUDED__
 #define __IRR_LIST_H_INCLUDED__
 
+#include "core/collections/list/SKListNode.h"
+#include "core/collections/list/iterators.h"
+
 #include "core/collections/ICollection.h"
-#include "core/base/irrAllocator.h"
-#include "core/math/irrMath.h"
+
+#include "core/allocator/irrAllocator.h"
+#include "core/math/SharedMath.h"
 #include "threads/irrgameMonitor.h"
-#include "SKListNode.h"
-#include "iterators.h"
 
 namespace irrgame
 {
 	namespace core
 	{
+
+		class stringc;
+
 		//! Doubly linked list template.
 		template<class T>
 		class list: public ICollection<T>
@@ -410,10 +415,10 @@ namespace irrgame
 			other.Monitor->enter();
 			Monitor->enter();
 
-			core::swap(First, other.First);
-			core::swap(Last, other.Last);
-			core::swap(Size, other.Size);
-			core::swap(Allocator, other.Allocator);	// memory is still released by the same Allocator used for allocation
+			SharedMath::getInstance().swap(First, other.First);
+			SharedMath::getInstance().swap(Last, other.Last);
+			SharedMath::getInstance().swap(Size, other.Size);
+			SharedMath::getInstance().swap(Allocator, other.Allocator);	// memory is still released by the same Allocator used for allocation
 
 			Monitor->exit();
 			other.Monitor->exit();
@@ -479,6 +484,12 @@ namespace irrgame
 
 	}	// end namespace core
 }	// end namespace irr
+
+//! list typedefs
+typedef irrgame::core::list<s32> listi;
+typedef irrgame::core::list<u32> listu;
+typedef irrgame::core::list<f32> listf;
+typedef irrgame::core::list<irrgame::core::stringc> liststr;
 
 #endif
 

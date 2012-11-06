@@ -5,7 +5,7 @@
 #ifndef __IRR_QUATERNION_H_INCLUDED__
 #define __IRR_QUATERNION_H_INCLUDED__
 
-#include "core/base/baseTypes.h"
+#include "compileConfig.h"
 #include "core/math/matrix4.h"
 
 namespace irrgame
@@ -30,7 +30,7 @@ namespace irrgame
 				quaternion(f32 x, f32 y, f32 z);
 
 				//! Constructor which converts euler angles (radians) to a quaternion
-				quaternion(const vector3d<f32>& vec);
+				quaternion(const vector3df& vec);
 
 				//! Constructor which converts a matrix to a quaternion
 				quaternion(const matrix4f& mat);
@@ -60,7 +60,7 @@ namespace irrgame
 				quaternion& operator*=(f32 s);
 
 				//! Multiplication operator
-				vector3d<f32> operator*(const vector3d<f32>& v) const;
+				vector3df operator*(const vector3df& v) const;
 
 				//! Multiplication operator
 				quaternion& operator*=(const quaternion& other);
@@ -75,7 +75,7 @@ namespace irrgame
 				inline quaternion& set(f32 x, f32 y, f32 z);
 
 				//! Sets new quaternion based on euler angles (radians)
-				inline quaternion& set(const vector3d<f32>& vec);
+				inline quaternion& set(const vector3df& vec);
 
 				//! Sets new quaternion from other quaternion
 				inline quaternion& set(const core::quaternion& quat);
@@ -88,7 +88,7 @@ namespace irrgame
 
 				//! Creates a matrix from this quaternion
 				void getMatrix(matrix4f &dest,
-						const vector3d<f32> &translation) const;
+						const vector3df &translation) const;
 
 				/*!
 				 Creates a matrix from this quaternion
@@ -107,9 +107,8 @@ namespace irrgame
 				 lookat *= m3;
 
 				 */
-				void getMatrixCenter(matrix4f &dest,
-						const vector3d<f32> &center,
-						const vector3d<f32> &translation) const;
+				void getMatrixCenter(matrix4f &dest, const vector3df &center,
+						const vector3df &translation) const;
 
 				//! Creates a matrix from this quaternion
 				inline void getMatrix_transposed(matrix4f &dest) const;
@@ -127,20 +126,20 @@ namespace irrgame
 				 q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k).
 				 \param angle Rotation Angle in radians.
 				 \param axis Rotation axis. */
-				quaternion& fromAngleAxis(f32 angle, const vector3d<f32>& axis);
+				quaternion& fromAngleAxis(f32 angle, const vector3df& axis);
 
 				//! Fills an angle (radians) around an axis (unit vector)
-				void toAngleAxis(f32 &angle, vector3d<f32>& axis) const;
+				void toAngleAxis(f32 &angle, vector3df& axis) const;
 
 				//! Output this quaternion to an euler angle (radians)
-				void toEuler(vector3d<f32>& euler) const;
+				void toEuler(vector3df& euler) const;
 
 				//! Set quaternion to identity
 				quaternion& makeIdentity();
 
 				//! Set quaternion to represent a rotation from one vector to another.
-				quaternion& rotationFromTo(const vector3d<f32>& from,
-						const vector3d<f32>& to);
+				quaternion& rotationFromTo(const vector3df& from,
+						const vector3df& to);
 
 			public:
 				//! Quaternion elements.
@@ -169,7 +168,7 @@ namespace irrgame
 		}
 
 		// Constructor which converts euler angles to a quaternion
-		inline quaternion::quaternion(const vector3d<f32>& vec)
+		inline quaternion::quaternion(const vector3df& vec)
 		{
 			set(vec.X(), vec.Y(), vec.Z());
 		}
@@ -321,7 +320,7 @@ namespace irrgame
 		 Creates a matrix from this quaternion
 		 */
 		inline void quaternion::getMatrix(matrix4f &dest,
-				const vector3d<f32> &center) const
+				const vector3df &center) const
 		{
 			f32 * m = dest.pointer();
 
@@ -362,8 +361,7 @@ namespace irrgame
 		 lookat *= m2;
 		 */
 		inline void quaternion::getMatrixCenter(matrix4f &dest,
-				const vector3d<f32> &center,
-				const vector3d<f32> &translation) const
+				const vector3df &center, const vector3df &translation) const
 		{
 			f32 * m = dest.pointer();
 
@@ -461,7 +459,7 @@ namespace irrgame
 		}
 
 		// sets new quaternion based on euler angles
-		inline quaternion& quaternion::set(const vector3d<f32>& vec)
+		inline quaternion& quaternion::set(const vector3df& vec)
 		{
 			return set(vec.X(), vec.Y(), vec.Z());
 		}
@@ -481,7 +479,8 @@ namespace irrgame
 				return *this;
 
 			//n = 1.0f / sqrtf(n);
-			return (*this *= reciprocal_squareroot(n));
+			return (*this *=
+					SharedFastMath::getInstance().invertSqrt(n));
 		}
 
 		// set this quaternion to the result of the interpolation between two quaternions
@@ -504,7 +503,9 @@ namespace irrgame
 				if ((1.0f - angle) >= 0.05f) // spherical interpolation
 				{
 					const f32 theta = acosf(angle);
-					const f32 invsintheta = reciprocal(sinf(theta));
+					const f32 invsintheta =
+							SharedFastMath::getInstance().invert(
+									sinf(theta));
 					scale = sinf(theta * (1.0f - time)) * invsintheta;
 					invscale = sinf(theta * time) * invsintheta;
 				}
@@ -517,8 +518,8 @@ namespace irrgame
 			else
 			{
 				q2.set(-q1.Y, q1.X, -q1.W, q1.Z);
-				scale = sinf(PI * (0.5f - time));
-				invscale = sinf(PI * time);
+				scale = sinf(SharedMath::Pi * (0.5f - time));
+				invscale = sinf(SharedMath::Pi * time);
 			}
 
 			return (*this = (q1 * scale) + (q2 * invscale));
@@ -533,7 +534,7 @@ namespace irrgame
 		//! axis must be unit length
 		//! angle in radians
 		inline quaternion& quaternion::fromAngleAxis(f32 angle,
-				const vector3d<f32>& axis)
+				const vector3df& axis)
 		{
 			const f32 fHalfAngle = 0.5f * angle;
 			const f32 fSin = sinf(fHalfAngle);
@@ -544,12 +545,12 @@ namespace irrgame
 			return *this;
 		}
 
-		inline void quaternion::toAngleAxis(f32 &angle,
-				vector3d<f32> &axis) const
+		inline void quaternion::toAngleAxis(f32 &angle, vector3df &axis) const
 		{
 			const f32 scale = sqrtf(X * X + Y * Y + Z * Z);
 
-			if (core::iszero(scale) || W > 1.0f || W < -1.0f)
+			if (SharedMath::getInstance().iszero(scale) || W > 1.0f
+					|| W < -1.0f)
 			{
 				angle = 0.0f;
 				axis.X() = 0.0f;
@@ -558,7 +559,8 @@ namespace irrgame
 			}
 			else
 			{
-				const f32 invscale = reciprocal(scale);
+				const f32 invscale = SharedFastMath::getInstance().invert(
+						scale);
 				angle = 2.0f * acosf(W);
 				axis.X() = X * invscale;
 				axis.Y() = Y * invscale;
@@ -566,7 +568,7 @@ namespace irrgame
 			}
 		}
 
-		inline void quaternion::toEuler(vector3d<f32>& euler) const
+		inline void quaternion::toEuler(vector3df& euler) const
 		{
 			const f32 sqw = W * W;
 			const f32 sqx = X * X;
@@ -582,15 +584,17 @@ namespace irrgame
 					(-sqx - sqy + sqz + sqw)));
 
 			// attitude = rotation about y-axis
-			euler.Y() = asinf(clamp(-2.0f * (X * Z - Y * W), -1.0f, 1.0f));
+			euler.Y() = asinf(
+					SharedMath::getInstance().clamp(-2.0f * (X * Z - Y * W),
+							-1.0f, 1.0f));
 		}
 
-		inline vector3d<f32> quaternion::operator*(const vector3d<f32>& v) const
+		inline vector3df quaternion::operator*(const vector3df& v) const
 		{
 			// nVidia SDK implementation
 
-			vector3d<f32> uv, uuv;
-			vector3d<f32> qvec(X, Y, Z);
+			vector3df uv, uuv;
+			vector3df qvec(X, Y, Z);
 			uv = qvec.crossProduct(v);
 			uuv = qvec.crossProduct(uv);
 			uv *= (2.0f * W);
@@ -610,12 +614,12 @@ namespace irrgame
 		}
 
 		inline core::quaternion& quaternion::rotationFromTo(
-				const vector3d<f32>& from, const vector3d<f32>& to)
+				const vector3df& from, const vector3df& to)
 		{
 			// Based on Stan Melax's article in Game Programming Gems
 			// Copy, since cannot modify local
-			vector3d<f32> v0 = from;
-			vector3d<f32> v1 = to;
+			vector3df v0 = from;
+			vector3df v1 = to;
 			v0.normalize();
 			v1.normalize();
 
@@ -627,7 +631,7 @@ namespace irrgame
 
 			const f32 s = sqrtf((1 + d) * 2); // optimize inv_sqrt
 			const f32 invs = 1.f / s;
-			const vector3d<f32> c = v0.crossProduct(v1) * invs;
+			const vector3df c = v0.crossProduct(v1) * invs;
 			X = c.X();
 			Y = c.Y();
 			Z = c.Z();

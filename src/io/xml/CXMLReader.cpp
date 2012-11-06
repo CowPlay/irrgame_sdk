@@ -5,9 +5,9 @@
  *      Author: gregorytkach
  */
 #include "CXMLReader.h"
+#include "core/math/SharedConverter.h"
 #include "io/IReadFile.h"
-#include "io/ioutil.h"
-#include "core/irrgamemath.h"
+#include "io/utils/ioutils.h"
 namespace irrgame
 {
 	namespace io
@@ -119,7 +119,7 @@ namespace irrgame
 		//! stored or deleted based on the nesessary conversion.
 		//! \param sizeWithoutHeader: Text size in characters without header
 		template<class src_c8>
-		void CXMLReader::convertTextData(ETEXT_FORMAT srcFormat, src_c8* source,
+		void CXMLReader::convertTextData(ETextFormat srcFormat, src_c8* source,
 				c8* pointerToStore, int sizeWithoutHeader)
 		{
 			// convert little to big endian if necessary
@@ -155,7 +155,7 @@ namespace irrgame
 		}
 
 		//! returns if a format is little endian
-		bool CXMLReader::isLittleEndian(ETEXT_FORMAT f)
+		bool CXMLReader::isLittleEndian(ETextFormat f)
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return f == ETF_ASCII || f == ETF_UTF8 || f == ETF_UTF16_LE
@@ -284,7 +284,7 @@ namespace irrgame
 			IRR_ASSERT(attr != 0);
 
 			core::stringc c = attr->Value.cStr();
-			return core::fast_atof(c.cStr());
+			return core::SharedConverter::getInstance().convertToFloat(c.cStr());
 		}
 
 		//! Returns the value of an attribute as float.
@@ -295,7 +295,7 @@ namespace irrgame
 			IRR_ASSERT(sizeof(attrvalue) > 0);
 
 			core::stringc c = attrvalue;
-			return core::fast_atof(c.cStr());
+			return core::SharedConverter::getInstance().convertToFloat(c.cStr());
 		}
 
 		//! Returns the name of the current node.
@@ -368,7 +368,7 @@ namespace irrgame
 			{
 				c8* p = start;
 				for (; p != end; ++p)
-					if (!io::isWhiteSpace(*p))
+					if (!ioutils::isWhiteSpace(*p))
 						break;
 
 				if (p == end)
@@ -435,7 +435,7 @@ namespace irrgame
 			const c8* startName = P;
 
 			// find end of element
-			while (*P != '>' && !io::isWhiteSpace(*P))
+			while (*P != '>' && !ioutils::isWhiteSpace(*P))
 				++P;
 
 			const c8* endName = P;
@@ -443,8 +443,10 @@ namespace irrgame
 			// find Attributes
 			while (*P != '>')
 			{
-				if (io::isWhiteSpace(*P))
+				if (ioutils::isWhiteSpace(*P))
+				{
 					++P;
+				}
 				else
 				{
 					if (*P != '/')
@@ -454,8 +456,10 @@ namespace irrgame
 						// read the attribute names
 						const c8* attributeNameBegin = P;
 
-						while (!isWhiteSpace(*P) && *P != '=')
+						while (!ioutils::isWhiteSpace(*P) && *P != '=')
+						{
 							++P;
+						}
 
 						const c8* attributeNameEnd = P;
 						++P;
@@ -463,10 +467,14 @@ namespace irrgame
 						// read the attribute value
 						// check for quotes and single quotes, thx to murphy
 						while ((*P != '\"') && (*P != '\'') && *P)
+						{
 							++P;
+						}
 
 						if (!*P) // malformatted xml file
+						{
 							return;
+						}
 
 						const c8 attributeQuoteChar = *P;
 
@@ -474,10 +482,14 @@ namespace irrgame
 						const c8* attributeValueBegin = P;
 
 						while (*P != attributeQuoteChar && *P)
+						{
 							++P;
+						}
 
 						if (!*P) // malformatted xml file
+						{
 							return;
+						}
 
 						const c8* attributeValueEnd = P;
 						++P;
@@ -566,7 +578,8 @@ namespace irrgame
 			}
 
 			if (cDataEnd)
-				NodeName = core::stringc(cDataBegin, (int) (cDataEnd - cDataBegin));
+				NodeName = core::stringc(cDataBegin,
+						(int) (cDataEnd - cDataBegin));
 			else
 				NodeName = "";
 
@@ -574,8 +587,7 @@ namespace irrgame
 		}
 
 		// finds a current attribute by name, returns 0 if not found
-		const CXMLReader::SAttribute* CXMLReader::getAttributeByName(
-				const c8* name) const
+		const SAttribute* CXMLReader::getAttributeByName(const c8* name) const
 		{
 			IRR_ASSERT(sizeof(name) > 0);
 
@@ -589,7 +601,8 @@ namespace irrgame
 		}
 
 		// replaces xml special characters in a string and creates a new one
-		core::stringc CXMLReader::replaceSpecialCharacters(core::stringc& origstr)
+		core::stringc CXMLReader::replaceSpecialCharacters(
+				core::stringc& origstr)
 		{
 			int pos = origstr.findFirst('&');
 			int oldPos = 0;

@@ -5,8 +5,9 @@
 #ifndef __IRR_PLANE_3D_H_INCLUDED__
 #define __IRR_PLANE_3D_H_INCLUDED__
 
-#include "core/math/irrMath.h"
+#include "core/math/SharedFastMath.h"
 #include "core/shapes/vector3d.h"
+#include "EIntersectionRelation3D.h"
 
 namespace irrgame
 {
@@ -14,17 +15,6 @@ namespace irrgame
 	{
 
 		//TODO: REFACTOR IT!
-
-		//! Enumeration for intersection relations of 3d objects
-		enum EIntersectionRelation3D
-		{
-			ISREL3D_FRONT = 0,
-			ISREL3D_BACK,
-			ISREL3D_PLANAR,
-			ISREL3D_SPANNING,
-			ISREL3D_CLIPPED
-		};
-
 		//! Template plane class with some intersection testing methods.
 		template<class T>
 		class plane3d
@@ -72,7 +62,8 @@ namespace irrgame
 
 				inline bool operator==(const plane3d<T>& other) const
 				{
-					return (equals(D, other.D) && Normal == other.Normal);
+					return (SharedMath::getInstance().equals(D, other.D)
+							&& Normal == other.Normal);
 				}
 
 				inline bool operator!=(const plane3d<T>& other) const
@@ -167,10 +158,10 @@ namespace irrgame
 				{
 					const T d = Normal.dotProduct(point) + D;
 
-					if (d < -ROUNDING_ERROR_f32)
+					if (d < -SharedMath::RoundErrF32)
 						return ISREL3D_BACK;
 
-					if (d > ROUNDING_ERROR_f32)
+					if (d > SharedMath::RoundErrF32)
 						return ISREL3D_FRONT;
 
 					return ISREL3D_PLANAR;
@@ -193,7 +184,7 @@ namespace irrgame
 				bool existsIntersection(const plane3d<T>& other) const
 				{
 					vector3d<T> cross = other.Normal.crossProduct(Normal);
-					return cross.getLength() > core::ROUNDING_ERROR_f32;
+					return cross.getLength() > SharedMath::RoundErrF32;
 				}
 
 				//! Intersects this plane with another.
@@ -210,7 +201,7 @@ namespace irrgame
 					const T fn11 = other.Normal.getLength();
 					const f32 det = fn00 * fn11 - fn01 * fn01;
 
-					if (fabs(det) < ROUNDING_ERROR_f32)
+					if (fabs(det) < SharedMath::RoundErrF32)
 						return false;
 
 					const f32 invdet = 1.0 / det;
@@ -246,7 +237,7 @@ namespace irrgame
 				bool isFrontFacing(const vector3d<T>& lookDirection) const
 				{
 					const f32 d = Normal.dotProduct(lookDirection);
-					return F32_LOWER_EQUAL_0 ( d );
+					return SharedFastMath::F32_LOWER_EQUAL_0(d);
 				}
 
 				//! Get the distance to a point.

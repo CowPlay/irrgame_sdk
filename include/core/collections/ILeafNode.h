@@ -67,14 +67,6 @@ namespace irrgame
 
 				//! List of all children of this node
 				list<T*> Children;
-
-//			private:
-//				//! Internal field. Please do not use.
-//				ILeafNode* LeafParent;
-//
-//				//! Internal field. Please do not use.
-//				list<ILeafNode*> LeafChildren;
-
 		};
 
 		//! Default constructor

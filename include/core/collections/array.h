@@ -6,11 +6,17 @@
 #define _IRR_ARRAY_HINCLUDED__
 
 #include "core/collections/ICollection.h"
-#include "core/base/irrAllocator.h"
+
+#include "core/allocator/irrAllocator.h"
+#include "core/allocator/EAllocStrategy.h"
+
+#include "core/math/SharedMath.h"
+#include "core/math/SharedHeapsort.h"
+
 #include "threads/irrgameMonitor.h"
-#include "core/math/irrMath.h"
-#include "core/math/heapsort.h"
-#include "stdio.h"
+
+#include <stdio.h>
+
 namespace irrgame
 {
 	namespace core
@@ -48,8 +54,7 @@ namespace irrgame
 				/** if the maximum size of the array is unknown, you can define how big the
 				 allocation should happen.
 				 \param value New strategy to apply to this array. */
-				void setAllocStrategy(eAllocStrategy value =
-						ALLOC_STRATEGY_DOUBLE);
+				void setAllocStrategy(EAllocStrategy value = AS_DOUBLE);
 
 				//! Adds an element at back of array.
 				/** If the array is too small to add this new element it is made bigger.
@@ -229,7 +234,7 @@ namespace irrgame
 				u32 Used;
 				irrAllocator<T> Allocator;
 				threads::irrgameMonitor* Monitor;
-				eAllocStrategy Strategy :4;
+				EAllocStrategy Strategy :4;
 				bool FreeWhenDestroyed :1;
 				bool IsSorted :1;
 		};
@@ -237,9 +242,8 @@ namespace irrgame
 		//! Default constructor for empty array.
 		template<class T>
 		inline array<T>::array() :
-				Data(0), Allocated(0), Used(0), Monitor(0), Strategy(
-						ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(true), IsSorted(
-						true)
+				Data(0), Allocated(0), Used(0), Monitor(0), Strategy(AS_DOUBLE), FreeWhenDestroyed(
+						true), IsSorted(true)
 		{
 			Monitor = threads::createIrrgameMonitor();
 		}
@@ -247,9 +251,8 @@ namespace irrgame
 		//! Constructs an array and allocates an initial chunk of memory.
 		template<class T>
 		inline array<T>::array(u32 startCount) :
-				Data(0), Allocated(0), Used(0), Monitor(0), Strategy(
-						ALLOC_STRATEGY_DOUBLE), FreeWhenDestroyed(true), IsSorted(
-						true)
+				Data(0), Allocated(0), Used(0), Monitor(0), Strategy(AS_DOUBLE), FreeWhenDestroyed(
+						true), IsSorted(true)
 		{
 			Monitor = threads::createIrrgameMonitor();
 			reallocate(startCount);
@@ -314,7 +317,7 @@ namespace irrgame
 
 		//! set a new allocation strategy
 		template<class T>
-		inline void array<T>::setAllocStrategy(eAllocStrategy value)
+		inline void array<T>::setAllocStrategy(EAllocStrategy value)
 		{
 			Monitor->enter();
 			Strategy = value;
@@ -355,15 +358,19 @@ namespace irrgame
 				u32 newAlloc;
 				switch (Strategy)
 				{
-					case ALLOC_STRATEGY_DOUBLE:
+					case AS_DOUBLE:
+					{
 						newAlloc = Used + 1
 								+ (Allocated < 500 ?
 										(Allocated < 5 ? 5 : Used) : Used >> 2);
 						break;
+					}
 					default:
-					case ALLOC_STRATEGY_SAFE:
+					case AS_SAFE:
+					{
 						newAlloc = Used + 1;
 						break;
+					}
 				}
 
 				reallocateInternal(newAlloc);
@@ -378,7 +385,10 @@ namespace irrgame
 				}
 				// then add new element
 				if (Used > index)
+				{
 					Allocator.destruct(&Data[index]);
+				}
+
 				Allocator.construct(&Data[index], e); // data[index] = e;
 			}
 			else
@@ -675,7 +685,9 @@ namespace irrgame
 		inline void array<T>::sortInternal()
 		{
 			if (!IsSorted && Used > 1)
-				heapsort(Data, Used);
+			{
+				SharedHeapsort<T>::getInstance().sort(Data, Used);
+			}
 
 			IsSorted = true;
 		}
@@ -879,12 +891,13 @@ namespace irrgame
 			other.Monitor->enter();
 			Monitor->enter();
 
-			core::swap(Monitor, other.Monitor);
-			core::swap(Data, other.Data);
-			core::swap(Allocated, other.Allocated);
-			core::swap(Used, other.Used);
-			core::swap(Allocator, other.Allocator);	// memory is still released by the same allocator used for allocation
-			eAllocStrategy helperStrategy(Strategy);// can't use core::swap with bitfields
+			SharedMath::getInstance().swap(Monitor, other.Monitor);
+			SharedMath::getInstance().swap(Data, other.Data);
+			SharedMath::getInstance().swap(Allocated, other.Allocated);
+			SharedMath::getInstance().swap(Used, other.Used);
+			SharedMath::getInstance().swap(Allocator, other.Allocator);	// memory is still released by the same allocator used for allocation
+
+			EAllocStrategy helperStrategy(Strategy);// can't use core::swap with bitfields
 			Strategy = other.Strategy;
 			other.Strategy = helperStrategy;
 

@@ -6,7 +6,7 @@
  */
 #include "CFloatAttribute.h"
 #include "core/irrgamemath.h"
-#include "core/collections/irrstring.h"
+#include "core/collections/stringc.h"
 
 namespace irrgame
 {
@@ -52,7 +52,7 @@ namespace irrgame
 
 		void CFloatAttribute::setString(const c8* text)
 		{
-			Value = core::fast_atof(text);
+			Value = core::SharedConverter::getInstance().convertToFloat(text);
 		}
 
 		EAttributeType CFloatAttribute::getType() const

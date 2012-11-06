@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "io/CFileList.h"
-#include "io/ioutil.h"
+#include "io/utils/ioutils.h"
 
 namespace irrgame
 {
@@ -83,12 +83,12 @@ namespace irrgame
 
 			entry.FullName = entry.Name;
 
-			io::deletePathFromFilename(entry.Name);
+			io::ioutils::deletePathFromFilename(entry.Name);
 
 			if (IgnorePaths)
+			{
 				entry.FullName = entry.Name;
-
-			//os::Printer::log(Path.c_str(), entry.FullName);
+			}
 
 			Files.pushBack(entry);
 
@@ -118,8 +118,8 @@ namespace irrgame
 		}
 
 		//! Searches for a file or folder within the list, returns the index
-		s32 CFileList::findFile(const core::stringc& filename, bool isDirectory =
-				false) const
+		s32 CFileList::findFile(const core::stringc& filename,
+				bool isDirectory = false) const
 		{
 			SFileListEntry entry;
 			entry.FullName = filename;
@@ -140,7 +140,9 @@ namespace irrgame
 				entry.FullName.makeLower();
 
 			if (IgnorePaths)
-				io::deletePathFromFilename(entry.FullName);
+			{
+				io::ioutils::deletePathFromFilename(entry.FullName);
+			}
 
 			return Files.linearReverseSearch(entry);
 		}

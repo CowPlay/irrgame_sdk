@@ -37,10 +37,10 @@ namespace irrgame
 		void CColorAttribute::setInt(s32 intValue)
 		{
 			video::SColorf c = video::SColor(intValue);
-			ValueF[0] = c.r;
-			ValueF[1] = c.g;
-			ValueF[2] = c.b;
-			ValueF[3] = c.a;
+			ValueF[0] = c.Red;
+			ValueF[1] = c.Green;
+			ValueF[2] = c.Blue;
+			ValueF[3] = c.Alpha;
 		}
 
 		void CColorAttribute::setFloat(f32 floatValue)

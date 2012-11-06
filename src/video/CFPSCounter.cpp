@@ -59,10 +59,13 @@ namespace irrgame
 
 			if (milliseconds >= 1500)
 			{
-				const f32 invMilli = core::reciprocal((f32) milliseconds);
+				const f32 invMilli =
+						core::SharedFastMath::getInstance().invert(
+								(f32) milliseconds);
 
-				FPS = core::ceil32((1000 * FramesCounted) * invMilli);
-				PrimitiveAverage = core::ceil32(
+				FPS = core::SharedFastMath::getInstance().ceil32(
+						(1000 * FramesCounted) * invMilli);
+				PrimitiveAverage = core::SharedFastMath::getInstance().ceil32(
 						(1000 * PrimitivesCounted) * invMilli);
 
 				FramesCounted = 0;

@@ -10,7 +10,7 @@
 #include "core/irrgameshapes.h"
 
 //#include "IImage.h"
-//#include "EDriverTypes.h"
+#include "video/driver/EDriverType.h"
 
 namespace irrgame
 {
@@ -94,45 +94,44 @@ namespace irrgame
 				{
 				}
 
-//	//! Lock function.
-//	/** Locks the Texture and returns a pointer to access the
-//	pixels. After lock() has been called and all operations on the pixels
-//	are done, you must call unlock().
-//	Locks are not accumulating, hence one unlock will do for an arbitrary
-//	number of previous locks.
-//	\param readOnly Specifies that no changes to the locked texture are
-//	made. Unspecified behavior will arise if still write access happens.
-//	\param mipmapLevel Number of the mipmapLevel to lock. 0 is main texture.
-//	Non-existing levels will silently fail and return 0.
-//	\return Returns a pointer to the pixel data. The format of the pixel can
-//	be determined by using getColorFormat(). 0 is returned, if
-//	the texture cannot be locked. */
-//	virtual void* lock(bool readOnly = false, u32 mipmapLevel=0) = 0;
-//
-//	//! Unlock function. Must be called after a lock() to the texture.
-//	/** One should avoid to call unlock more than once before another lock. */
-//	virtual void unlock() = 0;
-//
-//	//! Get original size of the texture.
-//	/** The texture is usually scaled, if it was created with an unoptimal
-//	size. For example if the size was not a power of two. This method
-//	returns the size of the texture it had before it was scaled. Can be
-//	useful when drawing 2d images on the screen, which should have the
-//	exact size of the original texture. Use ITexture::getSize() if you want
-//	to know the real size it has now stored in the system.
-//	\return The original size of the texture. */
-//	virtual const dimension2du& getOriginalSize() const = 0;
-//
-//	//! Get dimension (=size) of the texture.
-//	/** \return The size of the texture. */
-//	virtual const dimension2du& getSize() const = 0;
-//
-//	//! Get driver type of texture.
-//	/** This is the driver, which created the texture. This method is used
-//	internally by the video devices, to check, if they may use a texture
-//	because textures may be incompatible between different devices.
-//	\return Driver type of texture. */
-//	virtual E_DRIVER_TYPE getDriverType() const = 0;
+				//! Lock function.
+				/** Locks the Texture and returns a pointer to access the
+				 pixels. After lock() has been called and all operations on the pixels
+				 are done, you must call unlock().
+				 Locks are not accumulating, hence one unlock will do for an arbitrary
+				 number of previous locks.
+				 \param readOnly Specifies that no changes to the locked texture are
+				 made. Unspecified behavior will arise if still write access happens.
+				 \param mipmapLevel Number of the mipmapLevel to lock. 0 is main texture.
+				 Non-existing levels will silently fail and return 0.
+				 \return Returns a pointer to the pixel data. The format of the pixel can
+				 be determined by using getColorFormat(). 0 is returned, if
+				 the texture cannot be locked. */
+//				virtual void* lock(bool readOnly = false,
+//						u32 mipmapLevel = 0) = 0;
+				//! Unlock function. Must be called after a lock() to the texture.
+				/** One should avoid to call unlock more than once before another lock. */
+//				virtual void unlock() = 0;
+				//! Get original size of the texture.
+				/** The texture is usually scaled, if it was created with an unoptimal
+				 size. For example if the size was not a power of two. This method
+				 returns the size of the texture it had before it was scaled. Can be
+				 useful when drawing 2d images on the screen, which should have the
+				 exact size of the original texture. Use ITexture::getSize() if you want
+				 to know the real size it has now stored in the system.
+				 \return The original size of the texture. */
+				virtual const dimension2du& getOriginalSize() const = 0;
+
+				//! Get dimension(size) of the texture.
+				/** \return The size of the texture. */
+				virtual const dimension2du& getSize() const = 0;
+
+				//! Get type of texture.
+				/** This is also the driver type, which created the texture. This method is used
+				 internally by the video devices, to check, if they may use a texture
+				 because textures may be incompatible between different devices.
+				 \return Driver type of texture. */
+				virtual EDriverType getType() const = 0;
 //
 //	//! Get the color format of texture.
 //	/** \return The color format of texture. */
@@ -157,10 +156,11 @@ namespace irrgame
 //	/** Required after modifying the texture, usually after calling unlock(). */
 //	virtual void regenerateMipMapLevels(void* mipmapData=0) = 0;
 //
-//	//! Check whether the texture is a render target
-//	/** \return True if this is a render target, otherwise false. */
-//	virtual bool isRenderTarget() const { return false; }
-//
+				//! Check whether the texture is a render target
+				/** \return True if this is a render target, otherwise false. */
+				//by default return false
+				virtual bool isRenderTarget() const = 0;
+
 //	//! Get name of texture (in most cases this is the filename)
 //	const io::SNamedPath& getName() const { return NamedPath; }
 //
@@ -182,6 +182,7 @@ namespace irrgame
 //		return ETCF_OPTIMIZED_FOR_SPEED;
 //	}
 //
+			protected:
 				core::stringc Path;
 		};
 

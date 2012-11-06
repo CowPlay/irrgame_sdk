@@ -8,7 +8,7 @@
 #ifndef SCOLORHSL_H_
 #define SCOLORHSL_H_
 
-#include "core/base/baseTypes.h"
+#include "compileConfig.h"
 
 namespace irrgame
 {

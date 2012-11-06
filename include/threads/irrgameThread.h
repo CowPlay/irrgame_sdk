@@ -8,7 +8,6 @@
 #ifndef IRRGAMETHREAD_H_
 #define IRRGAMETHREAD_H_
 
-#include "core/irrgamebase.h"
 #include "core/irrgamecollections.h"
 #include "delegate/delegate.h"
 namespace irrgame

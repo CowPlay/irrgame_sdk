@@ -9,7 +9,6 @@
 
 namespace irrgame
 {
-
 	namespace utils
 	{
 		core::list<ITimer*> ITimer::RegisteredTimers;

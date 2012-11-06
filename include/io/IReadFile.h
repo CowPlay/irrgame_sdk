@@ -5,7 +5,8 @@
 #ifndef __I_READ_FILE_H_INCLUDED__
 #define __I_READ_FILE_H_INCLUDED__
 
-#include "ioutil.h"
+#include "core/engine/IReferenceCounted.h"
+#include "core/collections/stringc.h"
 
 namespace irrgame
 {

@@ -9,7 +9,7 @@
 #define CENUMATTRIBUTE_H_
 
 #include "io/serialize/IAttribute.h"
-#include "core/collections/irrstring.h"
+#include "core/collections/stringc.h"
 
 namespace irrgame
 {

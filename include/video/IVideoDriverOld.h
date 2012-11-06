@@ -44,43 +44,7 @@
 //	class IImageWriter;
 //	class IMaterialRenderer;
 //	class IGPUProgrammingServices;
-//
-//	//! enumeration for geometry transformation states
-//	enum E_TRANSFORMATION_STATE
-//	{
-//		//! View transformation
-//		ETS_VIEW = 0,
-//		//! World transformation
-//		ETS_WORLD,
-//		//! Projection transformation
-//		ETS_PROJECTION,
-//		//! Texture transformation
-//		ETS_TEXTURE_0,
-//		//! Texture transformation
-//		ETS_TEXTURE_1,
-//		//! Texture transformation
-//		ETS_TEXTURE_2,
-//		//! Texture transformation
-//		ETS_TEXTURE_3,
-//#if _IRR_MATERIAL_MAX_TEXTURES_>4
-//		//! Texture transformation
-//		ETS_TEXTURE_4,
-//#if _IRR_MATERIAL_MAX_TEXTURES_>5
-//		//! Texture transformation
-//		ETS_TEXTURE_5,
-//#if _IRR_MATERIAL_MAX_TEXTURES_>6
-//		//! Texture transformation
-//		ETS_TEXTURE_6,
-//#if _IRR_MATERIAL_MAX_TEXTURES_>7
-//		//! Texture transformation
-//		ETS_TEXTURE_7,
-//#endif
-//#endif
-//#endif
-//#endif
-//		//! Not used
-//		ETS_COUNT
-//	};
+
 //
 //	//! enumeration for signalling ressources which were lost after the last render cycle
 //	/** These values can be signalled by the driver, telling the app that some ressources

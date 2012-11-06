@@ -76,8 +76,11 @@ namespace irrgame
 		{
 			LeftChild = p;
 			if (p)
+			{
 				p->setParent(this);
+			}
 		}
+
 		template<class Key, class Value>
 		inline void RBTree<Key, Value>::setRightChild(RBTree<Key, Value>* p)
 		{
@@ -192,8 +195,7 @@ namespace irrgame
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !IsRed;
 		}
-	// RBTree
-	}// end namespace core
+	} // end namespace core
 } // end namespace irrgame
 
 #endif /* RBTREE_H_ */

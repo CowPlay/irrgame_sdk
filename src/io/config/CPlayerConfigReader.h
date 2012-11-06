@@ -9,7 +9,6 @@
 #define CCONFIGREADER_H_
 
 #include "io/config/IPlayerConfigReader.h"
-#include "io/IFileSystem.h"
 #include "io/SPath.h"
 
 namespace irrgame

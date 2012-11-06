@@ -5,7 +5,7 @@
 #ifndef __S_MATERIAL_H_INCLUDED__
 #define __S_MATERIAL_H_INCLUDED__
 
-#include "video/videoutils.h"
+#include "video/utils/SharedVideoUtils.h"
 
 #include "SMaterialLayer.h"
 #include "video/color/SColor.h"

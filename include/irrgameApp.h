@@ -8,9 +8,8 @@
 #ifndef IRRGAMEAPPLICATION_H_
 #define IRRGAMEAPPLICATION_H_
 
-#include "core/irrgamebase.h"
-
 #include "core/engine/IReferenceCounted.h"
+
 namespace irrgame
 {
 	class irrgamePlayer;

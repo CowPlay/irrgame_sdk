@@ -7,7 +7,9 @@
 
 #ifndef CMAPITERATOR_H_
 #define CMAPITERATOR_H_
-#include "RBTree.h"
+
+#include "core/collections/map/RBTree.h"
+
 namespace irrgame
 {
 	namespace core

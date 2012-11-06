@@ -8,7 +8,7 @@
 #ifndef SCOLORF_H_
 #define SCOLORF_H_
 
-#include "core/base/baseTypes.h"
+#include "compileConfig.h"
 
 namespace irrgame
 {
@@ -105,16 +105,16 @@ namespace irrgame
 			public:
 
 				//! red color component
-				f32 r;
+				f32 Red;
 
 				//! green color component
-				f32 g;
+				f32 Green;
 
 				//! blue component
-				f32 b;
+				f32 Blue;
 
 				//! alpha color component
-				f32 a;
+				f32 Alpha;
 		};
 
 	}  // namespace video

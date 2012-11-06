@@ -8,7 +8,7 @@
 #ifndef CPARENTFIRSTITERATOR_H_
 #define CPARENTFIRSTITERATOR_H_
 
-#include "RBTree.h"
+#include "core/collections/map/RBTree.h"
 
 namespace irrgame
 {
@@ -50,42 +50,7 @@ namespace irrgame
 
 			private:
 
-				void inc()
-				{
-					// Already at end?
-					if (Cur == 0)
-						return;
-
-					// First we try down to the left
-					if (Cur->getLeftChild())
-					{
-						Cur = Cur->getLeftChild();
-					}
-					else if (Cur->getRightChild())
-					{
-						// No left child? The we go down to the right.
-						Cur = Cur->getRightChild();
-					}
-					else
-					{
-						// No children? Move up in the hierarcy until
-						// we either reach 0 (and are finished) or
-						// find a right uncle.
-						while (Cur != 0)
-						{
-							// But if parent is left child and has a right "uncle" the parent
-							// has already been processed but the uncle hasn't. Move to
-							// the uncle.
-							if (Cur->isLeftChild()
-									&& Cur->getParent()->getRightChild())
-							{
-								Cur = Cur->getParent()->getRightChild();
-								return;
-							}
-							Cur = Cur->getParent();
-						}
-					}
-				}
+				void inc();
 
 			private:
 
@@ -159,6 +124,44 @@ namespace irrgame
 
 			return *getNode();
 		}
+
+		template<class Key, class Value>
+		inline void CParentFirstIterator<Key, Value>::inc()
+		{
+			// Already at end?
+			if (Cur == 0)
+				return;
+
+			// First we try down to the left
+			if (Cur->getLeftChild())
+			{
+				Cur = Cur->getLeftChild();
+			}
+			else if (Cur->getRightChild())
+			{
+				// No left child? The we go down to the right.
+				Cur = Cur->getRightChild();
+			}
+			else
+			{
+				// No children? Move up in the hierarcy until
+				// we either reach 0 (and are finished) or
+				// find a right uncle.
+				while (Cur != 0)
+				{
+					// But if parent is left child and has a right "uncle" the parent
+					// has already been processed but the uncle hasn't. Move to
+					// the uncle.
+					if (Cur->isLeftChild() && Cur->getParent()->getRightChild())
+					{
+						Cur = Cur->getParent()->getRightChild();
+						return;
+					}
+					Cur = Cur->getParent();
+				}
+			}
+		}
+
 	}		// end namespace core
 } // end namespace irrgame
 

@@ -8,7 +8,7 @@
 #ifndef SCURSORINFO_H_
 #define SCURSORINFO_H_
 
-#include "core/irrgameshapes.h"
+#include "core/shapes/vector2d.h"
 #include "events/user/ECursorStates.h"
 #include "core/engine/IReferenceCounted.h"
 
@@ -17,13 +17,13 @@ namespace irrgame
 	namespace events
 	{
 		//! Struct which represent pc/mac mouse cursor and finger on touch devices.
-		struct SCursorInfo : public IReferenceCounted
+		struct SCursorInfo: public IReferenceCounted
 		{
 			public:
 
 				//! Default constructor
 				SCursorInfo(u32 number, ECursorStates state) :
-					Number(number), State(state)
+						Number(number), State(state)
 				{
 				}
 

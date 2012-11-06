@@ -8,6 +8,7 @@
 #ifndef IRRGAME_H_
 #define IRRGAME_H_
 
+#include "compileConfig.h"
 #include "irrgameApp.h"
 #include "irrgamePlayer.h"
 
@@ -17,7 +18,7 @@
 #include "events/IEventReceiver.h"
 
 //engine events
-#include "events/engine/IEventScheduler.h"
+#include "events/engine/SharedEventScheduler.h"
 #include "events/engine/IEngineEvent.h"
 
 //user events
@@ -30,14 +31,13 @@
 #include "events/user/SCursorInfo.h"
 
 //core
-#include "core/irrgamebase.h"
 #include "core/irrgamecollections.h"
 #include "core/irrgamemath.h"
 #include "core/irrgameshapes.h"
 
 //io
-#include "io/ioutil.h"
-#include "io/IFileSystem.h"
+#include "io/utils/ioutils.h"
+#include "io/SharedFileSystem.h"
 #include "io/IReadFile.h"
 #include "io/IWriteFile.h"
 #include "io/SPath.h"
@@ -57,5 +57,9 @@
 #include "threads/irrgameThread.h"
 
 //video
+#include "video/utils/AbsRectangle.h"
+#include "video/utils/SharedVideoUtils.h"
+#include "video/driver/IVideoDriver.h"
+#include "video/color.h"
 
 #endif /* IRRGAME_H_ */

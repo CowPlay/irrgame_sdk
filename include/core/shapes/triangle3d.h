@@ -9,6 +9,7 @@
 #include "core/shapes/line3d.h"
 #include "core/shapes/plane3d.h"
 #include "core/shapes/aabbox3d.h"
+#include "core/math/SharedConverter.h"
 
 namespace irrgame
 {
@@ -142,7 +143,10 @@ namespace irrgame
 					f32 z = x + y - ac_bb;
 
 					// return sign(z) && !(sign(x)||sign(y))
-					return (((IR(z)) & ~((IR(x)) | (IR(y)))) & 0x80000000) != 0;
+					return (((SharedConverter::getInstance().convertToUInt(z))
+							& ~((SharedConverter::getInstance().convertToUInt(x))
+									| (SharedConverter::getInstance().convertToUInt(
+											y)))) & 0x80000000) != 0;
 				}
 
 				//! Get an intersection with a 3d line.
@@ -191,7 +195,8 @@ namespace irrgame
 					const vector3d<T> normal = getNormal().normalize();
 					T t2;
 
-					if (core::iszero(t2 = normal.dotProduct(lineVect)))
+					if (core::SharedMath::getInstance().iszero(
+							t2 = normal.dotProduct(lineVect)))
 						return false;
 
 					T d = pointA.dotProduct(normal);
@@ -217,7 +222,7 @@ namespace irrgame
 				{
 					const vector3d<T> n = getNormal().normalize();
 					const f32 d = (f32) n.dotProduct(lookDirection);
-					return F32_LOWER_EQUAL_0(d);
+					return SharedFastMath::getInstance().F32_LOWER_EQUAL_0(d);
 				}
 
 				//! Get the plane of this triangle.

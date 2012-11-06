@@ -7,6 +7,7 @@
 
 #include "CPlayerConfigReader.h"
 #include "io/serialize/IAttributes.h"
+#include "io/SharedFileSystem.h"
 
 namespace irrgame
 {
@@ -27,7 +28,7 @@ namespace irrgame
 
 		void CPlayerConfigReader::read(const c8* file)
 		{
-			XMLReader = IFileSystem::getInstance().createXMLReader(file);
+			XMLReader = SharedFileSystem::getInstance().createXMLReader(file);
 
 			Entry = new SPlayerConfigEntry();
 
@@ -88,7 +89,7 @@ namespace irrgame
 						if (nodeName == XML_TAG_ATTRIBUTES)
 						{
 							io::IAttributes* attr =
-									IFileSystem::getInstance().createEmptyAttributes();
+									SharedFileSystem::getInstance().createEmptyAttributes();
 
 							attr->read(xml, true);
 

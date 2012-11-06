@@ -8,7 +8,7 @@
 #ifndef IRRGAMEPLAYER_H_
 #define IRRGAMEPLAYER_H_
 
-#include "core/irrgamebase.h"
+#include "playerCompileConfig.h"
 #include "io/SPath.h"
 #include "io/config/IPlayerConfigReader.h"
 #include "irrgameApp.h"
@@ -22,7 +22,7 @@ namespace irrgame
 
 	namespace io
 	{
-		class IFileSystem;
+		class SharedFileSystem;
 	}  // namespace io
 
 	namespace scene
@@ -37,6 +37,7 @@ namespace irrgame
 
 	class irrgameApp;
 
+	//! Interface of most important object in irrgame.
 	class irrgamePlayer: public IReferenceCounted
 	{
 		public:

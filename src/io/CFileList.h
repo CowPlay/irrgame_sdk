@@ -6,7 +6,9 @@
 #define __C_FILE_LIST_H_INCLUDED__
 
 #include "io/IFileList.h"
+#include "io/SFileListEntry.h"
 #include "core/collections/array.h"
+
 
 namespace irrgame
 {
@@ -17,8 +19,6 @@ namespace irrgame
 		class CFileList: public IFileList
 		{
 			public:
-
-				// CFileList methods
 
 				//! Constructor
 				/** \param path The path of this file archive */

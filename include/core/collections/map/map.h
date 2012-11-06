@@ -5,11 +5,12 @@
 #ifndef __IRR_MAP_H_INCLUDED__
 #define __IRR_MAP_H_INCLUDED__
 
-#include "core/math/irrMath.h"
+#include "core/collections/map/CMapIterator.h"
+#include "core/collections/map/CParentFirstIterator.h"
+#include "core/collections/map/CParentLastIterator.h"
+
+#include "core/math/SharedMath.h"
 #include "threads/irrgameMonitor.h"
-#include "CMapIterator.h"
-#include "CParentFirstIterator.h"
-#include "CParentLastIterator.h"
 
 namespace irrgame
 {
@@ -522,9 +523,9 @@ namespace irrgame
 			other.Monitor->enter();
 			Monitor->enter();
 
-			core::swap(Monitor, other.Monitor);
-			core::swap(Root, other.Root);
-			core::swap(Size, other.Size);
+			SharedMath::getInstance().swap(Monitor, other.Monitor);
+			SharedMath::getInstance().swap(Root, other.Root);
+			SharedMath::getInstance().swap(Size, other.Size);
 
 			Monitor->exit();
 			other.Monitor->exit();
@@ -690,9 +691,8 @@ namespace irrgame
 			left->setRightChild(p);
 		}
 
-	}
-// end namespace core
-}// end namespace irr
+	} // end namespace core
+} // end namespace irrgame
 
 //! map typedefs
 typedef irrgame::core::map<s32, s32> DictIntInt;

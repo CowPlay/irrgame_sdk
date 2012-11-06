@@ -9,7 +9,7 @@
 #define IPLAYERCONFIGREADER_H_
 
 #include "io/config/IConfigReader.h"
-#include "core/collections/irrstring.h"
+#include "core/collections/stringc.h"
 #include "core/shapes/dimension2d.h"
 
 namespace irrgame

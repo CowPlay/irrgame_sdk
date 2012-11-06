@@ -5,7 +5,8 @@
 #ifndef __I_IREFERENCE_COUNTED_H_INCLUDED__
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
-#include "core/base/baseTypes.h"
+#include "compileConfig.h"
+
 namespace irrgame
 {
 
@@ -124,9 +125,6 @@ namespace irrgame
 			//@ param0 - thread id
 			bool haveDependiesFromThread(s32 threadID) const;
 
-			//! Get object type
-//			virtual void getType() = 0;
-
 		protected:
 
 			//! Sets the debug name of the object.
@@ -141,7 +139,7 @@ namespace irrgame
 			//! Key 	- thread id
 			//! Value 	- reference count
 			//! TODO: change to threadsafe collection
-			//! TODO:review collection type. Maybe need change for productivity reason.
+			//! TODO: review collection type. Maybe need change for productivity reason.
 //			mutable irrgame::core::map<s32, s32> ThreadsReferenceCounters;
 
 			//! The debug name.

@@ -10,13 +10,9 @@
 
 namespace irrgame
 {
-
 	namespace io
 	{
-
-		/*!
-		 Class for writing a real file to disk.
-		 */
+		//! Class for writing a real file to disk.
 		class CWriteFile: public IWriteFile
 		{
 			public:

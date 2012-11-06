@@ -34,7 +34,10 @@ namespace irrgame
 			EXNT_CDATA,
 
 			//! Unknown element.
-			EXNT_UNKNOWN
+			EXNT_UNKNOWN,
+
+			//! Not used
+			EXNT_COUNT
 		};
 	}
 }

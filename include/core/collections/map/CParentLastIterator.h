@@ -8,7 +8,7 @@
 #ifndef CPARENTLASTITERATOR_H_
 #define CPARENTLASTITERATOR_H_
 
-#include "RBTree.h"
+#include "core/collections/map/RBTree.h"
 
 namespace irrgame
 {

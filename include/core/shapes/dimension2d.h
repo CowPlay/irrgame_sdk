@@ -5,8 +5,7 @@
 #ifndef __IRR_DIMENSION2D_H_INCLUDED__
 #define __IRR_DIMENSION2D_H_INCLUDED__
 
-#include "core/irrgamebase.h"
-#include "core/math/irrMath.h" // for irr::core::equals()
+#include "core/math/SharedMath.h" // for irr::core::equals()
 namespace irrgame
 {
 	namespace core
@@ -19,25 +18,23 @@ namespace irrgame
 		class dimension2d
 		{
 			public:
-				static const dimension2d& getEmpty(void)
-				{
-					static const dimension2d empty;
-					return empty;
-				}
+				//! Returns empty dimension
+				static const dimension2d& getEmpty(void);
 
 			public:
 				//! Default constructor for empty dimension
-				dimension2d() :
-						Width(0), Height(0)
-				{
-				}
+				dimension2d();
+
 				//! Constructor with width and height
-				dimension2d(const T& width, const T& height) :
-						Width(width), Height(height)
-				{
-				}
+				dimension2d(const T& width, const T& height);
 
 				dimension2d(const vector2d<T>& other); // Defined in vector2d.h
+
+				/*
+				 * Methods for work with dimension with another type
+				 */
+
+			public:
 
 				//! Use this constructor only where you are sure that the conversion is valid.
 				template<class U>
@@ -54,90 +51,16 @@ namespace irrgame
 					return *this;
 				}
 
-				//! Equality operator
-				bool operator==(const dimension2d<T>& other) const
-				{
-					return core::equals(Width, other.Width)
-							&& core::equals(Height, other.Height);
-				}
+				/*
+				 * Methods
+				 */
 
-				//! Inequality operator
-				bool operator!=(const dimension2d<T>& other) const
-				{
-					return !(*this == other);
-				}
-
-				bool operator==(const vector2d<T>& other) const; // Defined in vector2d.h
-
-				bool operator!=(const vector2d<T>& other) const
-				{
-					return !(*this == other);
-				}
-
+			public:
 				//! Set to new values
-				dimension2d<T>& set(const T& width, const T& height)
-				{
-					Width = width;
-					Height = height;
-					return *this;
-				}
-
-				//! Divide width and height by scalar
-				dimension2d<T>& operator/=(const T& scale)
-				{
-					Width /= scale;
-					Height /= scale;
-					return *this;
-				}
-
-				//! Divide width and height by scalar
-				dimension2d<T> operator/(const T& scale) const
-				{
-					return dimension2d<T>(Width / scale, Height / scale);
-				}
-
-				//! Multiply width and height by scalar
-				dimension2d<T>& operator*=(const T& scale)
-				{
-					Width *= scale;
-					Height *= scale;
-					return *this;
-				}
-
-				//! Multiply width and height by scalar
-				dimension2d<T> operator*(const T& scale) const
-				{
-					return dimension2d<T>(Width * scale, Height * scale);
-				}
-
-				//! Add another dimension to this one.
-				dimension2d<T>& operator+=(const dimension2d<T>& other)
-				{
-					Width += other.Width;
-					Height += other.Height;
-					return *this;
-				}
-
-				//! Subtract a dimension from this one
-				dimension2d<T>& operator-=(const dimension2d<T>& other)
-				{
-					Width -= other.Width;
-					Height -= other.Height;
-					return *this;
-				}
-
-				//! Add two dimensions
-				dimension2d<T> operator+(const dimension2d<T>& other) const
-				{
-					return dimension2d<T>(Width + other.Width,
-							Height + other.Height);
-				}
+				dimension2d<T>& set(const T& width, const T& height);
 
 				//! Get area
-				T getArea() const
-				{
-					return Width * Height;
-				}
+				T getArea() const;
 
 				//! Get the optimal size according to some properties
 				/** This is a function often used for texture dimension
@@ -156,55 +79,53 @@ namespace irrgame
 				 constraints. */
 				dimension2d<T> getOptimalSize(bool requirePowerOfTwo = true,
 						bool requireSquare = false, bool larger = true,
-						u32 maxValue = 0) const
-				{
-					u32 i = 1;
-					u32 j = 1;
-					if (requirePowerOfTwo)
-					{
-						while (i < (u32) Width)
-							i <<= 1;
-						if (!larger && i != 1 && i != (u32) Width)
-							i >>= 1;
-						while (j < (u32) Height)
-							j <<= 1;
-						if (!larger && j != 1 && j != (u32) Height)
-							j >>= 1;
-					}
-					else
-					{
-						i = (u32) Width;
-						j = (u32) Height;
-					}
-
-					if (requireSquare)
-					{
-						if ((larger && (i > j)) || (!larger && (i < j)))
-							j = i;
-						else
-							i = j;
-					}
-
-					if (maxValue > 0 && i > maxValue)
-						i = maxValue;
-
-					if (maxValue > 0 && j > maxValue)
-						j = maxValue;
-
-					return dimension2d<T>((T) i, (T) j);
-				}
+						u32 maxValue = 0) const;
 
 				//! Get the interpolated dimension
 				/** \param other Other dimension to interpolate with.
 				 \param d Value between 0.0f and 1.0f.
 				 \return Interpolated dimension. */
 				dimension2d<T> getInterpolated(const dimension2d<T>& other,
-						f32 d) const
-				{
-					T inv = (T) (1.0f - d);
-					return dimension2d<T>(other.Width * inv + Width * d,
-							other.Height * inv + Height * d);
-				}
+						f32 d) const;
+
+				/*
+				 * Operators
+				 */
+
+			public:
+
+				//! Equality operator
+				bool operator==(const dimension2d<T>& other) const;
+
+				//! Inequality operator
+				bool operator!=(const dimension2d<T>& other) const;
+
+				bool operator==(const vector2d<T>& other) const; // Defined in vector2d.h
+
+				bool operator!=(const vector2d<T>& other) const;
+
+				//! Divide width and height by scalar
+				dimension2d<T>& operator/=(const T& scale);
+
+				//! Divide width and height by scalar
+				dimension2d<T> operator/(const T& scale) const;
+
+				//! Multiply width and height by scalar
+				dimension2d<T>& operator*=(const T& scale);
+
+				//! Multiply width and height by scalar
+				dimension2d<T> operator*(const T& scale) const;
+
+				//! Add another dimension to this one.
+				dimension2d<T>& operator+=(const dimension2d<T>& other);
+
+				//! Subtract a dimension from this one
+				dimension2d<T>& operator-=(const dimension2d<T>& other);
+
+				//! Add two dimensions
+				dimension2d<T> operator+(const dimension2d<T>& other) const;
+
+			public:
 
 				//! Width of the dimension.
 				T Width;
@@ -212,8 +133,195 @@ namespace irrgame
 				T Height;
 		};
 
+		//! Returns empty dimension
+		template<class T>
+		const dimension2d<T>& dimension2d<T>::getEmpty(void)
+		{
+			static const dimension2d empty;
+			return empty;
+		}
+
+		//! Default constructor for empty dimension
+		template<class T>
+		dimension2d<T>::dimension2d() :
+				Width(0), Height(0)
+		{
+		}
+
+		//! Constructor with width and height
+		template<class T>
+		dimension2d<T>::dimension2d(const T& width, const T& height) :
+				Width(width), Height(height)
+		{
+		}
+
+		//! Set to new values
+		template<class T>
+		dimension2d<T>& dimension2d<T>::set(const T& width, const T& height)
+		{
+			Width = width;
+			Height = height;
+			return *this;
+		}
+
+		//! Get area
+		template<class T>
+		T dimension2d<T>::getArea() const
+		{
+			return Width * Height;
+		}
+
+		//! Get the optimal size according to some properties
+		template<class T>
+		dimension2d<T> dimension2d<T>::getOptimalSize(bool requirePowerOfTwo,
+				bool requireSquare, bool larger, u32 maxValue) const
+		{
+			u32 i = 1;
+			u32 j = 1;
+
+			if (requirePowerOfTwo)
+			{
+				while (i < (u32) Width)
+				{
+					i <<= 1;
+				}
+				if (!larger && i != 1 && i != (u32) Width)
+				{
+					i >>= 1;
+				}
+				while (j < (u32) Height)
+				{
+					j <<= 1;
+				}
+				if (!larger && j != 1 && j != (u32) Height)
+				{
+					j >>= 1;
+				}
+			}
+			else
+			{
+				i = (u32) Width;
+				j = (u32) Height;
+			}
+
+			if (requireSquare)
+			{
+				if ((larger && (i > j)) || (!larger && (i < j)))
+				{
+					j = i;
+				}
+				else
+				{
+					i = j;
+				}
+			}
+
+			if (maxValue > 0 && i > maxValue)
+			{
+				i = maxValue;
+			}
+
+			if (maxValue > 0 && j > maxValue)
+			{
+				j = maxValue;
+			}
+
+			return dimension2d<T>((T) i, (T) j);
+		}
+
+		//! Get the interpolated dimension
+		template<class T>
+		dimension2d<T> dimension2d<T>::getInterpolated(
+				const dimension2d<T>& other, f32 d) const
+		{
+			T inv = (T) (1.0f - d);
+
+			return dimension2d<T>(other.Width * inv + Width * d,
+					other.Height * inv + Height * d);
+		}
+
+		//! Equality operator
+		template<class T>
+		bool dimension2d<T>::operator==(const dimension2d<T>& other) const
+		{
+			return core::SharedMath::getInstance().equals(Width, other.Width)
+					&& core::SharedMath::getInstance().equals(Height,
+							other.Height);
+		}
+
+		//! Inequality operator
+		template<class T>
+		bool dimension2d<T>::operator!=(const dimension2d<T>& other) const
+		{
+			return !(*this == other);
+		}
+
+		template<class T>
+		bool dimension2d<T>::operator!=(const vector2d<T>& other) const
+		{
+			return !(*this == other);
+		}
+
+		//! Divide width and height by scalar
+		template<class T>
+		dimension2d<T>& dimension2d<T>::operator/=(const T& scale)
+		{
+			Width /= scale;
+			Height /= scale;
+			return *this;
+		}
+
+		//! Divide width and height by scalar
+		template<class T>
+		dimension2d<T> dimension2d<T>::operator/(const T& scale) const
+		{
+			return dimension2d<T>(Width / scale, Height / scale);
+		}
+
+		//! Multiply width and height by scalar
+		template<class T>
+		dimension2d<T>& dimension2d<T>::operator*=(const T& scale)
+		{
+			Width *= scale;
+			Height *= scale;
+			return *this;
+		}
+
+		//! Multiply width and height by scalar
+		template<class T>
+		dimension2d<T> dimension2d<T>::operator*(const T& scale) const
+		{
+			return dimension2d<T>(Width * scale, Height * scale);
+		}
+
+		//! Add another dimension to this one.
+		template<class T>
+		dimension2d<T>& dimension2d<T>::operator+=(const dimension2d<T>& other)
+		{
+			Width += other.Width;
+			Height += other.Height;
+			return *this;
+		}
+
+		//! Subtract a dimension from this one
+		template<class T>
+		dimension2d<T>& dimension2d<T>::operator-=(const dimension2d<T>& other)
+		{
+			Width -= other.Width;
+			Height -= other.Height;
+			return *this;
+		}
+
+		//! Add two dimensions
+		template<class T>
+		dimension2d<T> dimension2d<T>::operator+(
+				const dimension2d<T>& other) const
+		{
+			return dimension2d<T>(Width + other.Width, Height + other.Height);
+		}
+
 	} // end namespace core
-} // end namespace irr
+} // end namespace irrgame
 
 //! Typedefs for dimension2d
 typedef irrgame::core::dimension2d<u32> dimension2du;

@@ -5,7 +5,7 @@
 #ifndef __COLOR_H_INCLUDED__
 #define __COLOR_H_INCLUDED__
 
-#include "core/base/baseTypes.h"
+#include "compileConfig.h"
 
 namespace irrgame
 {

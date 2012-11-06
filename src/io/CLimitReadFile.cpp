@@ -3,6 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CLimitReadFile.h"
+#include "core/math/SharedMath.h"
 
 namespace irrgame
 {
@@ -36,8 +37,9 @@ namespace irrgame
 				return 0;
 
 			s32 r = AreaStart + Pos;
-			s32 toRead = core::s32_min(AreaEnd, r + sizeToRead)
-					- core::s32_max(AreaStart, r);
+			s32 toRead = core::SharedMath::getInstance().s32Min(AreaEnd,
+					r + sizeToRead)
+					- core::SharedMath::getInstance().s32Max(AreaStart, r);
 			if (toRead < 0)
 				return 0;
 			File->seek(r);
@@ -49,7 +51,8 @@ namespace irrgame
 		//! changes position in file, returns true if successful
 		bool CLimitReadFile::seek(long finalPos, bool relativeMovement)
 		{
-			Pos = core::s32_clamp(finalPos + (relativeMovement ? Pos : 0), 0,
+			Pos = core::SharedMath::getInstance().s32Clamp(
+					finalPos + (relativeMovement ? Pos : 0), 0,
 					AreaEnd - AreaStart);
 			return true;
 		}

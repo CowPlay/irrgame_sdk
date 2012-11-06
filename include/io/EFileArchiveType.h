@@ -8,13 +8,12 @@
 #ifndef EFILEARCHIVETYPE_H_
 #define EFILEARCHIVETYPE_H_
 
-#include "core/base/compileConfig.h"
+#include "compileConfig.h"
 
 namespace irrgame
 {
 	namespace io
 	{
-		//! TODO: move to individual file
 		//! Contains the different types of archives
 		enum E_FILE_ARCHIVE_TYPE
 		{

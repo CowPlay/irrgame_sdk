@@ -5,7 +5,7 @@
 #ifndef __IRR_C_VIDEO_MODE_LIST_H_INCLUDED__
 #define __IRR_C_VIDEO_MODE_LIST_H_INCLUDED__
 
-#include "video/IVideoModeList.h"
+#include "video/driver/IVideoModeList.h"
 #include "core/irrgameshapes.h"
 #include "core/irrgamecollections.h"
 

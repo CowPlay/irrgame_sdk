@@ -5,8 +5,9 @@
  *      Author: gregorytkach
  */
 
-#include "core/irrgamebase.h"
+#include "core/engine/IReferenceCounted.h"
 #include "threads/irrgameThread.h"
+
 namespace irrgame
 {
 

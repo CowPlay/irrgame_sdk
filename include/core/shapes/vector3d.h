@@ -5,7 +5,7 @@
 #ifndef __IRR_POINT_3D_H_INCLUDED__
 #define __IRR_POINT_3D_H_INCLUDED__
 
-#include "core/math/irrMath.h"
+#include "core/math/SharedFastMath.h"
 #include "threads/irrgameMonitor.h"
 
 namespace irrgame
@@ -79,7 +79,7 @@ namespace irrgame
 
 				//! returns if this vector equals the other one, taking floating point rounding errors into account
 				bool equals(const vector3d<T>& other, const T tolerance =
-						(T) ROUNDING_ERROR_f32) const;
+						(T) SharedMath::RoundErrF32) const;
 
 				vector3d<T>& set(const T nx, const T ny, const T nz);
 				vector3d<T>& set(const vector3d<T>& p);
@@ -623,11 +623,18 @@ namespace irrgame
 			Monitor->enter();
 			other.Monitor->enter();
 
-			bool result = (_X < other._X || core::equals(_X, other._X))
-					|| (core::equals(_X, other._X)
-							&& (_Y < other._Y || core::equals(_Y, other._Y)))
-					|| (core::equals(_X, other._X) && core::equals(_Y, other._Y)
-							&& (_Z < other._Z || core::equals(_Z, other._Z)));
+			bool result = (_X < other._X
+					|| core::SharedMath::getInstance().equals(_X, other._X))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& (_Y < other._Y
+									|| core::SharedMath::getInstance().equals(
+											_Y, other._Y)))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& core::SharedMath::getInstance().equals(_Y,
+									other._Y)
+							&& (_Z < other._Z
+									|| core::SharedMath::getInstance().equals(
+											_Z, other._Z)));
 
 			Monitor->exit();
 			other.Monitor->exit();
@@ -646,11 +653,18 @@ namespace irrgame
 			Monitor->enter();
 			other.Monitor->enter();
 
-			bool result = (_X > other._X || core::equals(_X, other._X))
-					|| (core::equals(_X, other._X)
-							&& (_Y > other._Y || core::equals(_Y, other._Y)))
-					|| (core::equals(_X, other._X) && core::equals(_Y, other._Y)
-							&& (_Z > other._Z || core::equals(_Z, other._Z)));
+			bool result = (_X > other._X
+					|| core::SharedMath::getInstance().equals(_X, other._X))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& (_Y > other._Y
+									|| core::SharedMath::getInstance().equals(
+											_Y, other._Y)))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& core::SharedMath::getInstance().equals(_Y,
+									other._Y)
+							&& (_Z > other._Z
+									|| core::SharedMath::getInstance().equals(
+											_Z, other._Z)));
 
 			Monitor->exit();
 			other.Monitor->exit();
@@ -672,11 +686,17 @@ namespace irrgame
 			Monitor->enter();
 			other.Monitor->enter();
 
-			bool result = (_X < other._X && !core::equals(_X, other._X))
-					|| (core::equals(_X, other._X) && _Y < other._Y
-							&& !core::equals(_Y, other._Y))
-					|| (core::equals(_X, other._X) && core::equals(_Y, other._Y)
-							&& _Z < other._Z && !core::equals(_Z, other._Z));
+			bool result = (_X < other._X
+					&& !core::SharedMath::getInstance().equals(_X, other._X))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& _Y < other._Y
+							&& !core::SharedMath::getInstance().equals(_Y,
+									other._Y))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& core::SharedMath::getInstance().equals(_Y,
+									other._Y) && _Z < other._Z
+							&& !core::SharedMath::getInstance().equals(_Z,
+									other._Z));
 
 			Monitor->exit();
 			other.Monitor->exit();
@@ -698,11 +718,17 @@ namespace irrgame
 			Monitor->enter();
 			other.Monitor->enter();
 
-			bool result = (_X > other._X && !core::equals(_X, other._X))
-					|| (core::equals(_X, other._X) && _Y > other._Y
-							&& !core::equals(_Y, other._Y))
-					|| (core::equals(_X, other._X) && core::equals(_Y, other._Y)
-							&& _Z > other._Z && !core::equals(_Z, other._Z));
+			bool result = (_X > other._X
+					&& !core::SharedMath::getInstance().equals(_X, other._X))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& _Y > other._Y
+							&& !core::SharedMath::getInstance().equals(_Y,
+									other._Y))
+					|| (core::SharedMath::getInstance().equals(_X, other._X)
+							&& core::SharedMath::getInstance().equals(_Y,
+									other._Y) && _Z > other._Z
+							&& !core::SharedMath::getInstance().equals(_Z,
+									other._Z));
 			Monitor->exit();
 			other.Monitor->exit();
 
@@ -730,9 +756,12 @@ namespace irrgame
 		inline bool vector3d<T>::equals(const vector3d<T>& other,
 				const T tolerance) const
 		{
-			return core::equals(_X, other._X, tolerance)
-					&& core::equals(_Y, other._Y, tolerance)
-					&& core::equals(_Z, other._Z, tolerance);
+			return core::SharedMath::getInstance().equals(_X, other._X,
+					tolerance)
+					&& core::SharedMath::getInstance().equals(_Y, other._Y,
+							tolerance)
+					&& core::SharedMath::getInstance().equals(_Z, other._Z,
+							tolerance);
 		}
 
 		template<class T>
@@ -758,7 +787,8 @@ namespace irrgame
 		inline T vector3d<T>::getLength() const
 		{
 			Monitor->enter();
-			T result = core::squareroot(_X * _X + _Y * _Y + _Z * _Z);
+			T result = core::SharedMath::getInstance().squareroot(
+					_X * _X + _Y * _Y + _Z * _Z);
 			Monitor->exit();
 
 			return result;
@@ -894,13 +924,14 @@ namespace irrgame
 
 			f32 length = _X * _X + _Y * _Y + _Z * _Z;
 
-			if (core::equals(length, 0.0)) // this check isn't an optimization but prevents getting NAN in the sqrt.
+			if (core::SharedMath::getInstance().equals(length, 0.0)) // this check isn't an optimization but prevents getting NAN in the sqrt.
 			{
 				Monitor->exit();
 				return *this;
 			}
 
-			length = core::reciprocal_squareroot(length);
+			length = core::SharedFastMath::getInstance().invertSqrt(
+					length);
 
 			_X = (T) (_X * length);
 			_Y = (T) (_Y * length);
@@ -945,7 +976,7 @@ namespace irrgame
 			Monitor->enter();
 			center.Monitor->enter();
 
-			degrees *= DEGTORAD;
+			degrees *= core::SharedMath::DegToRad;
 			f32 cs = cos(degrees);
 			f32 sn = sin(degrees);
 			_X -= center._X;
@@ -972,7 +1003,7 @@ namespace irrgame
 			Monitor->enter();
 			center.Monitor->enter();
 
-			degrees *= DEGTORAD;
+			degrees *= core::SharedMath::DegToRad;
 			f32 cs = cos(degrees);
 			f32 sn = sin(degrees);
 
@@ -1000,7 +1031,7 @@ namespace irrgame
 			Monitor->enter();
 			center.Monitor->enter();
 
-			degrees *= DEGTORAD;
+			degrees *= core::SharedMath::DegToRad;
 			f32 cs = cos(degrees);
 			f32 sn = sin(degrees);
 			_Z -= center._Z;
@@ -1047,7 +1078,8 @@ namespace irrgame
 
 			Monitor->enter();
 
-			const f32 tmp = (atan2((f32) _X, (f32) _Z) * RADTODEG);
+			const f32 tmp = (atan2((f32) _X, (f32) _Z)
+					* core::SharedMath::RadToDeg);
 			result._Y = (T) tmp;
 
 			if (result._Y < 0)
@@ -1055,9 +1087,11 @@ namespace irrgame
 			if (result._Y >= 360)
 				result._Y -= 360;
 
-			const f32 z1 = core::squareroot(_X * _X + _Z * _Z);
+			const f32 z1 = core::SharedMath::getInstance().squareroot(
+					_X * _X + _Z * _Z);
 
-			result._X = (T) (atan2((f32) z1, (f32) _Y) * RADTODEG - 90.0);
+			result._X = (T) (atan2((f32) z1, (f32) _Y)
+					* core::SharedMath::RadToDeg - 90.0);
 
 			if (result._X < 0)
 				result._X += 360;
@@ -1083,13 +1117,18 @@ namespace irrgame
 			{
 				if (_X != 0)
 				{
-					result._Y = (T) (atan2((f32) _Z, (f32) _X) * RADTODEG);
+					result._Y = (T) (atan2((f32) _Z, (f32) _X)
+							* core::SharedMath::RadToDeg);
 				}
 				else if (_Z < 0)
 					result._Y = 180;
 
-				result._X = (T) (acos(_Y * core::reciprocal_squareroot(length))
-						* RADTODEG);
+				result._X =
+						(T) (acos(
+								_Y
+										* core::SharedFastMath::getInstance().invertSqrt(
+												length))
+								* core::SharedMath::RadToDeg);
 			}
 
 			Monitor->exit();
@@ -1105,12 +1144,12 @@ namespace irrgame
 		{
 			Monitor->enter();
 
-			const f32 cr = cos(core::DEGTORAD * _X);
-			const f32 sr = sin(core::DEGTORAD * _X);
-			const f32 cp = cos(core::DEGTORAD * _Y);
-			const f32 sp = sin(core::DEGTORAD * _Y);
-			const f32 cy = cos(core::DEGTORAD * _Z);
-			const f32 sy = sin(core::DEGTORAD * _Z);
+			const f32 cr = cos(core::SharedMath::DegToRad * _X);
+			const f32 sr = sin(core::SharedMath::DegToRad * _X);
+			const f32 cp = cos(core::SharedMath::DegToRad * _Y);
+			const f32 sp = sin(core::SharedMath::DegToRad * _Y);
+			const f32 cy = cos(core::SharedMath::DegToRad * _Z);
+			const f32 sy = sin(core::SharedMath::DegToRad * _Z);
 
 			const f32 srsp = sr * sp;
 			const f32 crsp = cr * sp;

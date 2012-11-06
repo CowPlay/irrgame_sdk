@@ -5,8 +5,9 @@
  *      Author: gregorytkach
  */
 #include "CStringAttribute.h"
-#include "io/ioutil.h"
-#include "core/irrgamemath.h"
+#include "io/utils/ioutils.h"
+#include "core/math/SharedConverter.h"
+
 namespace irrgame
 {
 	namespace io
@@ -34,7 +35,7 @@ namespace irrgame
 
 		f32 CStringAttribute::getFloat()
 		{
-			return core::fast_atof(Value.cStr());
+			return core::SharedConverter::getInstance().convertToFloat(Value.cStr());
 		}
 
 		bool CStringAttribute::getBool()
@@ -85,10 +86,10 @@ namespace irrgame
 
 			while (dataString[p] && p < dataSize)
 			{
-				s32 v = getByteFromHex((c8) dataString[p * 2]) * 16;
+				s32 v = ioutils::getByteFromHex((c8) dataString[p * 2]) * 16;
 
 				if (dataString[(p * 2) + 1])
-					v += getByteFromHex((c8) dataString[(p * 2) + 1]);
+					v += ioutils::getByteFromHex((c8) dataString[(p * 2) + 1]);
 
 				datac8[p] = v;
 				++p;
@@ -105,11 +106,10 @@ namespace irrgame
 
 			for (s32 b = 0; b < dataSize; ++b)
 			{
-				getHexStrFromByte(datac8[b], tmp);
+				ioutils::getHexStrFromByte(datac8[b], tmp);
 				Value.append(tmp);
 			}
 		}
-
-	}
-}
+	} //end namespace io
+} //end namespace irrgame
 

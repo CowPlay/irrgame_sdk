@@ -5,7 +5,6 @@
 #ifndef __IRR_LINE_3D_H_INCLUDED__
 #define __IRR_LINE_3D_H_INCLUDED__
 
-#include "core/irrgamebase.h"
 #include "core/shapes/vector3d.h"
 
 namespace irrgame
@@ -13,6 +12,7 @@ namespace irrgame
 	namespace core
 	{
 
+		//TODO: refactor
 		//! 3D line between two points with intersection methods.
 		template<class T>
 		class line3d
@@ -174,7 +174,8 @@ namespace irrgame
 					if (d < 0.0)
 						return false;
 
-					outdistance = v - core::squareroot(d);
+					outdistance = v
+							- core::SharedMath::getInstance().squareroot(d);
 					return true;
 				}
 

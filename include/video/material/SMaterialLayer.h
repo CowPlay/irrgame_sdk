@@ -8,7 +8,7 @@
 #include "ETextureClamp.h"
 #include "core/math/matrix4.h"
 
-#include "core/base/irrAllocator.h"
+#include "core/allocator/irrAllocator.h"
 
 namespace irrgame
 {
@@ -152,6 +152,8 @@ namespace irrgame
 				{
 					return !(b != *this);
 				}
+
+			public:
 
 				//! Texture
 				ITexture* Texture;

@@ -6,7 +6,7 @@
  */
 
 #include "CIntAttribute.h"
-#include "core/collections/irrstring.h"
+#include "core/collections/stringc.h"
 
 namespace irrgame
 {

@@ -11,5 +11,7 @@
 #include "video/color/SColor.h"
 #include "video/color/SColorHSL.h"
 #include "video/color/SColorf.h"
+#include "video/color/EColorFormat.h"
+#include "video/color/SharedColorConverter.h"
 
 #endif /* COLOR_H_ */

@@ -16,10 +16,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.r);
-			ValueF.pushBack(value.g);
-			ValueF.pushBack(value.b);
-			ValueF.pushBack(value.a);
+			ValueF.pushBack(value.Red);
+			ValueF.pushBack(value.Green);
+			ValueF.pushBack(value.Blue);
+			ValueF.pushBack(value.Alpha);
 		}
 
 		//! Default constructor for color list
@@ -572,7 +572,9 @@ namespace irrgame
 			{
 				while (*P && P[0] != '-'
 						&& (P[0] == ' ' || (P[0] < '0' || P[0] > '9')))
+				{
 					++P;
+				}
 
 				// set value
 				if (*P)
@@ -580,14 +582,16 @@ namespace irrgame
 					if (IsFloat)
 					{
 						f32 c = 0;
-						P = core::fast_atof_move(P, c);
+						c = core::SharedConverter::getInstance().convertToFloat(
+								P, true);
 						ValueF[i] = c;
 					}
 					else
 					{
 						// todo: fix this to read ints properly
 						f32 c = 0;
-						P = core::fast_atof_move(P, c);
+						c = core::SharedConverter::getInstance().convertToFloat(
+								P, true);
 						ValueI[i] = (s32) c;
 
 					}
@@ -648,24 +652,24 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = color.r;
+					ValueF[0] = color.Red;
 				if (Count > 1)
-					ValueF[1] = color.g;
+					ValueF[1] = color.Green;
 				if (Count > 2)
-					ValueF[2] = color.b;
+					ValueF[2] = color.Blue;
 				if (Count > 3)
-					ValueF[3] = color.a;
+					ValueF[3] = color.Alpha;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) (color.r * 255);
+					ValueI[0] = (s32) (color.Red * 255);
 				if (Count > 1)
-					ValueI[1] = (s32) (color.g * 255);
+					ValueI[1] = (s32) (color.Green * 255);
 				if (Count > 2)
-					ValueI[2] = (s32) (color.b * 255);
+					ValueI[2] = (s32) (color.Blue * 255);
 				if (Count > 3)
-					ValueI[3] = (s32) (color.a * 255);
+					ValueI[3] = (s32) (color.Alpha * 255);
 			}
 
 		}

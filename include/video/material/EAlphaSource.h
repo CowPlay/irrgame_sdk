@@ -10,7 +10,6 @@
 
 namespace irrgame
 {
-
 	namespace video
 	{
 
@@ -24,11 +23,12 @@ namespace irrgame
 			//! Use vertex color alpha
 			EAS_VERTEX_COLOR,
 			//! Use texture alpha channel
-			EAS_TEXTURE
+			EAS_TEXTURE,
+
+			//! Not used
+			EAS_COUNT
 		};
-
 	}  // namespace video
-
 }  // namespace irrgame
 
 #endif /* EALPHASOURCE_H_ */

@@ -18,7 +18,7 @@ namespace irrgame
 	namespace core
 	{
 		//! Very simple allocator implementation, containers using it can be used across dll boundaries
-		template<typename T>
+		template<class T>
 		class irrAllocator
 		{
 			public:

@@ -115,13 +115,13 @@ namespace irrgame
 				s32 getAverage(s16 color);
 
 				//! get the amount of Bits per Pixel of the given color format
-				u32 getBitsPerPixelFromFormat(const ECOLOR_FORMAT format);
+				u32 getBitsPerPixelFromFormat(const EColorFormat format);
 
 				//! test if the color format is only viable for RenderTarget textures
 				/** Since we don't have support for e.g. floating point iimage formats
 				 one should test if the color format can be used for arbitrary usage, or
 				 if it is restricted to RTTs. */
-				bool isRenderTargetOnlyFormat(const ECOLOR_FORMAT format);
+				bool isRenderTargetOnlyFormat(const EColorFormat format);
 
 				//! EMT_ONETEXTURE_BLEND: pack srcFact, dstFact, Modulate and alpha source to MaterialTypeParam
 				/** alpha source can be an OR'ed combination of E_ALPHA_SOURCE values. */

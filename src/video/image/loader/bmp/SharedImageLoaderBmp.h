@@ -8,7 +8,7 @@
 #ifndef CIMAGELOADERBMP_H_
 #define CIMAGELOADERBMP_H_
 
-#include "core/engine/IReferenceCounted.h"
+#include "compileConfig.h"
 
 namespace irrgame
 {
@@ -25,14 +25,30 @@ namespace irrgame
 		/*!
 		 Surface Loader for Windows bitmaps
 		 */
-		class ImageLoaderBmp: public IReferenceCounted
+		class SharedImageLoaderBmp
 		{
 			public:
-				//! Default constructor
-				ImageLoaderBmp();
+				//! Singleton realization
+				static SharedImageLoaderBmp& getInstance();
 
-				//! Destructor
-				virtual ~ImageLoaderBmp();
+			private:
+				//! Default constructor. Should use only one time.
+				SharedImageLoaderBmp();
+
+				//! Destructor. Should use only one time.
+				virtual ~SharedImageLoaderBmp();
+
+				//! Copy constructor. Do not implement.
+				SharedImageLoaderBmp(const SharedImageLoaderBmp& root);
+
+				//! Override equal operator. Do not implement.
+				const SharedImageLoaderBmp& operator=(SharedImageLoaderBmp&);
+
+				/*
+				 * Methods
+				 */
+
+			public:
 
 				//! Returns BMP image
 				IImage* createImage(io::IReadFile* file);
@@ -46,7 +62,6 @@ namespace irrgame
 						s32 height, s32 pitch) const;
 		};
 
-	}
-/* namespace video */
+	} /* namespace video */
 } /* namespace irrgame */
 #endif /* CIMAGELOADERBMP_H_ */

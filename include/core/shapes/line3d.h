@@ -28,17 +28,17 @@ namespace irrgame
 				//! Default constructor
 				/** line from (0,0,0) to (1,1,1) */
 				line3d() :
-						start(0, 0, 0), end(1, 1, 1)
+						Start(0, 0, 0), End(1, 1, 1)
 				{
 				}
 				//! Constructor with two points
 				line3d(T xa, T ya, T za, T xb, T yb, T zb) :
-						start(xa, ya, za), end(xb, yb, zb)
+						Start(xa, ya, za), End(xb, yb, zb)
 				{
 				}
 				//! Constructor with two points as vectors
 				line3d(const vector3d<T>& start, const vector3d<T>& end) :
-						start(start), end(end)
+						Start(start), End(end)
 				{
 				}
 
@@ -46,35 +46,35 @@ namespace irrgame
 
 				line3d<T> operator+(const vector3d<T>& point) const
 				{
-					return line3d<T>(start + point, end + point);
+					return line3d<T>(Start + point, End + point);
 				}
 				line3d<T>& operator+=(const vector3d<T>& point)
 				{
-					start += point;
-					end += point;
+					Start += point;
+					End += point;
 					return *this;
 				}
 
 				line3d<T> operator-(const vector3d<T>& point) const
 				{
-					return line3d<T>(start - point, end - point);
+					return line3d<T>(Start - point, End - point);
 				}
 				line3d<T>& operator-=(const vector3d<T>& point)
 				{
-					start -= point;
-					end -= point;
+					Start -= point;
+					End -= point;
 					return *this;
 				}
 
 				bool operator==(const line3d<T>& other) const
 				{
-					return (start == other.start && end == other.end)
-							|| (end == other.start && start == other.end);
+					return (Start == other.Start && End == other.End)
+							|| (End == other.Start && Start == other.End);
 				}
 				bool operator!=(const line3d<T>& other) const
 				{
-					return !(start == other.start && end == other.end)
-							|| (end == other.start && start == other.end);
+					return !(Start == other.Start && End == other.End)
+							|| (End == other.Start && Start == other.End);
 				}
 
 				// functions
@@ -82,48 +82,48 @@ namespace irrgame
 				void setLine(const T& xa, const T& ya, const T& za, const T& xb,
 						const T& yb, const T& zb)
 				{
-					start.set(xa, ya, za);
-					end.set(xb, yb, zb);
+					Start.set(xa, ya, za);
+					End.set(xb, yb, zb);
 				}
 				//! Set this line to a new line going through the two points.
 				void setLine(const vector3d<T>& nstart, const vector3d<T>& nend)
 				{
-					start.set(nstart);
-					end.set(nend);
+					Start.set(nstart);
+					End.set(nend);
 				}
 				//! Set this line to new line given as parameter.
 				void setLine(const line3d<T>& line)
 				{
-					start.set(line.start);
-					end.set(line.end);
+					Start.set(line.Start);
+					End.set(line.End);
 				}
 
 				//! Get length of line
 				/** \return Length of line. */
 				T getLength() const
 				{
-					return start.getDistanceFrom(end);
+					return Start.getDistanceFrom(End);
 				}
 
 				//! Get squared length of line
 				/** \return Squared length of line. */
 				T getLengthSQ() const
 				{
-					return start.getDistanceFromSQ(end);
+					return Start.getDistanceFromSQ(End);
 				}
 
 				//! Get middle of line
 				/** \return Center of line. */
 				vector3d<T> getMiddle() const
 				{
-					return (start + end) * (T) 0.5;
+					return (Start + End) * (T) 0.5;
 				}
 
 				//! Get vector of line
 				/** \return vector of line. */
 				vector3d<T> getVector() const
 				{
-					return end - start;
+					return End - Start;
 				}
 
 				//! Check if the given point is between start and end of the line.
@@ -133,7 +133,7 @@ namespace irrgame
 				 */
 				bool isPointBetweenStartAndEnd(const vector3d<T>& point) const
 				{
-					return point.isBetweenPoints(start, end);
+					return point.isBetweenPoints(Start, End);
 				}
 
 				//! Get the closest point on this line to a point
@@ -141,19 +141,19 @@ namespace irrgame
 				 \return The nearest point which is part of the line. */
 				vector3d<T> getClosestPoint(const vector3d<T>& point) const
 				{
-					vector3d<T> c = point - start;
-					vector3d<T> v = end - start;
+					vector3d<T> c = point - Start;
+					vector3d<T> v = End - Start;
 					T d = (T) v.getLength();
 					v /= d;
 					T t = v.dotProduct(c);
 
 					if (t < (T) 0.0)
-						return start;
+						return Start;
 					if (t > d)
-						return end;
+						return End;
 
 					v *= t;
-					return start + v;
+					return Start + v;
 				}
 
 				//! Check if the line intersects with a shpere
@@ -166,7 +166,7 @@ namespace irrgame
 				bool getIntersectionWithSphere(vector3d<T> sorigin, T sradius,
 						f32& outdistance) const
 				{
-					const vector3d<T> q = sorigin - start;
+					const vector3d<T> q = sorigin - Start;
 					T c = q.getLength();
 					T v = q.dotProduct(getVector().normalize());
 					T d = sradius * sradius - (c * c - v * v);
@@ -179,12 +179,12 @@ namespace irrgame
 					return true;
 				}
 
-				// member variables
+			public:
 
 				//! Start point of line
-				vector3d<T> start;
+				vector3d<T> Start;
 				//! End point of line
-				vector3d<T> end;
+				vector3d<T> End;
 		};
 
 	} // end namespace core

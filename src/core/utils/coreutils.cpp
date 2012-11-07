@@ -20,7 +20,7 @@ namespace irrgame
 
 		//! Default constructor. Should use only one time.
 		SharedCoreUtils::SharedCoreUtils() :
-				locale_current(IRR_LOCALE_ANSI)
+				CurrentLocale(ELID_ANSI)
 		{
 		}
 
@@ -31,16 +31,16 @@ namespace irrgame
 
 		void SharedCoreUtils::localeSet(ELocaleID id)
 		{
-			locale_current = id;
+			CurrentLocale = id;
 		}
 
 		//! Returns a character converted to lower case
 		u32 SharedCoreUtils::localeLower(u32 x) const
 		{
-			switch (locale_current)
+			switch (CurrentLocale)
 			{
-				case IRR_LOCALE_GERMAN:
-				case IRR_LOCALE_ANSI:
+				case ELID_GERMAN:
+				case ELID_ANSI:
 					break;
 			}
 			// ansi
@@ -50,10 +50,10 @@ namespace irrgame
 		//! Returns a character converted to upper case
 		u32 SharedCoreUtils::localeUpper(u32 x) const
 		{
-			switch (locale_current)
+			switch (CurrentLocale)
 			{
-				case IRR_LOCALE_GERMAN:
-				case IRR_LOCALE_ANSI:
+				case ELID_GERMAN:
+				case ELID_ANSI:
 					break;
 			}
 

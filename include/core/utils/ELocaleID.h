@@ -14,7 +14,10 @@ namespace irrgame
 	{
 		enum ELocaleID
 		{
-			IRR_LOCALE_ANSI = 0, IRR_LOCALE_GERMAN = 1
+			ELID_ANSI = 0, ELID_GERMAN = 1,
+
+			//! Not used
+			ELID_COUNT
 		};
 	}  // namespace core
 }  // namespace irrgame

@@ -25,6 +25,35 @@ namespace irrgame
 		 engine with new materials. */
 		class IMaterialRenderer: public virtual IReferenceCounted
 		{
+			public:
+				/*
+				 * Creators
+				 */
+
+				//TODO: write comments
+				static IMaterialRenderer* createMaterialRendererDetailMap(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererLightMap(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererOneTextureBlend(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererReflection2Layer(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererSolid(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererSolid2Layer(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererSphereMap(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererTransparentAddColor(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererTransparentAlphaChannel(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererTransparentAlphaChannelRef(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererTransparentReflection2Layer(IVideoDriver* driver);
+
+				static IMaterialRenderer* createMaterialRendererTransparentVertexAlpha(IVideoDriver* driver);
 
 			public:
 

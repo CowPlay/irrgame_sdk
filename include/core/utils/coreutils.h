@@ -47,7 +47,7 @@ namespace irrgame
 
 			public:
 
-				ELocaleID locale_current;
+				ELocaleID CurrentLocale;
 		};
 	}  // namespace core
 }  // namespace irrgame

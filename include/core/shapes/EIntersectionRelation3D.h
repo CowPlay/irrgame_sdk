@@ -19,7 +19,10 @@ namespace irrgame
 			ISREL3D_BACK,
 			ISREL3D_PLANAR,
 			ISREL3D_SPANNING,
-			ISREL3D_CLIPPED
+			ISREL3D_CLIPPED,
+
+			//! Not used
+			ISREL3D_COUNT
 		};
 	}  // namespace core
 }  // namespace irrgame

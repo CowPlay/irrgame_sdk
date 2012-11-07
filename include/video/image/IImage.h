@@ -42,6 +42,15 @@ namespace irrgame
 				//! Image creator;
 				static IImage* createImage(io::IReadFile* file);
 
+				//! Create image from raw data
+				static IImage* createRawImage(EColorFormat format,
+						const dimension2du& size, void* data,
+						bool ownForeignMemory = true, bool deleteMemory = true);
+
+				//! Empty image creator;
+				static IImage* createEmptyImage(EColorFormat format,
+						const dimension2du& size);
+
 				/*
 				 * Instance methods
 				 */
@@ -84,7 +93,7 @@ namespace irrgame
 						bool blend = false) = 0;
 
 				//! Returns the color format
-				virtual ECOLOR_FORMAT getColorFormat() const = 0;
+				virtual EColorFormat getColorFormat() const = 0;
 
 				//! Returns mask for red value of a pixel
 				virtual u32 getRedMask() const = 0;
@@ -103,7 +112,7 @@ namespace irrgame
 
 				//! Copies the image into the target, scaling the image to fit
 				virtual void copyToScaling(void* target, u32 width, u32 height,
-						ECOLOR_FORMAT format = ECF_A8R8G8B8, u32 pitch = 0) =0;
+						EColorFormat format = ECF_A8R8G8B8, u32 pitch = 0) =0;
 
 				//! Copies the image into the target, scaling the image to fit
 				virtual void copyToScaling(IImage* target) = 0;

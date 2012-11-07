@@ -14,7 +14,7 @@ namespace irrgame
 	{
 		//! An enum for the color format of textures used by the Irrlicht Engine.
 		/** A color format specifies how color information is stored. */
-		enum ECOLOR_FORMAT
+		enum EColorFormat
 		{
 			//! 16 bit color format used by the software driver.
 			/** It is thus preferred by all other irrlicht engine video drivers.

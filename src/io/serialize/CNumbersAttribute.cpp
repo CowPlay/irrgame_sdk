@@ -142,10 +142,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
-			ValueI.pushBack(value.start.X());
-			ValueI.pushBack(value.start.Y());
-			ValueI.pushBack(value.end.X());
-			ValueI.pushBack(value.end.Y());
+			ValueI.pushBack(value.Start.X());
+			ValueI.pushBack(value.Start.Y());
+			ValueI.pushBack(value.End.X());
+			ValueI.pushBack(value.End.Y());
 		}
 
 		//! Default constructor for line2df list
@@ -153,10 +153,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.start.X());
-			ValueF.pushBack(value.start.Y());
-			ValueF.pushBack(value.end.X());
-			ValueF.pushBack(value.end.Y());
+			ValueF.pushBack(value.Start.X());
+			ValueF.pushBack(value.Start.Y());
+			ValueF.pushBack(value.End.X());
+			ValueF.pushBack(value.End.Y());
 		}
 
 		//! Default constructor for line3df list
@@ -164,12 +164,12 @@ namespace irrgame
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.start.X());
-			ValueF.pushBack(value.start.Y());
-			ValueF.pushBack(value.start.Z());
-			ValueF.pushBack(value.end.X());
-			ValueF.pushBack(value.end.Y());
-			ValueF.pushBack(value.end.Z());
+			ValueF.pushBack(value.Start.X());
+			ValueF.pushBack(value.Start.Y());
+			ValueF.pushBack(value.Start.Z());
+			ValueF.pushBack(value.End.X());
+			ValueF.pushBack(value.End.Y());
+			ValueF.pushBack(value.End.Z());
 		}
 
 		//! Default constructor for dimension2du list
@@ -467,17 +467,17 @@ namespace irrgame
 			line2df ret;
 			if (IsFloat)
 			{
-				ret.start.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.start.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.end.X() = Count > 2 ? ValueF[2] : 0.0f;
-				ret.end.Y() = Count > 3 ? ValueF[3] : 0.0f;
+				ret.Start.X() = Count > 0 ? ValueF[0] : 0.0f;
+				ret.Start.Y() = Count > 1 ? ValueF[1] : 0.0f;
+				ret.End.X() = Count > 2 ? ValueF[2] : 0.0f;
+				ret.End.Y() = Count > 3 ? ValueF[3] : 0.0f;
 			}
 			else
 			{
-				ret.start.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.start.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.end.X() = Count > 2 ? (f32) ValueI[2] : 0.0f;
-				ret.end.Y() = Count > 3 ? (f32) ValueI[3] : 0.0f;
+				ret.Start.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.Start.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.End.X() = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.End.Y() = Count > 3 ? (f32) ValueI[3] : 0.0f;
 			}
 			return ret;
 		}
@@ -487,21 +487,21 @@ namespace irrgame
 			line3df ret;
 			if (IsFloat)
 			{
-				ret.start.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.start.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.start.Z() = Count > 2 ? ValueF[2] : 0.0f;
-				ret.end.X() = Count > 3 ? ValueF[3] : 0.0f;
-				ret.end.Y() = Count > 4 ? ValueF[4] : 0.0f;
-				ret.end.Z() = Count > 5 ? ValueF[5] : 0.0f;
+				ret.Start.X() = Count > 0 ? ValueF[0] : 0.0f;
+				ret.Start.Y() = Count > 1 ? ValueF[1] : 0.0f;
+				ret.Start.Z() = Count > 2 ? ValueF[2] : 0.0f;
+				ret.End.X() = Count > 3 ? ValueF[3] : 0.0f;
+				ret.End.Y() = Count > 4 ? ValueF[4] : 0.0f;
+				ret.End.Z() = Count > 5 ? ValueF[5] : 0.0f;
 			}
 			else
 			{
-				ret.start.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.start.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.start.Z() = Count > 2 ? (f32) ValueI[2] : 0.0f;
-				ret.end.X() = Count > 3 ? (f32) ValueI[3] : 0.0f;
-				ret.end.Y() = Count > 4 ? (f32) ValueI[4] : 0.0f;
-				ret.end.Z() = Count > 5 ? (f32) ValueI[5] : 0.0f;
+				ret.Start.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.Start.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.Start.Z() = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.End.X() = Count > 3 ? (f32) ValueI[3] : 0.0f;
+				ret.End.Y() = Count > 4 ? (f32) ValueI[4] : 0.0f;
+				ret.End.Z() = Count > 5 ? (f32) ValueI[5] : 0.0f;
 			}
 			return ret;
 		}
@@ -889,24 +889,24 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = (f32) v.start.X();
+					ValueF[0] = (f32) v.Start.X();
 				if (Count > 1)
-					ValueF[1] = (f32) v.start.Y();
+					ValueF[1] = (f32) v.Start.Y();
 				if (Count > 2)
-					ValueF[2] = (f32) v.end.X();
+					ValueF[2] = (f32) v.End.X();
 				if (Count > 3)
-					ValueF[3] = (f32) v.end.Y();
+					ValueF[3] = (f32) v.End.Y();
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = v.start.X();
+					ValueI[0] = v.Start.X();
 				if (Count > 1)
-					ValueI[1] = v.start.Y();
+					ValueI[1] = v.Start.Y();
 				if (Count > 2)
-					ValueI[2] = v.end.X();
+					ValueI[2] = v.End.X();
 				if (Count > 3)
-					ValueI[3] = v.end.Y();
+					ValueI[3] = v.End.Y();
 			}
 		}
 
@@ -916,24 +916,24 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = v.start.X();
+					ValueF[0] = v.Start.X();
 				if (Count > 1)
-					ValueF[1] = v.start.Y();
+					ValueF[1] = v.Start.Y();
 				if (Count > 2)
-					ValueF[2] = v.end.X();
+					ValueF[2] = v.End.X();
 				if (Count > 3)
-					ValueF[3] = v.end.Y();
+					ValueF[3] = v.End.Y();
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) v.start.X();
+					ValueI[0] = (s32) v.Start.X();
 				if (Count > 1)
-					ValueI[1] = (s32) v.start.Y();
+					ValueI[1] = (s32) v.Start.Y();
 				if (Count > 2)
-					ValueI[2] = (s32) v.end.X();
+					ValueI[2] = (s32) v.End.X();
 				if (Count > 3)
-					ValueI[3] = (s32) v.end.Y();
+					ValueI[3] = (s32) v.End.Y();
 			}
 		}
 

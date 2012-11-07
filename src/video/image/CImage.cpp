@@ -17,7 +17,8 @@
 /*
  * Image loaders
  */
-#include "video/image/loader/bmp/ImageLoaderBmp.h"
+#include "video/image/loader/bmp/SharedImageLoaderBmp.h"
+#include "video/image/loader/jpg/SharedImageLoaderJpg.h"
 
 namespace irrgame
 {
@@ -25,14 +26,14 @@ namespace irrgame
 	{
 
 		//! Constructor of empty image
-		CImage::CImage(ECOLOR_FORMAT format, const dimension2du& size) :
+		CImage::CImage(EColorFormat format, const dimension2du& size) :
 				Data(0), Size(size), Format(format), DeleteMemory(true)
 		{
 			initData();
 		}
 
 		//! Constructor from raw data
-		CImage::CImage(ECOLOR_FORMAT format, const core::dimension2d<u32>& size,
+		CImage::CImage(EColorFormat format, const dimension2du& size,
 				void* data, bool ownForeignMemory, bool deleteForeignMemory) :
 				Data(0), Size(size), Format(format), DeleteMemory(
 						deleteForeignMemory)
@@ -75,7 +76,9 @@ namespace irrgame
 		CImage::~CImage()
 		{
 			if (DeleteMemory)
+			{
 				delete[] Data;
+			}
 		}
 
 		//! Returns width and height of image data.
@@ -242,7 +245,9 @@ namespace irrgame
 		SColor CImage::getPixel(u32 x, u32 y) const
 		{
 			if (x >= Size.Width || y >= Size.Height)
+			{
 				return SColor(0);
+			}
 
 			switch (Format)
 			{
@@ -274,7 +279,7 @@ namespace irrgame
 		}
 
 		//! returns the color format
-		ECOLOR_FORMAT CImage::getColorFormat() const
+		EColorFormat CImage::getColorFormat() const
 		{
 			return Format;
 		}
@@ -314,7 +319,7 @@ namespace irrgame
 		//! copies this surface into another, scaling it to the target image size
 		// note: this is very very slow.
 		void CImage::copyToScaling(void* target, u32 width, u32 height,
-				ECOLOR_FORMAT format, u32 pitch)
+				EColorFormat format, u32 pitch)
 		{
 			if (!target || !width || !height)
 				return;
@@ -603,11 +608,12 @@ namespace irrgame
 			//bmp image support
 			if (extension->equalsIgnoreCase("bmp"))
 			{
-				ImageLoaderBmp* loaderBmp = new ImageLoaderBmp();
-
-				result = loaderBmp->createImage(file);
-
-				loaderBmp->drop();
+				result = SharedImageLoaderBmp::getInstance().createImage(file);
+			}
+			else if (extension->equalsIgnoreCase("jpg")
+					|| extension->equalsIgnoreCase("jpeg"))
+			{
+				result = SharedImageLoaderJpg::getInstance().createImage(file);
 			}
 			else
 			{
@@ -621,6 +627,22 @@ namespace irrgame
 			}
 
 			return result;
+		}
+
+		//! Empty image creator;
+		IImage* IImage::createEmptyImage(EColorFormat format,
+				const dimension2du& size)
+		{
+			return new CImage(format, size);
+		}
+
+		//! Create image from raw data
+		IImage* IImage::createRawImage(EColorFormat format,
+				const dimension2du& size, void* data, bool ownForeignMemory,
+				bool deleteMemory)
+		{
+			return new CImage(format, size, data, ownForeignMemory,
+					deleteMemory);
 		}
 
 	} // end namespace video

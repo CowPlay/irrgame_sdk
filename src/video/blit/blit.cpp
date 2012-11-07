@@ -754,9 +754,9 @@ namespace irrgame
 		inline tExecuteBlit getBlitter2(eBlitter operation,
 				const video::IImage * dest, const video::IImage * source)
 		{
-			video::ECOLOR_FORMAT sourceFormat = (video::ECOLOR_FORMAT) (
+			video::EColorFormat sourceFormat = (video::EColorFormat) (
 					source ? source->getColorFormat() : -1);
-			video::ECOLOR_FORMAT destFormat = (video::ECOLOR_FORMAT) (
+			video::EColorFormat destFormat = (video::EColorFormat) (
 					dest ? dest->getColorFormat() : -1);
 
 			const blitterTable * b = blitTable;

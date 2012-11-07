@@ -287,7 +287,7 @@ namespace irrgame
 
 		//! get the amount of Bits per Pixel of the given color format
 		u32 SharedVideoUtils::getBitsPerPixelFromFormat(
-				const ECOLOR_FORMAT format)
+				const EColorFormat format)
 		{
 			switch (format)
 			{
@@ -318,7 +318,7 @@ namespace irrgame
 
 		//! test if the color format is only viable for RenderTarget textures
 		bool SharedVideoUtils::isRenderTargetOnlyFormat(
-				const ECOLOR_FORMAT format)
+				const EColorFormat format)
 		{
 			switch (format)
 			{

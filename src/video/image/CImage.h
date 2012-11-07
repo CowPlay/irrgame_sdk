@@ -23,12 +23,12 @@ namespace irrgame
 				/** \param useForeignMemory: If true, the image will use the data pointer
 				 directly and own it from now on, which means it will also try to delete [] the
 				 data when the image will be destructed. If false, the memory will by copied. */
-				CImage(ECOLOR_FORMAT format, const dimension2du& size,
+				CImage(EColorFormat format, const dimension2du& size,
 						void* data, bool ownForeignMemory = true,
 						bool deleteMemory = true);
 
 				//! Constructor for empty image
-				CImage(ECOLOR_FORMAT format, const dimension2du& size);
+				CImage(EColorFormat format, const dimension2du& size);
 
 				//! destructor
 				virtual ~CImage();
@@ -79,14 +79,14 @@ namespace irrgame
 						bool blend = false);
 
 				//! returns the color format
-				virtual ECOLOR_FORMAT getColorFormat() const;
+				virtual EColorFormat getColorFormat() const;
 
 				//! returns pitch of image
 				virtual u32 getPitch() const;
 
 				//! copies this surface into another, scaling it to fit.
 				virtual void copyToScaling(void* target, u32 width, u32 height,
-						ECOLOR_FORMAT format, u32 pitch = 0);
+						EColorFormat format, u32 pitch = 0);
 
 				//! copies this surface into another, scaling it to fit.
 				virtual void copyToScaling(IImage* target);
@@ -132,7 +132,7 @@ namespace irrgame
 				dimension2du Size;
 				u32 BytesPerPixel;
 				u32 Pitch;
-				ECOLOR_FORMAT Format;
+				EColorFormat Format;
 
 				bool DeleteMemory;
 		};

@@ -5,10 +5,9 @@
  *      Author: gregorytkach
  */
 
-#include "ImageLoaderBmp.h"
+#include "SharedImageLoaderBmp.h"
 #include "SBMPHeader.h"
 #include "video/image/IImage.h"
-#include "video/image/CImage.h"
 
 #include "video/color/SharedColorConverter.h"
 #include "io/IReadFile.h"
@@ -17,21 +16,26 @@ namespace irrgame
 {
 	namespace video
 	{
-		//! Default constructor
-		ImageLoaderBmp::ImageLoaderBmp()
+
+		//! Singleton realization
+		SharedImageLoaderBmp& SharedImageLoaderBmp::getInstance()
 		{
-#ifdef DEBUG
-			setDebugName("ImageLoaderBMP");
-#endif
+			static SharedImageLoaderBmp instance;
+			return instance;
 		}
 
-		//! Destructor
-		ImageLoaderBmp::~ImageLoaderBmp()
+		//! Default constructor. Should use only one time.
+		SharedImageLoaderBmp::SharedImageLoaderBmp()
+		{
+		}
+
+		//! Destructor. Should use only one time.
+		SharedImageLoaderBmp::~SharedImageLoaderBmp()
 		{
 		}
 
 		//! Returns BMP image
-		IImage* ImageLoaderBmp::createImage(io::IReadFile* file)
+		IImage* SharedImageLoaderBmp::createImage(io::IReadFile* file)
 		{
 			SBMPHeader header;
 
@@ -122,7 +126,7 @@ namespace irrgame
 			{
 				case 1:
 				{
-					image = new CImage(ECF_A1R5G5B5, dim);
+					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);//new CImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert1BitTo16Bit(
 							bmpData, (s16*) image->lock(), header.Width,
@@ -132,7 +136,7 @@ namespace irrgame
 				}
 				case 4:
 				{
-					image = new CImage(ECF_A1R5G5B5, dim);
+					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert4BitTo16Bit(
 							bmpData, (s16*) image->lock(), header.Width,
@@ -142,7 +146,7 @@ namespace irrgame
 				}
 				case 8:
 				{
-					image = new CImage(ECF_A1R5G5B5, dim);
+					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert8BitTo16Bit(
 							bmpData, (s16*) image->lock(), header.Width,
@@ -152,7 +156,7 @@ namespace irrgame
 				}
 				case 16:
 				{
-					image = new CImage(ECF_A1R5G5B5, dim);
+					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert16BitTo16Bit(
 							(s16*) bmpData, (s16*) image->lock(), header.Width,
@@ -161,7 +165,7 @@ namespace irrgame
 				}
 				case 24:
 				{
-					image = new CImage(ECF_R8G8B8, dim);
+					image = IImage::createEmptyImage(ECF_R8G8B8, dim);
 
 					SharedColorConverter::getInstance().convert24BitTo24Bit(
 							bmpData, (u8*) image->lock(), header.Width,
@@ -171,7 +175,7 @@ namespace irrgame
 				}
 				case 32:
 				{ // thx to Reinhard Ostermeier
-					image = new CImage(ECF_A8R8G8B8, dim);
+					image = IImage::createEmptyImage(ECF_A8R8G8B8, dim);
 
 					SharedColorConverter::getInstance().convert32BitTo32Bit(
 							(s32*) bmpData, (s32*) image->lock(), header.Width,
@@ -196,7 +200,7 @@ namespace irrgame
 			return image;
 		}
 
-		void ImageLoaderBmp::decompress8BitRLE(u8*& bmpData, s32 size,
+		void SharedImageLoaderBmp::decompress8BitRLE(u8*& bmpData, s32 size,
 				s32 width, s32 height, s32 pitch) const
 		{
 			u8* p = bmpData;
@@ -278,7 +282,7 @@ namespace irrgame
 			bmpData = newBmp;
 		}
 
-		void ImageLoaderBmp::decompress4BitRLE(u8*& bmpData, s32 size,
+		void SharedImageLoaderBmp::decompress4BitRLE(u8*& bmpData, s32 size,
 				s32 width, s32 height, s32 pitch) const
 		{
 			s32 lineWidth = (width + 1) / 2 + pitch;

@@ -11,10 +11,7 @@
 #include <float.h>
 #include <stdlib.h> // for abs() etc.
 #include <limits.h> // For INT_MAX / UINT_MAX
-//#define IRR_FAST_MATH
 
-#undef FLT_MAX
-#undef PI
 namespace irrgame
 {
 	namespace core

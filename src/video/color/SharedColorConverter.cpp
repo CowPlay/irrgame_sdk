@@ -682,7 +682,7 @@ namespace irrgame
 		}
 
 		void SharedColorConverter::convert_viaFormat(const void* sP,
-				ECOLOR_FORMAT sF, s32 sN, void* dP, ECOLOR_FORMAT dF)
+				EColorFormat sF, s32 sN, void* dP, EColorFormat dF)
 		{
 			switch (sF)
 			{

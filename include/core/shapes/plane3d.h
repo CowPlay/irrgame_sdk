@@ -247,6 +247,8 @@ namespace irrgame
 					return point.dotProduct(Normal) + D;
 				}
 
+			public:
+
 				//! Normal vector of the plane.
 				vector3d<T> Normal;
 

@@ -18,7 +18,7 @@ namespace irrgame
 		//! Fast allocator, only to be used in containers inside the same memory heap.
 		/** Containers using it are NOT able to be used it across dll boundaries. Use this
 		 when using in an internal class or function or when compiled into a static lib */
-		template<typename T>
+		template<class T>
 		class irrAllocatorFast
 		{
 			public:

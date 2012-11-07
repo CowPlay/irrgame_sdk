@@ -564,10 +564,14 @@ namespace irrgame
 			}
 
 			if (plane.Normal.dotProduct(nearPoint) + plane.D > (T) 0)
+			{
 				return ISREL3D_FRONT;
+			}
 
 			if (plane.Normal.dotProduct(farPoint) + plane.D > (T) 0)
+			{
 				return ISREL3D_CLIPPED;
+			}
 
 			return ISREL3D_BACK;
 		}

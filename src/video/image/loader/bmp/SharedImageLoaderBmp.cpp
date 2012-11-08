@@ -120,65 +120,65 @@ namespace irrgame
 			dim.Width = header.Width;
 			dim.Height = header.Height;
 
-			IImage* image = 0;
+			IImage* result = 0;
 
 			switch (header.BPP)
 			{
 				case 1:
 				{
-					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);//new CImage(ECF_A1R5G5B5, dim);
+					result = IImage::createEmptyImage(ECF_A1R5G5B5, dim);//new CImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert1BitTo16Bit(
-							bmpData, (s16*) image->lock(), header.Width,
+							bmpData, (s16*) result->lock(), header.Width,
 							header.Height, pitch, true);
 
 					break;
 				}
 				case 4:
 				{
-					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
+					result = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert4BitTo16Bit(
-							bmpData, (s16*) image->lock(), header.Width,
+							bmpData, (s16*) result->lock(), header.Width,
 							header.Height, paletteData, pitch, true);
 
 					break;
 				}
 				case 8:
 				{
-					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
+					result = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert8BitTo16Bit(
-							bmpData, (s16*) image->lock(), header.Width,
+							bmpData, (s16*) result->lock(), header.Width,
 							header.Height, paletteData, pitch, true);
 
 					break;
 				}
 				case 16:
 				{
-					image = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
+					result = IImage::createEmptyImage(ECF_A1R5G5B5, dim);
 
 					SharedColorConverter::getInstance().convert16BitTo16Bit(
-							(s16*) bmpData, (s16*) image->lock(), header.Width,
+							(s16*) bmpData, (s16*) result->lock(), header.Width,
 							header.Height, pitch, true);
 					break;
 				}
 				case 24:
 				{
-					image = IImage::createEmptyImage(ECF_R8G8B8, dim);
+					result = IImage::createEmptyImage(ECF_R8G8B8, dim);
 
 					SharedColorConverter::getInstance().convert24BitTo24Bit(
-							bmpData, (u8*) image->lock(), header.Width,
+							bmpData, (u8*) result->lock(), header.Width,
 							header.Height, pitch, true, true);
 
 					break;
 				}
 				case 32:
 				{ // thx to Reinhard Ostermeier
-					image = IImage::createEmptyImage(ECF_A8R8G8B8, dim);
+					result = IImage::createEmptyImage(ECF_A8R8G8B8, dim);
 
 					SharedColorConverter::getInstance().convert32BitTo32Bit(
-							(s32*) bmpData, (s32*) image->lock(), header.Width,
+							(s32*) bmpData, (s32*) result->lock(), header.Width,
 							header.Height, pitch, true);
 
 					break;
@@ -191,13 +191,13 @@ namespace irrgame
 				}
 			};
 
-			image->unlock();
+			result->unlock();
 
 			// clean up
 			delete[] paletteData;
 			delete[] bmpData;
 
-			return image;
+			return result;
 		}
 
 		void SharedImageLoaderBmp::decompress8BitRLE(u8*& bmpData, s32 size,

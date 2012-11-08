@@ -19,6 +19,7 @@
  */
 #include "video/image/loader/bmp/SharedImageLoaderBmp.h"
 #include "video/image/loader/jpg/SharedImageLoaderJpg.h"
+#include "video/image/loader/png/SharedImageLoaderPng.h"
 
 namespace irrgame
 {
@@ -614,6 +615,10 @@ namespace irrgame
 					|| extension->equalsIgnoreCase("jpeg"))
 			{
 				result = SharedImageLoaderJpg::getInstance().createImage(file);
+			}
+			else if(extension->equalsIgnoreCase("png"))
+			{
+				result = SharedImageLoaderPng::getInstance().createImage(file);
 			}
 			else
 			{

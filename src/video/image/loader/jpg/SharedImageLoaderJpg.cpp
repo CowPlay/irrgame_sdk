@@ -6,13 +6,15 @@
  */
 
 #include "SharedImageLoaderJpg.h"
-#include "SharedJpgExtension.h"
+#include "StaticJpgExtension.h"
+#include "SJpgErrorMgr.h"
+
 #include "io/IReadFile.h"
 
 #include "video/image/IImage.h"
 
 #include <stdio.h> // required for jpeglib.h
-#include "vendors/jpeglib/jpeglib.h"
+#include "vendors/libjpeg/jpeglib.h"
 #include <setjmp.h>
 
 namespace irrgame
@@ -46,6 +48,15 @@ namespace irrgame
 		{
 			IRR_ASSERT(file);
 
+			s32 jfif = 0;
+			file->seek(6);
+			file->read(&jfif, sizeof(s32));
+			bool isJpegFile = jfif == 0x4a464946 || jfif == 0x4649464a;
+
+			IRR_ASSERT(isJpegFile);
+
+			file->seek(0);
+
 			u8 **rowPtr = 0;
 			u8* input = new u8[file->getSize()];
 			file->read(input, file->getSize());
@@ -53,7 +64,7 @@ namespace irrgame
 			// allocate and initialize JPEG decompression object
 			struct jpeg_decompress_struct cinfo;
 
-			struct irr_jpeg_error_mgr jerr;
+			struct SJpgErrorMgr jerr;
 
 			//We have to set up the error handler first, in case the initialization
 			//step fails.  (Unlikely, but it could happen if you are out of memory.)
@@ -62,8 +73,8 @@ namespace irrgame
 
 			cinfo.err = jpeg_std_error(&jerr.pub);
 
-			cinfo.err->error_exit = SharedJpgExtension::errorExit;
-			cinfo.err->output_message = SharedJpgExtension::outputMessage;
+			cinfo.err->error_exit = StaticJpgExtension::errorExit;
+			cinfo.err->output_message = StaticJpgExtension::outputMessage;
 
 			// compatibility fudge:
 			// we need to use setjmp/longjmp for error handling as gcc-linux
@@ -83,8 +94,7 @@ namespace irrgame
 					delete[] rowPtr;
 				}
 
-				// return null pointer
-				return 0;
+				IRR_ASSERT(false);
 			}
 
 			// Now we can initialize the JPEG decompression object.
@@ -98,11 +108,11 @@ namespace irrgame
 			jsrc.next_input_byte = (JOCTET*) input;
 			cinfo.src = &jsrc;
 
-			jsrc.init_source = SharedJpgExtension::initSource;
-			jsrc.fill_input_buffer = SharedJpgExtension::fillInputBuffer;
-			jsrc.skip_input_data = SharedJpgExtension::skipInputData;
+			jsrc.init_source = StaticJpgExtension::initSource;
+			jsrc.fill_input_buffer = StaticJpgExtension::fillInputBuffer;
+			jsrc.skip_input_data = StaticJpgExtension::skipInputData;
 			jsrc.resync_to_restart = jpeg_resync_to_restart;
-			jsrc.term_source = SharedJpgExtension::termSource;
+			jsrc.term_source = StaticJpgExtension::termSource;
 
 			// Decodes JPG input from whatever source
 			// Does everything AFTER jpeg_create_decompress
@@ -156,8 +166,8 @@ namespace irrgame
 			}
 
 			delete[] rowPtr;
-			// Finish decompression
 
+			// Finish decompression
 			jpeg_finish_decompress(&cinfo);
 
 			// Release JPEG decompression object
@@ -165,13 +175,14 @@ namespace irrgame
 			jpeg_destroy_decompress(&cinfo);
 
 			// convert image
-			IImage* image = 0;
+			IImage* result = 0;
 			if (useCMYK)
 			{
-				image = IImage::createEmptyImage(ECF_R8G8B8,
+				result = IImage::createEmptyImage(ECF_R8G8B8,
 						dimension2du(width, height));
+
 				const u32 size = 3 * width * height;
-				u8* data = (u8*) image->lock();
+				u8* data = (u8*) result->lock();
 				if (data)
 				{
 					for (u32 i = 0, j = 0; i < size; i += 3, j += 4)
@@ -188,18 +199,18 @@ namespace irrgame
 								* (output[j + 3] / 255.f));
 					}
 				}
-				image->unlock();
+				result->unlock();
 				delete[] output;
 			}
 			else
 			{
-				image = IImage::createRawImage(ECF_R8G8B8,
+				result = IImage::createRawImage(ECF_R8G8B8,
 						dimension2du(width, height), output);
 			}
 
 			delete[] input;
 
-			return image;
+			return result;
 		}
 
 	} /* namespace video */

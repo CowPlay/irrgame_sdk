@@ -7,7 +7,7 @@
 
 #include "compileConfig.h"
 #include "stdio.h" // required for JPEG lib
-#include "vendors/jpeglib/jpeglib.h"
+#include "vendors/libjpeg/jpeglib.h"
 #include <setjmp.h>
 
 #ifndef SHAREDJPGEXTENSION_H_
@@ -18,36 +18,9 @@ namespace irrgame
 	namespace video
 	{
 
-
-		// struct for handling jpeg errors
-		struct irr_jpeg_error_mgr
+		//! Class which contains several static methods used via function pointers by libjpeg
+		class StaticJpgExtension
 		{
-				// public jpeg error fields
-				struct jpeg_error_mgr pub;
-
-				// for longjmp, to return to caller on a fatal error
-				jmp_buf setjmp_buffer;
-		};
-
-		//! Class which contains several methods used via function pointers by jpeglib
-		class SharedJpgExtension
-		{
-			public:
-				//! Singleton realization
-				static SharedJpgExtension& getInstance();
-
-			private:
-				//! Default constructor. Should use only one time.
-				SharedJpgExtension();
-
-				//! Destructor. Should use only one time.
-				virtual ~SharedJpgExtension();
-
-				//! Copy constructor. Do not implement.
-				SharedJpgExtension(const SharedJpgExtension& root);
-
-				//! Override equal operator. Do not implement.
-				const SharedJpgExtension& operator=(SharedJpgExtension&);
 
 				/*
 				 * Methods
@@ -92,7 +65,8 @@ namespace irrgame
 				 but it's not clear that being smart is worth much trouble; large
 				 skips are uncommon.  bytes_in_buffer may be zero on return.
 				 A zero or negative skip count should be treated as a no-op. */
-				static void skipInputData(j_decompress_ptr cinfo, long num_bytes);
+				static void skipInputData(j_decompress_ptr cinfo,
+						long num_bytes);
 
 				/* Terminate source --- called by jpeg_finish_decompress() after all
 				 data has been read.  Often a no-op. */

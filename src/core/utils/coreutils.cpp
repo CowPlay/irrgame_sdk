@@ -5,7 +5,7 @@
  *      Author: gregorytkach
  */
 
-#include "core/utils/coreutils.h"
+#include "core/utils/SharedCoreUtils.h"
 
 namespace irrgame
 {
@@ -41,7 +41,15 @@ namespace irrgame
 			{
 				case ELID_GERMAN:
 				case ELID_ANSI:
+				{
 					break;
+				}
+				default:
+				{
+					//Not implemented
+					IRR_ASSERT(false);
+					break;
+				}
 			}
 			// ansi
 			return x >= 'A' && x <= 'Z' ? x + 0x20 : x;
@@ -54,7 +62,15 @@ namespace irrgame
 			{
 				case ELID_GERMAN:
 				case ELID_ANSI:
+				{
 					break;
+				}
+				default:
+				{
+					//Not implemented
+					IRR_ASSERT(false);
+					break;
+				}
 			}
 
 			// ansi

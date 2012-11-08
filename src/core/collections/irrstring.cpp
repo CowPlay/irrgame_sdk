@@ -6,7 +6,7 @@
  */
 
 #include "core/collections/stringc.h"
-#include "core/utils/coreutils.h"
+#include "core/utils/SharedCoreUtils.h"
 
 #include "threads/irrgameMonitor.h"
 

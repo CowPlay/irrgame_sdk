@@ -8,7 +8,7 @@
 #include "compileConfig.h"
 #include "core/collections/ICollection.h"
 #include "core/allocator/irrAllocator.h"
-#include "core/utils/coreutils.h"
+#include "core/utils/SharedCoreUtils.h"
 #include "threads/irrgameMonitor.h"
 
 #include <stdio.h>

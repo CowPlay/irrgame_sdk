@@ -45,7 +45,7 @@ namespace irrgame
 				//! Returns a character converted to upper case
 				u32 localeUpper(u32 x) const;
 
-			public:
+			private:
 
 				ELocaleID CurrentLocale;
 		};

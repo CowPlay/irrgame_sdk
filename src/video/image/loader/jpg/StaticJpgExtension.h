@@ -7,7 +7,7 @@
 
 #include "compileConfig.h"
 #include "stdio.h" // required for JPEG lib
-#include "vendors/libjpeg/jpeglib.h"
+#include "libjpeg/jpeglib.h"
 #include <setjmp.h>
 
 #ifndef SHAREDJPGEXTENSION_H_

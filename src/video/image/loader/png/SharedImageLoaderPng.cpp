@@ -9,7 +9,7 @@
 #include "StaticPpgExtension.h"
 #include "video/image/IImage.h"
 #include "io/IReadFile.h"
-#include "vendors/libpng/png.h"
+#include "libpng/png.h"
 
 namespace irrgame
 {

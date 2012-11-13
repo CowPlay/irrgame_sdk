@@ -14,7 +14,7 @@
 #include "video/image/IImage.h"
 
 #include <stdio.h> // required for jpeglib.h
-#include "vendors/libjpeg/jpeglib.h"
+#include "libjpeg/jpeglib.h"
 #include <setjmp.h>
 
 namespace irrgame

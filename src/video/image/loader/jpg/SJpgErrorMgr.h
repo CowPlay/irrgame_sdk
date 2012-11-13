@@ -9,7 +9,7 @@
 #define SJPGERRORMGR_H_
 
 #include "stdio.h" // required for JPEG lib
-#include "vendors/libjpeg/jpeglib.h"
+#include "libjpeg/jpeglib.h"
 
 namespace irrgame
 {

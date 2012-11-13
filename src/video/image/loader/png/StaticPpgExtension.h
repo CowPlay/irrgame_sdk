@@ -9,7 +9,7 @@
 #define STATICPPGEXTENSION_H_
 
 #include "compileConfig.h"
-#include "vendors/libpng/png.h"
+#include "libpng/png.h"
 
 namespace irrgame
 {

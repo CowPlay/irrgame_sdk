@@ -4,7 +4,7 @@
 
 #include "video/color/SharedColorConverter.h"
 #include "video/color.h"
-#include "utils/ByteSwap.h"
+#include "utils/StaticByteSwap.h"
 #include "video/utils/SharedVideoUtils.h"
 #include "string.h"
 
@@ -578,7 +578,7 @@ namespace irrgame
 			for (s32 x = 0; x < sN; ++x)
 			{
 
-				*dB++ = utils::ByteSwap::byteswap(*sB);
+				*dB++ = utils::StaticByteSwap::byteswap(*sB);
 
 				++sB;
 			}

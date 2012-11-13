@@ -153,7 +153,7 @@ namespace irrgame
 				// defined but not implemented. The tree should never be
 				// copied, pass along references to it instead.
 				explicit map(const map& src);
-				map& operator =(const map& src);
+				map& operator=(const map& src);
 
 			private:
 
@@ -195,8 +195,11 @@ namespace irrgame
 		template<class Key, class Value>
 		inline void CAccessClass<Key, Value>::operator=(const Value& value)
 		{
-			// Just use the Set method, it handles already exist/not exist situation
-			Tree.set(_Key, value);
+			Node* node = Tree.find(_Key);
+
+			IRR_ASSERT(node);
+
+			node->setValue(value);
 		}
 
 		// Value operator

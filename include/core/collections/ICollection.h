@@ -38,6 +38,22 @@ namespace irrgame
 				//! Get number of occupied elements of the array.
 				/** \return Size of elements in the array which are actually occupied. */
 				virtual u32 size() const = 0;
+
+				//! Returns last element of collection
+				virtual T& getLast() = 0;
+
+				//! Returns last element of collection
+				virtual const T& getLast() const = 0;
+
+				//! Direct access operator
+				/* \param index Index of element. Must be lower than collection size
+				 * \return Element by index for getting or setting value. */
+				virtual T& operator[](u32 index) = 0;
+
+				//! Direct const access operator
+				/* \param index Index of element. Must be lower than collection size
+				 * \return Element by index for getting or setting value. */
+				virtual const T& operator[](u32 index) const = 0;
 		};
 	}
 }

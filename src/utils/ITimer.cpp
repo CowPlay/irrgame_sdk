@@ -36,7 +36,7 @@ namespace irrgame
 		void ITimer::tick()
 		{
 			for (core::list<ITimer*>::Iterator it = RegisteredTimers.begin();
-					it != RegisteredTimers.getLast(); it++)
+					it != RegisteredTimers.getLastIterator(); it++)
 			{
 				(*it)->tickInternal();
 			}

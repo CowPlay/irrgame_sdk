@@ -111,25 +111,21 @@ namespace irrgame
 				array<T>& operator=(const array<T>& other);
 
 				//! Equality operator. Typename T must implement operator!=
-				bool operator ==(const array<T>& other) const;
+				bool operator==(const array<T>& other) const;
 
 				//! Inequality operator
-				bool operator !=(const array<T>& other) const;
+				bool operator!=(const array<T>& other) const;
 
 				//! Direct access operator
-				T& operator [](u32 index);
+				T& operator[](u32 index);
 
 				//! Direct const access operator
-				const T& operator [](u32 index) const;
+				const T& operator[](u32 index) const;
 
 				//! Gets last element.
-				//! Can be get or set value.
-				//! Size must be greater than zero.
 				T& getLast();
 
 				//! Gets last element.
-				//! Can be get or set value.
-				//! Size must be greater than zero.
 				const T& getLast() const;
 
 				//! Gets a pointer to the array.

@@ -8,6 +8,7 @@
 #ifndef VERTEX_H_
 #define VERTEX_H_
 
+#include "video/vertex/EIndexType.h"
 #include "video/vertex/EVertexType.h"
 #include "video/vertex/vertex3d.h"
 #include "video/vertex/vertex3d2TCoords.h"

@@ -40,12 +40,50 @@ namespace irrgame
 				//! Destructor
 				virtual ~list();
 
+				/*
+				 * Operators
+				 */
+
 				//! Assignment operator
 				void operator=(const list<T>& other);
 
+				/*
+				 * ICollection realization
+				 */
+
+				//! Adds an element at the end of the list.
+				/** \param element Element to add to the list. */
+				virtual void pushBack(const T& element);
+
+				//! Adds an element at the begin of the list.
+				/** \param element: Element to add to the list. */
+				virtual void pushFront(const T& element);
+
 				//! Returns amount of elements in list.
 				/** \return Amount of elements in the list. */
-				u32 size() const;
+				virtual u32 size() const;
+
+				//! Gets last element
+				virtual T& getLast();
+
+				//! Returns last element of collection
+				virtual const T& getLast() const;
+
+				//! Direct access operator
+				//! Reverse search
+				/* \param index Index of element. Must be lower than collection size
+				 * \return Element by index for getting or setting value. */
+				virtual T& operator[](u32 index);
+
+				//! Direct const access operator
+				//! Reverse search
+				/* \param index Index of element. Must be lower than collection size
+				 * \return Element by index for getting or setting value. */
+				virtual const T& operator[](u32 index) const;
+
+				/*
+				 * Methods
+				 */
 
 				//! Clears the list, deletes all elements in the list.
 				/** All existing iterators of this list will be invalid. */
@@ -54,14 +92,6 @@ namespace irrgame
 				//! Checks for empty list.
 				/** \return True if the list is empty and false if not. */
 				bool empty() const;
-
-				//! Adds an element at the end of the list.
-				/** \param element Element to add to the list. */
-				void pushBack(const T& element);
-
-				//! Adds an element at the begin of the list.
-				/** \param element: Element to add to the list. */
-				void pushFront(const T& element);
 
 				//! Inserts an element after an element.
 				/* \param it Iterator pointing to element after which the new element
@@ -93,7 +123,7 @@ namespace irrgame
 				 \param other Swap content with this object	*/
 				void swap(list<T>& other);
 
-				//! Gets first node.
+				//! Gets iterator of first node.
 				/** \return A list iterator pointing to the beginning of the list. */
 				Iterator begin();
 
@@ -101,11 +131,11 @@ namespace irrgame
 				/** \return List iterator pointing to null. */
 				Iterator end();
 
-				//! Gets last element.
+				//! Gets iterator of last element.
 				/** \return List iterator pointing to the last element of the list. */
-				Iterator getLast();
+				Iterator getLastIterator();
 
-				//! Gets first node.
+				//! Gets const iterator of first node.
 				/** \return A const list iterator pointing to the beginning of the list. */
 				ConstIterator begin() const;
 
@@ -113,9 +143,9 @@ namespace irrgame
 				/** \return Const list iterator pointing to null. */
 				ConstIterator end() const;
 
-				//! Gets last element.
+				//! Gets const iterator of  last element.
 				/** \return Const list iterator pointing to the last element of the list. */
-				virtual ConstIterator getLast() const;
+				virtual ConstIterator getLastIterator() const;
 
 			private:
 				//! Clears the list, deletes all elements in the list.
@@ -180,57 +210,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Returns amount of elements in list.
-		template<class T>
-		inline u32 list<T>::size() const
-		{
-			Monitor->enter();
-
-			u32 result = Size;
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Clears the list, deletes all elements in the list.
-		template<class T>
-		inline void list<T>::clear()
-		{
-			Monitor->enter();
-			clearInternal();
-			Monitor->exit();
-		}
-
-		//! Clears the list, deletes all elements in the list.
-		//! Uses internal without lockers
-		template<class T>
-		inline void list<T>::clearInternal()
-		{
-			while (First)
-			{
-				SKListNode<T>* next = First->Next;
-				Allocator.destruct(First);
-				Allocator.deallocate(First);
-				First = next;
-			}
-
-			//First = 0; handled by loop
-			Last = 0;
-			Size = 0;
-		}
-
-		//! Checks for empty list.
-		template<class T>
-		inline bool list<T>::empty() const
-		{
-			Monitor->enter();
-			bool result = First == 0;
-			Monitor->exit();
-
-			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return result;
-		}
-
 		//! Adds an element at the end of the list.
 		template<class T>
 		inline void list<T>::pushBack(const T& element)
@@ -279,6 +258,121 @@ namespace irrgame
 			}
 
 			Monitor->exit();
+		}
+
+		//! Returns amount of elements in list.
+		template<class T>
+		inline u32 list<T>::size() const
+		{
+			Monitor->enter();
+			u32 result = Size;
+			Monitor->exit();
+
+			return result;
+		}
+
+		//! Gets last element
+		template<class T>
+		inline T& list<T>::getLast()
+		{
+			Monitor->enter();
+			T& result = Last->Element;
+			Monitor->exit();
+
+			return result;
+		}
+
+		//! Returns last element of collection
+		template<class T>
+		inline const T& list<T>::getLast() const
+		{
+			Monitor->enter();
+			const T& result = Last->Element;
+			Monitor->exit();
+
+			return result;
+
+		}
+
+		//! Direct access operator
+		template<class T>
+		inline T& list<T>::operator[](u32 index)
+		{
+			IRR_ASSERT(index < Size);
+
+			Monitor->enter();
+
+			SKListNode<T>* resultNode = Last;
+			for (u32 i = Size; i != index; --i)
+			{
+				resultNode = Last->Prev;
+			}
+
+			T& result = resultNode->Element;
+
+			Monitor->exit();
+
+			return result;
+		}
+
+		//! Direct const access operator
+		template<class T>
+		inline const T& list<T>::operator[](u32 index) const
+		{
+			IRR_ASSERT(index < Size);
+
+			Monitor->enter();
+
+			SKListNode<T>* resultNode = Last;
+			for (u32 i = Size; i != index; --i)
+			{
+				resultNode = Last->Prev;
+			}
+
+			const T& result = resultNode->Element;
+
+			Monitor->exit();
+
+			return result;
+		}
+
+		//! Clears the list, deletes all elements in the list.
+		template<class T>
+		inline void list<T>::clear()
+		{
+			Monitor->enter();
+			clearInternal();
+			Monitor->exit();
+		}
+
+		//! Clears the list, deletes all elements in the list.
+		//! Uses internal without lockers
+		template<class T>
+		inline void list<T>::clearInternal()
+		{
+			while (First)
+			{
+				SKListNode<T>* next = First->Next;
+				Allocator.destruct(First);
+				Allocator.deallocate(First);
+				First = next;
+			}
+
+			//First = 0; handled by loop
+			Last = 0;
+			Size = 0;
+		}
+
+		//! Checks for empty list.
+		template<class T>
+		inline bool list<T>::empty() const
+		{
+			Monitor->enter();
+			bool result = First == 0;
+			Monitor->exit();
+
+			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+			return result;
 		}
 
 		//! Inserts an element after an element.
@@ -444,7 +538,7 @@ namespace irrgame
 
 		//! Gets last element.
 		template<class T>
-		inline CIterator<T> list<T>::getLast()
+		inline CIterator<T> list<T>::getLastIterator()
 		{
 			Monitor->enter();
 			Iterator result(Last);
@@ -473,7 +567,7 @@ namespace irrgame
 
 		//! Gets last element.
 		template<class T>
-		inline CConstIterator<T> list<T>::getLast() const
+		inline CConstIterator<T> list<T>::getLastIterator() const
 		{
 			Monitor->enter();
 			ConstIterator result(Last);

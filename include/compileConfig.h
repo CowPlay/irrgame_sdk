@@ -10,6 +10,7 @@
 
 #include "config/compileConfigMacOSX.h"
 #include "config/compileConfigWin.h"
+#include "config/compileConfigLinux.h"
 
 /*
  * Constants

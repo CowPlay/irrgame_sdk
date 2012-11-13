@@ -225,10 +225,6 @@ namespace irrgame
 				/** Always use this if the mesh lit and scaled. Default: false */
 				bool NormalizeNormals :1;
 		};
-
-		//TODO: make it static
-		extern SMaterial IdentityMaterial;
-
 	} // end namespace video
 } // end namespace irrgame
 

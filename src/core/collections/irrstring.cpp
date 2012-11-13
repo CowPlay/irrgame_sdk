@@ -686,11 +686,13 @@ namespace irrgame
 			Monitor->enter();
 
 			for (u32 i = Used - 1; i > 0; --i)
+			{
 				if (Array[i] == c)
 				{
 					result = i;
 					break;
 				}
+			}
 
 			Monitor->exit();
 

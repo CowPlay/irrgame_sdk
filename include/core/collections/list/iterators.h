@@ -31,6 +31,13 @@ namespace irrgame
 				//! Default constructor
 				CIterator();
 
+				//! Explicit constructor
+				explicit CIterator(SKListNode<T>* begin);
+
+				/*
+				 * Operators
+				 */
+
 				CIterator<T>& operator ++();
 				CIterator& operator --();
 				CIterator& operator -=(s32 num) const;
@@ -46,18 +53,12 @@ namespace irrgame
 				bool operator ==(const CConstIterator<T>& other) const;
 				bool operator !=(const CConstIterator<T>& other) const;
 
-				T & operator *();
-				T * operator ->();
+				T& operator *();
+				T* operator ->();
 
-			private:
-				//! Explicit constructor
-				explicit CIterator(SKListNode<T>* begin);
-
-			private:
+			public:
+				//! For internal use. Please do not use
 				SKListNode<T>* Current;
-
-				friend class list<T> ;
-				friend class CConstIterator<T> ;
 		};
 
 		//! List iterator for const access.
@@ -71,6 +72,13 @@ namespace irrgame
 
 				//! Constructor from another iterator
 				CConstIterator(const CIterator<T>& iter);
+
+				//! Explicit constructor
+				explicit CConstIterator(SKListNode<T>* begin);
+
+				/*
+				 * Operators
+				 */
 
 				CConstIterator<T>& operator +=(s32 num);
 				CConstIterator<T>& operator -=(s32 num) const;
@@ -91,15 +99,9 @@ namespace irrgame
 				const T& operator *();
 				const T* operator ->();
 
-			private:
-				//! Explicit constructor
-				explicit CConstIterator(SKListNode<T>* begin);
-
-			private:
+			public:
+				//! For internal use. Please do not use
 				SKListNode<T>* Current;
-
-				friend class list<T> ;
-				friend class CIterator<T> ;
 		};
 
 		//!-------- Iterator realization
@@ -108,6 +110,13 @@ namespace irrgame
 		template<class T>
 		inline CIterator<T>::CIterator() :
 				Current(0)
+		{
+		}
+
+		//! Explicit constructor
+		template<class T>
+		inline CIterator<T>::CIterator(SKListNode<T>* begin) :
+				Current(begin)
 		{
 		}
 
@@ -212,12 +221,6 @@ namespace irrgame
 		inline T* CIterator<T>::operator ->()
 		{
 			return &Current->Element;
-		}
-
-		template<class T>
-		inline CIterator<T>::CIterator(SKListNode<T>* begin) :
-				Current(begin)
-		{
 		}
 
 		//!--------- CConstIterator realization

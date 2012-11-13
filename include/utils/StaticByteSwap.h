@@ -15,8 +15,7 @@ namespace irrgame
 	namespace utils
 	{
 		//! Platform dependent
-		//TODO: make it singleton
-		class ByteSwap
+		class StaticByteSwap
 		{
 			public:
 				static u16 byteswap(u16 num);

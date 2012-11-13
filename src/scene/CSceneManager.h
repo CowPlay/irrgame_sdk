@@ -9,7 +9,7 @@
 #define CSCENEMANAGER_H_
 
 #include "scene/ISceneManager.h"
-#include "scene/ISceneNode.h"
+#include "scene/node/ISceneNode.h"
 
 namespace irrgame
 {

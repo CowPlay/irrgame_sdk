@@ -11,7 +11,6 @@
 #include <float.h>
 #include <stdlib.h> // for abs() etc.
 #include <limits.h> // For INT_MAX / UINT_MAX
-
 namespace irrgame
 {
 	namespace core
@@ -241,12 +240,6 @@ namespace irrgame
 		}
 	} // end namespace core
 } // end namespace irrgame
-
-//TODO: review
-//#ifndef IRRLICHT_FAST_MATH
-//using irr::core::IR;
-//using irr::core::FR;
-//#endif
 
 #endif
 

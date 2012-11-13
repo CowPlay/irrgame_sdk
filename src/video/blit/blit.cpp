@@ -22,20 +22,20 @@ namespace irrgame
 		{
 			u32 code = CLIPCODE_EMPTY;
 
-			if (p.X() < r.x0)
+			if (p.X < r.x0)
 			{
 				code = CLIPCODE_LEFT;
 			}
-			else if (p.X() > r.x1)
+			else if (p.X > r.x1)
 			{
 				code = CLIPCODE_RIGHT;
 			}
 
-			if (p.Y() < r.y0)
+			if (p.Y < r.y0)
 			{
 				code |= CLIPCODE_TOP;
 			}
-			else if (p.Y() > r.y1)
+			else if (p.Y > r.y1)
 			{
 				code |= CLIPCODE_BOTTOM;
 			}
@@ -85,47 +85,47 @@ namespace irrgame
 				{
 					// clip bottom viewport
 					y = clipping.y1;
-					x = p0.X()
-							+ (p1.X() - p0.X()) * (y - p0.Y())
-									/ (p1.Y() - p0.Y());
+					x = p0.X
+							+ (p1.X - p0.X) * (y - p0.Y)
+									/ (p1.Y - p0.Y);
 				}
 				else if ((code & CLIPCODE_TOP) == CLIPCODE_TOP)
 				{
 					// clip to viewport
 					y = clipping.y0;
-					x = p0.X()
-							+ (p1.X() - p0.X()) * (y - p0.Y())
-									/ (p1.Y() - p0.Y());
+					x = p0.X
+							+ (p1.X - p0.X) * (y - p0.Y)
+									/ (p1.Y - p0.Y);
 				}
 				else if ((code & CLIPCODE_RIGHT) == CLIPCODE_RIGHT)
 				{
 					// clip right viewport
 					x = clipping.x1;
-					y = p0.Y()
-							+ (p1.Y() - p0.Y()) * (x - p0.X())
-									/ (p1.X() - p0.X());
+					y = p0.Y
+							+ (p1.Y - p0.Y) * (x - p0.X)
+									/ (p1.X - p0.X);
 				}
 				else if ((code & CLIPCODE_LEFT) == CLIPCODE_LEFT)
 				{
 					// clip left viewport
 					x = clipping.x0;
-					y = p0.Y()
-							+ (p1.Y() - p0.Y()) * (x - p0.X())
-									/ (p1.X() - p0.X());
+					y = p0.Y
+							+ (p1.Y - p0.Y) * (x - p0.X)
+									/ (p1.X - p0.X);
 				}
 
 				if (code == code0)
 				{
 					// modify first point
-					p0.X() = x;
-					p0.Y() = y;
+					p0.X = x;
+					p0.Y = y;
 					code0 = GetClipCode(clipping, p0);
 				}
 				else
 				{
 					// modify second point
-					p1.X() = x;
-					p1.Y() = y;
+					p1.X = x;
+					p1.Y = y;
 					code1 = GetClipCode(clipping, p1);
 				}
 			}
@@ -183,8 +183,8 @@ namespace irrgame
 		void RenderLine32_Decal(video::IImage *t, const vector2di &p0,
 				const vector2di &p1, u32 argb)
 		{
-			s32 dx = p1.X() - p0.X();
-			s32 dy = p1.Y() - p0.Y();
+			s32 dx = p1.X - p0.X;
+			s32 dy = p1.Y - p0.Y;
 
 			s32 c;
 			s32 m;
@@ -207,8 +207,8 @@ namespace irrgame
 			}
 
 			u32 *dst;
-			dst = (u32*) ((u8*) t->lock() + (p0.Y() * t->getPitch())
-					+ (p0.X() << 2));
+			dst = (u32*) ((u8*) t->lock() + (p0.Y * t->getPitch())
+					+ (p0.X << 2));
 
 			if (dy > dx)
 			{
@@ -245,8 +245,8 @@ namespace irrgame
 		void RenderLine32_Blend(IImage *t, const vector2di &p0,
 				const vector2di &p1, u32 argb, u32 alpha)
 		{
-			s32 dx = p1.X() - p0.X();
-			s32 dy = p1.Y() - p0.Y();
+			s32 dx = p1.X - p0.X;
+			s32 dy = p1.Y - p0.Y;
 
 			s32 c;
 			s32 m;
@@ -269,8 +269,8 @@ namespace irrgame
 			}
 
 			u32 *dst;
-			dst = (u32*) ((u8*) t->lock() + (p0.Y() * t->getPitch())
-					+ (p0.X() << 2));
+			dst = (u32*) ((u8*) t->lock() + (p0.Y * t->getPitch())
+					+ (p0.X << 2));
 
 			if (dy > dx)
 			{
@@ -310,8 +310,8 @@ namespace irrgame
 		void RenderLine16_Decal(IImage *t, const vector2di &p0,
 				const vector2di &p1, u32 argb)
 		{
-			s32 dx = p1.X() - p0.X();
-			s32 dy = p1.Y() - p0.Y();
+			s32 dx = p1.X - p0.X;
+			s32 dy = p1.Y - p0.Y;
 
 			s32 c;
 			s32 m;
@@ -334,8 +334,8 @@ namespace irrgame
 			}
 
 			u16 *dst;
-			dst = (u16*) ((u8*) t->lock() + (p0.Y() * t->getPitch())
-					+ (p0.X() << 1));
+			dst = (u16*) ((u8*) t->lock() + (p0.Y * t->getPitch())
+					+ (p0.X << 1));
 
 			if (dy > dx)
 			{
@@ -372,8 +372,8 @@ namespace irrgame
 		void RenderLine16_Blend(IImage *t, const vector2di &p0,
 				const vector2di &p1, u16 argb, u16 alpha)
 		{
-			s32 dx = p1.X() - p0.X();
-			s32 dy = p1.Y() - p0.Y();
+			s32 dx = p1.X - p0.X;
+			s32 dy = p1.Y - p0.Y;
 
 			s32 c;
 			s32 m;
@@ -396,8 +396,8 @@ namespace irrgame
 			}
 
 			u16 *dst;
-			dst = (u16*) ((u8*) t->lock() + (p0.Y() * t->getPitch())
-					+ (p0.X() << 1));
+			dst = (u16*) ((u8*) t->lock() + (p0.Y * t->getPitch())
+					+ (p0.X << 1));
 
 			if (dy > dx)
 			{
@@ -784,10 +784,10 @@ namespace irrgame
 		{
 			if (clip && 0 == tex && passnative)
 			{
-				out.x0 = clip->UpperLeftCorner.X();
-				out.x1 = clip->LowerRightCorner.X();
-				out.y0 = clip->UpperLeftCorner.Y();
-				out.y1 = clip->LowerRightCorner.Y();
+				out.x0 = clip->UpperLeftCorner.X;
+				out.x1 = clip->LowerRightCorner.X;
+				out.y0 = clip->UpperLeftCorner.Y;
+				out.y1 = clip->LowerRightCorner.Y;
 				return;
 			}
 
@@ -796,13 +796,13 @@ namespace irrgame
 			if (clip)
 			{
 				out.x0 = core::SharedMath::getInstance().s32Clamp(
-						clip->UpperLeftCorner.X(), 0, w);
+						clip->UpperLeftCorner.X, 0, w);
 				out.x1 = core::SharedMath::getInstance().s32Clamp(
-						clip->LowerRightCorner.X(), out.x0, w);
+						clip->LowerRightCorner.X, out.x0, w);
 				out.y0 = core::SharedMath::getInstance().s32Clamp(
-						clip->UpperLeftCorner.Y(), 0, h);
+						clip->UpperLeftCorner.Y, 0, h);
 				out.y1 = core::SharedMath::getInstance().s32Clamp(
-						clip->LowerRightCorner.Y(), out.y0, h);
+						clip->LowerRightCorner.Y, out.y0, h);
 			}
 			else
 			{
@@ -837,8 +837,8 @@ namespace irrgame
 			setClip(sourceClip, sourceClipping, source, 1);
 			setClip(destClip, destClipping, dest, 0);
 
-			v.x0 = destPos ? destPos->X() : 0;
-			v.y0 = destPos ? destPos->Y() : 0;
+			v.x0 = destPos ? destPos->X : 0;
+			v.y0 = destPos ? destPos->Y : 0;
 			v.x1 = v.x0 + (sourceClip.x1 - sourceClip.x0);
 			v.y1 = v.y0 + (sourceClip.y1 - sourceClip.y0);
 

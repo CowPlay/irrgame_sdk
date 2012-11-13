@@ -39,9 +39,9 @@ namespace irrgame
 				ValueI(), ValueF(), Count(3), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.X());
-			ValueF.pushBack(value.Y());
-			ValueF.pushBack(value.Z());
+			ValueF.pushBack(value.X);
+			ValueF.pushBack(value.Y);
+			ValueF.pushBack(value.Z);
 		}
 
 		//! Default constructor for recti list
@@ -49,10 +49,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
-			ValueI.pushBack(value.UpperLeftCorner.X());
-			ValueI.pushBack(value.UpperLeftCorner.Y());
-			ValueI.pushBack(value.LowerRightCorner.X());
-			ValueI.pushBack(value.LowerRightCorner.Y());
+			ValueI.pushBack(value.UpperLeftCorner.X);
+			ValueI.pushBack(value.UpperLeftCorner.Y);
+			ValueI.pushBack(value.LowerRightCorner.X);
+			ValueI.pushBack(value.LowerRightCorner.Y);
 		}
 
 		//! Default constructor for rectf list
@@ -60,10 +60,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.UpperLeftCorner.X());
-			ValueF.pushBack(value.UpperLeftCorner.Y());
-			ValueF.pushBack(value.LowerRightCorner.X());
-			ValueF.pushBack(value.LowerRightCorner.Y());
+			ValueF.pushBack(value.UpperLeftCorner.X);
+			ValueF.pushBack(value.UpperLeftCorner.Y);
+			ValueF.pushBack(value.LowerRightCorner.X);
+			ValueF.pushBack(value.LowerRightCorner.Y);
 		}
 
 		//! Default constructor for matrix4 list
@@ -93,12 +93,12 @@ namespace irrgame
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.MinEdge.X());
-			ValueF.pushBack(value.MinEdge.Y());
-			ValueF.pushBack(value.MinEdge.Z());
-			ValueF.pushBack(value.MaxEdge.X());
-			ValueF.pushBack(value.MaxEdge.Y());
-			ValueF.pushBack(value.MaxEdge.Z());
+			ValueF.pushBack(value.MinEdge.X);
+			ValueF.pushBack(value.MinEdge.Y);
+			ValueF.pushBack(value.MinEdge.Z);
+			ValueF.pushBack(value.MaxEdge.X);
+			ValueF.pushBack(value.MaxEdge.Y);
+			ValueF.pushBack(value.MaxEdge.Z);
 		}
 
 		//! Default constructor for plane3df list
@@ -106,9 +106,9 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.Normal.X());
-			ValueF.pushBack(value.Normal.Y());
-			ValueF.pushBack(value.Normal.Z());
+			ValueF.pushBack(value.Normal.X);
+			ValueF.pushBack(value.Normal.Y);
+			ValueF.pushBack(value.Normal.Z);
 			ValueF.pushBack(value.D);
 		}
 
@@ -117,15 +117,15 @@ namespace irrgame
 				ValueI(), ValueF(), Count(9), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.pointA.X());
-			ValueF.pushBack(value.pointA.Y());
-			ValueF.pushBack(value.pointA.Z());
-			ValueF.pushBack(value.pointB.X());
-			ValueF.pushBack(value.pointB.Y());
-			ValueF.pushBack(value.pointB.Z());
-			ValueF.pushBack(value.pointC.X());
-			ValueF.pushBack(value.pointC.Y());
-			ValueF.pushBack(value.pointC.Z());
+			ValueF.pushBack(value.pointA.X);
+			ValueF.pushBack(value.pointA.Y);
+			ValueF.pushBack(value.pointA.Z);
+			ValueF.pushBack(value.pointB.X);
+			ValueF.pushBack(value.pointB.Y);
+			ValueF.pushBack(value.pointB.Z);
+			ValueF.pushBack(value.pointC.X);
+			ValueF.pushBack(value.pointC.Y);
+			ValueF.pushBack(value.pointC.Z);
 		}
 
 		//! Default constructor for vector2df list
@@ -133,8 +133,8 @@ namespace irrgame
 				ValueI(), ValueF(), Count(2), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.X());
-			ValueF.pushBack(value.Y());
+			ValueF.pushBack(value.X);
+			ValueF.pushBack(value.Y);
 		}
 
 		//! Default constructor for line2di list
@@ -142,10 +142,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(false)
 		{
 			Name = name;
-			ValueI.pushBack(value.Start.X());
-			ValueI.pushBack(value.Start.Y());
-			ValueI.pushBack(value.End.X());
-			ValueI.pushBack(value.End.Y());
+			ValueI.pushBack(value.Start.X);
+			ValueI.pushBack(value.Start.Y);
+			ValueI.pushBack(value.End.X);
+			ValueI.pushBack(value.End.Y);
 		}
 
 		//! Default constructor for line2df list
@@ -153,10 +153,10 @@ namespace irrgame
 				ValueI(), ValueF(), Count(4), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.Start.X());
-			ValueF.pushBack(value.Start.Y());
-			ValueF.pushBack(value.End.X());
-			ValueF.pushBack(value.End.Y());
+			ValueF.pushBack(value.Start.X);
+			ValueF.pushBack(value.Start.Y);
+			ValueF.pushBack(value.End.X);
+			ValueF.pushBack(value.End.Y);
 		}
 
 		//! Default constructor for line3df list
@@ -164,12 +164,12 @@ namespace irrgame
 				ValueI(), ValueF(), Count(6), IsFloat(true)
 		{
 			Name = name;
-			ValueF.pushBack(value.Start.X());
-			ValueF.pushBack(value.Start.Y());
-			ValueF.pushBack(value.Start.Z());
-			ValueF.pushBack(value.End.X());
-			ValueF.pushBack(value.End.Y());
-			ValueF.pushBack(value.End.Z());
+			ValueF.pushBack(value.Start.X);
+			ValueF.pushBack(value.Start.Y);
+			ValueF.pushBack(value.Start.Z);
+			ValueF.pushBack(value.End.X);
+			ValueF.pushBack(value.End.Y);
+			ValueF.pushBack(value.End.Z);
 		}
 
 		//! Default constructor for dimension2du list
@@ -242,14 +242,14 @@ namespace irrgame
 
 			if (IsFloat)
 			{
-				v.X() = Count > 0 ? ValueF[0] : 0;
-				v.Y() = Count > 1 ? ValueF[1] : 0;
+				v.X = Count > 0 ? ValueF[0] : 0;
+				v.Y = Count > 1 ? ValueF[1] : 0;
 
 			}
 			else
 			{
-				v.X() = (f32) (Count > 0 ? ValueI[0] : 0);
-				v.Y() = (f32) (Count > 1 ? ValueI[1] : 0);
+				v.X = (f32) (Count > 0 ? ValueI[0] : 0);
+				v.Y = (f32) (Count > 1 ? ValueI[1] : 0);
 			}
 
 			return v;
@@ -261,15 +261,15 @@ namespace irrgame
 
 			if (IsFloat)
 			{
-				v.X() = Count > 0 ? ValueF[0] : 0;
-				v.Y() = Count > 1 ? ValueF[1] : 0;
-				v.Z() = Count > 2 ? ValueF[2] : 0;
+				v.X = Count > 0 ? ValueF[0] : 0;
+				v.Y = Count > 1 ? ValueF[1] : 0;
+				v.Z = Count > 2 ? ValueF[2] : 0;
 			}
 			else
 			{
-				v.X() = (f32) (Count > 0 ? ValueI[0] : 0);
-				v.Y() = (f32) (Count > 1 ? ValueI[1] : 0);
-				v.Z() = (f32) (Count > 2 ? ValueI[2] : 0);
+				v.X = (f32) (Count > 0 ? ValueI[0] : 0);
+				v.Y = (f32) (Count > 1 ? ValueI[1] : 0);
+				v.Z = (f32) (Count > 2 ? ValueI[2] : 0);
 			}
 
 			return v;
@@ -311,21 +311,21 @@ namespace irrgame
 
 			if (IsFloat)
 			{
-				r.UpperLeftCorner.X() = (s32) (Count > 0 ? ValueF[0] : 0);
-				r.UpperLeftCorner.Y() = (s32) (Count > 1 ? ValueF[1] : 0);
-				r.LowerRightCorner.X() = (s32) (
-						Count > 2 ? ValueF[2] : r.UpperLeftCorner.X());
-				r.LowerRightCorner.Y() = (s32) (
-						Count > 3 ? ValueF[3] : r.UpperLeftCorner.Y());
+				r.UpperLeftCorner.X = (s32) (Count > 0 ? ValueF[0] : 0);
+				r.UpperLeftCorner.Y = (s32) (Count > 1 ? ValueF[1] : 0);
+				r.LowerRightCorner.X = (s32) (
+						Count > 2 ? ValueF[2] : r.UpperLeftCorner.X);
+				r.LowerRightCorner.Y = (s32) (
+						Count > 3 ? ValueF[3] : r.UpperLeftCorner.Y);
 			}
 			else
 			{
-				r.UpperLeftCorner.X() = Count > 0 ? ValueI[0] : 0;
-				r.UpperLeftCorner.Y() = Count > 1 ? ValueI[1] : 0;
-				r.LowerRightCorner.X() =
-						Count > 2 ? ValueI[2] : r.UpperLeftCorner.X();
-				r.LowerRightCorner.Y() =
-						Count > 3 ? ValueI[3] : r.UpperLeftCorner.Y();
+				r.UpperLeftCorner.X = Count > 0 ? ValueI[0] : 0;
+				r.UpperLeftCorner.Y = Count > 1 ? ValueI[1] : 0;
+				r.LowerRightCorner.X =
+						Count > 2 ? ValueI[2] : r.UpperLeftCorner.X;
+				r.LowerRightCorner.Y =
+						Count > 3 ? ValueI[3] : r.UpperLeftCorner.Y;
 			}
 			return r;
 		}
@@ -389,27 +389,27 @@ namespace irrgame
 
 			if (IsFloat)
 			{
-				ret.pointA.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.pointA.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.pointA.Z() = Count > 2 ? ValueF[2] : 0.0f;
-				ret.pointB.X() = Count > 3 ? ValueF[3] : 0.0f;
-				ret.pointB.Y() = Count > 4 ? ValueF[4] : 0.0f;
-				ret.pointB.Z() = Count > 5 ? ValueF[5] : 0.0f;
-				ret.pointC.X() = Count > 6 ? ValueF[6] : 0.0f;
-				ret.pointC.Y() = Count > 7 ? ValueF[7] : 0.0f;
-				ret.pointC.Z() = Count > 8 ? ValueF[8] : 0.0f;
+				ret.pointA.X = Count > 0 ? ValueF[0] : 0.0f;
+				ret.pointA.Y = Count > 1 ? ValueF[1] : 0.0f;
+				ret.pointA.Z = Count > 2 ? ValueF[2] : 0.0f;
+				ret.pointB.X = Count > 3 ? ValueF[3] : 0.0f;
+				ret.pointB.Y = Count > 4 ? ValueF[4] : 0.0f;
+				ret.pointB.Z = Count > 5 ? ValueF[5] : 0.0f;
+				ret.pointC.X = Count > 6 ? ValueF[6] : 0.0f;
+				ret.pointC.Y = Count > 7 ? ValueF[7] : 0.0f;
+				ret.pointC.Z = Count > 8 ? ValueF[8] : 0.0f;
 			}
 			else
 			{
-				ret.pointA.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.pointA.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.pointA.Z() = Count > 2 ? (f32) ValueI[2] : 0.0f;
-				ret.pointB.X() = Count > 3 ? (f32) ValueI[3] : 0.0f;
-				ret.pointB.Y() = Count > 4 ? (f32) ValueI[4] : 0.0f;
-				ret.pointB.Z() = Count > 5 ? (f32) ValueI[5] : 0.0f;
-				ret.pointC.X() = Count > 6 ? (f32) ValueI[6] : 0.0f;
-				ret.pointC.Y() = Count > 7 ? (f32) ValueI[7] : 0.0f;
-				ret.pointC.Z() = Count > 8 ? (f32) ValueI[8] : 0.0f;
+				ret.pointA.X = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.pointA.Y = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.pointA.Z = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.pointB.X = Count > 3 ? (f32) ValueI[3] : 0.0f;
+				ret.pointB.Y = Count > 4 ? (f32) ValueI[4] : 0.0f;
+				ret.pointB.Z = Count > 5 ? (f32) ValueI[5] : 0.0f;
+				ret.pointC.X = Count > 6 ? (f32) ValueI[6] : 0.0f;
+				ret.pointC.Y = Count > 7 ? (f32) ValueI[7] : 0.0f;
+				ret.pointC.Z = Count > 8 ? (f32) ValueI[8] : 0.0f;
 			}
 
 			return ret;
@@ -421,16 +421,16 @@ namespace irrgame
 
 			if (IsFloat)
 			{
-				ret.Normal.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.Normal.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.Normal.Z() = Count > 2 ? ValueF[2] : 0.0f;
+				ret.Normal.X = Count > 0 ? ValueF[0] : 0.0f;
+				ret.Normal.Y = Count > 1 ? ValueF[1] : 0.0f;
+				ret.Normal.Z = Count > 2 ? ValueF[2] : 0.0f;
 				ret.D = Count > 3 ? ValueF[3] : 0.0f;
 			}
 			else
 			{
-				ret.Normal.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.Normal.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.Normal.Z() = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.Normal.X = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.Normal.Y = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.Normal.Z = Count > 2 ? (f32) ValueI[2] : 0.0f;
 				ret.D = Count > 3 ? (f32) ValueI[3] : 0.0f;
 			}
 
@@ -442,21 +442,21 @@ namespace irrgame
 			aabbox3df ret;
 			if (IsFloat)
 			{
-				ret.MinEdge.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.MinEdge.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.MinEdge.Z() = Count > 2 ? ValueF[2] : 0.0f;
-				ret.MaxEdge.X() = Count > 3 ? ValueF[3] : 0.0f;
-				ret.MaxEdge.Y() = Count > 4 ? ValueF[4] : 0.0f;
-				ret.MaxEdge.Z() = Count > 5 ? ValueF[5] : 0.0f;
+				ret.MinEdge.X = Count > 0 ? ValueF[0] : 0.0f;
+				ret.MinEdge.Y = Count > 1 ? ValueF[1] : 0.0f;
+				ret.MinEdge.Z = Count > 2 ? ValueF[2] : 0.0f;
+				ret.MaxEdge.X = Count > 3 ? ValueF[3] : 0.0f;
+				ret.MaxEdge.Y = Count > 4 ? ValueF[4] : 0.0f;
+				ret.MaxEdge.Z = Count > 5 ? ValueF[5] : 0.0f;
 			}
 			else
 			{
-				ret.MinEdge.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.MinEdge.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.MinEdge.Z() = Count > 2 ? (f32) ValueI[2] : 0.0f;
-				ret.MaxEdge.X() = Count > 3 ? (f32) ValueI[3] : 0.0f;
-				ret.MaxEdge.Y() = Count > 4 ? (f32) ValueI[4] : 0.0f;
-				ret.MaxEdge.Z() = Count > 5 ? (f32) ValueI[5] : 0.0f;
+				ret.MinEdge.X = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.MinEdge.Y = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.MinEdge.Z = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.MaxEdge.X = Count > 3 ? (f32) ValueI[3] : 0.0f;
+				ret.MaxEdge.Y = Count > 4 ? (f32) ValueI[4] : 0.0f;
+				ret.MaxEdge.Z = Count > 5 ? (f32) ValueI[5] : 0.0f;
 			}
 			return ret;
 
@@ -467,17 +467,17 @@ namespace irrgame
 			line2df ret;
 			if (IsFloat)
 			{
-				ret.Start.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.Start.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.End.X() = Count > 2 ? ValueF[2] : 0.0f;
-				ret.End.Y() = Count > 3 ? ValueF[3] : 0.0f;
+				ret.Start.X = Count > 0 ? ValueF[0] : 0.0f;
+				ret.Start.Y = Count > 1 ? ValueF[1] : 0.0f;
+				ret.End.X = Count > 2 ? ValueF[2] : 0.0f;
+				ret.End.Y = Count > 3 ? ValueF[3] : 0.0f;
 			}
 			else
 			{
-				ret.Start.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.Start.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.End.X() = Count > 2 ? (f32) ValueI[2] : 0.0f;
-				ret.End.Y() = Count > 3 ? (f32) ValueI[3] : 0.0f;
+				ret.Start.X = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.Start.Y = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.End.X = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.End.Y = Count > 3 ? (f32) ValueI[3] : 0.0f;
 			}
 			return ret;
 		}
@@ -487,21 +487,21 @@ namespace irrgame
 			line3df ret;
 			if (IsFloat)
 			{
-				ret.Start.X() = Count > 0 ? ValueF[0] : 0.0f;
-				ret.Start.Y() = Count > 1 ? ValueF[1] : 0.0f;
-				ret.Start.Z() = Count > 2 ? ValueF[2] : 0.0f;
-				ret.End.X() = Count > 3 ? ValueF[3] : 0.0f;
-				ret.End.Y() = Count > 4 ? ValueF[4] : 0.0f;
-				ret.End.Z() = Count > 5 ? ValueF[5] : 0.0f;
+				ret.Start.X = Count > 0 ? ValueF[0] : 0.0f;
+				ret.Start.Y = Count > 1 ? ValueF[1] : 0.0f;
+				ret.Start.Z = Count > 2 ? ValueF[2] : 0.0f;
+				ret.End.X = Count > 3 ? ValueF[3] : 0.0f;
+				ret.End.Y = Count > 4 ? ValueF[4] : 0.0f;
+				ret.End.Z = Count > 5 ? ValueF[5] : 0.0f;
 			}
 			else
 			{
-				ret.Start.X() = Count > 0 ? (f32) ValueI[0] : 0.0f;
-				ret.Start.Y() = Count > 1 ? (f32) ValueI[1] : 0.0f;
-				ret.Start.Z() = Count > 2 ? (f32) ValueI[2] : 0.0f;
-				ret.End.X() = Count > 3 ? (f32) ValueI[3] : 0.0f;
-				ret.End.Y() = Count > 4 ? (f32) ValueI[4] : 0.0f;
-				ret.End.Z() = Count > 5 ? (f32) ValueI[5] : 0.0f;
+				ret.Start.X = Count > 0 ? (f32) ValueI[0] : 0.0f;
+				ret.Start.Y = Count > 1 ? (f32) ValueI[1] : 0.0f;
+				ret.Start.Z = Count > 2 ? (f32) ValueI[2] : 0.0f;
+				ret.End.X = Count > 3 ? (f32) ValueI[3] : 0.0f;
+				ret.End.Y = Count > 4 ? (f32) ValueI[4] : 0.0f;
+				ret.End.Z = Count > 5 ? (f32) ValueI[5] : 0.0f;
 			}
 			return ret;
 		}
@@ -610,16 +610,16 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = v.X();
+					ValueF[0] = v.X;
 				if (Count > 1)
-					ValueF[1] = v.Y();
+					ValueF[1] = v.Y;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) v.X();
+					ValueI[0] = (s32) v.X;
 				if (Count > 1)
-					ValueI[1] = (s32) v.Y();
+					ValueI[1] = (s32) v.Y;
 			}
 		}
 
@@ -629,20 +629,20 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = v.X();
+					ValueF[0] = v.X;
 				if (Count > 1)
-					ValueF[1] = v.Y();
+					ValueF[1] = v.Y;
 				if (Count > 2)
-					ValueF[2] = v.Z();
+					ValueF[2] = v.Z;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) v.X();
+					ValueI[0] = (s32) v.X;
 				if (Count > 1)
-					ValueI[1] = (s32) v.Y();
+					ValueI[1] = (s32) v.Y;
 				if (Count > 2)
-					ValueI[2] = (s32) v.Z();
+					ValueI[2] = (s32) v.Z;
 			}
 		}
 
@@ -707,24 +707,24 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = (f32) value.UpperLeftCorner.X();
+					ValueF[0] = (f32) value.UpperLeftCorner.X;
 				if (Count > 1)
-					ValueF[1] = (f32) value.UpperLeftCorner.Y();
+					ValueF[1] = (f32) value.UpperLeftCorner.Y;
 				if (Count > 2)
-					ValueF[2] = (f32) value.LowerRightCorner.X();
+					ValueF[2] = (f32) value.LowerRightCorner.X;
 				if (Count > 3)
-					ValueF[3] = (f32) value.LowerRightCorner.Y();
+					ValueF[3] = (f32) value.LowerRightCorner.Y;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = value.UpperLeftCorner.X();
+					ValueI[0] = value.UpperLeftCorner.X;
 				if (Count > 1)
-					ValueI[1] = value.UpperLeftCorner.Y();
+					ValueI[1] = value.UpperLeftCorner.Y;
 				if (Count > 2)
-					ValueI[2] = value.LowerRightCorner.X();
+					ValueI[2] = value.LowerRightCorner.X;
 				if (Count > 3)
-					ValueI[3] = value.LowerRightCorner.Y();
+					ValueI[3] = value.LowerRightCorner.Y;
 			}
 		}
 
@@ -780,32 +780,32 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = value.MinEdge.X();
+					ValueF[0] = value.MinEdge.X;
 				if (Count > 1)
-					ValueF[1] = value.MinEdge.Y();
+					ValueF[1] = value.MinEdge.Y;
 				if (Count > 2)
-					ValueF[2] = value.MinEdge.Z();
+					ValueF[2] = value.MinEdge.Z;
 				if (Count > 3)
-					ValueF[3] = value.MaxEdge.X();
+					ValueF[3] = value.MaxEdge.X;
 				if (Count > 4)
-					ValueF[4] = value.MaxEdge.Y();
+					ValueF[4] = value.MaxEdge.Y;
 				if (Count > 5)
-					ValueF[5] = value.MaxEdge.Z();
+					ValueF[5] = value.MaxEdge.Z;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) value.MinEdge.X();
+					ValueI[0] = (s32) value.MinEdge.X;
 				if (Count > 1)
-					ValueI[1] = (s32) value.MinEdge.Y();
+					ValueI[1] = (s32) value.MinEdge.Y;
 				if (Count > 2)
-					ValueI[2] = (s32) value.MinEdge.Z();
+					ValueI[2] = (s32) value.MinEdge.Z;
 				if (Count > 3)
-					ValueI[3] = (s32) value.MaxEdge.X();
+					ValueI[3] = (s32) value.MaxEdge.X;
 				if (Count > 4)
-					ValueI[4] = (s32) value.MaxEdge.Y();
+					ValueI[4] = (s32) value.MaxEdge.Y;
 				if (Count > 5)
-					ValueI[5] = (s32) value.MaxEdge.Z();
+					ValueI[5] = (s32) value.MaxEdge.Z;
 			}
 		}
 
@@ -815,22 +815,22 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = value.Normal.X();
+					ValueF[0] = value.Normal.X;
 				if (Count > 1)
-					ValueF[1] = value.Normal.Y();
+					ValueF[1] = value.Normal.Y;
 				if (Count > 2)
-					ValueF[2] = value.Normal.Z();
+					ValueF[2] = value.Normal.Z;
 				if (Count > 3)
 					ValueF[3] = value.D;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) value.Normal.X();
+					ValueI[0] = (s32) value.Normal.X;
 				if (Count > 1)
-					ValueI[1] = (s32) value.Normal.Y();
+					ValueI[1] = (s32) value.Normal.Y;
 				if (Count > 2)
-					ValueI[2] = (s32) value.Normal.Z();
+					ValueI[2] = (s32) value.Normal.Z;
 				if (Count > 3)
 					ValueI[3] = (s32) value.D;
 			}
@@ -842,44 +842,44 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = value.pointA.X();
+					ValueF[0] = value.pointA.X;
 				if (Count > 1)
-					ValueF[1] = value.pointA.Y();
+					ValueF[1] = value.pointA.Y;
 				if (Count > 2)
-					ValueF[2] = value.pointA.Z();
+					ValueF[2] = value.pointA.Z;
 				if (Count > 3)
-					ValueF[3] = value.pointB.X();
+					ValueF[3] = value.pointB.X;
 				if (Count > 4)
-					ValueF[4] = value.pointB.Y();
+					ValueF[4] = value.pointB.Y;
 				if (Count > 5)
-					ValueF[5] = value.pointB.Z();
+					ValueF[5] = value.pointB.Z;
 				if (Count > 6)
-					ValueF[6] = value.pointC.X();
+					ValueF[6] = value.pointC.X;
 				if (Count > 7)
-					ValueF[7] = value.pointC.Y();
+					ValueF[7] = value.pointC.Y;
 				if (Count > 8)
-					ValueF[8] = value.pointC.Z();
+					ValueF[8] = value.pointC.Z;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) value.pointA.X();
+					ValueI[0] = (s32) value.pointA.X;
 				if (Count > 1)
-					ValueI[1] = (s32) value.pointA.Y();
+					ValueI[1] = (s32) value.pointA.Y;
 				if (Count > 2)
-					ValueI[2] = (s32) value.pointA.Z();
+					ValueI[2] = (s32) value.pointA.Z;
 				if (Count > 3)
-					ValueI[3] = (s32) value.pointB.X();
+					ValueI[3] = (s32) value.pointB.X;
 				if (Count > 4)
-					ValueI[4] = (s32) value.pointB.Y();
+					ValueI[4] = (s32) value.pointB.Y;
 				if (Count > 5)
-					ValueI[5] = (s32) value.pointB.Z();
+					ValueI[5] = (s32) value.pointB.Z;
 				if (Count > 6)
-					ValueI[6] = (s32) value.pointC.X();
+					ValueI[6] = (s32) value.pointC.X;
 				if (Count > 7)
-					ValueI[7] = (s32) value.pointC.Y();
+					ValueI[7] = (s32) value.pointC.Y;
 				if (Count > 8)
-					ValueI[8] = (s32) value.pointC.Z();
+					ValueI[8] = (s32) value.pointC.Z;
 			}
 		}
 
@@ -889,24 +889,24 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = (f32) v.Start.X();
+					ValueF[0] = (f32) v.Start.X;
 				if (Count > 1)
-					ValueF[1] = (f32) v.Start.Y();
+					ValueF[1] = (f32) v.Start.Y;
 				if (Count > 2)
-					ValueF[2] = (f32) v.End.X();
+					ValueF[2] = (f32) v.End.X;
 				if (Count > 3)
-					ValueF[3] = (f32) v.End.Y();
+					ValueF[3] = (f32) v.End.Y;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = v.Start.X();
+					ValueI[0] = v.Start.X;
 				if (Count > 1)
-					ValueI[1] = v.Start.Y();
+					ValueI[1] = v.Start.Y;
 				if (Count > 2)
-					ValueI[2] = v.End.X();
+					ValueI[2] = v.End.X;
 				if (Count > 3)
-					ValueI[3] = v.End.Y();
+					ValueI[3] = v.End.Y;
 			}
 		}
 
@@ -916,24 +916,24 @@ namespace irrgame
 			if (IsFloat)
 			{
 				if (Count > 0)
-					ValueF[0] = v.Start.X();
+					ValueF[0] = v.Start.X;
 				if (Count > 1)
-					ValueF[1] = v.Start.Y();
+					ValueF[1] = v.Start.Y;
 				if (Count > 2)
-					ValueF[2] = v.End.X();
+					ValueF[2] = v.End.X;
 				if (Count > 3)
-					ValueF[3] = v.End.Y();
+					ValueF[3] = v.End.Y;
 			}
 			else
 			{
 				if (Count > 0)
-					ValueI[0] = (s32) v.Start.X();
+					ValueI[0] = (s32) v.Start.X;
 				if (Count > 1)
-					ValueI[1] = (s32) v.Start.Y();
+					ValueI[1] = (s32) v.Start.Y;
 				if (Count > 2)
-					ValueI[2] = (s32) v.End.X();
+					ValueI[2] = (s32) v.End.X;
 				if (Count > 3)
-					ValueI[3] = (s32) v.End.Y();
+					ValueI[3] = (s32) v.End.Y;
 			}
 		}
 
@@ -956,7 +956,7 @@ namespace irrgame
 			}
 		}
 
-		//! set float array
+//! set float array
 		void CNumbersAttribute::setFloatArray(arrayf &vals)
 		{
 			reset();
@@ -970,7 +970,7 @@ namespace irrgame
 			}
 		}
 
-		//! set int array
+//! set int array
 		void CNumbersAttribute::setIntArray(arrayi &vals)
 		{
 			reset();
@@ -984,13 +984,13 @@ namespace irrgame
 			}
 		}
 
-		//! is it a number list?
+//! is it a number list?
 		bool CNumbersAttribute::isNumberList()
 		{
 			return true;
 		}
 
-		//! is it a float list?
+//! is it a float list?
 		bool CNumbersAttribute::isFloat()
 		{
 			return IsFloat;
@@ -1012,7 +1012,7 @@ namespace irrgame
 				return "intlist";
 		}
 
-		//! clear all values
+//! clear all values
 		void CNumbersAttribute::reset()
 		{
 			if (IsFloat)

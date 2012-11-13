@@ -2,11 +2,10 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#ifndef __IRR_POINT_3D_H_INCLUDED__
-#define __IRR_POINT_3D_H_INCLUDED__
+#ifndef VECTOR3D_H_
+#define VECTOR3D_H_
 
 #include "core/math/SharedFastMath.h"
-#include "threads/irrgameMonitor.h"
 
 namespace irrgame
 {
@@ -17,7 +16,7 @@ namespace irrgame
 		/** The vector3d class is used in Irrlicht for three main purposes:
 		 1) As a direction vector (most of the methods assume this).
 		 2) As a position in 3d space (which is synonymous with a direction vector from the origin to this position).
-		 3) To hold three Euler rotations, where _X is pitch, _Y is yaw and _Z is roll.
+		 3) To hold three Euler rotations, where X is pitch, Y is yaw and Z is roll.
 		 */
 		template<class T>
 		class vector3d
@@ -61,14 +60,14 @@ namespace irrgame
 				vector3d<T>& operator/=(const vector3d<T>& other);
 				vector3d<T>& operator/=(const T v);
 
-				//! sort in order _X, _Y, _Z. Equality with rounding tolerance.
+				//! sort in order X, Y, Z. Equality with rounding tolerance.
 				bool operator<=(const vector3d<T>&other) const;
-				//! sort in order _X, _Y, _Z. Equality with rounding tolerance.
+				//! sort in order X, Y, Z. Equality with rounding tolerance.
 				bool operator>=(const vector3d<T>&other) const;
 
-				//! sort in order _X, _Y, _Z. Difference must be above rounding tolerance.
+				//! sort in order X, Y, Z. Difference must be above rounding tolerance.
 				bool operator<(const vector3d<T>&other) const;
-				//! sort in order _X, _Y, _Z. Difference must be above rounding tolerance.
+				//! sort in order X, Y, Z. Difference must be above rounding tolerance.
 				bool operator>(const vector3d<T>&other) const;
 
 				//! use weak float compare
@@ -128,22 +127,22 @@ namespace irrgame
 				//! Inverts the vector.
 				vector3d<T>& invert();
 
-				//! Rotates the vector by a specified number of degrees around the _Y axis and the specified center.
-				/** \param degrees Number of degrees to rotate around the _Y axis.
+				//! Rotates the vector by a specified number of degrees around the Y axis and the specified center.
+				/** \param degrees Number of degrees to rotate around the Y axis.
 				 \param center The center of the rotation. */
-				void rotate_X_ZBy(f32 degrees, const vector3d<T>& center =
+				void rotateXZBy(f32 degrees, const vector3d<T>& center =
 						vector3d<T>());
 
-				//! Rotates the vector by a specified number of degrees around the _Z axis and the specified center.
-				/** \param degrees: Number of degrees to rotate around the _Z axis.
+				//! Rotates the vector by a specified number of degrees around the Z axis and the specified center.
+				/** \param degrees: Number of degrees to rotate around the Z axis.
 				 \param center: The center of the rotation. */
-				void rotate_X_YBy(f32 degrees, const vector3d<T>& center =
+				void rotateXYBy(f32 degrees, const vector3d<T>& center =
 						vector3d<T>());
 
-				//! Rotates the vector by a specified number of degrees around the _X axis and the specified center.
-				/** \param degrees: Number of degrees to rotate around the _X axis.
+				//! Rotates the vector by a specified number of degrees around the X axis and the specified center.
+				/** \param degrees: Number of degrees to rotate around the X axis.
 				 \param center: The center of the rotation. */
-				void rotate_Y_ZBy(f32 degrees, const vector3d<T>& center =
+				void rotateYZBy(f32 degrees, const vector3d<T>& center =
 						vector3d<T>());
 
 				//! Creates an interpolated vector between this vector and another vector.
@@ -170,9 +169,9 @@ namespace irrgame
 					const f32 mul2 = d * d;
 
 					return vector3d<T>(
-							(T) (_X * mul0 + v2._X * mul1 + v3._X * mul2),
-							(T) (_Y * mul0 + v2._Y * mul1 + v3._Y * mul2),
-							(T) (_Z * mul0 + v2._Z * mul1 + v3._Z * mul2));
+							(T) (X * mul0 + v2.X * mul1 + v3.X * mul2),
+							(T) (Y * mul0 + v2.Y * mul1 + v3.Y * mul2),
+							(T) (Z * mul0 + v2.Z * mul1 + v3.Z * mul2));
 				}
 
 				//! Sets this vector to the linearly interpolated vector between a and b.
@@ -185,9 +184,9 @@ namespace irrgame
 						const vector3d<T>& b, f32 d)
 				{
 
-					_X = (T) ((f32) b._X + ((a._X - b._X) * d));
-					_Y = (T) ((f32) b._Y + ((a._Y - b._Y) * d));
-					_Z = (T) ((f32) b._Z + ((a._Z - b._Z) * d));
+					X = (T) ((f32) b.X + ((a.X - b.X) * d));
+					Y = (T) ((f32) b.Y + ((a.Y - b.Y) * d));
+					Z = (T) ((f32) b.Z + ((a.Z - b.Z) * d));
 
 					return *this;
 				}
@@ -203,15 +202,15 @@ namespace irrgame
 				 const vector3df requiredRotation = toTarget.getHorizontalAngle();
 				 seeker->setRotation(requiredRotation);
 
-				 \return A rotation vector containing the _X (pitch) and _Y (raw) rotations (in degrees) that when applied to a
-				 +_Z (e.g. 0, 0, 1) direction vector would make it point in the same direction as this vector. The _Z (roll) rotation
+				 \return A rotation vector containing the X (pitch) and Y (raw) rotations (in degrees) that when applied to a
+				 +Z (e.g. 0, 0, 1) direction vector would make it point in the same direction as this vector. The Z (roll) rotation
 				 is always 0, since two Euler rotations are sufficient to point in any given direction. */
 				vector3d<T> getHorizontalAngle() const;
 
 				//! Get the spherical coordinate angles
 				/** This returns Euler degrees for the point represented by
 				 this vector.  The calculation assumes the pole at (0,1,0) and
-				 returns the angles in _X and _Y.
+				 returns the angles in X and Y.
 				 */
 				vector3d<T> getSphericalCoordinateAngles();
 
@@ -220,7 +219,7 @@ namespace irrgame
 				 The implementation performs the same calculations as using a matrix to do the rotation.
 
 				 \param[in] forwards  The direction representing "forwards" which will be rotated by this vector.
-				 If you do not provide a direction, then the +_Z axis (0, 0, 1) will be assumed to be forwards.
+				 If you do not provide a direction, then the +Z axis (0, 0, 1) will be assumed to be forwards.
 				 \return A direction vector calculated by rotating the forwards direction by the 3 Euler angles
 				 (in degrees) represented by this vector. */
 				vector3d<T> rotationToDirection(const vector3d<T> & forwards =
@@ -231,30 +230,10 @@ namespace irrgame
 				 will always be 0. */
 				void getAs4Values(T* array) const;
 
-				//getters/setters
-
-				//! Getter\setter for _X coordinate of the vector
-				T& X();
-				//! Getter\setter for _Y coordinate of the vector
-				T& Y();
-				//! Getter\setter for _Z coordinate of the vector
-				T& Z();
-
-				//! Getter for _X coordinate of the const vector
-				const T X() const;
-				//! Getter for _Y coordinate of the const vector
-				const T Y() const;
-				//! Getter for _Z coordinate of the const vector
-				const T Z() const;
-
 			public:
-				T _X;
-				T _Y;
-				T _Z;
-
-			private:
-
-				threads::irrgameMonitor* Monitor;
+				T X;
+				T Y;
+				T Z;
 		};
 
 		//! Returns empty string
@@ -268,33 +247,29 @@ namespace irrgame
 		//! Default constructor (null vector).
 		template<class T>
 		inline vector3d<T>::vector3d() :
-				_X(0), _Y(0), _Z(0), Monitor(0)
+				X(0), Y(0), Z(0)
 		{
-			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Constructor with three different values
 		template<class T>
 		inline vector3d<T>::vector3d(T nx, T ny, T nz) :
-				_X(nx), _Y(ny), _Z(nz), Monitor(0)
+				X(nx), Y(ny), Z(nz)
 		{
-			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Constructor with the same value for all elements
 		template<class T>
 		inline vector3d<T>::vector3d(T n) :
-				_X(0), _Y(0), _Z(0), Monitor(0)
+				X(0), Y(0), Z(0)
 		{
-			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Copy constructor
 		template<class T>
-		inline vector3d<T>::vector3d(const vector3d<T>& other) :
-				Monitor(0)
+		inline vector3d<T>::vector3d(const vector3d<T>& other)
+
 		{
-			Monitor = threads::createIrrgameMonitor();
 			*this = other;
 		}
 
@@ -306,15 +281,9 @@ namespace irrgame
 			if (this == &other)
 				return *this;
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			_X = other._X;
-			_Y = other._Y;
-			_Z = other._Z;
-
-			Monitor->exit();
-			other.Monitor->exit();
+			X = other.X;
+			Y = other.Y;
+			Z = other.Z;
 
 			return *this;
 		}
@@ -323,67 +292,29 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T> vector3d<T>::operator-() const
 		{
-			Monitor->enter();
-			vector3d<T> result = vector3d<T>(-_X, -_Y, -_Z);
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(-X, -Y, -Z);
 		}
 
 		template<class T>
 		inline vector3d<T> vector3d<T>::operator+(
 				const vector3d<T>& other) const
 		{
-			bool selfAppending = false;
-
-			//handle self-appending
-			if (this == &other)
-				selfAppending = true;
-
-			if (!selfAppending)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			vector3d<T> result = vector3d<T>(_X + other._X, _Y + other._Y,
-					_Z + other._Z);
-
-			if (!selfAppending)
-				other.Monitor->exit();
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(X + other.X, Y + other.Y, Z + other.Z);
 		}
 
 		template<class T>
 		inline vector3d<T> vector3d<T>::operator+(const T val) const
 		{
-			Monitor->enter();
-			vector3d<T> result = vector3d<T>(_X + val, _Y + val, _Z + val);
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(X + val, Y + val, Z + val);
 		}
 
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator+=(const vector3d<T>& other)
 		{
-			bool selfAppending = false;
 
-			//handle self-appending
-			if (this == &other)
-				selfAppending = true;
-
-			if (!selfAppending)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			_X += other._X;
-			_Y += other._Y;
-			_Z += other._Z;
-
-			if (!selfAppending)
-				other.Monitor->exit();
-			Monitor->exit();
+			X += other.X;
+			Y += other.Y;
+			Z += other.Z;
 
 			return *this;
 		}
@@ -391,11 +322,10 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator+=(const T val)
 		{
-			Monitor->enter();
-			_X += val;
-			_Y += val;
-			_Z += val;
-			Monitor->exit();
+
+			X += val;
+			Y += val;
+			Z += val;
 
 			return *this;
 		}
@@ -404,21 +334,11 @@ namespace irrgame
 		inline vector3d<T> vector3d<T>::operator-(
 				const vector3d<T>& other) const
 		{
-			bool selfSubtracting = false;
-
 			if (this == &other)
-				selfSubtracting = true;
+				return vector3d<T>();
 
-			if (!selfSubtracting)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			vector3d<T> result = vector3d<T>(_X - other._X, _Y - other._Y,
-					_Z - other._Z);
-
-			if (!selfSubtracting)
-				other.Monitor->exit();
-			Monitor->exit();
+			vector3d<T> result = vector3d<T>(X - other.X, Y - other.Y,
+					Z - other.Z);
 
 			return result;
 		}
@@ -426,32 +346,15 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T> vector3d<T>::operator-(const T val) const
 		{
-			Monitor->enter();
-			vector3d<T> result = vector3d<T>(_X - val, _Y - val, _Z - val);
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(X - val, Y - val, Z - val);
 		}
 
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator-=(const vector3d<T>& other)
 		{
-			bool selfSubtracting = false;
-
-			if (this == &other)
-				selfSubtracting = true;
-
-			if (!selfSubtracting)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			_X -= other._X;
-			_Y -= other._Y;
-			_Z -= other._Z;
-
-			if (!selfSubtracting)
-				other.Monitor->exit();
-			Monitor->exit();
+			X -= other.X;
+			Y -= other.Y;
+			Z -= other.Z;
 
 			return *this;
 		}
@@ -459,11 +362,10 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator-=(const T val)
 		{
-			Monitor->enter();
-			_X -= val;
-			_Y -= val;
-			_Z -= val;
-			Monitor->enter();
+
+			X -= val;
+			Y -= val;
+			Z -= val;
 
 			return *this;
 		}
@@ -472,54 +374,21 @@ namespace irrgame
 		inline vector3d<T> vector3d<T>::operator*(
 				const vector3d<T>& other) const
 		{
-			bool selfMultiplication = false;
-
-			if (this == &other)
-				selfMultiplication = true;
-
-			if (!selfMultiplication)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			vector3d<T> result = vector3d<T>(_X * other._X, _Y * other._Y,
-					_Z * other._Z);
-
-			if (!selfMultiplication)
-				other.Monitor->exit();
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(X * other.X, Y * other.Y, Z * other.Z);
 		}
 
 		template<class T>
 		inline vector3d<T> vector3d<T>::operator*(const T v) const
 		{
-			Monitor->enter();
-			vector3d<T> result = vector3d<T>(_X * v, _Y * v, _Z * v);
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(X * v, Y * v, Z * v);
 		}
 
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator*=(const vector3d<T>& other)
 		{
-			bool selfMultiplication = false;
-
-			if (this == &other)
-				selfMultiplication = true;
-
-			if (!selfMultiplication)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			_X *= other._X;
-			_Y *= other._Y;
-			_Z *= other._Z;
-
-			if (!selfMultiplication)
-				other.Monitor->exit();
-			Monitor->exit();
+			X *= other.X;
+			Y *= other.Y;
+			Z *= other.Z;
 
 			return *this;
 		}
@@ -527,11 +396,9 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator*=(const T v)
 		{
-			Monitor->enter();
-			_X *= v;
-			_Y *= v;
-			_Z *= v;
-			Monitor->exit();
+			X *= v;
+			Y *= v;
+			Z *= v;
 
 			return *this;
 		}
@@ -540,25 +407,9 @@ namespace irrgame
 		inline vector3d<T> vector3d<T>::operator/(
 				const vector3d<T>& other) const
 		{
-			bool selfDivision = false;
+			IRR_ASSERT(other.X != 0 && other.Y != 0 && other.Z != 0);
 
-			if (this == &other)
-				selfDivision = true;
-
-			if (!selfDivision)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			IRR_ASSERT(other._X != 0 && other._Y != 0 && other._Z != 0);
-
-			vector3d<T> result = vector3d<T>(_X / other._X, _Y / other._Y,
-					_Z / other._Z);
-
-			if (!selfDivision)
-				other.Monitor->exit();
-			Monitor->exit();
-
-			return result;
+			return vector3d<T>(X / other.X, Y / other.Y, Z / other.Z);
 		}
 
 		template<class T>
@@ -566,10 +417,7 @@ namespace irrgame
 		{
 			IRR_ASSERT(v != 0);
 
-			Monitor->enter();
-			vector3d<T> result = vector3d<T>((T) _X / v, (T) _Y / v,
-					(T) _Z / v);
-			Monitor->exit();
+			vector3d<T> result = vector3d<T>((T) X / v, (T) Y / v, (T) Z / v);
 
 			return result;
 		}
@@ -577,24 +425,11 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T>& vector3d<T>::operator/=(const vector3d<T>& other)
 		{
-			bool selfDivision = false;
+			IRR_ASSERT(other.X != 0 && other.Y != 0 && other.Z != 0);
 
-			if (this == &other)
-				selfDivision = true;
-
-			if (!selfDivision)
-				other.Monitor->enter();
-			Monitor->enter();
-
-			IRR_ASSERT(other._X != 0 && other._Y != 0 && other._Z != 0);
-
-			_X /= other._X;
-			_Y /= other._Y;
-			_Z /= other._Z;
-
-			if (!selfDivision)
-				other.Monitor->exit();
-			Monitor->exit();
+			X /= other.X;
+			Y /= other.Y;
+			Z /= other.Z;
 
 			return *this;
 		}
@@ -604,76 +439,62 @@ namespace irrgame
 		{
 			IRR_ASSERT(v != 0);
 
-			Monitor->enter();
-			_X /= v;
-			_Y /= v;
-			_Z /= v;
-			Monitor->exit();
+			X /= v;
+			Y /= v;
+			Z /= v;
 
 			return *this;
 		}
 
-		//! sort in order _X, _Y, _Z. Equality with rounding tolerance.
+		//! sort in order X, Y, Z. Equality with rounding tolerance.
 		template<class T>
 		inline bool vector3d<T>::operator<=(const vector3d<T>&other) const
 		{
 			if (this == &other)
 				return true;
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			bool result = (_X < other._X
-					|| core::SharedMath::getInstance().equals(_X, other._X))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& (_Y < other._Y
-									|| core::SharedMath::getInstance().equals(
-											_Y, other._Y)))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& core::SharedMath::getInstance().equals(_Y,
-									other._Y)
-							&& (_Z < other._Z
-									|| core::SharedMath::getInstance().equals(
-											_Z, other._Z)));
-
-			Monitor->exit();
-			other.Monitor->exit();
+			bool result = (X < other.X
+					|| core::SharedMath::getInstance().equals(X, other.X))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& (Y < other.Y
+									|| core::SharedMath::getInstance().equals(Y,
+											other.Y)))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& core::SharedMath::getInstance().equals(Y,
+									other.Y)
+							&& (Z < other.Z
+									|| core::SharedMath::getInstance().equals(Z,
+											other.Z)));
 
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
-		//! sort in order _X, _Y, _Z. Equality with rounding tolerance.
+		//! sort in order X, Y, Z. Equality with rounding tolerance.
 		template<class T>
 		inline bool vector3d<T>::operator>=(const vector3d<T>&other) const
 		{
 			if (this == &other)
 				return true;
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			bool result = (_X > other._X
-					|| core::SharedMath::getInstance().equals(_X, other._X))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& (_Y > other._Y
-									|| core::SharedMath::getInstance().equals(
-											_Y, other._Y)))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& core::SharedMath::getInstance().equals(_Y,
-									other._Y)
-							&& (_Z > other._Z
-									|| core::SharedMath::getInstance().equals(
-											_Z, other._Z)));
-
-			Monitor->exit();
-			other.Monitor->exit();
+			bool result = (X > other.X
+					|| core::SharedMath::getInstance().equals(X, other.X))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& (Y > other.Y
+									|| core::SharedMath::getInstance().equals(Y,
+											other.Y)))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& core::SharedMath::getInstance().equals(Y,
+									other.Y)
+							&& (Z > other.Z
+									|| core::SharedMath::getInstance().equals(Z,
+											other.Z)));
 
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
-		//! sort in order _X, _Y, _Z. Difference must be above rounding tolerance.
+		//! sort in order X, Y, Z. Difference must be above rounding tolerance.
 		template<class T>
 		inline bool vector3d<T>::operator<(const vector3d<T>&other) const
 		{
@@ -683,29 +504,23 @@ namespace irrgame
 				return false;
 			}
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			bool result = (_X < other._X
-					&& !core::SharedMath::getInstance().equals(_X, other._X))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& _Y < other._Y
-							&& !core::SharedMath::getInstance().equals(_Y,
-									other._Y))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& core::SharedMath::getInstance().equals(_Y,
-									other._Y) && _Z < other._Z
-							&& !core::SharedMath::getInstance().equals(_Z,
-									other._Z));
-
-			Monitor->exit();
-			other.Monitor->exit();
+			bool result = (X < other.X
+					&& !core::SharedMath::getInstance().equals(X, other.X))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& Y < other.Y
+							&& !core::SharedMath::getInstance().equals(Y,
+									other.Y))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& core::SharedMath::getInstance().equals(Y,
+									other.Y) && Z < other.Z
+							&& !core::SharedMath::getInstance().equals(Z,
+									other.Z));
 
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
 		}
 
-		//! sort in order _X, _Y, _Z. Difference must be above rounding tolerance.
+		//! sort in order X, Y, Z. Difference must be above rounding tolerance.
 		template<class T>
 		inline bool vector3d<T>::operator>(const vector3d<T>&other) const
 		{
@@ -715,22 +530,17 @@ namespace irrgame
 				return false;
 			}
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			bool result = (_X > other._X
-					&& !core::SharedMath::getInstance().equals(_X, other._X))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& _Y > other._Y
-							&& !core::SharedMath::getInstance().equals(_Y,
-									other._Y))
-					|| (core::SharedMath::getInstance().equals(_X, other._X)
-							&& core::SharedMath::getInstance().equals(_Y,
-									other._Y) && _Z > other._Z
-							&& !core::SharedMath::getInstance().equals(_Z,
-									other._Z));
-			Monitor->exit();
-			other.Monitor->exit();
+			bool result = (X > other.X
+					&& !core::SharedMath::getInstance().equals(X, other.X))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& Y > other.Y
+							&& !core::SharedMath::getInstance().equals(Y,
+									other.Y))
+					|| (core::SharedMath::getInstance().equals(X, other.X)
+							&& core::SharedMath::getInstance().equals(Y,
+									other.Y) && Z > other.Z
+							&& !core::SharedMath::getInstance().equals(Z,
+									other.Z));
 
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return result;
@@ -756,22 +566,19 @@ namespace irrgame
 		inline bool vector3d<T>::equals(const vector3d<T>& other,
 				const T tolerance) const
 		{
-			return core::SharedMath::getInstance().equals(_X, other._X,
-					tolerance)
-					&& core::SharedMath::getInstance().equals(_Y, other._Y,
-							tolerance)
-					&& core::SharedMath::getInstance().equals(_Z, other._Z,
+			return core::SharedMath::getInstance().equals(X, other.X, tolerance)
+
+			&& core::SharedMath::getInstance().equals(Y, other.Y, tolerance)
+					&& core::SharedMath::getInstance().equals(Z, other.Z,
 							tolerance);
 		}
 
 		template<class T>
 		inline vector3d<T>& vector3d<T>::set(const T nx, const T ny, const T nz)
 		{
-			Monitor->enter();
-			_X = nx;
-			_Y = ny;
-			_Z = nz;
-			Monitor->exit();
+			X = nx;
+			Y = ny;
+			Z = nz;
 
 			return *this;
 		}
@@ -786,23 +593,15 @@ namespace irrgame
 		template<class T>
 		inline T vector3d<T>::getLength() const
 		{
-			Monitor->enter();
-			T result = core::SharedMath::getInstance().squareroot(
-					_X * _X + _Y * _Y + _Z * _Z);
-			Monitor->exit();
-
-			return result;
+			return core::SharedMath::getInstance().squareroot(
+					X * X + Y * Y + Z * Z);
 		}
 
 		//! Get squared length of the vector.
 		template<class T>
 		inline T vector3d<T>::getLengthSQ() const
 		{
-			Monitor->enter();
-			T result = _X * _X + _Y * _Y + _Z * _Z;
-			Monitor->exit();
-
-			return result;
+			return X * X + Y * Y + Z * Z;
 		}
 
 		//! Get the dot product with another vector.
@@ -812,80 +611,35 @@ namespace irrgame
 			if (this == &other)
 				return getLengthSQ();
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			T result = _X * other._X + _Y * other._Y + _Z * other._Z;
-
-			Monitor->exit();
-			other.Monitor->exit();
-
-			return result;
+			return X * other.X + Y * other.Y + Z * other.Z;
 		}
 
 		//! Get distance from another point.
 		template<class T>
 		inline T vector3d<T>::getDistanceFrom(const vector3d<T>& other) const
 		{
-			T result = 0;
-
 			if (this == &other)
-				return result;
+				return 0;
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			result =
-					vector3d<T>(_X - other._X, _Y - other._Y, _Z - other._Z).getLength();
-
-			Monitor->exit();
-			other.Monitor->exit();
-
-			return result;
+			return vector3d<T>(X - other.X, Y - other.Y, Z - other.Z).getLength();
 		}
 
 		//! Returns squared distance from another point.
 		template<class T>
 		inline T vector3d<T>::getDistanceFromSQ(const vector3d<T>& other) const
 		{
-			T result = 0;
-
 			if (this == &other)
-				return result;
+				return 0;
 
-			Monitor->enter();
-			other.Monitor->enter();
-
-			result =
-					vector3d<T>(_X - other._X, _Y - other._Y, _Z - other._Z).getLengthSQ();
-
-			Monitor->exit();
-			other.Monitor->exit();
-
-			return result;
+			return vector3d<T>(X - other.X, Y - other.Y, Z - other.Z).getLengthSQ();
 		}
 
 		//! Calculates the cross product with another vector.
 		template<class T>
 		inline vector3d<T> vector3d<T>::crossProduct(const vector3d<T>& p) const
 		{
-			bool selfCrossProduct = false;
-
-			if (this == &p)
-				selfCrossProduct = true;
-
-			Monitor->enter();
-			if (!selfCrossProduct)
-				p.Monitor->enter();
-
-			vector3d<T> result = vector3d<T>(_Y * p._Z - _Z * p._Y,
-					_Z * p._X - _X * p._Z, _X * p._Y - _Y * p._X);
-
-			Monitor->exit();
-			if (!selfCrossProduct)
-				p.Monitor->exit();
-
-			return result;
+			return vector3d<T>(Y * p.Z - Z * p.Y, Z * p.X - X * p.Z,
+					X * p.Y - Y * p.X);
 		}
 
 		//! Returns if this vector interpreted as a point is on a line between two other points.
@@ -896,17 +650,12 @@ namespace irrgame
 			const T f;
 
 			if (&begin == &end)
+			{
 				f = 0;
+			}
 			else
 			{
-				begin.Monitor->enter();
-				end.Monitor->enter();
-
 				f = (end - begin).getLengthSQ();
-
-				begin.Monitor->exit();
-				end.Monitor->exit();
-
 			}
 
 			bool result = getDistanceFromSQ(begin) <= f
@@ -920,24 +669,18 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T>& vector3d<T>::normalize()
 		{
-			Monitor->enter();
-
-			f32 length = _X * _X + _Y * _Y + _Z * _Z;
+			f32 length = X * X + Y * Y + Z * Z;
 
 			if (core::SharedMath::getInstance().equals(length, 0.0)) // this check isn't an optimization but prevents getting NAN in the sqrt.
 			{
-				Monitor->exit();
 				return *this;
 			}
 
-			length = core::SharedFastMath::getInstance().invertSqrt(
-					length);
+			length = core::SharedFastMath::getInstance().invertSqrt(length);
 
-			_X = (T) (_X * length);
-			_Y = (T) (_Y * length);
-			_Z = (T) (_Z * length);
-
-			Monitor->exit();
+			X = (T) (X * length);
+			Y = (T) (Y * length);
+			Z = (T) (Z * length);
 
 			return *this;
 		}
@@ -954,97 +697,79 @@ namespace irrgame
 		template<class T>
 		inline vector3d<T>& vector3d<T>::invert()
 		{
-			Monitor->enter();
 
-			_X *= -1;
-			_Y *= -1;
-			_Z *= -1;
-
-			Monitor->exit();
+			X *= -1;
+			Y *= -1;
+			Z *= -1;
 
 			return *this;
 		}
 
-		//! Rotates the vector by a specified number of degrees around the _Y axis and the specified center.
+		//! Rotates the vector by a specified number of degrees around the Y axis and the specified center.
 		template<class T>
-		inline void vector3d<T>::rotate_X_ZBy(f32 degrees,
+		inline void vector3d<T>::rotateXZBy(f32 degrees,
 				const vector3d<T>& center)
 		{
 			if (this == &center)
 				return;
 
-			Monitor->enter();
-			center.Monitor->enter();
-
 			degrees *= core::SharedMath::DegToRad;
 			f32 cs = cos(degrees);
 			f32 sn = sin(degrees);
-			_X -= center._X;
-			_Z -= center._Z;
+			X -= center.X;
+			Z -= center.Z;
 
-			_X = (T) (_X * cs - _Z * sn);
-			_Z = (T) (_X * sn + _Z * cs);
+			X = (T) (X * cs - Z * sn);
+			Z = (T) (X * sn + Z * cs);
 
-			_X += center._X;
-			_Z += center._Z;
+			X += center.X;
+			Z += center.Z;
 
-			Monitor->exit();
-			center.Monitor->exit();
 		}
 
-		//! Rotates the vector by a specified number of degrees around the _Z axis and the specified center.
+		//! Rotates the vector by a specified number of degrees around the Z axis and the specified center.
 		template<class T>
-		inline void vector3d<T>::rotate_X_YBy(f32 degrees,
+		inline void vector3d<T>::rotateXYBy(f32 degrees,
 				const vector3d<T>& center)
 		{
 			if (this == &center)
 				return;
 
-			Monitor->enter();
-			center.Monitor->enter();
-
 			degrees *= core::SharedMath::DegToRad;
 			f32 cs = cos(degrees);
 			f32 sn = sin(degrees);
 
-			_X -= center._X;
-			_Y -= center._Y;
+			X -= center.X;
+			Y -= center.Y;
 
-			_X = (T) (_X * cs - _Y * sn);
-			_Y = (T) (_X * sn + _Y * cs);
+			X = (T) (X * cs - Y * sn);
+			Y = (T) (X * sn + Y * cs);
 
-			_X += center._X;
-			_Y += center._Y;
+			X += center.X;
+			Y += center.Y;
 
-			Monitor->exit();
-			center.Monitor->exit();
 		}
 
-		//! Rotates the vector by a specified number of degrees around the _X axis and the specified center.
+		//! Rotates the vector by a specified number of degrees around the X axis and the specified center.
 		template<class T>
-		inline void vector3d<T>::rotate_Y_ZBy(f32 degrees,
+		inline void vector3d<T>::rotateYZBy(f32 degrees,
 				const vector3d<T>& center)
 		{
 			if (this == &center)
 				return;
 
-			Monitor->enter();
-			center.Monitor->enter();
-
 			degrees *= core::SharedMath::DegToRad;
 			f32 cs = cos(degrees);
 			f32 sn = sin(degrees);
-			_Z -= center._Z;
-			_Y -= center._Y;
+			Z -= center.Z;
+			Y -= center.Y;
 
-			_Y = (T) (_Y * cs - _Z * sn);
-			_Z = (T) (_Y * sn + _Z * cs);
+			Y = (T) (Y * cs - Z * sn);
+			Z = (T) (Y * sn + Z * cs);
 
-			_Z += center._Z;
-			_Y += center._Y;
+			Z += center.Z;
+			Y += center.Y;
 
-			Monitor->exit();
-			center.Monitor->exit();
 		}
 
 		//! Creates an interpolated vector between this vector and another vector.
@@ -1055,19 +780,10 @@ namespace irrgame
 			if (this == &other)
 				return *this;
 
-			Monitor->enter();
-			other.Monitor->enter();
-
 			const f32 inv = 1.0 - d;
 
-			vector3d<T> result = vector3d<T>((T) (other._X * inv + _X * d),
-					(T) (other._Y * inv + _Y * d),
-					(T) (other._Z * inv + _Z * d));
-
-			Monitor->exit();
-			other.Monitor->exit();
-
-			return result;
+			return vector3d<T>((T) (other.X * inv + X * d),
+					(T) (other.Y * inv + Y * d), (T) (other.Z * inv + Z * d));
 		}
 
 		//! Get the rotations that would make a (0,0,1) direction vector point in the same direction as this direction vector.
@@ -1076,29 +792,25 @@ namespace irrgame
 		{
 			vector3d<T> result;
 
-			Monitor->enter();
-
-			const f32 tmp = (atan2((f32) _X, (f32) _Z)
+			const f32 tmp = (atan2((f32) X, (f32) Z)
 					* core::SharedMath::RadToDeg);
-			result._Y = (T) tmp;
+			result.Y = (T) tmp;
 
-			if (result._Y < 0)
-				result._Y += 360;
-			if (result._Y >= 360)
-				result._Y -= 360;
+			if (result.Y < 0)
+				result.Y += 360;
+			if (result.Y >= 360)
+				result.Y -= 360;
 
 			const f32 z1 = core::SharedMath::getInstance().squareroot(
-					_X * _X + _Z * _Z);
+					X * X + Z * Z);
 
-			result._X = (T) (atan2((f32) z1, (f32) _Y)
+			result.X = (T) (atan2((f32) z1, (f32) Y)
 					* core::SharedMath::RadToDeg - 90.0);
 
-			if (result._X < 0)
-				result._X += 360;
-			if (result._X >= 360)
-				result._X -= 360;
-
-			Monitor->exit();
+			if (result.X < 0)
+				result.X += 360;
+			if (result.X >= 360)
+				result.X -= 360;
 
 			return result;
 		}
@@ -1109,47 +821,43 @@ namespace irrgame
 		{
 			vector3d<T> result;
 
-			Monitor->enter();
-
-			const f32 length = _X * _X + _Y * _Y + _Z * _Z;
+			const f32 length = X * X + Y * Y + Z * Z;
 
 			if (length)
 			{
-				if (_X != 0)
+				if (X != 0)
 				{
-					result._Y = (T) (atan2((f32) _Z, (f32) _X)
+					result.Y = (T) (atan2((f32) Z, (f32) X)
 							* core::SharedMath::RadToDeg);
 				}
-				else if (_Z < 0)
-					result._Y = 180;
+				else if (Z < 0)
+				{
+					result.Y = 180;
+				}
 
-				result._X =
+				result.X =
 						(T) (acos(
-								_Y
+								Y
 										* core::SharedFastMath::getInstance().invertSqrt(
 												length))
 								* core::SharedMath::RadToDeg);
 			}
 
-			Monitor->exit();
-
 			return result;
 		}
 
 		//! Builds a direction vector from (this) rotation vector.
-		//TODO: check forwards and adds monitor for him
 		template<class T>
 		inline vector3d<T> vector3d<T>::rotationToDirection(
 				const vector3d<T>& forwards) const
 		{
-			Monitor->enter();
 
-			const f32 cr = cos(core::SharedMath::DegToRad * _X);
-			const f32 sr = sin(core::SharedMath::DegToRad * _X);
-			const f32 cp = cos(core::SharedMath::DegToRad * _Y);
-			const f32 sp = sin(core::SharedMath::DegToRad * _Y);
-			const f32 cy = cos(core::SharedMath::DegToRad * _Z);
-			const f32 sy = sin(core::SharedMath::DegToRad * _Z);
+			const f32 cr = cos(core::SharedMath::DegToRad * X);
+			const f32 sr = sin(core::SharedMath::DegToRad * X);
+			const f32 cp = cos(core::SharedMath::DegToRad * Y);
+			const f32 sp = sin(core::SharedMath::DegToRad * Y);
+			const f32 cy = cos(core::SharedMath::DegToRad * Z);
+			const f32 sy = sin(core::SharedMath::DegToRad * Z);
 
 			const f32 srsp = sr * sp;
 			const f32 crsp = cr * sp;
@@ -1160,17 +868,15 @@ namespace irrgame
 					- sr * cy), (cr * cp) };
 
 			vector3d<T> result = vector3d<T>(
-					(T) (forwards._X * pseudoMatrix[0]
-							+ forwards._Y * pseudoMatrix[3]
-							+ forwards._Z * pseudoMatrix[6]),
-					(T) (forwards._X * pseudoMatrix[1]
-							+ forwards._Y * pseudoMatrix[4]
-							+ forwards._Z * pseudoMatrix[7]),
-					(T) (forwards._X * pseudoMatrix[2]
-							+ forwards._Y * pseudoMatrix[5]
-							+ forwards._Z * pseudoMatrix[8]));
-
-			Monitor->exit();
+					(T) (forwards.X * pseudoMatrix[0]
+							+ forwards.Y * pseudoMatrix[3]
+							+ forwards.Z * pseudoMatrix[6]),
+					(T) (forwards.X * pseudoMatrix[1]
+							+ forwards.Y * pseudoMatrix[4]
+							+ forwards.Z * pseudoMatrix[7]),
+					(T) (forwards.X * pseudoMatrix[2]
+							+ forwards.Y * pseudoMatrix[5]
+							+ forwards.Z * pseudoMatrix[8]));
 
 			return result;
 		}
@@ -1179,82 +885,10 @@ namespace irrgame
 		template<class T>
 		inline void vector3d<T>::getAs4Values(T* array) const
 		{
-			Monitor->enter();
-
-			array[0] = _X;
-			array[1] = _Y;
-			array[2] = _Z;
+			array[0] = X;
+			array[1] = Y;
+			array[2] = Z;
 			array[3] = 0;
-
-			Monitor->exit();
-		}
-
-		//getters/setters
-
-		//! Getter\setter for _X coordinate of the vector
-		template<class T>
-		inline T& vector3d<T>::X()
-		{
-			Monitor->enter();
-			T& result = _X;
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Getter\setter for _Y coordinate of the vector
-		template<class T>
-		inline T& vector3d<T>::Y()
-		{
-			Monitor->enter();
-			T& result = _Y;
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Getter\setter for _Z coordinate of the vector
-		template<class T>
-		inline T& vector3d<T>::Z()
-		{
-			Monitor->enter();
-			T& result = _Z;
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Getter for _X coordinate of the const vector
-		template<class T>
-		inline const T vector3d<T>::X() const
-		{
-			Monitor->enter();
-			const T result = _X;
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Getter for _Y coordinate of the const vector
-		template<class T>
-		inline const T vector3d<T>::Y() const
-		{
-			Monitor->enter();
-			const T result = _Y;
-			Monitor->exit();
-
-			return result;
-		}
-
-		//! Getter for _Z coordinate of the const vector
-		template<class T>
-		inline const T vector3d<T>::Z() const
-		{
-			Monitor->enter();
-			const T result = _Z;
-			Monitor->exit();
-
-			return result;
 		}
 
 //		//TODO: review this funcs. Mb need delete.
@@ -1263,9 +897,9 @@ namespace irrgame
 //		template<>
 //		inline vector3d<s32> vector3d<s32>::operator /(s32 val) const
 //		{
-//			Monitor->enter();
-//			vector3d<s32> result = vector3d<s32>(_X / val, _Y / val, _Z / val);
-//			Monitor->exit();
+//
+//			vector3d<s32> result = vector3d<s32>(X / val, Y / val, Z / val);
+//
 //
 //			return result;
 //		}
@@ -1273,9 +907,9 @@ namespace irrgame
 //		template<>
 //		inline vector3d<s32>& vector3d<s32>::operator /=(s32 val)
 //		{
-//			_X /= val;
-//			_Y /= val;
-//			_Z /= val;
+//			X /= val;
+//			Y /= val;
+//			Z /= val;
 //			return *this;
 //		}
 //
@@ -1293,5 +927,5 @@ namespace irrgame
 typedef irrgame::core::vector3d<f32> vector3df;
 typedef irrgame::core::vector3d<s32> vector3di;
 
-#endif
+#endif /* VECTOR3D_H_ */
 

@@ -5,7 +5,7 @@
  *      Author: gregorytkach
  */
 
-#include "scene/ISceneNode.h"
+#include "scene/node/ISceneNode.h"
 
 namespace irrgame
 {

@@ -46,7 +46,7 @@ namespace irrgame
 				template<class U>
 				rect(const vector2d<T>& pos, const dimension2d<U>& size) :
 						UpperLeftCorner(pos), LowerRightCorner(
-								pos.X() + size.Width, pos.Y() + size.Height)
+								pos.X + size.Width, pos.Y + size.Height)
 				{
 				}
 
@@ -186,14 +186,14 @@ namespace irrgame
 		template<class T>
 		T rect<T>::getWidth() const
 		{
-			return LowerRightCorner.X() - UpperLeftCorner.X();
+			return LowerRightCorner.X - UpperLeftCorner.X;
 		}
 
 		//! Get height of rectangle.
 		template<class T>
 		T rect<T>::getHeight() const
 		{
-			return LowerRightCorner.Y() - UpperLeftCorner.Y();
+			return LowerRightCorner.Y - UpperLeftCorner.Y;
 		}
 
 		//! Returns if a 2d point is within this rectangle.
@@ -318,8 +318,8 @@ namespace irrgame
 		template<class T>
 		bool rect<T>::isValid() const
 		{
-			return ((LowerRightCorner.X() >= UpperLeftCorner.X())
-					&& (LowerRightCorner.Y() >= UpperLeftCorner.Y()));
+			return ((LowerRightCorner.X >= UpperLeftCorner.X)
+					&& (LowerRightCorner.Y >= UpperLeftCorner.Y));
 		}
 
 		//! Get the center of the rectangle

@@ -1,15 +1,14 @@
 /*
- * compileConfigMacOSX.h
- * Compile config for MacOSX
- *  Created on: Nov 1, 2012
+ * compileConfigLinux.h
+ *
+ *  Created on: Nov 13, 2012
  *      Author: gregorytkach
  */
 
-#if defined(__APPLE__) || defined(MACOSX)
+#ifndef COMPILECONFIGLINUX_H_
+#define COMPILECONFIGLINUX_H_
 
-#ifndef COMPILECONFIGMACOSX_H_
-#define COMPILECONFIGMACOSX_H_
-
+#ifdef __linux
 /*
  * Fundamental types. This typedefs ensures portability of the engine.
  */
@@ -56,12 +55,7 @@ typedef float f32;
  */
 #define IRR_FAST_MATH
 #endif /* DEBUG */
-/*
- * legacy support
- */
-#ifndef MACOSX
-#define MACOSX
-#endif /* legacy support */
+
 /*
  * REALINLINE
  */
@@ -74,11 +68,10 @@ typedef float f32;
 #define LINEBREAK "\r"
 
 /*
- * Not used in MacOSX
+ * Not used in Linux
  */
 #define _IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX
 
-#endif /* COMPILECONFIGMACOSX_H_ */
+#endif /* __linux */
 
-#endif /*defined(__APPLE__) || defined(MACOSX) */
-
+#endif /* COMPILECONFIGLINUX_H_ */

@@ -51,6 +51,7 @@ namespace irrgame
 			s32 jfif = 0;
 			file->seek(6);
 			file->read(&jfif, sizeof(s32));
+
 			bool isJpegFile = jfif == 0x4a464946 || jfif == 0x4649464a;
 
 			IRR_ASSERT(isJpegFile);

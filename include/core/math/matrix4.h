@@ -400,26 +400,46 @@ namespace irrgame
 			switch (constructor)
 			{
 				case EM4CONST_IDENTITY:
+				{
 					makeIdentity();
 					break;
+				}
 				case EM4CONST_NOTHING:
+				{
 					break;
+				}
 				case EM4CONST_COPY:
+				{
 					*this = other;
 					break;
+				}
 				case EM4CONST_TRANSPOSED:
+				{
 					other.getTransposed(*this);
 					break;
+				}
 				case EM4CONST_INVERSE:
+				{
 					if (!other.getInverse(*this))
+					{
 						memset(M, 0, 16 * sizeof(T));
+					}
+
 					break;
+				}
 				case EM4CONST_INVERSE_TRANSPOSED:
+				{
 					if (!other.getInverse(*this))
+					{
 						memset(M, 0, 16 * sizeof(T));
+					}
 					else
+					{
 						*this = getTransposed();
+					}
+
 					break;
+				}
 				default:
 				{
 					//not implemented
@@ -731,9 +751,9 @@ namespace irrgame
 		inline matrix4<T>& matrix4<T>::setTranslation(
 				const vector3d<T>& translation)
 		{
-			M[12] = translation.X();
-			M[13] = translation.Y();
-			M[14] = translation.Z();
+			M[12] = translation.X;
+			M[13] = translation.Y;
+			M[14] = translation.Z;
 
 			return *this;
 		}
@@ -742,9 +762,9 @@ namespace irrgame
 		inline matrix4<T>& matrix4<T>::setInverseTranslation(
 				const vector3d<T>& translation)
 		{
-			M[12] = -translation.X();
-			M[13] = -translation.Y();
-			M[14] = -translation.Z();
+			M[12] = -translation.X;
+			M[13] = -translation.Y;
+			M[14] = -translation.Z;
 
 			return *this;
 		}
@@ -752,9 +772,9 @@ namespace irrgame
 		template<class T>
 		inline matrix4<T>& matrix4<T>::setScale(const vector3d<T>& scale)
 		{
-			M[0] = scale.X();
-			M[5] = scale.Y();
-			M[10] = scale.Z();
+			M[0] = scale.X;
+			M[5] = scale.Y;
+			M[10] = scale.Z;
 
 			return *this;
 		}
@@ -812,12 +832,12 @@ namespace irrgame
 		inline matrix4<T>& matrix4<T>::setRotationRadians(
 				const vector3d<T>& rotation)
 		{
-			const f32 cr = cos(rotation.X());
-			const f32 sr = sin(rotation.X());
-			const f32 cp = cos(rotation.Y());
-			const f32 sp = sin(rotation.Y());
-			const f32 cy = cos(rotation.Z());
-			const f32 sy = sin(rotation.Z());
+			const f32 cr = cos(rotation.X);
+			const f32 sr = sin(rotation.X);
+			const f32 cp = cos(rotation.Y);
+			const f32 sp = sin(rotation.Y);
+			const f32 cy = cos(rotation.Z);
+			const f32 sy = sin(rotation.Z);
 
 			M[0] = (T) (cp * cy);
 			M[1] = (T) (cp * sy);
@@ -847,11 +867,11 @@ namespace irrgame
 			const matrix4<T> &mat = *this;
 			const core::vector3d<T> scale = getScale();
 			const vector3df invScale(
-					SharedFastMath::getInstance().invert(scale.X()),
-					SharedFastMath::getInstance().invert(scale.Y()),
-					SharedFastMath::getInstance().invert(scale.Z()));
+					SharedFastMath::getInstance().invert(scale.X),
+					SharedFastMath::getInstance().invert(scale.Y),
+					SharedFastMath::getInstance().invert(scale.Z));
 
-			f32 Y = -asin(mat[2] * invScale.X());
+			f32 Y = -asin(mat[2] * invScale.X);
 			const f32 C = cos(Y);
 			Y *= SharedMath::RadToDeg;
 
@@ -860,18 +880,18 @@ namespace irrgame
 			if (!SharedMath::getInstance().iszero(C))
 			{
 				const f32 invC = SharedFastMath::getInstance().invert(C);
-				rotx = mat[10] * invC * invScale.Z();
-				roty = mat[6] * invC * invScale.Y();
+				rotx = mat[10] * invC * invScale.Z;
+				roty = mat[6] * invC * invScale.Y;
 				X = atan2(roty, rotx) * SharedMath::RadToDeg;
-				rotx = mat[0] * invC * invScale.X();
-				roty = mat[1] * invC * invScale.X();
+				rotx = mat[0] * invC * invScale.X;
+				roty = mat[1] * invC * invScale.X;
 				Z = atan2(roty, rotx) * SharedMath::RadToDeg;
 			}
 			else
 			{
 				X = 0.0;
-				rotx = mat[5] * invScale.Y();
-				roty = -mat[4] * invScale.Y();
+				rotx = mat[5] * invScale.Y;
+				roty = -mat[4] * invScale.Y;
 				Z = atan2(roty, rotx) * SharedMath::RadToDeg;
 			}
 
@@ -892,12 +912,12 @@ namespace irrgame
 		inline matrix4<T>& matrix4<T>::setInverseRotationRadians(
 				const vector3d<T>& rotation)
 		{
-			f32 cr = cos(rotation.X());
-			f32 sr = sin(rotation.X());
-			f32 cp = cos(rotation.Y());
-			f32 sp = sin(rotation.Y());
-			f32 cy = cos(rotation.Z());
-			f32 sy = sin(rotation.Z());
+			f32 cr = cos(rotation.X);
+			f32 sr = sin(rotation.X);
+			f32 cp = cos(rotation.Y);
+			f32 sp = sin(rotation.Y);
+			f32 cy = cos(rotation.Z);
+			f32 sy = sin(rotation.Z);
 
 			M[0] = (T) (cp * cy);
 			M[4] = (T) (cp * sy);
@@ -1029,9 +1049,9 @@ namespace irrgame
 		inline void matrix4<T>::rotateVect(vector3df& vect) const
 		{
 			vector3df tmp = vect;
-			vect.X() = tmp.X() * M[0] + tmp.Y() * M[4] + tmp.Z() * M[8];
-			vect.Y() = tmp.X() * M[1] + tmp.Y() * M[5] + tmp.Z() * M[9];
-			vect.Z() = tmp.X() * M[2] + tmp.Y() * M[6] + tmp.Z() * M[10];
+			vect.X = tmp.X * M[0] + tmp.Y * M[4] + tmp.Z * M[8];
+			vect.Y = tmp.X * M[1] + tmp.Y * M[5] + tmp.Z * M[9];
+			vect.Z = tmp.X * M[2] + tmp.Y * M[6] + tmp.Z * M[10];
 		}
 
 		//! An alternate transform vector method, writing into a second vector
@@ -1039,27 +1059,27 @@ namespace irrgame
 		inline void matrix4<T>::rotateVect(vector3df& out,
 				const vector3df& in) const
 		{
-			out.X() = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8];
-			out.Y() = in.X() * M[1] + in.Y() * M[5] + in.Z() * M[9];
-			out.Z() = in.X() * M[2] + in.Y() * M[6] + in.Z() * M[10];
+			out.X = in.X * M[0] + in.Y * M[4] + in.Z * M[8];
+			out.Y = in.X * M[1] + in.Y * M[5] + in.Z * M[9];
+			out.Z = in.X * M[2] + in.Y * M[6] + in.Z * M[10];
 		}
 
 		//! An alternate transform vector method, writing into an array of 3 floats
 		template<class T>
 		inline void matrix4<T>::rotateVect(T *out, const vector3df& in) const
 		{
-			out[0] = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8];
-			out[1] = in.X() * M[1] + in.Y() * M[5] + in.Z() * M[9];
-			out[2] = in.X() * M[2] + in.Y() * M[6] + in.Z() * M[10];
+			out[0] = in.X * M[0] + in.Y * M[4] + in.Z * M[8];
+			out[1] = in.X * M[1] + in.Y * M[5] + in.Z * M[9];
+			out[2] = in.X * M[2] + in.Y * M[6] + in.Z * M[10];
 		}
 
 		template<class T>
 		inline void matrix4<T>::inverseRotateVect(vector3df& vect) const
 		{
 			vector3df tmp = vect;
-			vect.X() = tmp.X() * M[0] + tmp.Y() * M[1] + tmp.Z() * M[2];
-			vect.Y() = tmp.X() * M[4] + tmp.Y() * M[5] + tmp.Z() * M[6];
-			vect.Z() = tmp.X() * M[8] + tmp.Y() * M[9] + tmp.Z() * M[10];
+			vect.X = tmp.X * M[0] + tmp.Y * M[1] + tmp.Z * M[2];
+			vect.Y = tmp.X * M[4] + tmp.Y * M[5] + tmp.Z * M[6];
+			vect.Z = tmp.X * M[8] + tmp.Y * M[9] + tmp.Z * M[10];
 		}
 
 		template<class T>
@@ -1067,34 +1087,31 @@ namespace irrgame
 		{
 			f32 vector[3];
 
-			vector[0] = vect.X() * M[0] + vect.Y() * M[4] + vect.Z() * M[8]
-					+ M[12];
-			vector[1] = vect.X() * M[1] + vect.Y() * M[5] + vect.Z() * M[9]
-					+ M[13];
-			vector[2] = vect.X() * M[2] + vect.Y() * M[6] + vect.Z() * M[10]
-					+ M[14];
+			vector[0] = vect.X * M[0] + vect.Y * M[4] + vect.Z * M[8] + M[12];
+			vector[1] = vect.X * M[1] + vect.Y * M[5] + vect.Z * M[9] + M[13];
+			vector[2] = vect.X * M[2] + vect.Y * M[6] + vect.Z * M[10] + M[14];
 
-			vect.X() = vector[0];
-			vect.Y() = vector[1];
-			vect.Z() = vector[2];
+			vect.X = vector[0];
+			vect.Y = vector[1];
+			vect.Z = vector[2];
 		}
 
 		template<class T>
 		inline void matrix4<T>::transformVect(vector3df& out,
 				const vector3df& in) const
 		{
-			out.X() = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8] + M[12];
-			out.Y() = in.X() * M[1] + in.Y() * M[5] + in.Z() * M[9] + M[13];
-			out.Z() = in.X() * M[2] + in.Y() * M[6] + in.Z() * M[10] + M[14];
+			out.X = in.X * M[0] + in.Y * M[4] + in.Z * M[8] + M[12];
+			out.Y = in.X * M[1] + in.Y * M[5] + in.Z * M[9] + M[13];
+			out.Z = in.X * M[2] + in.Y * M[6] + in.Z * M[10] + M[14];
 		}
 
 		template<class T>
 		inline void matrix4<T>::transformVect(T *out, const vector3df &in) const
 		{
-			out[0] = in.X() * M[0] + in.Y() * M[4] + in.Z() * M[8] + M[12];
-			out[1] = in.X() * M[1] + in.Y() * M[5] + in.Z() * M[9] + M[13];
-			out[2] = in.X() * M[2] + in.Y() * M[6] + in.Z() * M[10] + M[14];
-			out[3] = in.X() * M[3] + in.Y() * M[7] + in.Z() * M[11] + M[15];
+			out[0] = in.X * M[0] + in.Y * M[4] + in.Z * M[8] + M[12];
+			out[1] = in.X * M[1] + in.Y * M[5] + in.Z * M[9] + M[13];
+			out[2] = in.X * M[2] + in.Y * M[6] + in.Z * M[10] + M[14];
+			out[3] = in.X * M[3] + in.Y * M[7] + in.Z * M[11] + M[15];
 		}
 
 		//! Transforms a plane by this matrix
@@ -1138,9 +1155,9 @@ namespace irrgame
 		{
 
 			const f32 Amin[3] =
-			{ box.MinEdge.X(), box.MinEdge.Y(), box.MinEdge.Z() };
+			{ box.MinEdge.X, box.MinEdge.Y, box.MinEdge.Z };
 			const f32 Amax[3] =
-			{ box.MaxEdge.X(), box.MaxEdge.Y(), box.MaxEdge.Z() };
+			{ box.MaxEdge.X, box.MaxEdge.Y, box.MaxEdge.Z };
 
 			f32 Bmin[3];
 			f32 Bmax[3];
@@ -1171,13 +1188,13 @@ namespace irrgame
 				}
 			}
 
-			box.MinEdge.X() = Bmin[0];
-			box.MinEdge.Y() = Bmin[1];
-			box.MinEdge.Z() = Bmin[2];
+			box.MinEdge.X = Bmin[0];
+			box.MinEdge.Y = Bmin[1];
+			box.MinEdge.Z = Bmin[2];
 
-			box.MaxEdge.X() = Bmax[0];
-			box.MaxEdge.Y() = Bmax[1];
-			box.MaxEdge.Z() = Bmax[2];
+			box.MaxEdge.X = Bmax[0];
+			box.MaxEdge.Y = Bmax[1];
+			box.MaxEdge.Z = Bmax[2];
 		}
 
 		//! Multiplies this matrix by a 1x4 matrix
@@ -1210,17 +1227,17 @@ namespace irrgame
 		template<class T>
 		inline void matrix4<T>::inverseTranslateVect(vector3df& vect) const
 		{
-			vect.X() = vect.X() - M[12];
-			vect.Y() = vect.Y() - M[13];
-			vect.Z() = vect.Z() - M[14];
+			vect.X = vect.X - M[12];
+			vect.Y = vect.Y - M[13];
+			vect.Z = vect.Z - M[14];
 		}
 
 		template<class T>
 		inline void matrix4<T>::translateVect(vector3df& vect) const
 		{
-			vect.X() = vect.X() + M[12];
-			vect.Y() = vect.Y() + M[13];
-			vect.Z() = vect.Z() + M[14];
+			vect.X = vect.X + M[12];
+			vect.Y = vect.Y + M[13];
+			vect.Z = vect.Z + M[14];
 		}
 
 		template<class T>
@@ -1732,24 +1749,24 @@ namespace irrgame
 			plane.Normal.normalize();
 			const f32 d = plane.Normal.dotProduct(light);
 
-			M[0] = (T) (-plane.Normal.X() * light.X() + d);
-			M[1] = (T) (-plane.Normal.X() * light.Y());
-			M[2] = (T) (-plane.Normal.X() * light.Z());
-			M[3] = (T) (-plane.Normal.X() * point);
+			M[0] = (T) (-plane.Normal.X * light.X + d);
+			M[1] = (T) (-plane.Normal.X * light.Y);
+			M[2] = (T) (-plane.Normal.X * light.Z);
+			M[3] = (T) (-plane.Normal.X * point);
 
-			M[4] = (T) (-plane.Normal.Y() * light.X());
-			M[5] = (T) (-plane.Normal.Y() * light.Y() + d);
-			M[6] = (T) (-plane.Normal.Y() * light.Z());
-			M[7] = (T) (-plane.Normal.Y() * point);
+			M[4] = (T) (-plane.Normal.Y * light.X);
+			M[5] = (T) (-plane.Normal.Y * light.Y + d);
+			M[6] = (T) (-plane.Normal.Y * light.Z);
+			M[7] = (T) (-plane.Normal.Y * point);
 
-			M[8] = (T) (-plane.Normal.Z() * light.X());
-			M[9] = (T) (-plane.Normal.Z() * light.Y());
-			M[10] = (T) (-plane.Normal.Z() * light.Z() + d);
-			M[11] = (T) (-plane.Normal.Z() * point);
+			M[8] = (T) (-plane.Normal.Z * light.X);
+			M[9] = (T) (-plane.Normal.Z * light.Y);
+			M[10] = (T) (-plane.Normal.Z * light.Z + d);
+			M[11] = (T) (-plane.Normal.Z * point);
 
-			M[12] = (T) (-plane.D * light.X());
-			M[13] = (T) (-plane.D * light.Y());
-			M[14] = (T) (-plane.D * light.Z());
+			M[12] = (T) (-plane.D * light.X);
+			M[13] = (T) (-plane.D * light.Y);
+			M[14] = (T) (-plane.D * light.Z);
 			M[15] = (T) (-plane.D * point + d);
 
 			return *this;
@@ -1769,19 +1786,19 @@ namespace irrgame
 
 			vector3df yaxis = zaxis.crossProduct(xaxis);
 
-			M[0] = (T) xaxis.X();
-			M[1] = (T) yaxis.X();
-			M[2] = (T) zaxis.X();
+			M[0] = (T) xaxis.X;
+			M[1] = (T) yaxis.X;
+			M[2] = (T) zaxis.X;
 			M[3] = 0;
 
-			M[4] = (T) xaxis.Y();
-			M[5] = (T) yaxis.Y();
-			M[6] = (T) zaxis.Y();
+			M[4] = (T) xaxis.Y;
+			M[5] = (T) yaxis.Y;
+			M[6] = (T) zaxis.Y;
 			M[7] = 0;
 
-			M[8] = (T) xaxis.Z();
-			M[9] = (T) yaxis.Z();
-			M[10] = (T) zaxis.Z();
+			M[8] = (T) xaxis.Z;
+			M[9] = (T) yaxis.Z;
+			M[10] = (T) zaxis.Z;
 			M[11] = 0;
 
 			M[12] = (T) -xaxis.dotProduct(position);
@@ -1806,19 +1823,19 @@ namespace irrgame
 
 			vector3df yaxis = zaxis.crossProduct(xaxis);
 
-			M[0] = (T) xaxis.X();
-			M[1] = (T) yaxis.X();
-			M[2] = (T) zaxis.X();
+			M[0] = (T) xaxis.X;
+			M[1] = (T) yaxis.X;
+			M[2] = (T) zaxis.X;
 			M[3] = 0;
 
-			M[4] = (T) xaxis.Y();
-			M[5] = (T) yaxis.Y();
-			M[6] = (T) zaxis.Y();
+			M[4] = (T) xaxis.Y;
+			M[5] = (T) yaxis.Y;
+			M[6] = (T) zaxis.Y;
 			M[7] = 0;
 
-			M[8] = (T) xaxis.Z();
-			M[9] = (T) yaxis.Z();
-			M[10] = (T) zaxis.Z();
+			M[8] = (T) xaxis.Z;
+			M[9] = (T) yaxis.Z;
+			M[10] = (T) zaxis.Z;
 			M[11] = 0;
 
 			M[12] = (T) -xaxis.dotProduct(position);
@@ -1888,12 +1905,14 @@ namespace irrgame
 			const f32 scaleX = (viewport.getWidth() - 0.75f) * 0.5f;
 			const f32 scaleY = -(viewport.getHeight() - 0.75f) * 0.5f;
 
-			const f32 dx = -0.5f
-					+ ((viewport.UpperLeftCorner.X()
-							+ viewport.LowerRightCorner.X()) * 0.5f);
-			const f32 dy = -0.5f
-					+ ((viewport.UpperLeftCorner.Y()
-							+ viewport.LowerRightCorner.Y()) * 0.5f);
+			const f32 dx =
+					-0.5f
+							+ ((viewport.UpperLeftCorner.X
+									+ viewport.LowerRightCorner.X) * 0.5f);
+			const f32 dy =
+					-0.5f
+							+ ((viewport.UpperLeftCorner.Y
+									+ viewport.LowerRightCorner.Y) * 0.5f);
 
 			makeIdentity();
 			M[12] = (T) dx;
@@ -1930,24 +1949,24 @@ namespace irrgame
 
 			vector3df vt(v * ((T) 1 - ca));
 
-			M[0] = vt.X() * v.X() + ca;
-			M[5] = vt.Y() * v.Y() + ca;
-			M[10] = vt.Z() * v.Z() + ca;
+			M[0] = vt.X * v.X + ca;
+			M[5] = vt.Y * v.Y + ca;
+			M[10] = vt.Z * v.Z + ca;
 
-			vt.X() *= v.Y();
-			vt.Z() *= v.X();
-			vt.Y() *= v.Z();
+			vt.X *= v.Y;
+			vt.Z *= v.X;
+			vt.Y *= v.Z;
 
-			M[1] = vt.X() - vs.Z();
-			M[2] = vt.Z() + vs.Y();
+			M[1] = vt.X - vs.Z;
+			M[2] = vt.Z + vs.Y;
 			M[3] = (T) 0;
 
-			M[4] = vt.X() + vs.Z();
-			M[6] = vt.Y() - vs.X();
+			M[4] = vt.X + vs.Z;
+			M[6] = vt.Y - vs.X;
 			M[7] = (T) 0;
 
-			M[8] = vt.Z() - vs.Y();
-			M[9] = vt.Y() + vs.X();
+			M[8] = vt.Z - vs.Y;
+			M[9] = vt.Y + vs.X;
 			M[11] = (T) 0;
 
 			M[12] = (T) 0;
@@ -1994,24 +2013,24 @@ namespace irrgame
 
 			vector3df vt(up * (1.f - ca));
 
-			M[0] = vt.X() * up.X() + ca;
-			M[5] = vt.Y() * up.Y() + ca;
-			M[10] = vt.Z() * up.Z() + ca;
+			M[0] = vt.X * up.X + ca;
+			M[5] = vt.Y * up.Y + ca;
+			M[10] = vt.Z * up.Z + ca;
 
-			vt.X() *= up.Y();
-			vt.Z() *= up.X();
-			vt.Y() *= up.Z();
+			vt.X *= up.Y;
+			vt.Z *= up.X;
+			vt.Y *= up.Z;
 
-			M[1] = vt.X() - vs.Z();
-			M[2] = vt.Z() + vs.Y();
+			M[1] = vt.X - vs.Z;
+			M[2] = vt.Z + vs.Y;
 			M[3] = (T) 0;
 
-			M[4] = vt.X() + vs.Z();
-			M[6] = vt.Y() - vs.X();
+			M[4] = vt.X + vs.Z;
+			M[6] = vt.Y - vs.X;
 			M[7] = (T) 0;
 
-			M[8] = vt.Z() - vs.Y();
-			M[9] = vt.Y() + vs.X();
+			M[8] = vt.Z - vs.Y;
+			M[9] = vt.Y + vs.X;
 			M[11] = (T) 0;
 
 			setRotationCenter(center, translation);
@@ -2023,12 +2042,12 @@ namespace irrgame
 		inline void matrix4<T>::setRotationCenter(const vector3df& center,
 				const vector3df& translation)
 		{
-			M[12] = -M[0] * center.X() - M[4] * center.Y() - M[8] * center.Z()
-					+ (center.X() - translation.X());
-			M[13] = -M[1] * center.X() - M[5] * center.Y() - M[9] * center.Z()
-					+ (center.Y() - translation.Y());
-			M[14] = -M[2] * center.X() - M[6] * center.Y() - M[10] * center.Z()
-					+ (center.Z() - translation.Z());
+			M[12] = -M[0] * center.X - M[4] * center.Y - M[8] * center.Z
+					+ (center.X - translation.X);
+			M[13] = -M[1] * center.X - M[5] * center.Y - M[9] * center.Z
+					+ (center.Y - translation.Y);
+			M[14] = -M[2] * center.X - M[6] * center.Y - M[10] * center.Z
+					+ (center.Z - translation.Z);
 			M[15] = (T) 1.0;
 		}
 
@@ -2051,20 +2070,20 @@ namespace irrgame
 			const f32 c = cosf(rotateRad);
 			const f32 s = sinf(rotateRad);
 
-			M[0] = (T) (c * scale.X());
-			M[1] = (T) (s * scale.Y());
+			M[0] = (T) (c * scale.X);
+			M[1] = (T) (s * scale.Y);
 			M[2] = 0;
 			M[3] = 0;
 
-			M[4] = (T) (-s * scale.X());
-			M[5] = (T) (c * scale.Y());
+			M[4] = (T) (-s * scale.X);
+			M[5] = (T) (c * scale.Y);
 			M[6] = 0;
 			M[7] = 0;
 
-			M[8] = (T) (c * scale.X() * rotatecenter.X() + -s * rotatecenter.Y()
-					+ translate.X());
-			M[9] = (T) (s * scale.Y() * rotatecenter.X() + c * rotatecenter.Y()
-					+ translate.Y());
+			M[8] = (T) (c * scale.X * rotatecenter.X + -s * rotatecenter.Y
+					+ translate.X);
+			M[9] = (T) (s * scale.Y * rotatecenter.X + c * rotatecenter.Y
+					+ translate.Y);
 			M[10] = 1;
 			M[11] = 0;
 

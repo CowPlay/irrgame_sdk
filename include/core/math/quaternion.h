@@ -170,7 +170,7 @@ namespace irrgame
 		// Constructor which converts euler angles to a quaternion
 		inline quaternion::quaternion(const vector3df& vec)
 		{
-			set(vec.X(), vec.Y(), vec.Z());
+			set(vec.X, vec.Y, vec.Z);
 		}
 
 		// Constructor which converts a matrix to a quaternion
@@ -339,9 +339,9 @@ namespace irrgame
 			m[10] = 1.0f - 2.0f * X * X - 2.0f * Y * Y;
 			m[11] = 0.0f;
 
-			m[12] = center.X();
-			m[13] = center.Y();
-			m[14] = center.Z();
+			m[12] = center.X;
+			m[13] = center.Y;
+			m[14] = center.Z;
 			m[15] = 1.f;
 
 			//dest.setDefinitelyIdentityMatrix ( matrix4::BIT_IS_NOT_IDENTITY );
@@ -461,7 +461,7 @@ namespace irrgame
 		// sets new quaternion based on euler angles
 		inline quaternion& quaternion::set(const vector3df& vec)
 		{
-			return set(vec.X(), vec.Y(), vec.Z());
+			return set(vec.X, vec.Y, vec.Z);
 		}
 
 		// sets new quaternion based on other quaternion
@@ -479,8 +479,7 @@ namespace irrgame
 				return *this;
 
 			//n = 1.0f / sqrtf(n);
-			return (*this *=
-					SharedFastMath::getInstance().invertSqrt(n));
+			return (*this *= SharedFastMath::getInstance().invertSqrt(n));
 		}
 
 		// set this quaternion to the result of the interpolation between two quaternions
@@ -504,8 +503,7 @@ namespace irrgame
 				{
 					const f32 theta = acosf(angle);
 					const f32 invsintheta =
-							SharedFastMath::getInstance().invert(
-									sinf(theta));
+							SharedFastMath::getInstance().invert(sinf(theta));
 					scale = sinf(theta * (1.0f - time)) * invsintheta;
 					invscale = sinf(theta * time) * invsintheta;
 				}
@@ -539,9 +537,9 @@ namespace irrgame
 			const f32 fHalfAngle = 0.5f * angle;
 			const f32 fSin = sinf(fHalfAngle);
 			W = cosf(fHalfAngle);
-			X = fSin * axis.X();
-			Y = fSin * axis.Y();
-			Z = fSin * axis.Z();
+			X = fSin * axis.X;
+			Y = fSin * axis.Y;
+			Z = fSin * axis.Z;
 			return *this;
 		}
 
@@ -553,18 +551,18 @@ namespace irrgame
 					|| W < -1.0f)
 			{
 				angle = 0.0f;
-				axis.X() = 0.0f;
-				axis.Y() = 1.0f;
-				axis.Z() = 0.0f;
+				axis.X = 0.0f;
+				axis.Y = 1.0f;
+				axis.Z = 0.0f;
 			}
 			else
 			{
 				const f32 invscale = SharedFastMath::getInstance().invert(
 						scale);
 				angle = 2.0f * acosf(W);
-				axis.X() = X * invscale;
-				axis.Y() = Y * invscale;
-				axis.Z() = Z * invscale;
+				axis.X = X * invscale;
+				axis.Y = Y * invscale;
+				axis.Z = Z * invscale;
 			}
 		}
 
@@ -576,15 +574,15 @@ namespace irrgame
 			const f32 sqz = Z * Z;
 
 			// heading = rotation about z-axis
-			euler.Z() = (f32) (atan2(2.0 * (X * Y + Z * W),
+			euler.Z = (f32) (atan2(2.0 * (X * Y + Z * W),
 					(sqx - sqy - sqz + sqw)));
 
 			// bank = rotation about x-axis
-			euler.X() = (f32) (atan2(2.0 * (Y * Z + X * W),
+			euler.X = (f32) (atan2(2.0 * (Y * Z + X * W),
 					(-sqx - sqy + sqz + sqw)));
 
 			// attitude = rotation about y-axis
-			euler.Y() = asinf(
+			euler.Y = asinf(
 					SharedMath::getInstance().clamp(-2.0f * (X * Z - Y * W),
 							-1.0f, 1.0f));
 		}
@@ -610,6 +608,7 @@ namespace irrgame
 			X = 0.f;
 			Y = 0.f;
 			Z = 0.f;
+
 			return *this;
 		}
 
@@ -632,9 +631,9 @@ namespace irrgame
 			const f32 s = sqrtf((1 + d) * 2); // optimize inv_sqrt
 			const f32 invs = 1.f / s;
 			const vector3df c = v0.crossProduct(v1) * invs;
-			X = c.X();
-			Y = c.Y();
-			Z = c.Z();
+			X = c.X;
+			Y = c.Y;
+			Z = c.Z;
 			W = s * 0.5f;
 
 			return *this;

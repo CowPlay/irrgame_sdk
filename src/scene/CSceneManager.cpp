@@ -16,14 +16,11 @@ namespace irrgame
 		CSceneManager::CSceneManager() :
 				ISceneNode(0)
 		{
-			// TODO Auto-generated constructor stub
-
 		}
 
 		//! Destructor
 		CSceneManager::~CSceneManager()
 		{
-			// TODO Auto-generated destructor stub
 		}
 
 		//! Returns root node on the scene

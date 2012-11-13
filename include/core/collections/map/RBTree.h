@@ -14,28 +14,28 @@ namespace irrgame
 	{
 
 		//! red/black tree for map
-		template<class Key, class Value>
+		template<class KType, class VType>
 		class RBTree
 		{
 			public:
 
-				RBTree(const Key& k, const Value& v);
+				RBTree(const KType& k, const VType& v);
 
-				void setLeftChild(RBTree<Key, Value>* p);
-				void setRightChild(RBTree<Key, Value>* p);
+				void setLeftChild(RBTree<KType, VType>* p);
+				void setRightChild(RBTree<KType, VType>* p);
 
-				void setParent(RBTree<Key, Value>* p);
-				void setValue(const Value& v);
+				void setParent(RBTree<KType, VType>* p);
+				void setValue(const VType& v);
 
 				void setRed();
 				void setBlack();
 
-				RBTree<Key, Value>* getLeftChild() const;
-				RBTree<Key, Value>* getRightChild() const;
-				RBTree<Key, Value>* getParent() const;
-				Value getValue() const;
+				RBTree<KType, VType>* getLeftChild() const;
+				RBTree<KType, VType>* getRightChild() const;
+				RBTree<KType, VType>* getParent() const;
+				VType getValue() const;
 
-				Key getKey() const;
+				KType getKey() const;
 
 				bool isRoot() const;
 				bool isLeaf() const;
@@ -53,26 +53,26 @@ namespace irrgame
 
 			private:
 
-				RBTree<Key, Value>* LeftChild;
-				RBTree<Key, Value>* RightChild;
+				RBTree<KType, VType>* LeftChild;
+				RBTree<KType, VType>* RightChild;
 
-				RBTree<Key, Value>* Parent;
+				RBTree<KType, VType>* Parent;
 
-				Key _Key;
-				Value _Value;
+				KType Key;
+				VType Value;
 
 				bool IsRed;
 		};
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>::RBTree(const Key& k, const Value& v) :
-				LeftChild(0), RightChild(0), Parent(0), _Key(k), _Value(v), IsRed(
+		template<class KType, class VType>
+		inline RBTree<KType, VType>::RBTree(const KType& k, const VType& v) :
+				LeftChild(0), RightChild(0), Parent(0), Key(k), Value(v), IsRed(
 						true)
 		{
 		}
 
-		template<class Key, class Value>
-		inline void RBTree<Key, Value>::setLeftChild(RBTree<Key, Value>* p)
+		template<class KType, class VType>
+		inline void RBTree<KType, VType>::setLeftChild(RBTree<KType, VType>* p)
 		{
 			LeftChild = p;
 			if (p)
@@ -81,100 +81,100 @@ namespace irrgame
 			}
 		}
 
-		template<class Key, class Value>
-		inline void RBTree<Key, Value>::setRightChild(RBTree<Key, Value>* p)
+		template<class KType, class VType>
+		inline void RBTree<KType, VType>::setRightChild(RBTree<KType, VType>* p)
 		{
 			RightChild = p;
 			if (p)
 				p->setParent(this);
 		}
 
-		template<class Key, class Value>
-		inline void RBTree<Key, Value>::setParent(RBTree<Key, Value>* p)
+		template<class KType, class VType>
+		inline void RBTree<KType, VType>::setParent(RBTree<KType, VType>* p)
 		{
 			Parent = p;
 		}
 
-		template<class Key, class Value>
-		inline void RBTree<Key, Value>::setValue(const Value& v)
+		template<class KType, class VType>
+		inline void RBTree<KType, VType>::setValue(const VType& v)
 		{
-			_Value = v;
+			Value = v;
 		}
 
-		template<class Key, class Value>
-		inline void RBTree<Key, Value>::setRed()
+		template<class KType, class VType>
+		inline void RBTree<KType, VType>::setRed()
 		{
 			IsRed = true;
 		}
 
-		template<class Key, class Value>
-		inline void RBTree<Key, Value>::setBlack()
+		template<class KType, class VType>
+		inline void RBTree<KType, VType>::setBlack()
 		{
 			IsRed = false;
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* RBTree<Key, Value>::getLeftChild() const
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* RBTree<KType, VType>::getLeftChild() const
 		{
 			return LeftChild;
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* RBTree<Key, Value>::getRightChild() const
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* RBTree<KType, VType>::getRightChild() const
 		{
 			return RightChild;
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* RBTree<Key, Value>::getParent() const
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* RBTree<KType, VType>::getParent() const
 		{
 			return Parent;
 		}
 
-		template<class Key, class Value>
-		inline Value RBTree<Key, Value>::getValue() const
+		template<class KType, class VType>
+		inline VType RBTree<KType, VType>::getValue() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return _Value;
+			return Value;
 		}
 
-		template<class Key, class Value>
-		inline Key RBTree<Key, Value>::getKey() const
+		template<class KType, class VType>
+		inline KType RBTree<KType, VType>::getKey() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return _Key;
+			return Key;
 		}
 
-		template<class Key, class Value>
-		inline bool RBTree<Key, Value>::isRoot() const
+		template<class KType, class VType>
+		inline bool RBTree<KType, VType>::isRoot() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return Parent == 0;
 		}
 
-		template<class Key, class Value>
-		inline bool RBTree<Key, Value>::isLeftChild() const
+		template<class KType, class VType>
+		inline bool RBTree<KType, VType>::isLeftChild() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return (Parent != 0) && (Parent->getLeftChild() == this);
 		}
 
-		template<class Key, class Value>
-		inline bool RBTree<Key, Value>::isRightChild() const
+		template<class KType, class VType>
+		inline bool RBTree<KType, VType>::isRightChild() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return (Parent != 0) && (Parent->getRightChild() == this);
 		}
 
-		template<class Key, class Value>
-		inline bool RBTree<Key, Value>::isLeaf() const
+		template<class KType, class VType>
+		inline bool RBTree<KType, VType>::isLeaf() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return (LeftChild == 0) && (RightChild == 0);
 		}
 
-		template<class Key, class Value>
-		inline u32 RBTree<Key, Value>::getLevel() const
+		template<class KType, class VType>
+		inline u32 RBTree<KType, VType>::getLevel() const
 		{
 			if (isRoot())
 				return 1;
@@ -182,15 +182,15 @@ namespace irrgame
 				return getParent()->getLevel() + 1;
 		}
 
-		template<class Key, class Value>
-		inline bool RBTree<Key, Value>::isRed() const
+		template<class KType, class VType>
+		inline bool RBTree<KType, VType>::isRed() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return IsRed;
 		}
 
-		template<class Key, class Value>
-		inline bool RBTree<Key, Value>::isBlack() const
+		template<class KType, class VType>
+		inline bool RBTree<KType, VType>::isBlack() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return !IsRed;

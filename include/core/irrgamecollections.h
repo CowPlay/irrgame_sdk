@@ -12,6 +12,7 @@
 #include "core/collections/ICollection.h"
 #include "core/collections/ILeafNode.h"
 
+//! Collections
 #include "core/collections/array.h"
 #include "core/collections/list/list.h"
 #include "core/collections/map/map.h"

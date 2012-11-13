@@ -34,6 +34,7 @@
 #include "core/irrgamecollections.h"
 #include "core/irrgamemath.h"
 #include "core/irrgameshapes.h"
+#include "core/delegate.h"
 
 //io
 #include "io/utils/ioutils.h"

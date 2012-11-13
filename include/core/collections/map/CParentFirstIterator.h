@@ -28,17 +28,29 @@ namespace irrgame
 
 			public:
 
+				/*
+				 * Constructors
+				 */
+
 				//! Default constructor
 				CParentFirstIterator();
 
 				//! Excplicit Node* constructor
 				explicit CParentFirstIterator(Node* root);
 
+				/*
+				 * Methods
+				 */
+
 				void reset();
 
 				bool atEnd() const;
 
 				Node* getNode();
+
+				/*
+				 * Operators
+				 */
 
 				CParentFirstIterator<Key, Value>& operator=(
 						const CParentFirstIterator<Key, Value>& src);

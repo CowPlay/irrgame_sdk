@@ -9,7 +9,7 @@
 #define IEVENTRECEIVER_H_
 
 #include "core/engine/IReferenceCounted.h"
-#include "delegate/delegate.h"
+#include "core/delegate.h"
 
 namespace irrgame
 {
@@ -18,7 +18,7 @@ namespace irrgame
 	{
 		class IEvent;
 
-		typedef CDelegate<bool, IEvent*> delegateUserEventHandler;
+		typedef delegate<bool, IEvent*> delegateUserEventHandler;
 
 		//! Interface of an object which can receive events.
 		/** Every object which want handle user event must implement this interface */

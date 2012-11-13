@@ -31,22 +31,6 @@ namespace irrgame
 
 			public:
 
-				//! Default constructor for empty list.
-				list();
-
-				//! Copy constructor.
-				list(const list<T>& other);
-
-				//! Destructor
-				virtual ~list();
-
-				/*
-				 * Operators
-				 */
-
-				//! Assignment operator
-				void operator=(const list<T>& other);
-
 				/*
 				 * ICollection realization
 				 */
@@ -80,6 +64,26 @@ namespace irrgame
 				/* \param index Index of element. Must be lower than collection size
 				 * \return Element by index for getting or setting value. */
 				virtual const T& operator[](u32 index) const;
+
+				/*
+				 * Constructors
+				 */
+
+				//! Default constructor for empty list.
+				list();
+
+				//! Copy constructor.
+				list(const list<T>& other);
+
+				//! Destructor
+				virtual ~list();
+
+				/*
+				 * Operators
+				 */
+
+				//! Assignment operator
+				void operator=(const list<T>& other);
 
 				/*
 				 * Methods
@@ -162,53 +166,9 @@ namespace irrgame
 				threads::irrgameMonitor* Monitor;
 		};
 
-		//! Default constructor for empty list.
-		template<class T>
-		inline list<T>::list() :
-				First(0), Last(0), Size(0), Monitor(0)
-		{
-			Monitor = irrgame::threads::createIrrgameMonitor();
-		}
-
-		//! Copy constructor.
-		template<class T>
-		inline list<T>::list(const list<T>& other) :
-				First(0), Last(0), Size(0), Monitor(0)
-		{
-			Monitor = threads::createIrrgameMonitor();
-			*this = other;
-		}
-
-		//! Destructor
-		template<class T>
-		inline list<T>::~list()
-		{
-			clear();
-
-			if (Monitor)
-				Monitor->drop();
-		}
-
-		//! Assignment operator
-		template<class T>
-		inline void list<T>::operator=(const list<T>& other)
-		{
-			if (&other == this)
-				return;
-
-			Monitor->enter();
-
-			clearInternal();
-
-			SKListNode<T>* node = other.First;
-			while (node)
-			{
-				pushBack(node->Element);
-				node = node->Next;
-			}
-
-			Monitor->exit();
-		}
+		/*
+		 * ICollection realization
+		 */
 
 		//! Adds an element at the end of the list.
 		template<class T>
@@ -222,12 +182,16 @@ namespace irrgame
 			++Size;
 
 			if (First == 0)
+			{
 				First = node;
+			}
 
 			node->Prev = Last;
 
 			if (Last != 0)
+			{
 				Last->Next = node;
+			}
 
 			Last = node;
 
@@ -334,6 +298,58 @@ namespace irrgame
 			Monitor->exit();
 
 			return result;
+		}
+
+		/*
+		 * Constructors
+		 */
+
+		//! Default constructor for empty list.
+		template<class T>
+		inline list<T>::list() :
+				First(0), Last(0), Size(0), Monitor(0)
+		{
+			Monitor = irrgame::threads::createIrrgameMonitor();
+		}
+
+		//! Copy constructor.
+		template<class T>
+		inline list<T>::list(const list<T>& other) :
+				First(0), Last(0), Size(0), Monitor(0)
+		{
+			Monitor = threads::createIrrgameMonitor();
+			*this = other;
+		}
+
+		//! Destructor
+		template<class T>
+		inline list<T>::~list()
+		{
+			clear();
+
+			if (Monitor)
+				Monitor->drop();
+		}
+
+		//! Assignment operator
+		template<class T>
+		inline void list<T>::operator=(const list<T>& other)
+		{
+			if (&other == this)
+				return;
+
+			Monitor->enter();
+
+			clearInternal();
+
+			SKListNode<T>* node = other.First;
+			while (node)
+			{
+				pushBack(node->Element);
+				node = node->Next;
+			}
+
+			Monitor->exit();
 		}
 
 		//! Clears the list, deletes all elements in the list.

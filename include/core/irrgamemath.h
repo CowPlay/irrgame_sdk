@@ -9,7 +9,7 @@
 #define IRRGAMEMATH_H_
 
 #include "core/math/SharedConverter.h"
-#include "core/math/Sharedheapsort.h"
+#include "core/math/SharedHeapsort.h"
 #include "core/math/SharedMath.h"
 
 #include "core/math/matrix4.h"

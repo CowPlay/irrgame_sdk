@@ -15,14 +15,19 @@ namespace irrgame
 	namespace core
 	{
 		//! Normal Iterator
-		template<class Key, class Value>
+		template<class KType, class VType>
 		class CMapIterator
 		{
 			public:
 
-				typedef RBTree<Key, Value> Node;
+				typedef RBTree<KType, VType> Node;
 
 			public:
+
+				/*
+				 * Constructors
+				 */
+
 				//! Default constructor
 				CMapIterator();
 
@@ -32,11 +37,19 @@ namespace irrgame
 				// Copy constructor
 				CMapIterator(const CMapIterator& src);
 
+				/*
+				 * Methods
+				 */
+
 				void reset(bool atLowest = true);
 
 				bool atEnd() const;
 
 				Node* getNode();
+
+				/*
+				 * Operators
+				 */
 
 				CMapIterator& operator=(const CMapIterator& src);
 
@@ -63,78 +76,83 @@ namespace irrgame
 		//!--------- Public funcs
 
 		//! Default constructor
-		template<class Key, class Value>
-		inline CMapIterator<Key, Value>::CMapIterator() :
+		template<class KType, class VType>
+		inline CMapIterator<KType, VType>::CMapIterator() :
 				Root(0), Cur(0)
 		{
 		}
 
 		// Constructor(Node*)
-		template<class Key, class Value>
-		inline CMapIterator<Key, Value>::CMapIterator(Node* root) :
+		template<class KType, class VType>
+		inline CMapIterator<KType, VType>::CMapIterator(Node* root) :
 				Root(root)
 		{
 			reset();
 		}
 
 		// Copy constructor
-		template<class Key, class Value>
-		inline CMapIterator<Key, Value>::CMapIterator(const CMapIterator& src) :
+		template<class KType, class VType>
+		inline CMapIterator<KType, VType>::CMapIterator(const CMapIterator& src) :
 				Root(src.Root), Cur(src.Cur)
 		{
 		}
 
-		template<class Key, class Value>
-		inline void CMapIterator<Key, Value>::reset(bool atLowest)
+		template<class KType, class VType>
+		inline void CMapIterator<KType, VType>::reset(bool atLowest)
 		{
 			if (atLowest)
+			{
 				Cur = getMin(Root);
+			}
 			else
+			{
 				Cur = getMax(Root);
+			}
 		}
 
-		template<class Key, class Value>
-		inline bool CMapIterator<Key, Value>::atEnd() const
+		template<class KType, class VType>
+		inline bool CMapIterator<KType, VType>::atEnd() const
 		{
 			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 			return Cur == 0;
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* CMapIterator<Key, Value>::getNode()
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* CMapIterator<KType, VType>::getNode()
 		{
 			return Cur;
 		}
 
-		template<class Key, class Value>
-		inline CMapIterator<Key, Value>& CMapIterator<Key, Value>::operator=(
+		template<class KType, class VType>
+		inline CMapIterator<KType, VType>& CMapIterator<KType, VType>::operator=(
 				const CMapIterator& src)
 		{
 			Root = src.Root;
 			Cur = src.Cur;
+
 			return (*this);
 		}
 
-		template<class Key, class Value>
-		inline void CMapIterator<Key, Value>::operator++(s32)
+		template<class KType, class VType>
+		inline void CMapIterator<KType, VType>::operator++(s32)
 		{
 			inc();
 		}
 
-		template<class Key, class Value>
-		inline void CMapIterator<Key, Value>::operator--(s32)
+		template<class KType, class VType>
+		inline void CMapIterator<KType, VType>::operator--(s32)
 		{
 			dec();
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* CMapIterator<Key, Value>::operator ->()
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* CMapIterator<KType, VType>::operator ->()
 		{
 			return getNode();
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>& CMapIterator<Key, Value>::operator*()
+		template<class KType, class VType>
+		inline RBTree<KType, VType>& CMapIterator<KType, VType>::operator*()
 		{
 			// access violation
 			IRR_ASSERT(!atEnd())
@@ -143,24 +161,27 @@ namespace irrgame
 		}
 
 		//!--------- Private funcs
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* CMapIterator<Key, Value>::getMin(Node* n)
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* CMapIterator<KType, VType>::getMin(Node* n)
 		{
 			while (n && n->getLeftChild())
+			{
 				n = n->getLeftChild();
+			}
+
 			return n;
 		}
 
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* CMapIterator<Key, Value>::getMax(Node* n)
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* CMapIterator<KType, VType>::getMax(Node* n)
 		{
 			while (n && n->getRightChild())
 				n = n->getRightChild();
 			return n;
 		}
 
-		template<class Key, class Value>
-		inline void CMapIterator<Key, Value>::inc()
+		template<class KType, class VType>
+		inline void CMapIterator<KType, VType>::inc()
 		{
 			// Already at end?
 			if (Cur == 0)
@@ -186,17 +207,21 @@ namespace irrgame
 				// child (ie either a left child or the root) up in the
 				// hierarchy. Root's parent is 0.
 				while (Cur->isRightChild())
+				{
 					Cur = Cur->getParent();
+				}
 				Cur = Cur->getParent();
 			}
 		}
 
-		template<class Key, class Value>
-		inline void CMapIterator<Key, Value>::dec()
+		template<class KType, class VType>
+		inline void CMapIterator<KType, VType>::dec()
 		{
 			// Already at end?
 			if (Cur == 0)
+			{
 				return;
+			}
 
 			if (Cur->getLeftChild())
 			{
@@ -219,7 +244,9 @@ namespace irrgame
 				// hierarchy. Root's parent is 0.
 
 				while (Cur->isLeftChild())
+				{
 					Cur = Cur->getParent();
+				}
 				Cur = Cur->getParent();
 			}
 		}

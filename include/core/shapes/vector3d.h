@@ -797,9 +797,13 @@ namespace irrgame
 			result.Y = (T) tmp;
 
 			if (result.Y < 0)
+			{
 				result.Y += 360;
+			}
 			if (result.Y >= 360)
+			{
 				result.Y -= 360;
+			}
 
 			const f32 z1 = core::SharedMath::getInstance().squareroot(
 					X * X + Z * Z);
@@ -808,9 +812,13 @@ namespace irrgame
 					* core::SharedMath::RadToDeg - 90.0);
 
 			if (result.X < 0)
+			{
 				result.X += 360;
+			}
 			if (result.X >= 360)
+			{
 				result.X -= 360;
+			}
 
 			return result;
 		}
@@ -891,36 +899,14 @@ namespace irrgame
 			array[3] = 0;
 		}
 
-//		//TODO: review this funcs. Mb need delete.
-//		//! partial specialization for integer vectors
-//		// Implementor note: inline keyword needed due to template specialization for s32. Otherwise put specialization into a .cpp
-//		template<>
-//		inline vector3d<s32> vector3d<s32>::operator /(s32 val) const
-//		{
-//
-//			vector3d<s32> result = vector3d<s32>(X / val, Y / val, Z / val);
-//
-//
-//			return result;
-//		}
-//
-//		template<>
-//		inline vector3d<s32>& vector3d<s32>::operator /=(s32 val)
-//		{
-//			X /= val;
-//			Y /= val;
-//			Z /= val;
-//			return *this;
-//		}
-//
-//		//! Function multiplying a scalar and a vector component-wise.
-//		template<class S, class T>
-//		vector3d<T> operator*(const S scalar, const vector3d<T>& vector)
-//		{
-//			return vector * scalar;
-//		}
+		//! Function multiplying a scalar and a vector component-wise.
+		template<class S, class T>
+		vector3d<T> operator*(const S scalar, const vector3d<T>& vector)
+		{
+			return vector * scalar;
+		}
 
-	}// end namespace core
+	} // end namespace core
 } // end namespace irr
 
 //! Typedefs for vector3d

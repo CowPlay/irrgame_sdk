@@ -27,6 +27,9 @@ namespace irrgame
 				typedef RBTree<Key, Value> Node;
 
 			public:
+				/*
+				 * Constructors
+				 */
 
 				//! Default constructor
 				CParentLastIterator();
@@ -34,11 +37,19 @@ namespace irrgame
 				//! Explicit Node* constructor
 				explicit CParentLastIterator(Node* root);
 
+				/*
+				 * Methods
+				 */
+
 				void reset();
 
 				bool atEnd() const;
 
 				Node* getNode();
+
+				/*
+				 * Operators
+				 */
 
 				CParentLastIterator<Key, Value>& operator=(
 						const CParentLastIterator<Key, Value>& src);
@@ -120,7 +131,7 @@ namespace irrgame
 		inline RBTree<Key, Value>& CParentLastIterator<Key, Value>::operator*()
 		{
 			// access violation
-			IRR_ASSERT(atEnd())
+			IRR_ASSERT (atEnd())
 
 			return *getNode();
 		}

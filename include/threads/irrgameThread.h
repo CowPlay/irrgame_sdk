@@ -8,8 +8,9 @@
 #ifndef IRRGAMETHREAD_H_
 #define IRRGAMETHREAD_H_
 
-#include "core/irrgamecollections.h"
-#include "delegate/delegate.h"
+#include "core/collections/stringc.h"
+#include "core/delegate.h"
+
 namespace irrgame
 {
 	namespace threads
@@ -26,7 +27,7 @@ namespace irrgame
 		};
 
 		//! use this delegate for run some func in individual thread
-		typedef CDelegate<int, void*> delegateThreadCallback;
+		typedef delegate<s32, void*> delegateThreadCallback;
 
 		//! Interface providing acces to system thread
 		//! TODO: provide acces to change priority

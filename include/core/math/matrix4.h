@@ -279,9 +279,9 @@ namespace irrgame
 				inline void getTransposed(matrix4<T>& dest) const;
 
 				//! Builds a matrix that rotates from one vector to another
-				/** \param from: vector to rotate from
-				 \param to: vector to rotate to
-				 */
+				/* http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix/index.htm
+				 * \param from: vector to rotate from
+				 * \param to: vector to rotate to */
 				matrix4<T>& buildRotateFromTo(const vector3df& from,
 						const vector3df& to);
 
@@ -801,8 +801,11 @@ namespace irrgame
 
 			// Deal with the 0 rotation case first
 			// Prior to Irrlicht 1.6, we always returned this value.
-			if (iszero(M[1]) && iszero(M[2]) && iszero(M[4])
-					&& SharedMath::getInstance().iszero(M[6]) && iszero(M[8])
+			if (SharedMath::getInstance().iszero(M[1])
+					&& SharedMath::getInstance().iszero(M[2])
+					&& SharedMath::getInstance().iszero(M[4])
+					&& SharedMath::getInstance().iszero(M[6])
+					&& SharedMath::getInstance().iszero(M[8])
 					&& SharedMath::getInstance().iszero(M[9]))
 			{
 				return vector3d<T>(M[0], M[5], M[10]);
@@ -1922,11 +1925,6 @@ namespace irrgame
 		}
 
 		//! Builds a matrix that rotates from one vector to another
-		/** \param from: vector to rotate from
-		 \param to: vector to rotate to
-
-		 http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix/index.htm
-		 */
 		template<class T>
 		inline matrix4<T>& matrix4<T>::buildRotateFromTo(const vector3df& from,
 				const vector3df& to)
@@ -1978,12 +1976,6 @@ namespace irrgame
 		}
 
 		//! Builds a matrix which rotates a source vector to a look vector over an arbitrary axis
-		/** \param camPos: viewer position in world coo
-		 \param center: object position in world-coo and rotation pivot
-		 \param translation: object final translation from center
-		 \param axis: axis to rotate about
-		 \param from: source vector to rotate from
-		 */
 		template<class T>
 		inline void matrix4<T>::buildAxisAlignedBillboard(
 				const vector3df& camPos, const vector3df& center,
@@ -2095,6 +2087,7 @@ namespace irrgame
 			return *this;
 		}
 
+		//! Set texture transformation rotation
 		// rotate about z axis, center ( 0.5, 0.5 )
 		template<class T>
 		inline matrix4<T>& matrix4<T>::setTextureRotationCenter(f32 rotateRad)
@@ -2113,6 +2106,7 @@ namespace irrgame
 			return *this;
 		}
 
+		//! Set texture transformation translation
 		template<class T>
 		inline matrix4<T>& matrix4<T>::setTextureTranslate(f32 x, f32 y)
 		{
@@ -2122,6 +2116,7 @@ namespace irrgame
 			return *this;
 		}
 
+		//! Set texture transformation translation, using a transposed representation
 		template<class T>
 		inline matrix4<T>& matrix4<T>::setTextureTranslateTransposed(f32 x,
 				f32 y)

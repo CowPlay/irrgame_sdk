@@ -5,6 +5,7 @@
 #ifndef __IRR_MAP_H_INCLUDED__
 #define __IRR_MAP_H_INCLUDED__
 
+#include "core/collections/map/CAccessClass.h"
 #include "core/collections/map/CMapIterator.h"
 #include "core/collections/map/CParentFirstIterator.h"
 #include "core/collections/map/CParentLastIterator.h"
@@ -16,54 +17,18 @@ namespace irrgame
 {
 	namespace core
 	{
-		template<class Key, class Value>
-		class map;
-
-		// AccessClass is a temporary class used with the [] operator.
-		// It makes it possible to have different behavior in situations like:
-		// myTree["Foo"] = 32;
-		// If "Foo" already exists update its value else insert a new element.
-		// int i = myTree["Foo"]
-		// If "Foo" exists return its value.
-		template<class Key, class Value>
-		class CAccessClass
-		{
-				typedef RBTree<Key, Value> Node;
-
-				// Let map be the only one who can instantiate this class.
-				friend class map<Key, Value> ;
-
-			public:
-
-				// Assignment operator. Handles the myTree["Foo"] = 32; situation
-				void operator=(const Value& value);
-
-				// Value operator
-				operator Value();
-
-			private:
-
-				//! Default constructor
-				CAccessClass(map<Key, Value>& tree, const Key& key);
-
-				//! Do not implement
-				CAccessClass();
-
-				map<Key, Value>& Tree;
-				const Key& _Key;
-		};
 
 		//! map template for associative arrays using a red-black tree
-		template<class Key, class Value>
+		template<class KType, class VType>
 		class map
 		{
 			public:
 
-				typedef RBTree<Key, Value> Node;
-				typedef CMapIterator<Key, Value> Iterator;
-				typedef CParentFirstIterator<Key, Value> ParentFirstIterator;
-				typedef CParentLastIterator<Key, Value> ParentLastIterator;
-				typedef CAccessClass<Key, Value> AccessClass;
+				typedef RBTree<KType, VType> Node;
+				typedef CMapIterator<KType, VType> Iterator;
+				typedef CParentFirstIterator<KType, VType> ParentFirstIterator;
+				typedef CParentLastIterator<KType, VType> ParentLastIterator;
+				typedef CAccessClass<KType, VType> AccessClass;
 
 			public:
 
@@ -73,23 +38,23 @@ namespace irrgame
 				//! Destructor
 				virtual ~map();
 
-				//------------------------------
-				// Public Commands
-				//------------------------------
+				/*
+				 * Methods
+				 */
 
 				//! Inserts a new node into the tree
 				/** \param keyNew: the index for this value
 				 \param v: the value to insert */
-				void insert(const Key& keyNew, const Value& v);
+				void insert(const KType& keyNew, const VType& v);
 
 				//! Removes a node from the tree and returns it.
 				/** The returned node must be deleted by the user
 				 \param k the key to remove
 				 \return A pointer to the node*/
-				Node* delink(const Key& k);
+				Node* delink(const KType& k);
 
 				//! Removes a node from the tree and deletes it.
-				void remove(const Key& k);
+				void remove(const KType& k);
 
 				//! Clear the entire tree
 				void clear();
@@ -101,7 +66,7 @@ namespace irrgame
 				//! Search for a node with the specified key.
 				//! \param keyToFind: The key to find
 				//! \return Returns 0 if node couldn't be found.
-				Node* find(const Key& keyToFind) const;
+				Node* find(const KType& keyToFind) const;
 
 				//! Gets the root element.
 				//! \return Returns a pointer to the root node, or
@@ -116,11 +81,11 @@ namespace irrgame
 				 object will contain the content of this object. Iterators will afterwards be valid for
 				 the swapped object.
 				 \param other Swap content with this object	*/
-				void swap(map<Key, Value>& other);
+				void swap(map<KType, VType>& other);
 
-				//------------------------------
-				// Public Iterators
-				//------------------------------
+				/*
+				 * Iterators
+				 */
 
 				//! Returns an iterator
 				Iterator getIterator();
@@ -130,6 +95,7 @@ namespace irrgame
 				//! later (and inserting elements) the tree structure will
 				//! be the same.
 				ParentFirstIterator getParentFirstIterator();
+
 				//! Returns a ParentLastIterator to traverse the tree from
 				//! bottom to top.
 				//! Typical usage is when deleting all elements in the tree
@@ -137,18 +103,20 @@ namespace irrgame
 				//! their parent.
 				ParentLastIterator getParentLastIterator();
 
-				//------------------------------
-				// Public Operators
-				//------------------------------
+				/*
+				 * Operators
+				 */
 
 				//! operator [] for access to elements
 				/** for example myMap["key"] */
-				AccessClass operator[](const Key& k);
+				AccessClass operator[](const KType& k);
+
 			private:
 
-				//------------------------------
-				// Disabled methods
-				//------------------------------
+				/*
+				 * Disabled methods
+				 */
+
 				// Copy constructor and assignment operator deliberately
 				// defined but not implemented. The tree should never be
 				// copied, pass along references to it instead.
@@ -160,7 +128,7 @@ namespace irrgame
 				//! Search for a node with the specified key.
 				//! \param keyToFind: The key to find
 				//! \return Returns 0 if node couldn't be found.
-				Node* findInternal(const Key& keyToFind) const;
+				Node* findInternal(const KType& keyToFind) const;
 
 				//! Set node as new root.
 				/** The node will be set to black, otherwise core dumps may arise
@@ -182,63 +150,24 @@ namespace irrgame
 
 			private:
 
-				Node* Root; // The top node. 0 if empty.
-				u32 Size; // Number of nodes in the tree
+				//! The top node. 0 if empty.
+				Node* Root;
+				//! Number of nodes in the tree
+				u32 Size;
 				threads::irrgameMonitor* Monitor;
 		};
 
-		//------------------------------
-		// CAccessClass realization
-		//------------------------------
-
-		// Assignment operator. Handles the myTree["Foo"] = 32; situation
-		template<class Key, class Value>
-		inline void CAccessClass<Key, Value>::operator=(const Value& value)
-		{
-			Node* node = Tree.find(_Key);
-
-			IRR_ASSERT(node);
-
-			node->setValue(value);
-		}
-
-		// Value operator
-		template<class Key, class Value>
-		inline CAccessClass<Key, Value>::operator Value()
-		{
-			RBTree<Key, Value>* node = Tree.find(_Key);
-
-			// Not found
-			// access violation
-			IRR_ASSERT(node != 0)
-
-			_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
-			return node->getValue();
-		}
-
-		//! Default constructor
-		template<class Key, class Value>
-		inline CAccessClass<Key, Value>::CAccessClass(map<Key, Value>& tree,
-				const Key& key) :
-				Tree(tree), _Key(key)
-		{
-		}
-
-		//------------------------------
-		// map realization
-		//------------------------------
-
 		//! Default constructor.
-		template<class Key, class Value>
-		inline map<Key, Value>::map() :
+		template<class KType, class VType>
+		inline map<KType, VType>::map() :
 				Root(0), Size(0), Monitor(0)
 		{
 			Monitor = threads::createIrrgameMonitor();
 		}
 
 		//! Destructor
-		template<class Key, class Value>
-		inline map<Key, Value>::~map()
+		template<class KType, class VType>
+		inline map<KType, VType>::~map()
 		{
 			clear();
 
@@ -250,8 +179,9 @@ namespace irrgame
 		/** \param keyNew: the index for this value
 		 \param v: the value to insert
 		 \return True if successful, false if it fails (already exists) */
-		template<class Key, class Value>
-		inline void map<Key, Value>::insert(const Key& keyNew, const Value& v)
+		template<class KType, class VType>
+		inline void map<KType, VType>::insert(const KType& keyNew,
+				const VType& v)
 		{
 			// First insert node the "usual" way (no fancy balance logic yet)
 			Node* newNode = new Node(keyNew, v);
@@ -266,6 +196,7 @@ namespace irrgame
 					// If newNode is a left child, get its right 'uncle'
 					Node* newNodesUncle =
 							newNode->getParent()->getParent()->getRightChild();
+
 					if (newNodesUncle != 0 && newNodesUncle->isRed())
 					{
 						// case 1 - change the colours
@@ -328,8 +259,8 @@ namespace irrgame
 		}
 
 		//! Removes a node from the tree and returns it.
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* map<Key, Value>::delink(const Key& k)
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* map<KType, VType>::delink(const KType& k)
 		{
 			Monitor->enter();
 
@@ -349,11 +280,13 @@ namespace irrgame
 
 			// Let p's parent point to p's child instead of point to p
 			if (p->isLeftChild())
+			{
 				p->getParent()->setLeftChild(left);
-
+			}
 			else if (p->isRightChild())
+			{
 				p->getParent()->setRightChild(left);
-
+			}
 			else
 			{
 				// p has no parent => p is the root.
@@ -372,8 +305,8 @@ namespace irrgame
 		}
 
 		//! Removes a node from the tree and deletes it.
-		template<class Key, class Value>
-		inline void map<Key, Value>::remove(const Key& k)
+		template<class KType, class VType>
+		inline void map<KType, VType>::remove(const KType& k)
 		{
 			Monitor->enter();
 
@@ -393,11 +326,13 @@ namespace irrgame
 
 			// Let p's parent point to p's child instead of point to p
 			if (p->isLeftChild())
+			{
 				p->getParent()->setLeftChild(left);
-
+			}
 			else if (p->isRightChild())
+			{
 				p->getParent()->setRightChild(left);
-
+			}
 			else
 			{
 				// p has no parent => p is the root.
@@ -415,8 +350,8 @@ namespace irrgame
 		}
 
 		//! Clear the entire tree
-		template<class Key, class Value>
-		inline void map<Key, Value>::clear()
+		template<class KType, class VType>
+		inline void map<KType, VType>::clear()
 		{
 			Monitor->enter();
 
@@ -429,6 +364,7 @@ namespace irrgame
 					 // else iterator will get quite confused.
 				delete p;
 			}
+
 			Root = 0;
 			Size = 0;
 
@@ -437,8 +373,8 @@ namespace irrgame
 
 		//! Is the tree empty?
 		//! \return Returns true if empty, false if not
-		template<class Key, class Value>
-		inline bool map<Key, Value>::empty() const
+		template<class KType, class VType>
+		inline bool map<KType, VType>::empty() const
 		{
 			Monitor->enter();
 			bool result = Root == 0;
@@ -451,9 +387,9 @@ namespace irrgame
 		//! Search for a node with the specified key.
 		//! \param keyToFind: The key to find
 		//! \return Returns 0 if node couldn't be found.
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* map<Key, Value>::find(
-				const Key& keyToFind) const
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* map<KType, VType>::find(
+				const KType& keyToFind) const
 		{
 			Monitor->enter();
 			Node* result = findInternal(keyToFind);
@@ -465,23 +401,28 @@ namespace irrgame
 		//! Search for a node with the specified key.
 		//! \param keyToFind: The key to find
 		//! \return Returns 0 if node couldn't be found.
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* map<Key, Value>::findInternal(
-				const Key& keyToFind) const
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* map<KType, VType>::findInternal(
+				const KType& keyToFind) const
 		{
 			Node* result = Root;
 
 			while (result)
 			{
-				Key key(result->getKey());
+				KType key(result->getKey());
 
 				if (keyToFind == key)
+				{
 					break;
+				}
 				else if (keyToFind < key)
+				{
 					result = result->getLeftChild();
-				else
-					//keyToFind > key
+				}
+				else //keyToFind > key
+				{
 					result = result->getRightChild();
+				}
 			}
 
 			return result;
@@ -490,8 +431,8 @@ namespace irrgame
 		//! Gets the root element.
 		//! \return Returns a pointer to the root node, or
 		//! 0 if the tree is empty.
-		template<class Key, class Value>
-		inline RBTree<Key, Value>* map<Key, Value>::getRoot() const
+		template<class KType, class VType>
+		inline RBTree<KType, VType>* map<KType, VType>::getRoot() const
 		{
 			Monitor->enter();
 			Node* result = Root;
@@ -501,8 +442,8 @@ namespace irrgame
 		}
 
 		//! Returns the number of nodes in the tree.
-		template<class Key, class Value>
-		inline u32 map<Key, Value>::size() const
+		template<class KType, class VType>
+		inline u32 map<KType, VType>::size() const
 		{
 			Monitor->enter();
 			u32 result = Size;
@@ -516,8 +457,8 @@ namespace irrgame
 		 object will contain the content of this object. Iterators will afterwards be valid for
 		 the swapped object.
 		 \param other Swap content with this object	*/
-		template<class Key, class Value>
-		inline void map<Key, Value>::swap(map<Key, Value>& other)
+		template<class KType, class VType>
+		inline void map<KType, VType>::swap(map<KType, VType>& other)
 		{
 			// handle self swap
 			if (this == &other)
@@ -539,8 +480,8 @@ namespace irrgame
 		//------------------------------
 
 		//! Returns an iterator
-		template<class Key, class Value>
-		inline CMapIterator<Key, Value> map<Key, Value>::getIterator()
+		template<class KType, class VType>
+		inline CMapIterator<KType, VType> map<KType, VType>::getIterator()
 		{
 			Monitor->enter();
 			Iterator result(Root);
@@ -554,8 +495,8 @@ namespace irrgame
 		//! when storing the tree structure, because when reading it
 		//! later (and inserting elements) the tree structure will
 		//! be the same.
-		template<class Key, class Value>
-		inline CParentFirstIterator<Key, Value> map<Key, Value>::getParentFirstIterator()
+		template<class KType, class VType>
+		inline CParentFirstIterator<KType, VType> map<KType, VType>::getParentFirstIterator()
 		{
 			Monitor->enter();
 			ParentFirstIterator result(Root);
@@ -569,8 +510,8 @@ namespace irrgame
 		//! Typical usage is when deleting all elements in the tree
 		//! because you must delete the children before you delete
 		//! their parent.
-		template<class Key, class Value>
-		inline CParentLastIterator<Key, Value> map<Key, Value>::getParentLastIterator()
+		template<class KType, class VType>
+		inline CParentLastIterator<KType, VType> map<KType, VType>::getParentLastIterator()
 		{
 			Monitor->enter();
 			ParentLastIterator it(Root);
@@ -584,9 +525,9 @@ namespace irrgame
 		//------------------------------
 
 		//! operator [] for access to elements
-		template<class Key, class Value>
-		inline CAccessClass<Key, Value> map<Key, Value>::operator[](
-				const Key& k)
+		template<class KType, class VType>
+		inline CAccessClass<KType, VType> map<KType, VType>::operator[](
+				const KType& k)
 		{
 			Monitor->enter();
 			AccessClass result(*this, k);
@@ -600,8 +541,8 @@ namespace irrgame
 		//------------------------------
 
 		//! Set node as new root.
-		template<class Key, class Value>
-		inline void map<Key, Value>::setRoot(Node* newRoot)
+		template<class KType, class VType>
+		inline void map<KType, VType>::setRoot(Node* newRoot)
 		{
 			Root = newRoot;
 			if (Root != 0)
@@ -612,8 +553,8 @@ namespace irrgame
 		}
 
 		//! Insert a node into the tree without using any fancy balancing logic.
-		template<class Key, class Value>
-		inline void map<Key, Value>::insert(Node* newNode)
+		template<class KType, class VType>
+		inline void map<KType, VType>::insert(Node* newNode)
 		{
 			if (Root == 0)
 			{
@@ -623,10 +564,10 @@ namespace irrgame
 			else
 			{
 				Node* pNode = Root;
-				Key keyNew = newNode->getKey();
+				KType keyNew = newNode->getKey();
 				while (pNode)
 				{
-					Key key(pNode->getKey());
+					KType key(pNode->getKey());
 
 					IRR_ASSERT(keyNew != key);
 
@@ -658,38 +599,50 @@ namespace irrgame
 
 		//! Rotate left.
 		//! Pull up node's right child and let it knock node down to the left
-		template<class Key, class Value>
-		inline void map<Key, Value>::rotateLeft(Node* p)
+		template<class KType, class VType>
+		inline void map<KType, VType>::rotateLeft(Node* p)
 		{
 			Node* right = p->getRightChild();
 
 			p->setRightChild(right->getLeftChild());
 
 			if (p->isLeftChild())
+			{
 				p->getParent()->setLeftChild(right);
+			}
 			else if (p->isRightChild())
+			{
 				p->getParent()->setRightChild(right);
+			}
 			else
+			{
 				setRoot(right);
+			}
 
 			right->setLeftChild(p);
 		}
 
 		//! Rotate right.
 		//! Pull up node's left child and let it knock node down to the right
-		template<class Key, class Value>
-		inline void map<Key, Value>::rotateRight(Node* p)
+		template<class KType, class VType>
+		inline void map<KType, VType>::rotateRight(Node* p)
 		{
 			Node* left = p->getLeftChild();
 
 			p->setLeftChild(left->getRightChild());
 
 			if (p->isLeftChild())
+			{
 				p->getParent()->setLeftChild(left);
+			}
 			else if (p->isRightChild())
+			{
 				p->getParent()->setRightChild(left);
+			}
 			else
+			{
 				setRoot(left);
+			}
 
 			left->setRightChild(p);
 		}

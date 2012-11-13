@@ -8,7 +8,8 @@
 #ifndef ITHREADPOOL_H_
 #define ITHREADPOOL_H_
 
-#include "delegate/delegate.h"
+#include "core/delegate.h"
+#include "core/collections/list/list.h"
 #include "EEventPriority.h"
 
 namespace irrgame
@@ -16,7 +17,7 @@ namespace irrgame
 	namespace events
 	{
 		//! Use this delegate for add event to specify queue
-		typedef CDelegate<int, void*> delegateEvent;
+		typedef delegate<s32, void*> delegateEvent;
 
 		//! Event sheduler which manage engine events.
 		//! Represents a simple scheduler which have 3 threads with different priorities.

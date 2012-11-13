@@ -12,6 +12,7 @@
 #include "events/user/EUserKeys.h"
 #include "events/user/EUserKeyStates.h"
 #include "events/user/SCursorInfo.h"
+#include "core/collections/map/map.h"
 
 namespace irrgame
 {

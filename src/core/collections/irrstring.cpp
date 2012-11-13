@@ -828,8 +828,12 @@ namespace irrgame
 			Monitor->enter();
 
 			for (u32 i = 0; i < Used; ++i)
+			{
 				if (Array[i] == toReplace)
+				{
 					Array[i] = replaceWith;
+				}
+			}
 
 			Monitor->exit();
 		}

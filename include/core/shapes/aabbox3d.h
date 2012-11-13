@@ -231,8 +231,6 @@ namespace irrgame
 			return (MinEdge == other.MinEdge && other.MaxEdge == MaxEdge);
 		}
 		//! Inequality operator
-		/** \param other box to compare with.
-		 \return True if both boxes are different, else false. */
 		template<class T>
 		inline bool aabbox3d<T>::operator!=(const aabbox3d<T>& other) const
 		{
@@ -244,9 +242,6 @@ namespace irrgame
 		 */
 
 		//! Resets the bounding box to a one-point box.
-		/** \param x X coord of the point.
-		 \param y Y coord of the point.
-		 \param z Z coord of the point. */
 		template<class T>
 		inline void aabbox3d<T>::reset(T x, T y, T z)
 		{
@@ -255,7 +250,6 @@ namespace irrgame
 		}
 
 		//! Resets the bounding box.
-		/** \param initValue New box to set this one to. */
 		template<class T>
 		inline void aabbox3d<T>::reset(const aabbox3d<T>& initValue)
 		{
@@ -263,7 +257,6 @@ namespace irrgame
 		}
 
 		//! Resets the bounding box to a one-point box.
-		/** \param initValue New point. */
 		template<class T>
 		inline void aabbox3d<T>::reset(const vector3d<T>& initValue)
 		{
@@ -272,8 +265,6 @@ namespace irrgame
 		}
 
 		//! Adds a point to the bounding box
-		/** The box grows bigger, if point was outside of the box.
-		 \param p: Point to add into the box. */
 		template<class T>
 		inline void aabbox3d<T>::addInternalPoint(const vector3d<T>& p)
 		{
@@ -281,8 +272,6 @@ namespace irrgame
 		}
 
 		//! Adds another bounding box
-		/** The box grows bigger, if the new box was outside of the box.
-		 \param b: Other bounding box to add into this box. */
 		template<class T>
 		inline void aabbox3d<T>::addInternalBox(const aabbox3d<T>& b)
 		{
@@ -291,10 +280,6 @@ namespace irrgame
 		}
 
 		//! Adds a point to the bounding box
-		/** The box grows bigger, if point is outside of the box.
-		 \param x X coordinate of the point to add to this box.
-		 \param y Y coordinate of the point to add to this box.
-		 \param z Z coordinate of the point to add to this box. */
 		template<class T>
 		inline void aabbox3d<T>::addInternalPoint(T x, T y, T z)
 		{
@@ -326,7 +311,6 @@ namespace irrgame
 		}
 
 		//! Get center of the bounding box
-		/** \return Center of the bounding box. */
 		template<class T>
 		inline vector3d<T> aabbox3d<T>::getCenter() const
 		{
@@ -334,7 +318,6 @@ namespace irrgame
 		}
 
 		//! Get extent of the box (maximal distance of two points in the box)
-		/** \return Extent of the bounding box. */
 		template<class T>
 		inline vector3d<T> aabbox3d<T>::getExtent() const
 		{

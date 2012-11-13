@@ -22,6 +22,11 @@ namespace irrgame
 				static const dimension2d& getEmpty(void);
 
 			public:
+
+				/*
+				 * Constructors
+				 */
+
 				//! Default constructor for empty dimension
 				dimension2d();
 
@@ -33,8 +38,6 @@ namespace irrgame
 				/*
 				 * Methods for work with dimension with another type
 				 */
-
-			public:
 
 				//! Use this constructor only where you are sure that the conversion is valid.
 				template<class U>
@@ -55,7 +58,6 @@ namespace irrgame
 				 * Methods
 				 */
 
-			public:
 				//! Set to new values
 				dimension2d<T>& set(const T& width, const T& height);
 
@@ -91,8 +93,6 @@ namespace irrgame
 				/*
 				 * Operators
 				 */
-
-			public:
 
 				//! Equality operator
 				bool operator==(const dimension2d<T>& other) const;

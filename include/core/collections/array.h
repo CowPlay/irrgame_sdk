@@ -30,6 +30,41 @@ namespace irrgame
 		class array: public ICollection<T>
 		{
 			public:
+				/*
+				 * ICollection realization
+				 */
+
+				//! Adds an element at back of array.
+				/** If the array is too small to add this new element it is made bigger.
+				 \param value: Element to add at the back of the array. */
+				virtual void pushBack(const T& value);
+
+				//! Adds an element at the front of the array.
+				/** If the array is to small to add this new element, the array is
+				 made bigger. Please note that this is slow, because the whole array
+				 needs to be copied for this.
+				 \param value Element to add at the back of the array. */
+				virtual void pushFront(const T& value);
+
+				//! Get number of occupied elements of the array.
+				/** \return Size of elements in the array which are actually occupied. */
+				virtual u32 size() const;
+
+				//! Gets last element.
+				virtual T& getLast();
+
+				//! Gets last element.
+				virtual const T& getLast() const;
+
+				//! Direct access operator
+				virtual T& operator[](u32 index);
+
+				//! Direct const access operator
+				virtual const T& operator[](u32 index) const;
+
+				/*
+				 * Constructors
+				 */
 
 				//! Default constructor for empty array.
 				array();
@@ -46,6 +81,10 @@ namespace irrgame
 				 false by the user before. */
 				virtual ~array();
 
+				/*
+				 * Methods
+				 */
+
 				//! Reallocates the array, make it bigger or smaller.
 				/** \param newSize New size of array. */
 				void reallocate(u32 newSize);
@@ -55,18 +94,6 @@ namespace irrgame
 				 allocation should happen.
 				 \param value New strategy to apply to this array. */
 				void setAllocStrategy(EAllocStrategy value = AS_DOUBLE);
-
-				//! Adds an element at back of array.
-				/** If the array is too small to add this new element it is made bigger.
-				 \param value: Element to add at the back of the array. */
-				void pushBack(const T& value);
-
-				//! Adds an element at the front of the array.
-				/** If the array is to small to add this new element, the array is
-				 made bigger. Please note that this is slow, because the whole array
-				 needs to be copied for this.
-				 \param value Element to add at the back of the array. */
-				void pushFront(const T& value);
 
 				//! Insert item into array at specified position.
 				/** Please use this only if you know what you are doing (possible
@@ -107,27 +134,6 @@ namespace irrgame
 				 \param value Amount of elements now used. */
 				void setUsed(u32 value);
 
-				//! Assignment operator
-				array<T>& operator=(const array<T>& other);
-
-				//! Equality operator. Typename T must implement operator!=
-				bool operator==(const array<T>& other) const;
-
-				//! Inequality operator
-				bool operator!=(const array<T>& other) const;
-
-				//! Direct access operator
-				T& operator[](u32 index);
-
-				//! Direct const access operator
-				const T& operator[](u32 index) const;
-
-				//! Gets last element.
-				T& getLast();
-
-				//! Gets last element.
-				const T& getLast() const;
-
 				//! Gets a pointer to the array.
 				/** \return Pointer to the array. */
 				T* pointer();
@@ -135,10 +141,6 @@ namespace irrgame
 				//! Gets a const pointer to the array.
 				/** \return Pointer to the array. */
 				const T* constPointer() const;
-
-				//! Get number of occupied elements of the array.
-				/** \return Size of elements in the array which are actually occupied. */
-				u32 size() const;
 
 				//! Get amount of memory allocated.
 				/** \return Amount of memory allocated. The amount of bytes
@@ -208,6 +210,19 @@ namespace irrgame
 				 \param other Swap content with this object	*/
 				void swap(array<T>& other);
 
+				/*
+				 * Operators
+				 */
+
+				//! Assignment operator
+				array<T>& operator=(const array<T>& other);
+
+				//! Equality operator. Typename T must implement operator!=
+				bool operator==(const array<T>& other) const;
+
+				//! Inequality operator
+				bool operator!=(const array<T>& other) const;
+
 			private:
 
 				//! Sorts the array using heapsort.
@@ -234,6 +249,98 @@ namespace irrgame
 				bool FreeWhenDestroyed :1;
 				bool IsSorted :1;
 		};
+
+		/*
+		 * ICollection realization
+		 */
+
+		//! Adds an element at back of array.
+		template<class T>
+		inline void array<T>::pushBack(const T& value)
+		{
+			insert(value, Used);
+		}
+
+		//! Adds an element at the front of the array.
+		template<class T>
+		inline void array<T>::pushFront(const T& value)
+		{
+			insert(value);
+		}
+
+		template<class T>
+		inline u32 array<T>::size() const
+		{
+			Monitor->enter();
+			u32 result = Used;
+			Monitor->exit();
+
+			return result;
+		}
+
+		template<class T>
+		inline T& array<T>::getLast()
+		{
+			Monitor->enter();
+
+			// access violation
+			IRR_ASSERT(Used > 0)
+
+			T& result = Data[Used - 1];
+
+			Monitor->exit();
+
+			return result;
+		}
+
+		template<class T>
+		inline const T& array<T>::getLast() const
+		{
+			Monitor->enter();
+
+			// access violation
+			IRR_ASSERT(Used > 0)
+
+			const T& result = Data[Used - 1];
+
+			Monitor->exit();
+
+			return result;
+		}
+
+		template<class T>
+		inline T& array<T>::operator [](u32 index)
+		{
+			Monitor->enter();
+
+			// access violation
+			IRR_ASSERT(index >= 0 && index <= Used)
+
+			T& result = Data[index];
+
+			Monitor->exit();
+
+			return result;
+		}
+
+		template<class T>
+		inline const T& array<T>::operator [](u32 index) const
+		{
+			Monitor->enter();
+
+			// access violation
+			IRR_ASSERT(index >= 0 && index <= Used)
+
+			const T& result = Data[index];
+
+			Monitor->exit();
+
+			return result;
+		}
+
+		/*
+		 * Constructors
+		 */
 
 		//! Default constructor for empty array.
 		template<class T>
@@ -318,20 +425,6 @@ namespace irrgame
 			Monitor->enter();
 			Strategy = value;
 			Monitor->exit();
-		}
-
-		//! Adds an element at back of array.
-		template<class T>
-		inline void array<T>::pushBack(const T& value)
-		{
-			insert(value, Used);
-		}
-
-		//! Adds an element at the front of the array.
-		template<class T>
-		inline void array<T>::pushFront(const T& value)
-		{
-			insert(value);
 		}
 
 		//! Insert item into array at specified position.
@@ -483,140 +576,6 @@ namespace irrgame
 			Monitor->exit();
 		}
 
-		//! Assignment operator
-		template<class T>
-		inline array<T>& array<T>::operator=(const array<T>& other)
-		{
-			//handle self-assignment
-			if (this == &other)
-				return *this;
-
-			Monitor->enter();
-			other.Monitor->enter();
-
-			Strategy = other.Strategy;
-
-			if (Data)
-				clearInternal();
-
-			//if (allocated < other.allocated)
-			if (other.Allocated == 0)
-				Data = 0;
-			else
-				Data = Allocator.allocate(other.Allocated); // new T[other.allocated];
-
-			Used = other.Used;
-			FreeWhenDestroyed = true;
-			IsSorted = other.IsSorted;
-			Allocated = other.Allocated;
-
-			for (u32 i = 0; i < other.Used; ++i)
-				Allocator.construct(&Data[i], other.Data[i]); // data[i] = other.data[i];
-
-			Monitor->exit();
-			other.Monitor->exit();
-
-			return *this;
-		}
-
-		template<class T>
-		inline bool array<T>::operator ==(const array<T>& other) const
-		{
-			bool result = true;
-
-			//handle self-check equality
-			if (this == &other)
-				return result;
-
-			Monitor->enter();
-			other.Monitor->enter();
-
-			if (Used != other.Used)
-			{
-				result = false;
-			}
-			else
-			{
-				for (u32 i = 0; i < other.Used; ++i)
-					if (Data[i] != other.Data[i])
-					{
-						result = false;
-						break;
-					}
-			}
-
-			Monitor->exit();
-			other.Monitor->exit();
-
-			return result;
-		}
-
-		template<class T>
-		inline bool array<T>::operator !=(const array<T>& other) const
-		{
-			return !(*this == other);
-		}
-
-		template<class T>
-		inline T& array<T>::operator [](u32 index)
-		{
-			Monitor->enter();
-
-			// access violation
-			IRR_ASSERT(index >= 0 && index <= Used)
-
-			T& result = Data[index];
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		template<class T>
-		inline const T& array<T>::operator [](u32 index) const
-		{
-			Monitor->enter();
-
-			// access violation
-			IRR_ASSERT(index >= 0 && index <= Used)
-
-			const T& result = Data[index];
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		template<class T>
-		inline T& array<T>::getLast()
-		{
-			Monitor->enter();
-
-			// access violation
-			IRR_ASSERT(Used > 0)
-
-			T& result = Data[Used - 1];
-
-			Monitor->exit();
-
-			return result;
-		}
-
-		template<class T>
-		inline const T& array<T>::getLast() const
-		{
-			Monitor->enter();
-
-			// access violation
-			IRR_ASSERT(Used > 0)
-
-			const T& result = Data[Used - 1];
-
-			Monitor->exit();
-
-			return result;
-		}
-
 		template<class T>
 		inline T* array<T>::pointer()
 		{
@@ -632,16 +591,6 @@ namespace irrgame
 		{
 			Monitor->enter();
 			const T* result = Data;
-			Monitor->exit();
-
-			return result;
-		}
-
-		template<class T>
-		inline u32 array<T>::size() const
-		{
-			Monitor->enter();
-			u32 result = Used;
 			Monitor->exit();
 
 			return result;
@@ -908,6 +857,85 @@ namespace irrgame
 			Monitor->exit();
 			other.Monitor->exit();
 		}
+
+		/*
+		 * Operators
+		 */
+
+		//! Assignment operator
+		template<class T>
+		inline array<T>& array<T>::operator=(const array<T>& other)
+		{
+			//handle self-assignment
+			if (this == &other)
+				return *this;
+
+			Monitor->enter();
+			other.Monitor->enter();
+
+			Strategy = other.Strategy;
+
+			if (Data)
+				clearInternal();
+
+			//if (allocated < other.allocated)
+			if (other.Allocated == 0)
+				Data = 0;
+			else
+				Data = Allocator.allocate(other.Allocated); // new T[other.allocated];
+
+			Used = other.Used;
+			FreeWhenDestroyed = true;
+			IsSorted = other.IsSorted;
+			Allocated = other.Allocated;
+
+			for (u32 i = 0; i < other.Used; ++i)
+				Allocator.construct(&Data[i], other.Data[i]); // data[i] = other.data[i];
+
+			Monitor->exit();
+			other.Monitor->exit();
+
+			return *this;
+		}
+
+		template<class T>
+		inline bool array<T>::operator ==(const array<T>& other) const
+		{
+			bool result = true;
+
+			//handle self-check equality
+			if (this == &other)
+				return result;
+
+			Monitor->enter();
+			other.Monitor->enter();
+
+			if (Used != other.Used)
+			{
+				result = false;
+			}
+			else
+			{
+				for (u32 i = 0; i < other.Used; ++i)
+					if (Data[i] != other.Data[i])
+					{
+						result = false;
+						break;
+					}
+			}
+
+			Monitor->exit();
+			other.Monitor->exit();
+
+			return result;
+		}
+
+		template<class T>
+		inline bool array<T>::operator !=(const array<T>& other) const
+		{
+			return !(*this == other);
+		}
+
 	} // end namespace core
 } // end namespace irrgame
 

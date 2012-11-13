@@ -10,7 +10,7 @@
 
 #include "core/engine/IReferenceCounted.h"
 #include "core/irrgamecollections.h"
-#include "delegate/delegate.h"
+#include "core/delegate.h"
 
 namespace irrgame
 {
@@ -21,7 +21,7 @@ namespace irrgame
 		{
 			public:
 
-				typedef CDelegate<int, ITimer*> delegateTimerAlarm;
+				typedef delegate<s32, ITimer*> delegateTimerAlarm;
 
 				/*
 				 * Static funcs

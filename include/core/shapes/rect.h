@@ -143,7 +143,7 @@ namespace irrgame
 
 		//! Returns empty rect
 		template<class T>
-		const rect<T>& rect<T>::getEmpty(void)
+		inline const rect<T>& rect<T>::getEmpty(void)
 		{
 			static const rect<T> empty;
 			return empty;
@@ -158,14 +158,14 @@ namespace irrgame
 
 		//! Constructor with two corners
 		template<class T>
-		rect<T>::rect(T x, T y, T x2, T y2) :
+		inline rect<T>::rect(T x, T y, T x2, T y2) :
 				UpperLeftCorner(x, y), LowerRightCorner(x2, y2)
 		{
 		}
 
 		//! Constructor with two corners
 		template<class T>
-		rect<T>::rect(const vector2d<T>& upperLeft,
+		inline rect<T>::rect(const vector2d<T>& upperLeft,
 				const vector2d<T>& lowerRight) :
 				UpperLeftCorner(upperLeft), LowerRightCorner(lowerRight)
 		{
@@ -177,30 +177,28 @@ namespace irrgame
 
 		//! Returns size of rectangle
 		template<class T>
-		T rect<T>::getArea() const
+		inline T rect<T>::getArea() const
 		{
 			return getWidth() * getHeight();
 		}
 
 		//! Get width of rectangle.
 		template<class T>
-		T rect<T>::getWidth() const
+		inline T rect<T>::getWidth() const
 		{
 			return LowerRightCorner.X - UpperLeftCorner.X;
 		}
 
 		//! Get height of rectangle.
 		template<class T>
-		T rect<T>::getHeight() const
+		inline T rect<T>::getHeight() const
 		{
 			return LowerRightCorner.Y - UpperLeftCorner.Y;
 		}
 
 		//! Returns if a 2d point is within this rectangle.
-		/** \param pos Position to test if it lies within this rectangle.
-		 \return True if the position is within the rectangle, false if not. */
 		template<class T>
-		bool rect<T>::isPointInside(const vector2d<T>& pos) const
+		inline bool rect<T>::isPointInside(const vector2d<T>& pos) const
 		{
 			return (UpperLeftCorner.X <= pos.X && UpperLeftCorner.Y <= pos.Y
 					&& LowerRightCorner.X >= pos.X
@@ -208,10 +206,8 @@ namespace irrgame
 		}
 
 		//! Check if the rectangle collides with another rectangle.
-		/** \param other Rectangle to test collision with
-		 \return True if the rectangles collide. */
 		template<class T>
-		bool rect<T>::isRectCollided(const rect<T>& other) const
+		inline bool rect<T>::isRectCollided(const rect<T>& other) const
 		{
 			return (LowerRightCorner.Y > other.UpperLeftCorner.Y
 					&& UpperLeftCorner.Y < other.LowerRightCorner.Y
@@ -220,9 +216,8 @@ namespace irrgame
 		}
 
 		//! Clips this rectangle with another one.
-		/** \param other Rectangle to clip with */
 		template<class T>
-		void rect<T>::clipAgainst(const rect<T>& other)
+		inline void rect<T>::clipAgainst(const rect<T>& other)
 		{
 			if (other.LowerRightCorner.X < LowerRightCorner.X)
 			{
@@ -254,9 +249,8 @@ namespace irrgame
 		}
 
 		//! Moves this rectangle to fit inside another one.
-		/** \return True on success, false if not possible */
 		template<class T>
-		bool rect<T>::constrainTo(const rect<T>& other)
+		inline bool rect<T>::constrainTo(const rect<T>& other)
 		{
 			if (other.getWidth() < getWidth()
 					|| other.getHeight() < getHeight())
@@ -295,7 +289,7 @@ namespace irrgame
 
 		//! If the lower right corner of the rect is smaller then the upper left, the points are swapped.
 		template<class T>
-		void rect<T>::repair()
+		inline void rect<T>::repair()
 		{
 			if (LowerRightCorner.X < UpperLeftCorner.X)
 			{
@@ -313,10 +307,8 @@ namespace irrgame
 		}
 
 		//! Returns if the rect is valid to draw.
-		/** It would be invalid if the UpperLeftCorner is lower or more
-		 right than the LowerRightCorner. */
 		template<class T>
-		bool rect<T>::isValid() const
+		inline bool rect<T>::isValid() const
 		{
 			return ((LowerRightCorner.X >= UpperLeftCorner.X)
 					&& (LowerRightCorner.Y >= UpperLeftCorner.Y));
@@ -324,7 +316,7 @@ namespace irrgame
 
 		//! Get the center of the rectangle
 		template<class T>
-		vector2d<T> rect<T>::getCenter() const
+		inline vector2d<T> rect<T>::getCenter() const
 		{
 			return vector2d<T>((UpperLeftCorner.X + LowerRightCorner.X) / 2,
 					(UpperLeftCorner.Y + LowerRightCorner.Y) / 2);
@@ -332,28 +324,21 @@ namespace irrgame
 
 		//! Get the dimensions of the rectangle
 		template<class T>
-		dimension2d<T> rect<T>::getSize() const
+		inline dimension2d<T> rect<T>::getSize() const
 		{
 			return dimension2d<T>(getWidth(), getHeight());
 		}
 
 		//! Adds a point to the rectangle
-		/** Causes the rectangle to grow bigger if point is outside of
-		 the box
-		 \param p Point to add to the box. */
 		template<class T>
-		void rect<T>::addInternalPoint(const vector2d<T>& p)
+		inline void rect<T>::addInternalPoint(const vector2d<T>& p)
 		{
 			addInternalPoint(p.X, p.Y);
 		}
 
 		//! Adds a point to the bounding rectangle
-		/** Causes the rectangle to grow bigger if point is outside of
-		 the box
-		 \param x X-Coordinate of the point to add to this box.
-		 \param y Y-Coordinate of the point to add to this box. */
 		template<class T>
-		void rect<T>::addInternalPoint(T x, T y)
+		inline void rect<T>::addInternalPoint(T x, T y)
 		{
 			if (x > LowerRightCorner.X)
 			{
@@ -376,7 +361,7 @@ namespace irrgame
 
 		//! move right by given numbers
 		template<class T>
-		rect<T> rect<T>::operator+(const vector2d<T>& pos) const
+		inline rect<T> rect<T>::operator+(const vector2d<T>& pos) const
 		{
 			rect<T> ret(*this);
 			return ret += pos;
@@ -384,7 +369,7 @@ namespace irrgame
 
 		//! move right by given numbers
 		template<class T>
-		rect<T>& rect<T>::operator+=(const vector2d<T>& pos)
+		inline rect<T>& rect<T>::operator+=(const vector2d<T>& pos)
 		{
 			UpperLeftCorner += pos;
 			LowerRightCorner += pos;
@@ -393,7 +378,7 @@ namespace irrgame
 
 		//! move left by given numbers
 		template<class T>
-		rect<T> rect<T>::operator-(const vector2d<T>& pos) const
+		inline rect<T> rect<T>::operator-(const vector2d<T>& pos) const
 		{
 			rect<T> ret(*this);
 			return ret -= pos;
@@ -401,7 +386,7 @@ namespace irrgame
 
 		//! move left by given numbers
 		template<class T>
-		rect<T>& rect<T>::operator-=(const vector2d<T>& pos)
+		inline rect<T>& rect<T>::operator-=(const vector2d<T>& pos)
 		{
 			UpperLeftCorner -= pos;
 			LowerRightCorner -= pos;
@@ -410,7 +395,7 @@ namespace irrgame
 
 		//! equality operator
 		template<class T>
-		bool rect<T>::operator==(const rect<T>& other) const
+		inline bool rect<T>::operator==(const rect<T>& other) const
 		{
 			return (UpperLeftCorner == other.UpperLeftCorner
 					&& LowerRightCorner == other.LowerRightCorner);
@@ -418,7 +403,7 @@ namespace irrgame
 
 		//! inequality operator
 		template<class T>
-		bool rect<T>::operator!=(const rect<T>& other) const
+		inline bool rect<T>::operator!=(const rect<T>& other) const
 		{
 			return (UpperLeftCorner != other.UpperLeftCorner
 					|| LowerRightCorner != other.LowerRightCorner);
@@ -432,7 +417,7 @@ namespace irrgame
 		}
 
 	} // end namespace core
-} // end namespace irr
+} // end namespace irrgame
 
 //! Typedefs for rect
 typedef irrgame::core::rect<f32> rectf;

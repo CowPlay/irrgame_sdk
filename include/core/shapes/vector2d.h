@@ -208,7 +208,7 @@ namespace irrgame
 //			return vector * scalar;
 //		}
 
-// These methods are declared in dimension2d, but need definitions of vector2d
+		// These methods are declared in dimension2d, but need definitions of vector2d
 		template<class T>
 		dimension2d<T>::dimension2d(const vector2d<T>& other) :
 				Width(other.X), Height(other.Y)

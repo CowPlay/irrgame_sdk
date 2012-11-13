@@ -12,7 +12,11 @@ namespace irrgame
 	{
 		ITimer* ITimer::createTimer()
 		{
-			return new CTimer;
+			ITimer* result = new CTimer;
+
+			ITimer::registerTimer(result);
+
+			return result;
 		}
 
 		//! Default constructor
@@ -21,7 +25,6 @@ namespace irrgame
 						0), Speed(1.0F)
 		{
 			Monitor = threads::createIrrgameMonitor();
-			ITimer::registerTimer(this);
 		}
 
 		//! Destructor

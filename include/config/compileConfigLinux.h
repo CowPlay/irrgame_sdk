@@ -8,7 +8,7 @@
 #ifndef COMPILECONFIGLINUX_H_
 #define COMPILECONFIGLINUX_H_
 
-#ifdef __linux
+#if defined(__linux) || defined(linux)
 /*
  * Fundamental types. This typedefs ensures portability of the engine.
  */
